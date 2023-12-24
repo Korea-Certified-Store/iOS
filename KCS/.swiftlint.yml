@@ -6,7 +6,6 @@ opt_in_rules:
 
 excluded:
     - Pods
-    - KCS/AppDelegate.swift
-    - KCS/SceneDelegate.swift
+    - KCS/Application
 
 line_length: 140
