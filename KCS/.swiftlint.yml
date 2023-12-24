@@ -1,0 +1,12 @@
+disabled_rules:
+    - trailing_whitespace
+
+opt_in_rules:
+    - empty_string
+
+excluded:
+    - Pods
+    - KCS/AppDelegate.swift
+    - KCS/SceneDelegate.swift
+
+line_length: 140
