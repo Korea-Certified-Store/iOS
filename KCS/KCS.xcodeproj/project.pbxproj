@@ -64,6 +64,7 @@
 		591A887B2B384E600059E40F /* KCS */ = {
 			isa = PBXGroup;
 			children = (
+				5986DCE02B3893D1005AE43B /* Utils */,
 				5986DCDF2B3892EB005AE43B /* Presentation */,
 				5986DCDE2B3892E1005AE43B /* Domain */,
 				5986DCDD2B3892D8005AE43B /* Data */,
@@ -112,6 +113,13 @@
 				591A88802B384E600059E40F /* ViewController.swift */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		5986DCE02B3893D1005AE43B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		CBA0F2F7C6731F98AFE4E86D /* Frameworks */ = {
