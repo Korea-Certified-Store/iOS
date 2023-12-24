@@ -10,7 +10,6 @@ target 'KCS' do
   pod 'Alamofire' 
   pod 'RxSwift', '6.6.0'
   pod 'RxCocoa', '6.6.0'
-
-  pod 'Alamofire'
+  pod 'SwiftLint'
 
 end
