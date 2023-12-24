@@ -1,7 +1,7 @@
 
 ## ⭐️ Issue Number
 
-#number
+- #number
 
 ## 🚩 Summary
 
