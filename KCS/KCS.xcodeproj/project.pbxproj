@@ -68,7 +68,7 @@
 				5986DCDD2B3892D8005AE43B /* Data */,
 				5986DCDF2B3892EB005AE43B /* Presentation */,
 				5986DCDC2B389252005AE43B /* Resource */,
-				5986DCE02B3893D1005AE43B /* Utils */,
+				5986DCE02B3893D1005AE43B /* Util */,
 				5986DCDB2B389234005AE43B /* Application */,
 			);
 			path = KCS;
@@ -115,11 +115,11 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		5986DCE02B3893D1005AE43B /* Utils */ = {
+		5986DCE02B3893D1005AE43B /* Util */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Utils;
+			path = Util;
 			sourceTree = "<group>";
 		};
 		CBA0F2F7C6731F98AFE4E86D /* Frameworks */ = {
