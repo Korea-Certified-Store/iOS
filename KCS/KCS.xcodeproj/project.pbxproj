@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59053D0B2B3889A200D190CC /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 59053D0A2B3889A200D190CC /* .swiftlint.yml */; };
 		591A887D2B384E600059E40F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A887C2B384E600059E40F /* AppDelegate.swift */; };
 		591A887F2B384E600059E40F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A887E2B384E600059E40F /* SceneDelegate.swift */; };
 		591A88812B384E600059E40F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A88802B384E600059E40F /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		59053D0A2B3889A200D190CC /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		591A88792B384E600059E40F /* KCS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KCS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		591A887C2B384E600059E40F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		591A887E2B384E600059E40F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +45,7 @@
 		591A88702B384E600059E40F = {
 			isa = PBXGroup;
 			children = (
+				59053D0A2B3889A200D190CC /* .swiftlint.yml */,
 				591A887B2B384E600059E40F /* KCS */,
 				591A887A2B384E600059E40F /* Products */,
 				ED50AD730FA5F4D533F6DF5F /* Pods */,
@@ -149,6 +152,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59053D0B2B3889A200D190CC /* .swiftlint.yml in Resources */,
 				591A88892B384E610059E40F /* LaunchScreen.storyboard in Resources */,
 				591A88862B384E610059E40F /* Assets.xcassets in Resources */,
 			);
@@ -176,6 +180,7 @@
 		};
 		591A88902B3884930059E40F /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -190,7 +195,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		CB55E62BB6C1E559A1B678AA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
