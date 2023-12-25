@@ -128,9 +128,17 @@
 		5986DCEA2B392996005AE43B /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				591A88802B384E600059E40F /* HomeViewController.swift */,
+				5986DCEB2B392BE5005AE43B /* View */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		5986DCEB2B392BE5005AE43B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				591A88802B384E600059E40F /* HomeViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		CBA0F2F7C6731F98AFE4E86D /* Frameworks */ = {
