@@ -23,12 +23,16 @@ final class HomeViewController: UIViewController {
         addUIComponents()
         configureConstraints()
     }
+
+}
+
+private extension HomeViewController {
     
-    private func addUIComponents() {
+    func addUIComponents() {
         view.addSubview(mapView)
     }
     
-    private func configureConstraints() {
+    func configureConstraints() {
         NSLayoutConstraint.activate([
             mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
@@ -36,5 +40,5 @@ final class HomeViewController: UIViewController {
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
     }
-
+    
 }
