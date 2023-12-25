@@ -17,7 +17,7 @@ Content
 
 Content
 
-## 🙂 To Reviewr
+## 🙂 To Reviwer
 
 - Review Point
 - Caution Point
