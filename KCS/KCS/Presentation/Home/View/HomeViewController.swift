@@ -8,6 +8,8 @@
 import UIKit
 import NMapsMap
 import CoreLocation
+import RxSwift
+import RxCocoa
 
 final class HomeViewController: UIViewController {
     
@@ -18,10 +20,16 @@ final class HomeViewController: UIViewController {
         return manager
     }()
     
+    private var disposeBag = DisposeBag()
+    
     private lazy var locationButton: NMFLocationButton = {
         let locationButton = NMFLocationButton()
         locationButton.translatesAutoresizingMaskIntoConstraints = false
-        locationButton.addTarget(self, action: #selector(currentLocationButtonTapped), for: .touchDown)
+        locationButton.rx.controlEvent(.touchDown)
+            .bind { [weak self] _ in
+                self?.checkUserDeviceLocationServiceAuthorization()
+            }
+            .disposed(by: self.disposeBag)
         locationButton.mapView = mapView.mapView
         locationButton.isUserInteractionEnabled = true
         
@@ -39,10 +47,6 @@ final class HomeViewController: UIViewController {
         
         return map
     }()
-    
-    @objc func currentLocationButtonTapped() {
-        checkUserDeviceLocationServiceAuthorization()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,22 +84,24 @@ private extension HomeViewController {
 extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let coordinate = locations.last?.coordinate {
-            print(coordinate)
-        }
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
+        
     }
     
     func checkUserDeviceLocationServiceAuthorization() {
-        DispatchQueue.global().async {
-            guard CLLocationManager.locationServicesEnabled() else {
-                self.showRequestLocationServiceAlert()
-                return
+        Observable
+            .just(())
+            .observe(on: SerialDispatchQueueScheduler(qos: .background))
+            .subscribe { [weak self] _ in
+                guard CLLocationManager.locationServicesEnabled() else {
+                    self?.showRequestLocationServiceAlert()
+                    return
+                }
             }
-        }
+            .disposed(by: disposeBag)
         let authorizationStatus: CLAuthorizationStatus = locationManager.authorizationStatus
         checkUserCurrentLocationAuthorization(authorizationStatus)
     }
