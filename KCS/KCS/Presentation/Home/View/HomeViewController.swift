@@ -17,6 +17,16 @@ final class HomeViewController: UIViewController {
         
         return manager
     }()
+    
+    private lazy var locationButton: NMFLocationButton = {
+        let locationButton = NMFLocationButton()
+        locationButton.translatesAutoresizingMaskIntoConstraints = false
+        locationButton.addTarget(self, action: #selector(currentLocationButtonTapped), for: .touchDown)
+        locationButton.mapView = mapView.mapView
+        locationButton.isUserInteractionEnabled = true
+        
+        return locationButton
+    }()
 
     private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
@@ -29,6 +39,10 @@ final class HomeViewController: UIViewController {
         
         return map
     }()
+    
+    @objc func currentLocationButtonTapped() {
+        checkUserDeviceLocationServiceAuthorization()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +58,7 @@ private extension HomeViewController {
     
     func addUIComponents() {
         view.addSubview(mapView)
+        mapView.addSubview(locationButton)
     }
     
     func configureConstraints() {
@@ -52,6 +67,11 @@ private extension HomeViewController {
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             mapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        ])
+        
+        NSLayoutConstraint.activate([
+            locationButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20),
+            locationButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20)
         ])
     }
     
