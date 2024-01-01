@@ -21,6 +21,11 @@ final class HomeViewController: UIViewController {
     private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
+        map.showZoomControls = false
+        map.showCompass = false
+        map.showScaleBar = false
+        map.showIndoorLevelPicker = false
+        map.mapView.logoAlign = .rightBottom
         
         return map
     }()
