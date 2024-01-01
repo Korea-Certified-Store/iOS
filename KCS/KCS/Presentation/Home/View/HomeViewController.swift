@@ -13,6 +13,7 @@ final class HomeViewController: UIViewController {
     private let mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
+        map.showLocationButton = true
         
         return map
     }()
