@@ -28,11 +28,17 @@ final class HomeViewController: UIViewController {
         locationButton.rx.controlEvent(.touchDown)
             .bind { [weak self] _ in
                 self?.checkUserDeviceLocationServiceAuthorization()
+                switch locationButton.mapView?.positionMode {
+                case .direction:
+                    locationButton.mapView?.positionMode = .direction
+                default:
+                    locationButton.mapView?.positionMode = .normal
+                }
             }
             .disposed(by: self.disposeBag)
         locationButton.mapView = mapView.mapView
         locationButton.isUserInteractionEnabled = true
-        
+
         return locationButton
     }()
 
@@ -43,6 +49,7 @@ final class HomeViewController: UIViewController {
         map.showCompass = false
         map.showScaleBar = false
         map.showIndoorLevelPicker = false
+        map.showLocationButton = false
         map.mapView.logoAlign = .rightBottom
         
         return map
