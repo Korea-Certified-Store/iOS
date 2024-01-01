@@ -18,10 +18,9 @@ final class HomeViewController: UIViewController {
         return manager
     }()
 
-    private let mapView: NMFNaverMapView = {
+    private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
-        map.showLocationButton = true
         
         return map
     }()
@@ -65,15 +64,12 @@ extension HomeViewController: CLLocationManagerDelegate {
         print(error)
     }
     
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkUserDeviceLocationServiceAuthorization()
-    }
-    
     func checkUserDeviceLocationServiceAuthorization() {
-        guard CLLocationManager.locationServicesEnabled() else {
-            showRequestLocationServiceAlert()
-            
-            return
+        DispatchQueue.global().async {
+            guard CLLocationManager.locationServicesEnabled() else {
+                self.showRequestLocationServiceAlert()
+                return
+            }
         }
         let authorizationStatus: CLAuthorizationStatus = locationManager.authorizationStatus
         checkUserCurrentLocationAuthorization(authorizationStatus)
@@ -88,12 +84,16 @@ extension HomeViewController: CLLocationManagerDelegate {
         case .restricted, .denied:
             showRequestLocationServiceAlert()
         default:
-            print("defalut")
+            break
         }
     }
     
     func showRequestLocationServiceAlert() {
-        let requestLocationServiceAlert = UIAlertController(title: "위치 정보 이용", message: "위치 서비스를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)
+        let requestLocationServiceAlert = UIAlertController(
+            title: "위치 정보 이용",
+            message: "위치 서비스를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서 위치 서비스를 켜주세요.",
+            preferredStyle: .alert
+        )
         let goSetting = UIAlertAction(title: "설정으로 이동", style: .destructive) { _ in
             if let appSetting = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(appSetting)
