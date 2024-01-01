@@ -10,9 +10,10 @@ import NMapsMap
 
 final class HomeViewController: UIViewController {
 
-    private let mapView: NMFMapView = {
-        let map = NMFMapView()
+    private let mapView: NMFNaverMapView = {
+        let map = NMFNaverMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
+        map.showLocationButton = true
         
         return map
     }()
