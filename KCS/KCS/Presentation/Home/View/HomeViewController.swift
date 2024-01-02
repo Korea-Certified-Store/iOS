@@ -20,7 +20,7 @@ final class HomeViewController: UIViewController {
         return manager
     }()
     
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private lazy var locationButton: NMFLocationButton = {
         let locationButton = NMFLocationButton()
