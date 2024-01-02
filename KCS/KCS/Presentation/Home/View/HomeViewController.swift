@@ -38,7 +38,6 @@ final class HomeViewController: UIViewController {
                 }
             }
             .disposed(by: self.disposeBag)
-        
         locationButton.mapView = mapView.mapView
 
         return locationButton
