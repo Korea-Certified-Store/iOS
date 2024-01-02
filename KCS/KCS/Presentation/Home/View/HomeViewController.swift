@@ -25,17 +25,20 @@ final class HomeViewController: UIViewController {
     private lazy var locationButton: NMFLocationButton = {
         let locationButton = NMFLocationButton()
         locationButton.translatesAutoresizingMaskIntoConstraints = false
-        locationButton.rx.controlEvent(.touchDown)
+        locationButton.rx.controlEvent(.touchCancel)
             .bind { [weak self] _ in
                 self?.checkUserDeviceLocationServiceAuthorization()
                 switch locationButton.mapView?.positionMode {
                 case .direction:
                     locationButton.mapView?.positionMode = .direction
+                case .compass:
+                    locationButton.mapView?.positionMode = .compass
                 default:
                     locationButton.mapView?.positionMode = .normal
                 }
             }
             .disposed(by: self.disposeBag)
+        
         locationButton.mapView = mapView.mapView
 
         return locationButton
@@ -90,11 +93,11 @@ private extension HomeViewController {
 extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+        // TODO: Location update 완료시 동작 구현
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        
+        // TODO: Location update 실패시 동작 구현
     }
     
     func checkUserDeviceLocationServiceAuthorization() {
