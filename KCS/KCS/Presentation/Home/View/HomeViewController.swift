@@ -43,7 +43,7 @@ final class HomeViewController: UIViewController {
         return locationButton
     }()
 
-    private lazy var mapView: NMFNaverMapView = {
+    private var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.showZoomControls = false
