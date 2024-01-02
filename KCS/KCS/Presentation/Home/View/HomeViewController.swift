@@ -138,9 +138,7 @@ extension HomeViewController: CLLocationManagerDelegate {
                 UIApplication.shared.open(appSetting)
             }
         }
-        let cancel = UIAlertAction(title: "취소", style: .default) { _ in
-            print("취소")
-        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
         
         requestLocationServiceAlert.addAction(cancel)
         requestLocationServiceAlert.addAction(goSetting)
