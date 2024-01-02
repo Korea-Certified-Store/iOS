@@ -37,7 +37,6 @@ final class HomeViewController: UIViewController {
             }
             .disposed(by: self.disposeBag)
         locationButton.mapView = mapView.mapView
-        locationButton.isUserInteractionEnabled = true
 
         return locationButton
     }()
