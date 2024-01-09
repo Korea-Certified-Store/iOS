@@ -8,14 +8,6 @@
 import UIKit
 import NMapsMap
 
-enum StoreType {
-    
-    case goodPrice
-    case exemplary
-    case safe
-    
-}
-
 final class Marker: NMFMarker {
     
     init(type: StoreType) {
