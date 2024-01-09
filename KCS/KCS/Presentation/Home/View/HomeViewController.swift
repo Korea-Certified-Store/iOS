@@ -88,11 +88,10 @@ final class HomeViewController: UIViewController {
 private extension HomeViewController {
     
     func checkUserCurrentLocationAuthorization() {
-        if locationManager.authorizationStatus == .notDetermined {
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-        }
-        
-        if locationManager.authorizationStatus == .authorizedWhenInUse {
+        case .authorizedWhenInUse:
             let cameraUpdate = NMFCameraUpdate(scrollTo:
                                                 NMGLatLng(
                                                     lat: locationManager.location?.coordinate.latitude ?? 0,
@@ -101,6 +100,8 @@ private extension HomeViewController {
             cameraUpdate.animation = .easeIn
             mapView.mapView.moveCamera(cameraUpdate)
             mapView.mapView.positionMode = .normal
+        default:
+            break
         }
     }
     
