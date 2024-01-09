@@ -1,5 +1,5 @@
 //
-//  StorageType.swift
+//  StoreType.swift
 //  KCS
 //
 //  Created by 조성민 on 1/9/24.
