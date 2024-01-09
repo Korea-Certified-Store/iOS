@@ -37,11 +37,11 @@ private extension Marker {
         var icon = NMFOverlayImage()
         switch type {
         case .goodPrice:
-            icon = NMF_MARKER_IMAGE_RED
+            icon = NMFOverlayImage(image: UIImage.markerGoodPriceNormal)
         case .exemplary:
-            icon = NMF_MARKER_IMAGE_BLUE
+            icon = NMFOverlayImage(image: UIImage.markerExemplaryNormal)
         case .safe:
-            icon = NMF_MARKER_IMAGE_GREEN
+            icon = NMFOverlayImage(image: UIImage.markerSafeNormal)
         }
         self.iconImage = icon
     }
