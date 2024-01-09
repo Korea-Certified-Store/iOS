@@ -92,11 +92,8 @@ private extension HomeViewController {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse:
-            let cameraUpdate = NMFCameraUpdate(scrollTo:
-                                                NMGLatLng(
-                                                    lat: locationManager.location?.coordinate.latitude ?? 0,
-                                                    lng: locationManager.location?.coordinate.longitude ?? 0
-                                                ))
+            guard let location = locationManager.location else { return }
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
             cameraUpdate.animation = .easeIn
             mapView.mapView.moveCamera(cameraUpdate)
             mapView.mapView.positionMode = .normal
