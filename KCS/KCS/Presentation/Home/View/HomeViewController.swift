@@ -15,6 +15,13 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
+    private lazy var locationManager: CLLocationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        return locationManager
+    }()
+    
     private lazy var locationButton: NMFLocationButton = {
         let locationButton = NMFLocationButton()
         locationButton.translatesAutoresizingMaskIntoConstraints = false
@@ -81,13 +88,24 @@ final class HomeViewController: UIViewController {
 private extension HomeViewController {
     
     func checkUserCurrentLocationAuthorization() {
-        if CLLocationManager().authorizationStatus == .notDetermined {
-            CLLocationManager().requestWhenInUseAuthorization()
+        if locationManager.authorizationStatus == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
+        if locationManager.authorizationStatus == .authorizedWhenInUse {
+            let cameraUpdate = NMFCameraUpdate(scrollTo:
+                                                NMGLatLng(
+                                                    lat: locationManager.location?.coordinate.latitude ?? 0,
+                                                    lng: locationManager.location?.coordinate.longitude ?? 0
+                                                ))
+            cameraUpdate.animation = .easeIn
+            mapView.mapView.moveCamera(cameraUpdate)
+            mapView.mapView.positionMode = .normal
         }
     }
     
     func checkLocationService() {
-        if CLLocationManager().authorizationStatus == .denied {
+        if locationManager.authorizationStatus == .denied {
             present(requestLocationServiceAlert, animated: true)
         }
     }
@@ -115,4 +133,10 @@ private extension HomeViewController {
         ])
     }
     
+}
+
+extension HomeViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkUserCurrentLocationAuthorization()
+    }
 }
