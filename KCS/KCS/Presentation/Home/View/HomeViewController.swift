@@ -137,7 +137,9 @@ private extension HomeViewController {
 }
 
 extension HomeViewController: CLLocationManagerDelegate {
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkUserCurrentLocationAuthorization()
     }
+    
 }
