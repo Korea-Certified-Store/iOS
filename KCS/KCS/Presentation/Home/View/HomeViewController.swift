@@ -15,9 +15,9 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let goodPriceFilterButton = FilterButton(title: "착한 가격 업소", color: .systemRed)
-    private let exemplaryFilterButton = FilterButton(title: "모범 음식점", color: .systemYellow)
-    private let safeFilterButton = FilterButton(title: "안심 식당", color: .systemBlue)
+    private let goodPriceFilterButton = FilterButton(title: "착한 가격 업소", color: ColorSet.goodPriceColor ?? UIColor())
+    private let exemplaryFilterButton = FilterButton(title: "모범 음식점", color: ColorSet.exemplaryColor ?? UIColor())
+    private let safeFilterButton = FilterButton(title: "안심 식당", color: ColorSet.safeColor ?? UIColor())
     
     private lazy var filterButtonStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [goodPriceFilterButton, exemplaryFilterButton, safeFilterButton])
