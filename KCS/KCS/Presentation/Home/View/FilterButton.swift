@@ -8,14 +8,6 @@
 import UIKit
 
 final class FilterButton: UIButton {
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     init(title: String, color: UIColor) {
         super.init(frame: .zero)
@@ -23,6 +15,11 @@ final class FilterButton: UIButton {
         configure(title: title, color: color)
         configurationHandler()
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
 
 private extension FilterButton {
