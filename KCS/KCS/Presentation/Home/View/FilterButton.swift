@@ -11,7 +11,6 @@ final class FilterButton: UIButton {
     
     init(title: String, color: UIColor) {
         super.init(frame: .zero)
-        translatesAutoresizingMaskIntoConstraints = false
         configure(title: title, color: color)
         configurationHandler()
     }
@@ -48,7 +47,7 @@ private extension FilterButton {
         let handler: UIButton.ConfigurationUpdateHandler = { button in
             switch button.state {
             case .selected:
-                self.configuration?.baseBackgroundColor = ColorSet.selectedColor
+                self.configuration?.baseBackgroundColor = .filterButtonSelected
                 self.configuration?.baseForegroundColor = .white
             default:
                 self.configuration?.baseBackgroundColor = .white
