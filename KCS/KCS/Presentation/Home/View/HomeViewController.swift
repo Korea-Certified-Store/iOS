@@ -158,13 +158,13 @@ private extension HomeViewController {
         ])
         
         NSLayoutConstraint.activate([
-            locationButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20),
-            locationButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20)
+            locationButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 16),
+            locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
         
         NSLayoutConstraint.activate([
             filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20),
-            filterButtonStackView.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 67)
+            filterButtonStackView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8)
         ])
     }
     
