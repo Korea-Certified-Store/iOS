@@ -15,6 +15,37 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
+    private let goodPriceFilterButton: FilterButton = {
+        let button = FilterButton(title: "착한 가격 업소", color: UIColor.goodPrice)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    private let exemplaryFilterButton: FilterButton = {
+        let button = FilterButton(title: "모범 음식점", color: UIColor.exemplary)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    private let safeFilterButton: FilterButton = {
+        let button = FilterButton(title: "안심 식당", color: UIColor.safe)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    private lazy var filterButtonStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [goodPriceFilterButton, exemplaryFilterButton, safeFilterButton])
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.spacing = 8
+        stack.distribution = .fillProportionally
+        
+        return stack
+    }()
+    
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -115,6 +146,7 @@ private extension HomeViewController {
     func addUIComponents() {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
+        mapView.addSubview(filterButtonStackView)
     }
     
     func configureConstraints() {
@@ -126,8 +158,13 @@ private extension HomeViewController {
         ])
         
         NSLayoutConstraint.activate([
-            locationButton.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 20),
-            locationButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20)
+            locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            filterButtonStackView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8)
         ])
     }
     
