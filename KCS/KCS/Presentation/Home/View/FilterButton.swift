@@ -40,19 +40,21 @@ private extension FilterButton {
     }
     
     func configurationHandler() {
-        self.changesSelectionAsPrimaryAction = true
+        changesSelectionAsPrimaryAction = true
         
-        let handler: UIButton.ConfigurationUpdateHandler = { button in
+        let handler: UIButton.ConfigurationUpdateHandler = { [weak self] button in
             switch button.state {
             case .selected:
-                self.configuration?.baseBackgroundColor = .filterButtonSelected
-                self.configuration?.baseForegroundColor = .white
+                self?.configuration?.baseBackgroundColor = .filterButtonSelected
+                self?.configuration?.baseForegroundColor = .white
+            case .normal:
+                self?.configuration?.baseBackgroundColor = .white
+                self?.configuration?.baseForegroundColor = .black
             default:
-                self.configuration?.baseBackgroundColor = .white
-                self.configuration?.baseForegroundColor = .black
+                break
             }
         }
-        self.configurationUpdateHandler = handler
+        configurationUpdateHandler = handler
     }
     
 }
