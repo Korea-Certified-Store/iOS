@@ -15,4 +15,3 @@ enum ColorSet {
     static let selectedColor = UIColor(named: "Selected_color")
     
 }
-
