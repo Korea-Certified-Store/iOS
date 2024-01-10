@@ -17,7 +17,8 @@
 		59C306A62B4D966C00862625 /* StoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* StoreType.swift */; };
 		8FE699E5DAEEDFE5A53D5E82 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */; };
 		A89087042B4E7F3500767225 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087032B4E7F3500767225 /* FilterButton.swift */; };
-		A890870A2B4EF00B00767225 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* Constant.swift */; };
+		A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* SystemImage.swift */; };
+		A890870D2B4EF91600767225 /* UIView+SetLayerShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870C2B4EF91600767225 /* UIView+SetLayerShadow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +35,8 @@
 		59C306A52B4D966C00862625 /* StoreType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreType.swift; sourceTree = "<group>"; };
 		9EA5C8EA72EA9E937C11400A /* Pods-KCS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.debug.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.debug.xcconfig"; sourceTree = "<group>"; };
 		A89087032B4E7F3500767225 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
-		A89087092B4EF00B00767225 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		A89087092B4EF00B00767225 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
+		A890870C2B4EF91600767225 /* UIView+SetLayerShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SetLayerShadow.swift"; sourceTree = "<group>"; };
 		AA9EF30352C847A7C6DEC110 /* Pods-KCS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.release.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.release.xcconfig"; sourceTree = "<group>"; };
 		E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -121,6 +123,7 @@
 		5986DCDF2B3892EB005AE43B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				A890870B2B4EF8F900767225 /* Extension */,
 				5986DCEA2B392996005AE43B /* Home */,
 			);
 			path = Presentation;
@@ -129,7 +132,7 @@
 		5986DCE02B3893D1005AE43B /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				A89087092B4EF00B00767225 /* Constant.swift */,
+				A89087092B4EF00B00767225 /* SystemImage.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -150,6 +153,14 @@
 				A89087032B4E7F3500767225 /* FilterButton.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A890870B2B4EF8F900767225 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A890870C2B4EF91600767225 /* UIView+SetLayerShadow.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		CBA0F2F7C6731F98AFE4E86D /* Frameworks */ = {
@@ -307,8 +318,9 @@
 				59C306A62B4D966C00862625 /* StoreType.swift in Sources */,
 				A89087042B4E7F3500767225 /* FilterButton.swift in Sources */,
 				591A88812B384E600059E40F /* HomeViewController.swift in Sources */,
-				A890870A2B4EF00B00767225 /* Constant.swift in Sources */,
+				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
+				A890870D2B4EF91600767225 /* UIView+SetLayerShadow.swift in Sources */,
 				591A887D2B384E600059E40F /* AppDelegate.swift in Sources */,
 				591A887F2B384E600059E40F /* SceneDelegate.swift in Sources */,
 			);
