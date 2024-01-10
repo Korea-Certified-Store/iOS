@@ -21,6 +21,7 @@ final class FilterButton: UIButton {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         configure(title: title, color: color)
+        configurationHandler()
     }
 }
 
@@ -31,8 +32,6 @@ extension FilterButton {
         var titleAttribute = AttributedString.init(title)
         titleAttribute.font = .systemFont(ofSize: 10)
         config.attributedTitle = titleAttribute
-        config.baseBackgroundColor = .white
-        config.baseForegroundColor = .black
         config.image = UIImage(systemName: "circle.fill")?.withTintColor(color, renderingMode: .alwaysOriginal)
         config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 10)
         config.imagePlacement = .leading
@@ -43,7 +42,23 @@ extension FilterButton {
         layer.shadowOffset = CGSize(width: 0, height: 2)
         layer.shadowOpacity = 0.5
         layer.shadowColor = UIColor.black.cgColor
-        self.invalidateIntrinsicContentSize()
+    }
+    
+    private func configurationHandler() {
+        
+        self.changesSelectionAsPrimaryAction = true
+        
+        let handler: UIButton.ConfigurationUpdateHandler = { button in
+            switch button.state {
+            case .selected:
+                self.configuration?.baseBackgroundColor = ColorSet.selectedColor
+                self.configuration?.baseForegroundColor = .white
+            default:
+                self.configuration?.baseBackgroundColor = .white
+                self.configuration?.baseForegroundColor = .black
+            }
+        }
+        self.configurationUpdateHandler = handler
     }
     
 }
