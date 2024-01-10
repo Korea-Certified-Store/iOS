@@ -25,9 +25,9 @@ final class FilterButton: UIButton {
     }
 }
 
-extension FilterButton {
+private extension FilterButton {
     
-    private func configure(title: String, color: UIColor) {
+    func configure(title: String, color: UIColor) {
         var config = UIButton.Configuration.filled()
         var titleAttribute = AttributedString.init(title)
         titleAttribute.font = .systemFont(ofSize: 10)
@@ -44,7 +44,7 @@ extension FilterButton {
         layer.shadowColor = UIColor.black.cgColor
     }
     
-    private func configurationHandler() {
+    func configurationHandler() {
         
         self.changesSelectionAsPrimaryAction = true
         
