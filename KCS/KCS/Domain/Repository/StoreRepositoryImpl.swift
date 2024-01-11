@@ -25,11 +25,9 @@ struct StoreRepositoryImpl: StoreRepository {
                 switch response.result {
                 case .success(let result):
                     observer.onNext(result.data.map { $0.toEntity() })
-                    observer.onCompleted()
                 case .failure(let error):
                     dump(error)
                     observer.onError(error)
-                    observer.onCompleted()
                 }
             }
             

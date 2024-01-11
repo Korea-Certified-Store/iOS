@@ -10,7 +10,6 @@ import Foundation
 struct StoreDTO: Codable {
     
     let id: Int
-    let googlePlaceID: String
     let displayName: String
     let primaryTypeDisplayName: String?
     let formattedAddress: String
@@ -23,7 +22,6 @@ struct StoreDTO: Codable {
     enum CodingKeys: String, CodingKey {
         
         case id
-        case googlePlaceID = "googlePlaceId"
         case displayName
         case primaryTypeDisplayName
         case formattedAddress
