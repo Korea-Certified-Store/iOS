@@ -9,7 +9,9 @@ import Foundation
 
 struct RequestLocationDTO: Encodable {
     
-    let northWestLocation: LocationDTO
-    let southEastLocation: LocationDTO
+    let nwLong: Double
+    let nwLat: Double
+    let seLong: Double
+    let seLat: Double
     
 }

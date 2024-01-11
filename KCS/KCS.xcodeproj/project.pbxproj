@@ -33,6 +33,7 @@
 		59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306CE2B50399C00862625 /* RequestLocationDTO.swift */; };
 		59C306D12B503CA700862625 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306D02B503CA700862625 /* NetworkService.swift */; };
 		59C306D32B5042D500862625 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306D22B5042D500862625 /* NetworkError.swift */; };
+		59C306D82B50650D00862625 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306D72B50650D00862625 /* Encodable+.swift */; };
 		8FE699E5DAEEDFE5A53D5E82 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */; };
 		A89087042B4E7F3500767225 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087032B4E7F3500767225 /* FilterButton.swift */; };
 		A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* SystemImage.swift */; };
@@ -70,6 +71,7 @@
 		59C306D02B503CA700862625 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		59C306D22B5042D500862625 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkError.swift; path = ../../../../../../Downloads/NetworkError.swift; sourceTree = "<group>"; };
 		59C306D52B50629900862625 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		59C306D72B50650D00862625 /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		9EA5C8EA72EA9E937C11400A /* Pods-KCS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.debug.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.debug.xcconfig"; sourceTree = "<group>"; };
 		A89087032B4E7F3500767225 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		A89087092B4EF00B00767225 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 		59C306AE2B4FFE3700862625 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				59C306D62B50650100862625 /* Extension */,
 				59C306D42B50629400862625 /* Error */,
 				59C306B72B50033200862625 /* Response */,
 				59C306AB2B4FFABA00862625 /* DTO */,
@@ -273,6 +276,14 @@
 				59C306D52B50629900862625 /* NetworkError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		59C306D62B50650100862625 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				59C306D72B50650D00862625 /* Encodable+.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		A890870B2B4EF8F900767225 /* Extension */ = {
@@ -461,6 +472,7 @@
 				59C306AD2B4FFAC700862625 /* StoreDTO.swift in Sources */,
 				59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */,
 				591A887F2B384E600059E40F /* SceneDelegate.swift in Sources */,
+				59C306D82B50650D00862625 /* Encodable+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

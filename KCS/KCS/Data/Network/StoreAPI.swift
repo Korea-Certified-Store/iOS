@@ -44,14 +44,16 @@ extension StoreAPI: Router, URLRequestConvertible {
     }
     
     public var parameters: [String: Any]? {
-        switch self {
-        case let .getStores(location):
-            return [
-                "nwLong": "\(location.northWestLocation.longitude)",
-                "nwLat": "\(location.northWestLocation.latitude)",
-                "seLong": "\(location.southEastLocation.longitude)",
-                "seLat": "\(location.southEastLocation.latitude)"
-            ]
+        do {
+            switch self {
+            case let .getStores(location):
+                return try location.asDictionary()
+                
+            }
+        }
+        catch let error {
+            dump(error)
+            return nil
         }
     }
     

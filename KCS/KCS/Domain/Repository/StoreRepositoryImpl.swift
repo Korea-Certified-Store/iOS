@@ -17,12 +17,10 @@ struct StoreRepositoryImpl: StoreRepository {
         
         return NetworkService.shared.getStores(
             location: RequestLocationDTO(
-                northWestLocation: LocationDTO(
-                    longitude: northWestLocation.longitude, latitude: northWestLocation.longitude
-                ),
-                southEastLocation: LocationDTO(
-                    longitude: southEastLocation.longitude, latitude: southEastLocation.latitude
-                )
+                nwLong: northWestLocation.longitude,
+                nwLat: northWestLocation.latitude,
+                seLong: southEastLocation.longitude,
+                seLat: southEastLocation.latitude
             )
         )
         .map { stores in
