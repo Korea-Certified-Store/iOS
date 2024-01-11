@@ -7,17 +7,16 @@
 
 import Foundation
 
-// MARK: - StoreDTO
 struct StoreDTO: Codable {
     
     let id: Int
     let googlePlaceID: String
     let displayName: String
-    let primaryTypeDisplayName: String
+    let primaryTypeDisplayName: String?
     let formattedAddress: String
-    let phoneNumber: String
-    let location: Location
-    let regularOpeningHours: [RegularOpeningHour]
+    let phoneNumber: String?
+    let location: LocationDTO
+    let regularOpeningHours: [RegularOpeningHourDTO]
     let localPhotos: [String]
     let certificationName: [String]
 
@@ -36,43 +35,96 @@ struct StoreDTO: Codable {
         
     }
     
+    func toEntity() -> Store {
+        
+        var storeTypes: [StoreType] = []
+        var storeCategory: StoreCategory?
+        var openingHours: [RegularOpeningHours] = []
+        
+        do {
+            for name in certificationName {
+                guard let type = StoreType(rawValue: name) else {
+                    throw JSONContentsError.wrongStoreType
+                }
+                storeTypes.append(type)
+            }
+            
+            if let typeName = primaryTypeDisplayName {
+                guard let category = StoreCategory(rawValue: typeName) else {
+                    throw JSONContentsError.wrongCategory
+                }
+                storeCategory = category
+            }
+            
+            for hour in regularOpeningHours {
+                openingHours.append(try hour.toEntity())
+            }
+        } catch let error {
+            dump(error.localizedDescription)
+        }
+        
+        return Store(
+            title: displayName,
+            type: storeTypes,
+            category: storeCategory,
+            address: formattedAddress,
+            phoneNumber: phoneNumber,
+            location: location.toEntity(),
+            openingHour: openingHours
+        )
+    }
+    
 }
 
-struct Location: Codable {
+struct LocationDTO: Codable {
     
     let longitude: Double
     let latitude: Double
     
+    func toEntity() -> Location {
+        return Location(
+            longitude: longitude,
+            latitude: latitude
+        )
+    }
+    
 }
 
-struct RegularOpeningHour: Codable {
+struct RegularOpeningHourDTO: Codable {
     
-    let open: BusinessHour
-    let close: BusinessHour
+    let open: BusinessHourDTO
+    let close: BusinessHourDTO
 
     enum CodingKeys: String, CodingKey {
         case open
         case close
     }
     
+    func toEntity() throws -> RegularOpeningHours {
+        return RegularOpeningHours(
+            open: try open.toEntity(),
+            close: try close.toEntity()
+        )
+    }
+    
 }
 
-struct BusinessHour: Codable {
+struct BusinessHourDTO: Codable {
     
     let day: String
     let hour: Int
     let minute: Int
     
+    func toEntity() throws -> BusinessHour {
+        guard let entityDay = Day(rawValue: day) else {
+            throw JSONContentsError.wrongDay
+        }
+        
+        return BusinessHour(
+            day: entityDay,
+            hour: hour,
+            minute: minute
+        )
+    }
+    
 }
-
-//enum Day: String, Codable {
-//    
-//    case monday = "MON"
-//    case tuesday = "TUE"
-//    case wednesday = "WED"
-//    case thursday = "THU"
-//    case friday = "FRI"
-//    case saturday = "SAT"
-//    case sunday = "SUN"
-//    
-//}

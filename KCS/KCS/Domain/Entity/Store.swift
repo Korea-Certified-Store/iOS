@@ -11,10 +11,10 @@ struct Store {
     
     let title: String
     let type: [StoreType]
-    let category: StoreCategory
+    let category: StoreCategory?
     let address: String
-    let phoneNumber: String
+    let phoneNumber: String?
     let location: Location
-    let openingHour: [BusinessHour]
+    let openingHour: [RegularOpeningHours]
     
 }
