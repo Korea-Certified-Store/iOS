@@ -6,10 +6,15 @@
 //
 
 import Foundation
+import NMapsMap
 
 struct Location {
     
     let longitude: Double
     let latitude: Double
+    
+    func toMapLocation() -> NMGLatLng {
+        return NMGLatLng(lat: latitude, lng: longitude)
+    }
     
 }
