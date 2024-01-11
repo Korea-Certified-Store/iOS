@@ -50,8 +50,7 @@ extension StoreAPI: Router, URLRequestConvertible {
                 return try location.asDictionary()
                 
             }
-        }
-        catch let error {
+        } catch let error {
             dump(error)
             return nil
         }
