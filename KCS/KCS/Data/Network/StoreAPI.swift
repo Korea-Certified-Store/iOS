@@ -80,15 +80,4 @@ extension StoreAPI: Router, URLRequestConvertible {
         return request
     }
     
-    private func encodeToDictionary<T: Encodable>(_ value: T) throws -> [String: Any] {
-        let encoder = JSONEncoder()
-        let data = try encoder.encode(value)
-
-        guard let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-            throw JSONContentsError.dictionaryConvert
-        }
-        
-        return dictionary
-    }
-    
 }
