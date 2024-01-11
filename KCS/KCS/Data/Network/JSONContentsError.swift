@@ -12,6 +12,7 @@ enum JSONContentsError: Error, LocalizedError {
     case wrongDay
     case wrongStoreType
     case wrongCategory
+    case dictionaryConvert
     
     var errorDescription: String {
         switch self {
@@ -21,6 +22,8 @@ enum JSONContentsError: Error, LocalizedError {
             return "StoreType의 형식이 잘못되어 있습니다."
         case .wrongCategory:
             return "Category의 형식이 잘못되어 있습니다."
+        case .dictionaryConvert:
+            return "JSONSerialization에 실패했습니다."
         }
     }
     
