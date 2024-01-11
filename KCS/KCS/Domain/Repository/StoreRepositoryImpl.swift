@@ -14,18 +14,29 @@ struct StoreRepositoryImpl: StoreRepository {
         northWestLocation: Location,
         southEastLocation: Location
     ) -> Observable<[Store]> {
-        
-        return NetworkService.shared.getStores(
-            location: RequestLocationDTO(
+        let observable =  Observable<[Store]>.create { observer -> Disposable in
+            AF.request(StoreAPI.getStores(location: RequestLocationDTO(
                 nwLong: northWestLocation.longitude,
                 nwLat: northWestLocation.latitude,
                 seLong: southEastLocation.longitude,
                 seLat: southEastLocation.latitude
-            )
-        )
-        .map { stores in
-            return stores.map { $0.toEntity() }
+            )))
+            .responseDecodable(of: StoreResponse.self) { response in
+                switch response.result {
+                case .success(let result):
+                    observer.onNext(result.data.map { $0.toEntity() })
+                    observer.onCompleted()
+                case .failure(let error):
+                    dump(error)
+                    observer.onError(error)
+                    observer.onCompleted()
+                }
+            }
+            
+            return Disposables.create()
         }
+        
+        return observable
     }
     
     func fetchStoresInMockJSON() -> Observable<[Store]> {
