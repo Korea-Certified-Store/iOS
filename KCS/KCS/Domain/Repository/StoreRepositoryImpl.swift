@@ -14,7 +14,7 @@ struct StoreRepositoryImpl: StoreRepository {
         northWestLocation: Location,
         southEastLocation: Location
     ) -> Observable<[Store]> {
-        let observable =  Observable<[Store]>.create { observer -> Disposable in
+        return Observable<[Store]>.create { observer -> Disposable in
             AF.request(StoreAPI.getStores(location: RequestLocationDTO(
                 nwLong: northWestLocation.longitude,
                 nwLat: northWestLocation.latitude,
@@ -26,15 +26,12 @@ struct StoreRepositoryImpl: StoreRepository {
                 case .success(let result):
                     observer.onNext(result.data.map { $0.toEntity() })
                 case .failure(let error):
-                    dump(error)
                     observer.onError(error)
                 }
             }
             
             return Disposables.create()
         }
-        
-        return observable
     }
     
     func fetchStoresInMockJSON() -> Observable<[Store]> {
