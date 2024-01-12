@@ -34,27 +34,16 @@ struct StoreRepositoryImpl: StoreRepository {
         }
     }
     
-    func fetchStoresInMockJSON() -> Observable<[Store]> {
-        var resultStores: [Store] = []
+    func fetchStoresInMockJSON() throws -> [Store] {
         guard let json = Bundle.main.url(forResource: "MockStoreResponse", withExtension: "json") else {
-            return .empty()
+            throw JSONContentsError.bundleRead
         }
-        do {
-            let data = try Data(contentsOf: json)
-            let decoder = JSONDecoder()
-            let decodedData = try decoder.decode(StoreResponse.self, from: data)
-            
-            let stores = decodedData.data.map { store in
-                store.toEntity()
-            }
-            resultStores = stores
-            
-        } catch let error {
-            dump(error)
-            return .empty()
-        }
+        let data = try Data(contentsOf: json)
+        let decodedData = try JSONDecoder().decode(StoreResponse.self, from: data)
         
-        return .just(resultStores)
+        return decodedData.data.map { store in
+            store.toEntity()
+        }
     }
     
 }

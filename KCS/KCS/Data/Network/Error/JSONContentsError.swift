@@ -13,6 +13,7 @@ enum JSONContentsError: Error, LocalizedError {
     case wrongCertificationType
     case wrongCategory
     case dictionaryConvert
+    case bundleRead
     
     var errorDescription: String {
         switch self {
@@ -24,6 +25,8 @@ enum JSONContentsError: Error, LocalizedError {
             return "Category의 형식이 잘못되어 있습니다."
         case .dictionaryConvert:
             return "JSONSerialization에 실패했습니다."
+        case .bundleRead:
+            return "Bundle에서 JSON을 읽어오는 데에 실패했습니다."
         }
     }
     
