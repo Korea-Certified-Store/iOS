@@ -7,7 +7,7 @@
 
 import Alamofire
 
-public protocol Router {
+protocol Router {
     
     var baseURL: String { get }
     var path: String { get }
