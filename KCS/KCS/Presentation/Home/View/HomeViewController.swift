@@ -70,8 +70,31 @@ final class HomeViewController: UIViewController {
             }
             .disposed(by: self.disposeBag)
         locationButton.mapView = mapView.mapView
+        locationButton.isHidden = true
 
         return locationButton
+    }()
+    
+    private lazy var locationImageButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.rx.tap
+            .bind { [weak self] _ in
+                switch self?.mapView.mapView.positionMode {
+                case .direction:
+                    button.setImage(UIImage.locationButtonDirection, for: .normal)
+                case .compass:
+                    button.setImage(UIImage.locationButtonCompass, for: .normal)
+                case .normal:
+                    button.setImage(UIImage.locationButtonNormal, for: .normal)
+                default:
+                    button.setImage(UIImage.locationButtonNone, for: .normal)
+                }
+            }
+            .disposed(by: self.disposeBag)
+        button.setImage(UIImage.locationButtonNone, for: .normal)
+        
+        return button
     }()
 
     private var mapView: NMFNaverMapView = {
@@ -146,6 +169,7 @@ private extension HomeViewController {
     func addUIComponents() {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
+        mapView.addSubview(locationImageButton)
         mapView.addSubview(filterButtonStackView)
     }
     
@@ -159,7 +183,9 @@ private extension HomeViewController {
         
         NSLayoutConstraint.activate([
             locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+            locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            locationButton.widthAnchor.constraint(equalToConstant: 48),
+            locationButton.heightAnchor.constraint(equalToConstant: 48)
         ])
         
         NSLayoutConstraint.activate([
