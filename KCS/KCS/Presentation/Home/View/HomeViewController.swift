@@ -11,6 +11,10 @@ import CoreLocation
 import RxSwift
 import RxCocoa
 
+extension NMFMapView {
+    
+}
+
 final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
@@ -53,42 +57,23 @@ final class HomeViewController: UIViewController {
         return locationManager
     }()
     
-    private lazy var locationButton: NMFLocationButton = {
-        let locationButton = NMFLocationButton()
-        locationButton.translatesAutoresizingMaskIntoConstraints = false
-        locationButton.rx.controlEvent(.touchCancel)
-            .bind { [weak self] _ in
-                self?.checkLocationService()
-                switch locationButton.mapView?.positionMode {
-                case .direction:
-                    locationButton.mapView?.positionMode = .direction
-                case .compass:
-                    locationButton.mapView?.positionMode = .compass
-                default:
-                    locationButton.mapView?.positionMode = .normal
-                }
-            }
-            .disposed(by: self.disposeBag)
-        locationButton.mapView = mapView.mapView
-        locationButton.isHidden = true
-
-        return locationButton
-    }()
-    
-    private lazy var locationImageButton: UIButton = {
+    private lazy var locationButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
             .bind { [weak self] _ in
-                switch self?.mapView.mapView.positionMode {
+                guard let self = self else { return }
+                
+                checkLocationService()
+                switch mapView.mapView.positionMode {
                 case .direction:
-                    button.setImage(UIImage.locationButtonDirection, for: .normal)
-                case .compass:
                     button.setImage(UIImage.locationButtonCompass, for: .normal)
-                case .normal:
+                    mapView.mapView.positionMode = .compass
+                case .compass, .normal:
                     button.setImage(UIImage.locationButtonNormal, for: .normal)
+                    mapView.mapView.positionMode = .direction
                 default:
-                    button.setImage(UIImage.locationButtonNone, for: .normal)
+                    break
                 }
             }
             .disposed(by: self.disposeBag)
@@ -97,7 +82,7 @@ final class HomeViewController: UIViewController {
         return button
     }()
 
-    private var mapView: NMFNaverMapView = {
+    private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.showZoomControls = false
@@ -106,6 +91,7 @@ final class HomeViewController: UIViewController {
         map.showIndoorLevelPicker = false
         map.showLocationButton = false
         map.mapView.logoAlign = .rightBottom
+        map.mapView.addCameraDelegate(delegate: self)
         
         return map
     }()
@@ -135,6 +121,7 @@ final class HomeViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         checkUserCurrentLocationAuthorization()
+
     }
 
 }
@@ -145,12 +132,14 @@ private extension HomeViewController {
         switch locationManager.authorizationStatus {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
+            locationButton.setImage(UIImage.locationButtonNone, for: .normal)
         case .authorizedWhenInUse:
             guard let location = locationManager.location else { return }
             let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
             cameraUpdate.animation = .none
             mapView.mapView.moveCamera(cameraUpdate)
-            mapView.mapView.positionMode = .normal
+            mapView.mapView.positionMode = .direction
+            locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
         default:
             break
         }
@@ -169,7 +158,7 @@ private extension HomeViewController {
     func addUIComponents() {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
-        mapView.addSubview(locationImageButton)
+        mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
     }
     
@@ -200,6 +189,16 @@ extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkUserCurrentLocationAuthorization()
+    }
+    
+}
+
+extension HomeViewController: NMFMapViewCameraDelegate {
+    
+    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+        if reason == -1 {
+            locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+        }
     }
     
 }
