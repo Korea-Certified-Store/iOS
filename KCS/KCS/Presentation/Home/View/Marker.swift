@@ -10,12 +10,12 @@ import NMapsMap
 
 final class Marker: NMFMarker {
     
-    init(type: StoreType) {
+    init(type: CetificationType) {
         super.init()
         setUI(type: type)
     }
     
-    init(type: StoreType, position: NMGLatLng) {
+    init(type: CetificationType, position: NMGLatLng) {
         super.init()
         self.position = position
         setUI(type: type)
@@ -25,7 +25,7 @@ final class Marker: NMFMarker {
 
 private extension Marker {
     
-    func setUI(type: StoreType) {
+    func setUI(type: CetificationType) {
         var icon = NMFOverlayImage()
         switch type {
         case .goodPrice:

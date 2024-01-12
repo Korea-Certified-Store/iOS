@@ -10,7 +10,7 @@ import Foundation
 enum JSONContentsError: Error, LocalizedError {
     
     case wrongDay
-    case wrongStoreType
+    case wrongCertificationType
     case wrongCategory
     case dictionaryConvert
     
@@ -18,8 +18,8 @@ enum JSONContentsError: Error, LocalizedError {
         switch self {
         case .wrongDay:
             return "Day의 형식이 잘못되어 있습니다."
-        case .wrongStoreType:
-            return "StoreType의 형식이 잘못되어 있습니다."
+        case .wrongCertificationType:
+            return "CetificationType의 형식이 잘못되어 있습니다."
         case .wrongCategory:
             return "Category의 형식이 잘못되어 있습니다."
         case .dictionaryConvert:
