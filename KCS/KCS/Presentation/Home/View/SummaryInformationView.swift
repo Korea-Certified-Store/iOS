@@ -9,7 +9,7 @@ import UIKit
 
 final class SummaryInformationView: UIView {
     
-    private let storeName: UILabel = {
+    private let title: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
@@ -28,7 +28,7 @@ final class SummaryInformationView: UIView {
         return stack
     }()
     
-    private let storeType: UILabel = {
+    private let categoty: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
@@ -46,7 +46,7 @@ final class SummaryInformationView: UIView {
         return label
     }()
     
-    private let storeOpeningHours: UILabel = {
+    private let openingHour: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
@@ -55,14 +55,14 @@ final class SummaryInformationView: UIView {
         return label
     }()
     
-    private let storeImage: UIImageView = {
+    private let storeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
     
-    private let storePhoneButton: UIButton = {
+    private let storeCallButton: UIButton = {
         var config = UIButton.Configuration.gray()
         config.image = SystemImage.phone
         config.cornerStyle = .capsule
@@ -113,54 +113,54 @@ private extension SummaryInformationView {
     }
     
     func addUIComponents() {
-        addSubview(storeName)
+        addSubview(title)
         addSubview(certificationStackView)
-        addSubview(storeType)
+        addSubview(categoty)
         addSubview(storeOpenClosed)
-        addSubview(storeOpeningHours)
-        addSubview(storeImage)
-        addSubview(storePhoneButton)
+        addSubview(openingHour)
+        addSubview(storeImageView)
+        addSubview(storeCallButton)
         addSubview(dismissIndicatorView)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            storeName.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            storeName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+            title.topAnchor.constraint(equalTo: topAnchor, constant: 27),
+            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
         ])
         
         NSLayoutConstraint.activate([
-            certificationStackView.topAnchor.constraint(equalTo: storeName.bottomAnchor, constant: 8),
-            certificationStackView.leadingAnchor.constraint(equalTo: storeName.leadingAnchor)
+            certificationStackView.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 8),
+            certificationStackView.leadingAnchor.constraint(equalTo: title.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            storeType.centerYAnchor.constraint(equalTo: storeName.centerYAnchor, constant: 2),
-            storeType.leadingAnchor.constraint(equalTo: storeName.trailingAnchor, constant: 4)
+            categoty.centerYAnchor.constraint(equalTo: title.centerYAnchor, constant: 2),
+            categoty.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 4)
         ])
         
         NSLayoutConstraint.activate([
             storeOpenClosed.topAnchor.constraint(equalTo: certificationStackView.bottomAnchor, constant: 8),
-            storeOpenClosed.leadingAnchor.constraint(equalTo: storeName.leadingAnchor)
+            storeOpenClosed.leadingAnchor.constraint(equalTo: title.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            storeOpeningHours.centerYAnchor.constraint(equalTo: storeOpenClosed.centerYAnchor),
-            storeOpeningHours.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 6)
+            openingHour.centerYAnchor.constraint(equalTo: storeOpenClosed.centerYAnchor),
+            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 6)
         ])
         
         NSLayoutConstraint.activate([
-            storePhoneButton.topAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor, constant: 13),
-            storePhoneButton.leadingAnchor.constraint(equalTo: storeName.leadingAnchor),
-            storePhoneButton.widthAnchor.constraint(equalToConstant: 69),
-            storePhoneButton.heightAnchor.constraint(equalToConstant: 40)
+            storeCallButton.topAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor, constant: 13),
+            storeCallButton.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            storeCallButton.widthAnchor.constraint(equalToConstant: 69),
+            storeCallButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         NSLayoutConstraint.activate([
-            storeImage.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            storeImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            storeImage.widthAnchor.constraint(equalToConstant: 116),
-            storeImage.heightAnchor.constraint(equalToConstant: 116)
+            storeImageView.topAnchor.constraint(equalTo: topAnchor, constant: 27),
+            storeImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            storeImageView.widthAnchor.constraint(equalToConstant: 116),
+            storeImageView.heightAnchor.constraint(equalToConstant: 116)
         ])
         
         NSLayoutConstraint.activate([
