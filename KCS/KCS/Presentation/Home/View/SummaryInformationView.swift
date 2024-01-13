@@ -9,7 +9,7 @@ import UIKit
 
 final class SummaryInformationView: UIView {
     
-    private let title: UILabel = {
+    private let storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
@@ -105,7 +105,7 @@ private extension SummaryInformationView {
     }
     
     func addUIComponents() {
-        addSubview(title)
+        addSubview(storeTitle)
         addSubview(certificationStackView)
         addSubview(categoty)
         addSubview(storeOpenClosed)
@@ -117,23 +117,23 @@ private extension SummaryInformationView {
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+            storeTitle.topAnchor.constraint(equalTo: topAnchor, constant: 27),
+            storeTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
         ])
         
         NSLayoutConstraint.activate([
-            certificationStackView.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 8),
-            certificationStackView.leadingAnchor.constraint(equalTo: title.leadingAnchor)
+            certificationStackView.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 8),
+            certificationStackView.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            categoty.centerYAnchor.constraint(equalTo: title.centerYAnchor, constant: 2),
-            categoty.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 4)
+            categoty.centerYAnchor.constraint(equalTo: storeTitle.centerYAnchor, constant: 2),
+            categoty.leadingAnchor.constraint(equalTo: storeTitle.trailingAnchor, constant: 4)
         ])
         
         NSLayoutConstraint.activate([
             storeOpenClosed.topAnchor.constraint(equalTo: certificationStackView.bottomAnchor, constant: 8),
-            storeOpenClosed.leadingAnchor.constraint(equalTo: title.leadingAnchor)
+            storeOpenClosed.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -143,7 +143,7 @@ private extension SummaryInformationView {
         
         NSLayoutConstraint.activate([
             storeCallButton.topAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor, constant: 13),
-            storeCallButton.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            storeCallButton.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor),
             storeCallButton.widthAnchor.constraint(equalToConstant: 69),
             storeCallButton.heightAnchor.constraint(equalToConstant: 40)
         ])
