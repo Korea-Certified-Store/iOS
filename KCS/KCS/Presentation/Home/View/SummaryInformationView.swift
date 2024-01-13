@@ -12,7 +12,6 @@ class SummaryInformationView: UIView {
     private let storeName: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "미식일가"
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         label.textColor = UIColor.kcsSecondary
         
@@ -20,9 +19,7 @@ class SummaryInformationView: UIView {
     }()
     
     private var certificationStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews:
-                                    [CertificationLabel(frame: .zero, certificationType: .goodPrice),
-                                     CertificationLabel(frame: .zero, certificationType: .exemplary)])
+        let stack = UIStackView(arrangedSubviews: [])
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.spacing = 4
@@ -34,7 +31,6 @@ class SummaryInformationView: UIView {
     private let storeType: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "일식"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = UIColor.kcsGray
         
@@ -44,7 +40,6 @@ class SummaryInformationView: UIView {
     private let storeOpenClosed: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "영업 중"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor.goodPrice
         
@@ -54,7 +49,6 @@ class SummaryInformationView: UIView {
     private let storeOpeningHours: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "11:00 - 22:30"
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         label.textColor = UIColor.kcsGray
         
@@ -64,7 +58,6 @@ class SummaryInformationView: UIView {
     private let storeImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage.kcsLogo
         
         return imageView
     }()
