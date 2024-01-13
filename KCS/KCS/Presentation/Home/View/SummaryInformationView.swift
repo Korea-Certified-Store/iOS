@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SummaryInformationView: UIView {
+final class SummaryInformationView: UIView {
     
     private let storeName: UILabel = {
         let label = UILabel()
