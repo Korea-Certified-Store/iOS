@@ -16,14 +16,7 @@ final class CertificationLabel: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 9)
         label.textColor = UIColor.certificationLabelText
-        switch certificationType {
-        case .goodPrice:
-            label.text = "착한 가격 업소"
-        case .exemplary:
-            label.text = "모범 음식점"
-        case .safe:
-            label.text = "안심 식당"
-        }
+        label.text = certificationType.description
         
         return label
     }()
