@@ -9,8 +9,8 @@ import Foundation
 
 enum CertificationType: String {
     
-    case goodPrice = "착한 가격 업소"
-    case exemplary = "모범 음식점"
-    case safe = "안심 식당"
+    case goodPrice = "착한가격업소"
+    case exemplary = "모범음식점"
+    case safe = "안심식당"
     
 }
