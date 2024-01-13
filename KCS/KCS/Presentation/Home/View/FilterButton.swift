@@ -12,7 +12,7 @@ final class FilterButton: UIButton {
     init(title: String, color: UIColor) {
         super.init(frame: .zero)
         configure(title: title, color: color)
-        setLayerShadow()
+        setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
         configurationHandler()
     }
     

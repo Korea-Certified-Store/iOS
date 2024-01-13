@@ -37,10 +37,8 @@
 		A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802D1F52B5277620091FDE7 /* CertificationLabel.swift */; };
 		A89087042B4E7F3500767225 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087032B4E7F3500767225 /* FilterButton.swift */; };
 		A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* SystemImage.swift */; };
-		A890870D2B4EF91600767225 /* UIView+SetLayerShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870C2B4EF91600767225 /* UIView+SetLayerShadow.swift */; };
+		A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870C2B4EF91600767225 /* UIView+SetLayer.swift */; };
 		A890870F2B4F836C00767225 /* SummaryInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870E2B4F836C00767225 /* SummaryInformationView.swift */; };
-		A89087142B4FC3B600767225 /* SummaryInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087132B4FC3B600767225 /* SummaryInformationViewController.swift */; };
-		A89087172B52535B00767225 /* SummaryInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087162B52535B00767225 /* SummaryInformationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,10 +75,8 @@
 		A802D1F52B5277620091FDE7 /* CertificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationLabel.swift; sourceTree = "<group>"; };
 		A89087032B4E7F3500767225 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		A89087092B4EF00B00767225 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
-		A890870C2B4EF91600767225 /* UIView+SetLayerShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SetLayerShadow.swift"; sourceTree = "<group>"; };
+		A890870C2B4EF91600767225 /* UIView+SetLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SetLayer.swift"; sourceTree = "<group>"; };
 		A890870E2B4F836C00767225 /* SummaryInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryInformationView.swift; sourceTree = "<group>"; };
-		A89087132B4FC3B600767225 /* SummaryInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryInformationViewController.swift; sourceTree = "<group>"; };
-		A89087162B52535B00767225 /* SummaryInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryInformationViewModel.swift; sourceTree = "<group>"; };
 		AA9EF30352C847A7C6DEC110 /* Pods-KCS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.release.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.release.xcconfig"; sourceTree = "<group>"; };
 		E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -197,8 +193,6 @@
 			children = (
 				591A88802B384E600059E40F /* HomeViewController.swift */,
 				A890870E2B4F836C00767225 /* SummaryInformationView.swift */,
-				A89087132B4FC3B600767225 /* SummaryInformationViewController.swift */,
-				A89087162B52535B00767225 /* SummaryInformationViewModel.swift */,
 				59C306A32B4D7EBA00862625 /* Marker.swift */,
 				A89087032B4E7F3500767225 /* FilterButton.swift */,
 				A802D1F52B5277620091FDE7 /* CertificationLabel.swift */,
@@ -296,7 +290,7 @@
 		A890870B2B4EF8F900767225 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				A890870C2B4EF91600767225 /* UIView+SetLayerShadow.swift */,
+				A890870C2B4EF91600767225 /* UIView+SetLayer.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -456,7 +450,6 @@
 			files = (
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A890870F2B4F836C00767225 /* SummaryInformationView.swift in Sources */,
-				A89087142B4FC3B600767225 /* SummaryInformationViewController.swift in Sources */,
 				A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */,
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A89087042B4E7F3500767225 /* FilterButton.swift in Sources */,
@@ -468,7 +461,7 @@
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				59C306B02B4FFE4400862625 /* StoreResponse.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
-				A890870D2B4EF91600767225 /* UIView+SetLayerShadow.swift in Sources */,
+				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */,
 				59C306CB2B50357900862625 /* Router.swift in Sources */,
 				59C306B62B50027300862625 /* Store.swift in Sources */,
@@ -476,7 +469,6 @@
 				59C306C52B50125C00862625 /* StoreCategory.swift in Sources */,
 				59C306BB2B5003F500862625 /* NetworkURL.swift in Sources */,
 				59C306B22B50001F00862625 /* StoreRepositoryImpl.swift in Sources */,
-				A89087172B52535B00767225 /* SummaryInformationViewModel.swift in Sources */,
 				591A887D2B384E600059E40F /* AppDelegate.swift in Sources */,
 				59C306DC2B506F3D00862625 /* NetworkError.swift in Sources */,
 				59C306C32B50114100862625 /* Day.swift in Sources */,

@@ -32,7 +32,8 @@ final class CertificationLabel: UIView {
         self.certificationType = certificationType
         super.init(frame: .zero)
         
-        setUI()
+        setBackgroundColor()
+        setLayerCorner(cornerRadius: 9)
         addUIComponents()
         configureConstraints()
     }
@@ -44,7 +45,7 @@ final class CertificationLabel: UIView {
 
 extension CertificationLabel {
     
-    func setUI() {
+    func setBackgroundColor() {
         switch certificationType {
         case .goodPrice:
             backgroundColor = UIColor.goodPriceLabel
@@ -53,7 +54,6 @@ extension CertificationLabel {
         case .safe:
             backgroundColor = UIColor.safeLabel
         }
-        layer.cornerRadius = 9
     }
     
     func addUIComponents() {
