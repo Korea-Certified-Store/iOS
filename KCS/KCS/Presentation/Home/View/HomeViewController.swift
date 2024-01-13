@@ -111,8 +111,6 @@ final class HomeViewController: UIViewController {
         return alertController
     }()
     
-    let bottomsheet = SummaryInformationView()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -154,7 +152,6 @@ private extension HomeViewController {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
-        mapView.addSubview(bottomsheet)
     }
     
     func configureConstraints() {
@@ -175,14 +172,6 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             filterButtonStackView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8)
-        ])
-        
-        bottomsheet.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            bottomsheet.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor),
-            bottomsheet.trailingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.trailingAnchor),
-            bottomsheet.bottomAnchor.constraint(equalTo: mapView.bottomAnchor),
-            bottomsheet.heightAnchor.constraint(equalToConstant: 208)
         ])
     }
     

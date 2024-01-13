@@ -14,13 +14,12 @@ final class SummaryInformationView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         label.textColor = UIColor.kcsSecondary
-        label.text = "미식반점"
         
         return label
     }()
     
     private var certificationStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [CertificationLabel(certificationType: .goodPrice)])
+        let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.spacing = 4
@@ -34,7 +33,6 @@ final class SummaryInformationView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = UIColor.kcsGray
-        label.text = "일식"
         
         return label
     }()
@@ -44,7 +42,6 @@ final class SummaryInformationView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor.goodPrice
-        label.text = "영업 중"
         
         return label
     }()
@@ -54,7 +51,6 @@ final class SummaryInformationView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         label.textColor = UIColor.kcsGray
-        label.text = "11:00 -23:00"
         
         return label
     }()
@@ -62,7 +58,6 @@ final class SummaryInformationView: UIView {
     private let storeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage.kcsLogo
         
         return imageView
     }()
