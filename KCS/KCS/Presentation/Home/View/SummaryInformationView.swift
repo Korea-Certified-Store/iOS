@@ -19,7 +19,7 @@ final class SummaryInformationView: UIView {
     }()
     
     private var certificationStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [])
+        let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.spacing = 4
