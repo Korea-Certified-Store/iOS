@@ -10,7 +10,7 @@ import Foundation
 struct Store {
     
     let title: String
-    let type: [CetificationType]
+    let type: [CertificationType]
     let category: StoreCategory?
     let address: String
     let phoneNumber: String?

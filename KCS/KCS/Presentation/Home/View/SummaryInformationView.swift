@@ -19,10 +19,10 @@ class SummaryInformationView: UIView {
         return label
     }()
     
-//    private let label = CertificationLabel(frame: .zero, certificationType: .goodPrice)
-    
     private var certificationStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [CertificationLabel(frame: .zero, certificationType: .goodPrice), CertificationLabel(frame: .zero, certificationType: .exemplary)])
+        let stack = UIStackView(arrangedSubviews:
+                                    [CertificationLabel(frame: .zero, certificationType: .goodPrice),
+                                     CertificationLabel(frame: .zero, certificationType: .exemplary)])
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.spacing = 4

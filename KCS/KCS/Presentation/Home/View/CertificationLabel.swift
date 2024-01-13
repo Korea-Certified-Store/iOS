@@ -9,7 +9,7 @@ import UIKit
 
 final class CertificationLabel: UIView {
     
-    private var certificationType: CetificationType?
+    private var certificationType: CertificationType?
     
     private lazy var certificationLabel: UILabel = {
         let label = UILabel()
@@ -30,7 +30,7 @@ final class CertificationLabel: UIView {
         return label
     }()
 
-    init(frame: CGRect, certificationType: CetificationType) {
+    init(frame: CGRect, certificationType: CertificationType) {
         super.init(frame: frame)
         
         self.certificationType = certificationType

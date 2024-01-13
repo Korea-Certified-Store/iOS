@@ -35,13 +35,13 @@ struct StoreDTO: Codable {
     
     func toEntity() -> Store {
         
-        var certificationTypes: [CetificationType] = []
+        var certificationTypes: [CertificationType] = []
         var storeCategory: StoreCategory?
         var openingHours: [RegularOpeningHours] = []
         
         do {
             for name in certificationName {
-                guard let type = CetificationType(rawValue: name) else {
+                guard let type = CertificationType(rawValue: name) else {
                     throw JSONContentsError.wrongCertificationType
                 }
                 certificationTypes.append(type)
