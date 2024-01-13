@@ -63,7 +63,7 @@ struct StoreDTO: Codable {
         
         return Store(
             title: displayName,
-            type: certificationTypes,
+            certificationTypes: certificationTypes,
             category: storeCategory,
             address: formattedAddress,
             phoneNumber: phoneNumber,
