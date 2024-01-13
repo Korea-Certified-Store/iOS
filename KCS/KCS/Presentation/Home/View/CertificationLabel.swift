@@ -9,7 +9,7 @@ import UIKit
 
 final class CertificationLabel: UIView {
     
-    private var certificationType: CertificationType?
+    private let certificationType: CertificationType
     
     private lazy var certificationLabel: UILabel = {
         let label = UILabel()
@@ -18,22 +18,20 @@ final class CertificationLabel: UIView {
         label.textColor = UIColor.certificationLabelText
         switch certificationType {
         case .goodPrice:
-            label.text = certificationType?.rawValue
+            label.text = "착한 가격 업소"
         case .exemplary:
-            label.text = certificationType?.rawValue
+            label.text = "모범 음식점"
         case .safe:
-            label.text = certificationType?.rawValue
-        default:
-            break
+            label.text = "안심 식당"
         }
         
         return label
     }()
 
-    init(frame: CGRect, certificationType: CertificationType) {
-        super.init(frame: frame)
-        
+    init(certificationType: CertificationType) {
         self.certificationType = certificationType
+        super.init(frame: .zero)
+        
         setUI()
         addUIComponents()
         configureConstraints()
@@ -54,8 +52,6 @@ extension CertificationLabel {
             backgroundColor = UIColor.exemplaryLabel
         case .safe:
             backgroundColor = UIColor.safeLabel
-        default:
-            break
         }
         layer.cornerRadius = 9
     }
