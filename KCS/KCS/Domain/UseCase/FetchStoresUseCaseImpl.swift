@@ -1,5 +1,5 @@
 //
-//  GetStoresUseCaseImpl.swift
+//  FetchStoresUseCaseImpl.swift
 //  KCS
 //
 //  Created by 조성민 on 1/15/24.
@@ -7,7 +7,7 @@
 
 import RxSwift
 
-struct GetStoresUseCaseImpl {
+struct FetchStoresUseCaseImpl: FetchStoresUseCase {
     
     private let repository: StoreRepository
     
@@ -18,7 +18,7 @@ struct GetStoresUseCaseImpl {
     func execute(
         northWestLocation: Location,
         southEastLocation: Location
-    ) -> Observable<[Store]> {
+    ) -> Observable<Void> {
         return repository.fetchStores(
             northWestLocation: northWestLocation,
             southEastLocation: southEastLocation

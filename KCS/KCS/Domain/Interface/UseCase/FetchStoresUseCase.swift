@@ -1,5 +1,5 @@
 //
-//  GetStoresUseCase.swift
+//  FetchStoresUseCase.swift
 //  KCS
 //
 //  Created by 조성민 on 1/15/24.
@@ -7,11 +7,11 @@
 
 import RxSwift
 
-protocol GetStoresUseCase {
+protocol FetchStoresUseCase {
     
     func execute(
         northWestLocation: Location,
         southEastLocation: Location
-    ) -> Observable<[Store]>
+    ) -> Observable<Void>
 
 }
