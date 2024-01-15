@@ -161,8 +161,19 @@ final class HomeViewController: UIViewController {
 private extension HomeViewController {
     
     func getActivatedTypes() -> [CertificationType] {
+        var types: [CertificationType] = []
         
-        return []
+        if goodPriceFilterButton.isSelected {
+            types.append(.goodPrice)
+        }
+        if exemplaryFilterButton.isSelected {
+            types.append(.exemplary)
+        }
+        if safeFilterButton.isSelected {
+            types.append(.safe)
+        }
+        
+        return types
     }
     
 }
