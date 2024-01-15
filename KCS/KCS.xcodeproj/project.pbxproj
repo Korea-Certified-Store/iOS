@@ -151,6 +151,7 @@
 		5986DCDD2B3892D8005AE43B /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				A8ACB7CD2B54ED6400540BD1 /* Repository */,
 				59C306AE2B4FFE3700862625 /* Network */,
 			);
 			path = Data;
@@ -160,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				59C306AA2B4FFA8C00862625 /* Entity */,
-				59C306A72B4FF98600862625 /* Repository */,
+				A8ACB7CC2B54ED3800540BD1 /* Interface */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -206,8 +207,7 @@
 		59C306A72B4FF98600862625 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				59C306B92B50034700862625 /* Protocol */,
-				59C306B12B50001F00862625 /* StoreRepositoryImpl.swift */,
+				59C306A82B4FF9AF00862625 /* StoreRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -265,14 +265,6 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
-		59C306B92B50034700862625 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				59C306A82B4FF9AF00862625 /* StoreRepository.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
 		59C306D42B50629400862625 /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +288,22 @@
 				A890870C2B4EF91600767225 /* UIView+SetLayer.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		A8ACB7CC2B54ED3800540BD1 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				59C306A72B4FF98600862625 /* Repository */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		A8ACB7CD2B54ED6400540BD1 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				59C306B12B50001F00862625 /* StoreRepositoryImpl.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		CBA0F2F7C6731F98AFE4E86D /* Frameworks */ = {
