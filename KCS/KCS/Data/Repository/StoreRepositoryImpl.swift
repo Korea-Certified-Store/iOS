@@ -38,9 +38,9 @@ final class StoreRepositoryImpl: StoreRepository {
     }
     
     func getStores(
-        type: CertificationType
+        types: [CertificationType]
     ) -> [Store] {
-        return stores.filter { $0.certificationTypes.contains(type) }
+        return stores.filter { !$0.certificationTypes.filter { types.contains($0) }.isEmpty }
     }
     
     func fetchStoresInMockJSON() throws -> [Store] {

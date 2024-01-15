@@ -14,7 +14,7 @@ protocol GetStoresUseCase {
     init(repository: StoreRepository)
     
     func execute(
-        type: CertificationType
+        types: [CertificationType]
     ) -> [Store]
     
 }

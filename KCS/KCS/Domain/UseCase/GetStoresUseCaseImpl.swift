@@ -16,9 +16,9 @@ struct GetStoresUseCaseImpl: GetStoresUseCase {
     }
     
     func execute(
-        type: CertificationType
+        types: [CertificationType]
     ) -> [Store] {
-        return repository.getStores(type: type)
+        return repository.getStores(types: types)
     }
     
 }

@@ -15,7 +15,7 @@ protocol StoreRepository {
     ) -> Observable<Void>
     
     func getStores(
-        type: CertificationType
+        types: [CertificationType]
     ) -> [Store]
     
 }
