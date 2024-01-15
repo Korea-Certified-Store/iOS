@@ -9,7 +9,7 @@ import RxSwift
 
 struct FetchStoresUseCaseImpl: FetchStoresUseCase {
     
-    private let repository: StoreRepository
+    let repository: StoreRepository
     
     init(repository: StoreRepository) {
         self.repository = repository

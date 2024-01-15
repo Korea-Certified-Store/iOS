@@ -9,6 +9,10 @@ import RxSwift
 
 protocol FetchStoresUseCase {
     
+    var repository: StoreRepository { get }
+    
+    init(repository: StoreRepository)
+    
     func execute(
         northWestLocation: Location,
         southEastLocation: Location
