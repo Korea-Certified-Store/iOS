@@ -10,8 +10,15 @@ import RxCocoa
 protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     var dependency: HomeDependency { get }
+    
     var fetchStoresUseCase: FetchStoresUseCase { get }
-    init(dependency: HomeDependency, getStoresUseCase: FetchStoresUseCase)
+    var getStoresUseCase: GetStoresUseCase { get }
+    
+    init(
+        dependency: HomeDependency,
+        fetchStoresUseCase: FetchStoresUseCase,
+        getStoresUseCase: GetStoresUseCase
+    )
     
 }
 
@@ -22,7 +29,7 @@ protocol HomeViewModelInput {
         southEastLocation: Location,
         types: [CertificationType]
     ) 
-    func filterChange(type: CertificationType)
+    func applyFilter(type: CertificationType)
     
 }
 

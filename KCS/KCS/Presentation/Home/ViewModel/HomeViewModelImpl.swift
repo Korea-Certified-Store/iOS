@@ -11,15 +11,21 @@ import RxSwift
 final class HomeViewModelImpl: HomeViewModel {
     
     let fetchStoresUseCase: FetchStoresUseCase
+    let getStoresUseCase: GetStoresUseCase
     private let disposeBag = DisposeBag()
     
     var storesLoaded = PublishRelay<[Store]>()
     
     let dependency: HomeDependency
     
-    init(dependency: HomeDependency, getStoresUseCase: FetchStoresUseCase) {
+    init(
+        dependency: HomeDependency,
+        fetchStoresUseCase: FetchStoresUseCase,
+        getStoresUseCase: GetStoresUseCase
+    ) {
         self.dependency = dependency
-        self.fetchStoresUseCase = getStoresUseCase
+        self.fetchStoresUseCase = fetchStoresUseCase
+        self.getStoresUseCase = getStoresUseCase
     }
     
     func refresh(
@@ -30,14 +36,14 @@ final class HomeViewModelImpl: HomeViewModel {
         fetchStoresUseCase.execute(northWestLocation: northWestLocation, southEastLocation: southEastLocation)
             .subscribe(onNext: { [weak self] _ in
                 types.forEach { [weak self] type in
-                    self?.filterChange(type: type)
+                    self?.applyFilter(type: type)
                 }
             })
             .disposed(by: disposeBag)
     }
     
-    func filterChange(type: CertificationType) {
-        
+    func applyFilter(type: CertificationType) {
+        storesLoaded.accept(getStoresUseCase.execute(type: type))
     }
     
 }

@@ -117,9 +117,19 @@ final class HomeViewController: UIViewController {
         button.isHidden = true
         button.rx.tap
             .bind { [weak self] _ in
-                self?.viewModel.getStores(
-                    northWestLocation: <#T##Location#>,
-                    southEastLocation: <#T##Location#>
+                guard let self = self else { return }
+                let startPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+                let endPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+                viewModel.refresh(
+                    northWestLocation: Location(
+                        longitude: startPoint.lng,
+                        latitude: startPoint.lat
+                    ),
+                    southEastLocation: Location(
+                        longitude: endPoint.lng,
+                        latitude: endPoint.lat
+                    ),
+                    types: getActivatedTypes()
                 )
             }
             .disposed(by: self.disposeBag)
@@ -127,12 +137,16 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
-    private let viewModel = HomeViewModelImpl(
-        dependency: HomeDependency(), 
-        getStoresUseCase: FetchStoresUseCaseImpl(
-            repository: StoreRepositoryImpl()
-        )
-    )
+    private let viewModel: HomeViewModel
+    
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,7 +155,16 @@ final class HomeViewController: UIViewController {
         configureConstraints()
         checkUserCurrentLocationAuthorization()
     }
+    
+}
 
+private extension HomeViewController {
+    
+    func getActivatedTypes() -> [CertificationType] {
+        
+        return []
+    }
+    
 }
 
 private extension HomeViewController {
