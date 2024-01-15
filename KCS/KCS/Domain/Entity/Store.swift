@@ -11,7 +11,7 @@ struct Store {
     
     let title: String
     let certificationTypes: [CertificationType]
-    let category: StoreCategory?
+    let category: String?
     let address: String
     let phoneNumber: String?
     let location: Location

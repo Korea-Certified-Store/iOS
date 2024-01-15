@@ -34,9 +34,7 @@ struct StoreDTO: Codable {
     }
     
     func toEntity() -> Store {
-        
         var certificationTypes: [CertificationType] = []
-        var storeCategory: StoreCategory?
         var openingHours: [RegularOpeningHours] = []
         
         do {
@@ -47,24 +45,19 @@ struct StoreDTO: Codable {
                 certificationTypes.append(type)
             }
             
-            if let typeName = primaryTypeDisplayName {
-                guard let category = StoreCategory(rawValue: typeName) else {
-                    throw JSONContentsError.wrongCategory
-                }
-                storeCategory = category
-            }
-            
             for hour in regularOpeningHours {
                 openingHours.append(try hour.toEntity())
             }
+        } catch let error as JSONContentsError {
+            print(error.errorDescription)
         } catch let error {
-            dump(error.localizedDescription)
+            dump(error)
         }
         
         return Store(
             title: displayName,
             certificationTypes: certificationTypes,
-            category: storeCategory,
+            category: primaryTypeDisplayName,
             address: formattedAddress,
             phoneNumber: phoneNumber,
             location: location.toEntity(),

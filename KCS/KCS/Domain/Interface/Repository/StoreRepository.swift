@@ -12,6 +12,10 @@ protocol StoreRepository {
     func fetchStores(
         northWestLocation: Location,
         southEastLocation: Location
-    ) -> Observable<[Store]>
+    ) -> Observable<Void>
+    
+    func getStores(
+        types: [CertificationType]
+    ) -> [Store]
     
 }

@@ -8,23 +8,26 @@
 import RxSwift
 import Alamofire
 
-struct StoreRepositoryImpl: StoreRepository {
+final class StoreRepositoryImpl: StoreRepository {
+    
+    private var stores: [Store] = []
     
     func fetchStores(
         northWestLocation: Location,
         southEastLocation: Location
-    ) -> Observable<[Store]> {
-        return Observable<[Store]>.create { observer -> Disposable in
+    ) -> Observable<Void> {
+        return Observable<Void>.create { observer -> Disposable in
             AF.request(StoreAPI.getStores(location: RequestLocationDTO(
                 nwLong: northWestLocation.longitude,
                 nwLat: northWestLocation.latitude,
                 seLong: southEastLocation.longitude,
                 seLat: southEastLocation.latitude
             )))
-            .responseDecodable(of: StoreResponse.self) { response in
+            .responseDecodable(of: StoreResponse.self) { [weak self] response in
                 switch response.result {
                 case .success(let result):
-                    observer.onNext(result.data.map { $0.toEntity() })
+                    self?.stores = result.data.map { $0.toEntity() }
+                    observer.onNext(())
                 case .failure(let error):
                     observer.onError(error)
                 }
@@ -32,6 +35,12 @@ struct StoreRepositoryImpl: StoreRepository {
             
             return Disposables.create()
         }
+    }
+    
+    func getStores(
+        types: [CertificationType]
+    ) -> [Store] {
+        return stores.filter { !$0.certificationTypes.filter { types.contains($0) }.isEmpty }
     }
     
     func fetchStoresInMockJSON() throws -> [Store] {
