@@ -21,6 +21,7 @@
 		5977BE682B553C8300725C90 /* HomeDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE672B553C8300725C90 /* HomeDependency.swift */; };
 		5977BE6A2B554C2B00725C90 /* GetStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE692B554C2B00725C90 /* GetStoresUseCaseImpl.swift */; };
 		5977BE6C2B554CB700725C90 /* GetStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE6B2B554CB700725C90 /* GetStoresUseCase.swift */; };
+		5977BE6E2B55750100725C90 /* LoadedStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE6D2B55750100725C90 /* LoadedStores.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -33,7 +34,6 @@
 		59C306BD2B500D3D00862625 /* MockStoreResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C306BC2B500D3D00862625 /* MockStoreResponse.json */; };
 		59C306BF2B50109100862625 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306BE2B50109100862625 /* Location.swift */; };
 		59C306C32B50114100862625 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306C22B50114100862625 /* Day.swift */; };
-		59C306C52B50125C00862625 /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306C42B50125C00862625 /* StoreCategory.swift */; };
 		59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306C62B501B1E00862625 /* JSONContentsError.swift */; };
 		59C306C92B501B9D00862625 /* RegularOpeningHours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306C82B501B9D00862625 /* RegularOpeningHours.swift */; };
 		59C306CB2B50357900862625 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306CA2B50357900862625 /* Router.swift */; };
@@ -66,6 +66,7 @@
 		5977BE672B553C8300725C90 /* HomeDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDependency.swift; sourceTree = "<group>"; };
 		5977BE692B554C2B00725C90 /* GetStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresUseCaseImpl.swift; sourceTree = "<group>"; };
 		5977BE6B2B554CB700725C90 /* GetStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresUseCase.swift; sourceTree = "<group>"; };
+		5977BE6D2B55750100725C90 /* LoadedStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedStores.swift; sourceTree = "<group>"; };
 		5986DCE82B390A8D005AE43B /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
@@ -79,7 +80,6 @@
 		59C306BC2B500D3D00862625 /* MockStoreResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockStoreResponse.json; sourceTree = "<group>"; };
 		59C306BE2B50109100862625 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		59C306C22B50114100862625 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
-		59C306C42B50125C00862625 /* StoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCategory.swift; sourceTree = "<group>"; };
 		59C306C62B501B1E00862625 /* JSONContentsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONContentsError.swift; sourceTree = "<group>"; };
 		59C306C82B501B9D00862625 /* RegularOpeningHours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularOpeningHours.swift; sourceTree = "<group>"; };
 		59C306CA2B50357900862625 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -262,9 +262,9 @@
 				59C306B52B50027300862625 /* Store.swift */,
 				59C306BE2B50109100862625 /* Location.swift */,
 				59C306C22B50114100862625 /* Day.swift */,
-				59C306C42B50125C00862625 /* StoreCategory.swift */,
 				59C306C82B501B9D00862625 /* RegularOpeningHours.swift */,
 				59C306A52B4D966C00862625 /* CertificationType.swift */,
+				5977BE6D2B55750100725C90 /* LoadedStores.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -520,6 +520,7 @@
 				5977BE5E2B5535C700725C90 /* FetchStoresUseCase.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
+				5977BE6E2B55750100725C90 /* LoadedStores.swift in Sources */,
 				59C306B02B4FFE4400862625 /* StoreResponse.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* FetchStoresUseCaseImpl.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
@@ -528,7 +529,6 @@
 				59C306CB2B50357900862625 /* Router.swift in Sources */,
 				59C306B62B50027300862625 /* Store.swift in Sources */,
 				59C306B42B50015500862625 /* APIResponse.swift in Sources */,
-				59C306C52B50125C00862625 /* StoreCategory.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
 				59C306BB2B5003F500862625 /* NetworkURL.swift in Sources */,
 				59C306B22B50001F00862625 /* StoreRepositoryImpl.swift in Sources */,

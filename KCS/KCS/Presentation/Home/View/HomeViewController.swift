@@ -15,7 +15,7 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let goodPriceFilterButton: FilterButton = {
+    private lazy var goodPriceFilterButton: FilterButton = {
         let button = FilterButton(title: "착한 가격 업소", color: UIColor.goodPrice)
         button.translatesAutoresizingMaskIntoConstraints = false
         
@@ -77,6 +77,8 @@ final class HomeViewController: UIViewController {
         
         return button
     }()
+    
+    private var markers: [Marker] = []
 
     private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
@@ -154,11 +156,28 @@ final class HomeViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         checkUserCurrentLocationAuthorization()
+        bind()
     }
     
 }
 
 private extension HomeViewController {
+    
+    func bind() {
+        viewModel.refreshComplete
+            .bind { [weak self] loadedStores in
+                guard let self = self else { return }
+                self.markers.forEach { $0.mapView = nil }
+                loadedStores.stores.forEach {
+                    let location = $0.location.toMapLocation()
+                    guard let lastType = $0.certificationTypes.filter({ self.getActivatedTypes().contains($0) }).last else { return }
+                    let marker = Marker(type: lastType, position: location)
+                    marker.mapView = self.mapView.mapView
+                    self.markers.append(marker)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
     
     func getActivatedTypes() -> [CertificationType] {
         var types: [CertificationType] = []
