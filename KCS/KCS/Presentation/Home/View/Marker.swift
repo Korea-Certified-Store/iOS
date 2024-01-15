@@ -11,16 +11,12 @@ import NMapsMap
 final class Marker: NMFMarker {
     
     var isSelected: Bool = false
-    
-    init(type: CertificationType) {
+
+    init(type: CertificationType, position: NMGLatLng? = nil) {
         super.init()
-        setUI(type: type)
-        setHandler(type: type)
-    }
-    
-    init(type: CertificationType, position: NMGLatLng) {
-        super.init()
-        self.position = position
+        if let position = position {
+            self.position = position
+        }
         setUI(type: type)
         setHandler(type: type)
     }

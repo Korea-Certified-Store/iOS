@@ -45,7 +45,7 @@ private extension FilterButton {
         let handler: UIButton.ConfigurationUpdateHandler = { [weak self] button in
             switch button.state {
             case .selected:
-                self?.configuration?.baseBackgroundColor = .filterButtonSelected
+                self?.configuration?.baseBackgroundColor = .primary3
                 self?.configuration?.baseForegroundColor = .white
             case .normal:
                 self?.configuration?.baseBackgroundColor = .white

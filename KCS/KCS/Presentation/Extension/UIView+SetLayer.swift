@@ -12,7 +12,7 @@ extension UIView {
     func setLayerShadow(shadowOffset: CGSize) {
         layer.shadowOffset = shadowOffset
         layer.shadowOpacity = 0.25
-        layer.shadowColor = UIColor.kcsPrimary.cgColor
+        layer.shadowColor = UIColor.primary1.cgColor
     }
     
     func setLayerCorner(cornerRadius: CGFloat, maskedCorners: CACornerMask = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner]) {

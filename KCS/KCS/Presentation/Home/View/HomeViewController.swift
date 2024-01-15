@@ -111,6 +111,14 @@ final class HomeViewController: UIViewController {
         return alertController
     }()
     
+    private let refreshButton: RefreshButton = {
+        let button = RefreshButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
+        
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -152,6 +160,7 @@ private extension HomeViewController {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
+        mapView.addSubview(refreshButton)
     }
     
     func configureConstraints() {
@@ -172,6 +181,11 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             filterButtonStackView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8)
+        ])
+        
+        NSLayoutConstraint.activate([
+            refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            refreshButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
     
