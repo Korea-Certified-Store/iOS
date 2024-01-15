@@ -14,6 +14,8 @@
 		591A88862B384E610059E40F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 591A88852B384E610059E40F /* Assets.xcassets */; };
 		591A88892B384E610059E40F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591A88872B384E610059E40F /* LaunchScreen.storyboard */; };
 		5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE572B5524D500725C90 /* RefreshButton.swift */; };
+		5977BE5C2B5535A100725C90 /* GetStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE5B2B5535A100725C90 /* GetStoresUseCaseImpl.swift */; };
+		5977BE5E2B5535C700725C90 /* GetStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE5D2B5535C700725C90 /* GetStoresUseCase.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -52,6 +54,8 @@
 		591A88882B384E610059E40F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		591A888A2B384E610059E40F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5977BE572B5524D500725C90 /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
+		5977BE5B2B5535A100725C90 /* GetStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresUseCaseImpl.swift; sourceTree = "<group>"; };
+		5977BE5D2B5535C700725C90 /* GetStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresUseCase.swift; sourceTree = "<group>"; };
 		5986DCE82B390A8D005AE43B /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
@@ -128,6 +132,22 @@
 			path = KCS;
 			sourceTree = "<group>";
 		};
+		5977BE592B55355D00725C90 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				5977BE5D2B5535C700725C90 /* GetStoresUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		5977BE5A2B55356600725C90 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				5977BE5B2B5535A100725C90 /* GetStoresUseCaseImpl.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
 		5986DCDB2B389234005AE43B /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				59C306AA2B4FFA8C00862625 /* Entity */,
+				5977BE5A2B55356600725C90 /* UseCase */,
 				A8ACB7CC2B54ED3800540BD1 /* Interface */,
 			);
 			path = Domain;
@@ -293,6 +314,7 @@
 		A8ACB7CC2B54ED3800540BD1 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				5977BE592B55355D00725C90 /* UseCase */,
 				59C306A72B4FF98600862625 /* Repository */,
 			);
 			path = Interface;
@@ -469,8 +491,10 @@
 				591A88812B384E600059E40F /* HomeViewController.swift in Sources */,
 				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
 				59C306CD2B5035B100862625 /* StoreAPI.swift in Sources */,
+				5977BE5E2B5535C700725C90 /* GetStoresUseCase.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				59C306B02B4FFE4400862625 /* StoreResponse.swift in Sources */,
+				5977BE5C2B5535A100725C90 /* GetStoresUseCaseImpl.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */,
