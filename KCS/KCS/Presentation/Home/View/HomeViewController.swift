@@ -111,13 +111,28 @@ final class HomeViewController: UIViewController {
         return alertController
     }()
     
-    private let refreshButton: RefreshButton = {
+    private lazy var refreshButton: RefreshButton = {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
+        button.rx.tap
+            .bind { [weak self] _ in
+                self?.viewModel.getStores(
+                    northWestLocation: <#T##Location#>,
+                    southEastLocation: <#T##Location#>
+                )
+            }
+            .disposed(by: self.disposeBag)
         
         return button
     }()
+    
+    private let viewModel = HomeViewModelImpl(
+        dependency: HomeDependency(), 
+        getStoresUseCase: FetchStoresUseCaseImpl(
+            repository: StoreRepositoryImpl()
+        )
+    )
     
     override func viewDidLoad() {
         super.viewDidLoad()
