@@ -13,7 +13,7 @@ final class SummaryInformationView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        label.textColor = UIColor.kcsSecondary
+        label.textColor = UIColor.primary2
         
         return label
     }()
