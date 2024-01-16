@@ -79,6 +79,7 @@ final class HomeViewController: UIViewController {
     }()
     
     private var markers: [Marker] = []
+    private var clickedMarker: Marker?
 
     private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
@@ -113,10 +114,17 @@ final class HomeViewController: UIViewController {
         return alertController
     }()
     
+    private lazy var summaryInformationView: SummaryInformationView = {
+        var view = SummaryInformationView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     private lazy var refreshButton: RefreshButton = {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.isHidden = true
+//        button.isHidden = true
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
@@ -171,7 +179,18 @@ private extension HomeViewController {
                 loadedStores.stores.forEach {
                     let location = $0.location.toMapLocation()
                     guard let lastType = $0.certificationTypes.filter({ self.getActivatedTypes().contains($0) }).last else { return }
-                    let marker = Marker(type: lastType, position: location)
+                    let marker = Marker(certificationType: lastType, position: location)
+                    marker.userInfo = ["location": location]
+                    marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+                        guard let self = self else { return false }
+                        if let clickedMarker = clickedMarker {
+                            clickedMarker.isSelected = false
+                        }
+                        marker.isSelected = !marker.isSelected
+                        clickedMarker = marker
+                        
+                        return true
+                    }
                     marker.mapView = self.mapView.mapView
                     self.markers.append(marker)
                 }
