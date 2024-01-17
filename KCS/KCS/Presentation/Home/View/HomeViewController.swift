@@ -96,11 +96,16 @@ final class HomeViewController: UIViewController {
         return map
     }()
     
-    private var summaryInformationView: SummaryInformationView?
-    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, 
-                                                                                       constant: -16)
-    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, 
-                                                                                     constant: -16)
+    private var summaryInformationView: SummaryInformationView = {
+        let view = SummaryInformationView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor, constant: -29)
+    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor, constant: -29)
+    private lazy var summaryInfoBottomConstraint = summaryInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 224)
     
     private let requestLocationServiceAlert: UIAlertController = {
         let alertController = UIAlertController(
@@ -236,24 +241,21 @@ private extension HomeViewController {
     }
     
     func markerClicked(store: Store) {
-        let view = SummaryInformationView(store: store)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        mapView.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
-            view.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
-            view.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 0),
-            view.heightAnchor.constraint(equalToConstant: 224)
-        ])
-        locationBottomConstraint.constant = -195
-        refreshBottomConstraint.constant = -195
-        summaryInformationView = view
+        summaryInfoBottomConstraint.constant = 0
+        locationBottomConstraint.constant = -8
+        refreshBottomConstraint.constant = -8
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     func markerCancel() {
-        summaryInformationView?.removeFromSuperview()
-        locationBottomConstraint.constant = -16
-        refreshBottomConstraint.constant = -16
+        summaryInfoBottomConstraint.constant = 224
+        locationBottomConstraint.constant = -29
+        refreshBottomConstraint.constant = -29
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
     }
     
 }
@@ -287,6 +289,7 @@ private extension HomeViewController {
     
     func addUIComponents() {
         view.addSubview(mapView)
+        mapView.addSubview(summaryInformationView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
         mapView.addSubview(refreshButton)
@@ -298,6 +301,13 @@ private extension HomeViewController {
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             mapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        ])
+        
+        NSLayoutConstraint.activate([
+            summaryInformationView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
+            summaryInformationView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
+            summaryInformationView.heightAnchor.constraint(equalToConstant: 224),
+            summaryInfoBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
