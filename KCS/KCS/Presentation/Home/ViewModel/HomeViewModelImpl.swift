@@ -34,9 +34,14 @@ final class HomeViewModelImpl: HomeViewModel {
         types: [CertificationType] = [.goodPrice, .exemplary, .safe]
     ) {
         fetchStoresUseCase.execute(northWestLocation: northWestLocation, southEastLocation: southEastLocation)
-            .subscribe(onNext: { [weak self] _ in
-                self?.applyFilter(types: types)
-            })
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.applyFilter(types: types)
+                },
+                onError: { error in
+                    dump(error)
+                }
+            )
             .disposed(by: disposeBag)
     }
     

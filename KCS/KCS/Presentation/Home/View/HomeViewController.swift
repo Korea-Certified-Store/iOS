@@ -15,7 +15,7 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private lazy var goodPriceFilterButton: FilterButton = {
+    private let goodPriceFilterButton: FilterButton = {
         let button = FilterButton(title: "착한 가격 업소", color: UIColor.goodPrice)
         button.translatesAutoresizingMaskIntoConstraints = false
         
@@ -167,6 +167,7 @@ private extension HomeViewController {
         viewModel.refreshComplete
             .bind { [weak self] loadedStores in
                 guard let self = self else { return }
+                self.refreshButton.isHidden = true
                 self.markers.forEach { $0.mapView = nil }
                 loadedStores.stores.forEach {
                     let location = $0.location.toMapLocation()
@@ -190,6 +191,9 @@ private extension HomeViewController {
         }
         if safeFilterButton.isSelected {
             types.append(.safe)
+        }
+        if types.isEmpty {
+            return [.goodPrice, .exemplary, .safe]
         }
         
         return types
@@ -273,12 +277,26 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         if reason == NMFMapChangedByGesture {
             locationButton.setImage(UIImage.locationButtonNone, for: .normal)
         }
+        refreshButton.isHidden = false
     }
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         if reason == NMFMapChangedByDeveloper {
             mapView.positionMode = .direction
             locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
+            let startPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+            let endPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+            viewModel.refresh(
+                northWestLocation: Location(
+                    longitude: startPoint.lng,
+                    latitude: startPoint.lat
+                ),
+                southEastLocation: Location(
+                    longitude: endPoint.lng,
+                    latitude: endPoint.lat
+                ),
+                types: getActivatedTypes()
+            )
         }
     }
     
