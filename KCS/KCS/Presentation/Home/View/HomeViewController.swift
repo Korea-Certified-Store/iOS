@@ -18,20 +18,35 @@ final class HomeViewController: UIViewController {
     private lazy var goodPriceFilterButton: FilterButton = {
         let button = FilterButton(title: "착한 가격 업소", color: UIColor.goodPrice)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.rx.tap
+            .bind { [weak self] in
+                self?.refreshButton.isHidden = false
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
     
-    private let exemplaryFilterButton: FilterButton = {
+    private lazy var exemplaryFilterButton: FilterButton = {
         let button = FilterButton(title: "모범 음식점", color: UIColor.exemplary)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.rx.tap
+            .bind { [weak self] in
+                self?.refreshButton.isHidden = false
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
     
-    private let safeFilterButton: FilterButton = {
+    private lazy var safeFilterButton: FilterButton = {
         let button = FilterButton(title: "안심 식당", color: UIColor.safe)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.rx.tap
+            .bind { [weak self] in
+                self?.refreshButton.isHidden = false
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
@@ -167,6 +182,7 @@ private extension HomeViewController {
         viewModel.refreshComplete
             .bind { [weak self] loadedStores in
                 guard let self = self else { return }
+                self.refreshButton.isHidden = true
                 self.markers.forEach { $0.mapView = nil }
                 loadedStores.stores.forEach {
                     let location = $0.location.toMapLocation()
@@ -174,7 +190,6 @@ private extension HomeViewController {
                     let marker = Marker(type: lastType, position: location)
                     marker.mapView = self.mapView.mapView
                     self.markers.append(marker)
-                    self.refreshButton.isHidden = true
                 }
             }
             .disposed(by: disposeBag)
@@ -192,7 +207,9 @@ private extension HomeViewController {
         if safeFilterButton.isSelected {
             types.append(.safe)
         }
-        
+        if types.isEmpty {
+            return [.goodPrice, .exemplary, .safe]
+        }
         return types
     }
     
