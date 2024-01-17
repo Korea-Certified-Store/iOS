@@ -15,23 +15,59 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let goodPriceFilterButton: FilterButton = {
+    private lazy var goodPriceFilterButton: FilterButton = {
         let button = FilterButton(title: "착한 가격 업소", color: UIColor.goodPrice)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.rx.tap
+            .scan(false) { [weak self] (lastState, _) in
+                if lastState {
+                    guard let lastIndex = self?.activatedFilter.lastIndex(of: .goodPrice) else { return !lastState }
+                    self?.activatedFilter.remove(at: lastIndex)
+                } else {
+                    self?.activatedFilter.append(.goodPrice)
+                }
+                return !lastState
+            }
+            .bind(to: button.rx.isSelected)
+            .disposed(by: disposeBag)
         
         return button
     }()
     
-    private let exemplaryFilterButton: FilterButton = {
+    private lazy var exemplaryFilterButton: FilterButton = {
         let button = FilterButton(title: "모범 음식점", color: UIColor.exemplary)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.rx.tap
+            .scan(false) { [weak self] (lastState, _) in
+                if lastState {
+                    guard let lastIndex = self?.activatedFilter.lastIndex(of: .exemplary) else { return !lastState }
+                    self?.activatedFilter.remove(at: lastIndex)
+                } else {
+                    self?.activatedFilter.append(.exemplary)
+                }
+                return !lastState
+            }
+            .bind(to: button.rx.isSelected)
+            .disposed(by: disposeBag)
         
         return button
     }()
     
-    private let safeFilterButton: FilterButton = {
+    private lazy var safeFilterButton: FilterButton = {
         let button = FilterButton(title: "안심 식당", color: UIColor.safe)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.rx.tap
+            .scan(false) { [weak self] (lastState, _) in
+                if lastState {
+                    guard let lastIndex = self?.activatedFilter.lastIndex(of: .safe) else { return !lastState }
+                    self?.activatedFilter.remove(at: lastIndex)
+                } else {
+                    self?.activatedFilter.append(.safe)
+                }
+                return !lastState
+            }
+            .bind(to: button.rx.isSelected)
+            .disposed(by: disposeBag)
         
         return button
     }()
@@ -139,6 +175,8 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    private var activatedFilter: [CertificationType] = []
+    
     private let viewModel: HomeViewModel
     
     init(viewModel: HomeViewModel) {
@@ -169,6 +207,7 @@ private extension HomeViewController {
                 guard let self = self else { return }
                 self.refreshButton.isHidden = true
                 self.markers.forEach { $0.mapView = nil }
+                self.activatedFilter.sort()
                 loadedStores.stores.forEach {
                     let location = $0.location.toMapLocation()
                     guard let lastType = $0.certificationTypes.filter({ self.getActivatedTypes().contains($0) }).last else { return }
@@ -181,22 +220,11 @@ private extension HomeViewController {
     }
     
     func getActivatedTypes() -> [CertificationType] {
-        var types: [CertificationType] = []
-        
-        if goodPriceFilterButton.isSelected {
-            types.append(.goodPrice)
-        }
-        if exemplaryFilterButton.isSelected {
-            types.append(.exemplary)
-        }
-        if safeFilterButton.isSelected {
-            types.append(.safe)
-        }
-        if types.isEmpty {
+        if activatedFilter.isEmpty {
             return [.goodPrice, .exemplary, .safe]
         }
         
-        return types
+        return activatedFilter
     }
     
 }
