@@ -18,11 +18,6 @@ final class HomeViewController: UIViewController {
     private lazy var goodPriceFilterButton: FilterButton = {
         let button = FilterButton(title: "착한 가격 업소", color: UIColor.goodPrice)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.rx.tap
-            .bind { [weak self] in
-                self?.refreshButton.isHidden = false
-            }
-            .disposed(by: disposeBag)
         
         return button
     }()
@@ -30,11 +25,6 @@ final class HomeViewController: UIViewController {
     private lazy var exemplaryFilterButton: FilterButton = {
         let button = FilterButton(title: "모범 음식점", color: UIColor.exemplary)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.rx.tap
-            .bind { [weak self] in
-                self?.refreshButton.isHidden = false
-            }
-            .disposed(by: disposeBag)
         
         return button
     }()
@@ -42,11 +32,6 @@ final class HomeViewController: UIViewController {
     private lazy var safeFilterButton: FilterButton = {
         let button = FilterButton(title: "안심 식당", color: UIColor.safe)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.rx.tap
-            .bind { [weak self] in
-                self?.refreshButton.isHidden = false
-            }
-            .disposed(by: disposeBag)
         
         return button
     }()
