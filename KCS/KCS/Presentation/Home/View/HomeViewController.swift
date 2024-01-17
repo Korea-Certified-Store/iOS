@@ -174,7 +174,7 @@ private extension HomeViewController {
                     let marker = Marker(type: lastType, position: location)
                     marker.mapView = self.mapView.mapView
                     self.markers.append(marker)
-                    refreshButton.isHidden = true
+                    self.refreshButton.isHidden = true
                 }
             }
             .disposed(by: disposeBag)
