@@ -274,6 +274,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         if reason == NMFMapChangedByGesture {
             locationButton.setImage(UIImage.locationButtonNone, for: .normal)
         }
+        refreshButton.isHidden = false
     }
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
