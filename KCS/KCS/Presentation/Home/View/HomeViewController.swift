@@ -210,6 +210,7 @@ private extension HomeViewController {
         if types.isEmpty {
             return [.goodPrice, .exemplary, .safe]
         }
+        
         return types
     }
     
@@ -298,6 +299,19 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         if reason == NMFMapChangedByDeveloper {
             mapView.positionMode = .direction
             locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
+            let startPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+            let endPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+            viewModel.refresh(
+                northWestLocation: Location(
+                    longitude: startPoint.lng,
+                    latitude: startPoint.lat
+                ),
+                southEastLocation: Location(
+                    longitude: endPoint.lng,
+                    latitude: endPoint.lat
+                ),
+                types: getActivatedTypes()
+            )
         }
     }
     
