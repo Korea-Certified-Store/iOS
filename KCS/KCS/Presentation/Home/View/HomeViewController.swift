@@ -173,7 +173,7 @@ final class HomeViewController: UIViewController {
                         longitude: endPoint.lng,
                         latitude: endPoint.lat
                     ),
-                    types: getActivatedTypes()
+                    filters: getActivatedTypes()
                 )
             }
             .disposed(by: self.disposeBag)
@@ -331,7 +331,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
                     longitude: endPoint.lng,
                     latitude: endPoint.lat
                 ),
-                types: getActivatedTypes()
+                filters: getActivatedTypes()
             )
         }
     }

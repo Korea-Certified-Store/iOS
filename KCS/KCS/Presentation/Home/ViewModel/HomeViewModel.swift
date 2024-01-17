@@ -27,7 +27,7 @@ protocol HomeViewModelInput {
     func refresh(
         northWestLocation: Location,
         southEastLocation: Location,
-        types: [CertificationType]
+        filters: [CertificationType]
     ) 
     func applyFilter(filters: [CertificationType])
     

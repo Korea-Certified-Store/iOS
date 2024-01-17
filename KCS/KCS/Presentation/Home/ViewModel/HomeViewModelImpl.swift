@@ -31,12 +31,12 @@ final class HomeViewModelImpl: HomeViewModel {
     func refresh(
         northWestLocation: Location,
         southEastLocation: Location,
-        types: [CertificationType] = [.goodPrice, .exemplary, .safe]
+        filters: [CertificationType] = [.goodPrice, .exemplary, .safe]
     ) {
         fetchStoresUseCase.execute(northWestLocation: northWestLocation, southEastLocation: southEastLocation)
             .subscribe(
                 onNext: { [weak self] _ in
-                    self?.applyFilter(filters: types)
+                    self?.applyFilter(filters: filters)
                 },
                 onError: { error in
                     dump(error)
