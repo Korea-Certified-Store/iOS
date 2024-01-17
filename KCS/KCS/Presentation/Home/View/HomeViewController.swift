@@ -90,10 +90,17 @@ final class HomeViewController: UIViewController {
         map.showIndoorLevelPicker = false
         map.showLocationButton = false
         map.mapView.logoAlign = .rightBottom
+        map.mapView.touchDelegate = self
         map.mapView.addCameraDelegate(delegate: self)
         
         return map
     }()
+    
+    private var summaryInformationView: SummaryInformationView?
+    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, 
+                                                                                       constant: -16)
+    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, 
+                                                                                     constant: -16)
     
     private let requestLocationServiceAlert: UIAlertController = {
         let alertController = UIAlertController(
@@ -112,13 +119,6 @@ final class HomeViewController: UIViewController {
         alertController.addAction(goSetting)
         
         return alertController
-    }()
-    
-    private lazy var summaryInformationView: SummaryInformationView = {
-        var view = SummaryInformationView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
     }()
     
     private lazy var refreshButton: RefreshButton = {
@@ -177,23 +177,23 @@ private extension HomeViewController {
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
                 loadedStores.stores.forEach {
-                    let location = $0.location.toMapLocation()
+                    let location = $0.location
                     guard let lastType = $0.certificationTypes.filter({ self.getActivatedTypes().contains($0) }).last else { return }
-                    let marker = Marker(certificationType: lastType, position: location)
-                    marker.userInfo = ["location": location]
-                    marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-                        guard let self = self else { return false }
-                        if let clickedMarker = clickedMarker {
-                            clickedMarker.isSelected = false
-                        }
-                        marker.isSelected = !marker.isSelected
-                        clickedMarker = marker
-                        
-                        return true
-                    }
+                    let marker = Marker(certificationType: lastType, position: location.toMapLocation())
+                    marker.tag = UInt($0.id)
+                    self.markerTouchHandler(marker: marker)
                     marker.mapView = self.mapView.mapView
                     self.markers.append(marker)
                 }
+                markerCancel()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.getStoreInfoComplete
+            .bind { [weak self] store in
+                guard let self = self else { return }
+                guard let store = store else { return }
+                markerClicked(store: store)
             }
             .disposed(by: disposeBag)
     }
@@ -212,6 +212,48 @@ private extension HomeViewController {
         }
         
         return types
+    }
+    
+}
+
+private extension HomeViewController {
+    
+    func markerTouchHandler(marker: Marker) {
+        marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+            guard let self = self else { return true }
+            markerCancel()
+            if clickedMarker != marker {
+                clickedMarker?.isSelected = false
+            }
+            marker.isSelected = !marker.isSelected
+            if marker.isSelected {
+                viewModel.markerTapped(tag: marker.tag)
+            }
+            clickedMarker = marker
+            
+            return true
+        }
+    }
+    
+    func markerClicked(store: Store) {
+        let view = SummaryInformationView(store: store)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        mapView.addSubview(view)
+        NSLayoutConstraint.activate([
+            view.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
+            view.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
+            view.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 0),
+            view.heightAnchor.constraint(equalToConstant: 224)
+        ])
+        locationBottomConstraint.constant = -195
+        refreshBottomConstraint.constant = -195
+        summaryInformationView = view
+    }
+    
+    func markerCancel() {
+        summaryInformationView?.removeFromSuperview()
+        locationBottomConstraint.constant = -16
+        refreshBottomConstraint.constant = -16
     }
     
 }
@@ -260,9 +302,9 @@ private extension HomeViewController {
         
         NSLayoutConstraint.activate([
             locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             locationButton.widthAnchor.constraint(equalToConstant: 48),
-            locationButton.heightAnchor.constraint(equalToConstant: 48)
+            locationButton.heightAnchor.constraint(equalToConstant: 48),
+            locationBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
@@ -272,7 +314,7 @@ private extension HomeViewController {
         
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
-            refreshButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+            refreshBottomConstraint
         ])
     }
     
@@ -299,6 +341,16 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             mapView.positionMode = .direction
             locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
         }
+    }
+    
+}
+
+extension HomeViewController: NMFMapViewTouchDelegate {
+    
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        clickedMarker?.isSelected = false
+        clickedMarker = nil
+        markerCancel()
     }
     
 }

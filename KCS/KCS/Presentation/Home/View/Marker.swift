@@ -24,7 +24,6 @@ final class Marker: NMFMarker {
         super.init()
         if let position = position {
             self.position = position
-            self.userInfo = ["location": position]
         }
         setUI(type: certificationType)
     }

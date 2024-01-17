@@ -9,17 +9,21 @@ import UIKit
 
 final class SummaryInformationView: UIView {
     
-    private let storeTitle: UILabel = {
+    private let store: Store
+    
+    private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = store.title
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         label.textColor = UIColor.primary2
         
         return label
     }()
     
-    private var certificationStackView: UIStackView = {
-        let stack = UIStackView()
+    private lazy var certificationStackView: UIStackView = {
+        let labels = store.certificationTypes.map({ CertificationLabel(certificationType: $0) })
+        let stack = UIStackView(arrangedSubviews: labels)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.spacing = 4
@@ -28,9 +32,10 @@ final class SummaryInformationView: UIView {
         return stack
     }()
     
-    private let categoty: UILabel = {
+    private lazy var categoty: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = store.category
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = UIColor.kcsGray
         
@@ -83,7 +88,8 @@ final class SummaryInformationView: UIView {
         return view
     }()
     
-    override init(frame: CGRect) {
+    init(store: Store) {
+        self.store = store
         super.init(frame: .zero)
         
         setBackgroundColor()
