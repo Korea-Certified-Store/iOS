@@ -20,12 +20,14 @@ final class HomeViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
             .scan(false) { [weak self] (lastState, _) in
+                guard let self = self else { return lastState }
                 if lastState {
-                    guard let lastIndex = self?.activatedFilter.lastIndex(of: .goodPrice) else { return !lastState }
-                    self?.activatedFilter.remove(at: lastIndex)
+                    guard let lastIndex = activatedFilter.lastIndex(of: .goodPrice) else { return lastState }
+                    activatedFilter.remove(at: lastIndex)
                 } else {
-                    self?.activatedFilter.append(.goodPrice)
+                    activatedFilter.append(.goodPrice)
                 }
+                viewModel.changeFilter(type: .goodPrice)
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -39,12 +41,14 @@ final class HomeViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
             .scan(false) { [weak self] (lastState, _) in
+                guard let self = self else { return lastState }
                 if lastState {
-                    guard let lastIndex = self?.activatedFilter.lastIndex(of: .exemplary) else { return !lastState }
-                    self?.activatedFilter.remove(at: lastIndex)
+                    guard let lastIndex = activatedFilter.lastIndex(of: .exemplary) else { return lastState }
+                    activatedFilter.remove(at: lastIndex)
                 } else {
-                    self?.activatedFilter.append(.exemplary)
+                    activatedFilter.append(.exemplary)
                 }
+                viewModel.changeFilter(type: .exemplary)
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -58,12 +62,14 @@ final class HomeViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
             .scan(false) { [weak self] (lastState, _) in
+                guard let self = self else { return lastState }
                 if lastState {
-                    guard let lastIndex = self?.activatedFilter.lastIndex(of: .safe) else { return !lastState }
-                    self?.activatedFilter.remove(at: lastIndex)
+                    guard let lastIndex = activatedFilter.lastIndex(of: .safe) else { return lastState }
+                    activatedFilter.remove(at: lastIndex)
                 } else {
-                    self?.activatedFilter.append(.safe)
+                    activatedFilter.append(.safe)
                 }
+                viewModel.changeFilter(type: .safe)
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -202,26 +208,28 @@ final class HomeViewController: UIViewController {
 private extension HomeViewController {
     
     func bind() {
+        
         viewModel.refreshComplete
-            .bind { [weak self] loadedStores in
+            .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.refreshButton.isHidden = true
                 self.markers.forEach { $0.mapView = nil }
-                self.activatedFilter.sort()
-                loadedStores.stores.forEach {
-                    let location = $0.location.toMapLocation()
-                    guard let lastType = $0.certificationTypes.filter({ self.getActivatedTypes().contains($0) }).last else { return }
-                    let marker = Marker(type: lastType, position: location)
-                    marker.mapView = self.mapView.mapView
-                    self.markers.append(marker)
+                filteredStores.forEach { filteredStore in
+                    filteredStore.stores.forEach {
+                        let location = $0.location.toMapLocation()
+                        let marker = Marker(type: filteredStore.type, position: location)
+                        marker.mapView = self.mapView.mapView
+                        self.markers.append(marker)
+                    }
                 }
             }
             .disposed(by: disposeBag)
+        
     }
     
     func getActivatedTypes() -> [CertificationType] {
         if activatedFilter.isEmpty {
-            return [.goodPrice, .exemplary, .safe]
+            return [.safe, .exemplary, .goodPrice]
         }
         
         return activatedFilter
