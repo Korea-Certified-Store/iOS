@@ -15,21 +15,21 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private lazy var goodPriceFilterButton: FilterButton = {
+    private let goodPriceFilterButton: FilterButton = {
         let button = FilterButton(title: "착한 가격 업소", color: UIColor.goodPrice)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
-    private lazy var exemplaryFilterButton: FilterButton = {
+    private let exemplaryFilterButton: FilterButton = {
         let button = FilterButton(title: "모범 음식점", color: UIColor.exemplary)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
-    private lazy var safeFilterButton: FilterButton = {
+    private let safeFilterButton: FilterButton = {
         let button = FilterButton(title: "안심 식당", color: UIColor.safe)
         button.translatesAutoresizingMaskIntoConstraints = false
         
