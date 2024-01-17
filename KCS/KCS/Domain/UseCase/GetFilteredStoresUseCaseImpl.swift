@@ -50,6 +50,7 @@ struct GetFilteredStoresUseCaseImpl: GetFilteredStoresUseCase {
                 }
             }
         }
+        
         return [goodPriceStores, exemplaryStores, safeStores]
     }
     

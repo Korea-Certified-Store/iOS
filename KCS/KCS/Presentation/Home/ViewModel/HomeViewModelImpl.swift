@@ -15,7 +15,6 @@ final class HomeViewModelImpl: HomeViewModel {
     private let disposeBag = DisposeBag()
     
     var refreshComplete = PublishRelay<[FilteredStores]>()
-    var filterStores = PublishRelay<[FilteredStores]>()
     
     let dependency: HomeDependency
     
@@ -37,7 +36,7 @@ final class HomeViewModelImpl: HomeViewModel {
         fetchStoresUseCase.execute(northWestLocation: northWestLocation, southEastLocation: southEastLocation)
             .subscribe(
                 onNext: { [weak self] _ in
-                    self?.applyFilter(types: types)
+                    self?.applyFilter(filters: types)
                 },
                 onError: { error in
                     dump(error)
@@ -46,11 +45,8 @@ final class HomeViewModelImpl: HomeViewModel {
             .disposed(by: disposeBag)
     }
     
-    func applyFilter(types: [CertificationType]) {
-        refreshComplete.accept(getFilteredStoresUseCase.execute(filters: types))
-    }
-    
-    func changeFilter(type: CertificationType) {
+    func applyFilter(filters: [CertificationType]) {
+        refreshComplete.accept(getFilteredStoresUseCase.execute(filters: filters))
     }
     
 }

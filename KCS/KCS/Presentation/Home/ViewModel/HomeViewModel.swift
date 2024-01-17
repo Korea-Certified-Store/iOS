@@ -29,14 +29,12 @@ protocol HomeViewModelInput {
         southEastLocation: Location,
         types: [CertificationType]
     ) 
-    func applyFilter(types: [CertificationType])
-    func changeFilter(type: CertificationType) 
+    func applyFilter(filters: [CertificationType])
     
 }
 
 protocol HomeViewModelOutput {
     
     var refreshComplete: PublishRelay<[FilteredStores]> { get }
-    var filterStores: PublishRelay<[FilteredStores]> { get }
     
 }
