@@ -12,20 +12,24 @@ final class HomeViewModelImpl: HomeViewModel {
     
     let fetchStoresUseCase: FetchStoresUseCase
     let getStoresUseCase: GetStoresUseCase
+    let getStoreInfoUseCase: GetStoreInfoUseCase
     private let disposeBag = DisposeBag()
     
     var refreshComplete = PublishRelay<LoadedStores>()
+    var getStoreInfoComplete = PublishRelay<Store?>()
     
     let dependency: HomeDependency
     
     init(
         dependency: HomeDependency,
         fetchStoresUseCase: FetchStoresUseCase,
-        getStoresUseCase: GetStoresUseCase
+        getStoresUseCase: GetStoresUseCase,
+        getStoreInfoUseCase: GetStoreInfoUseCase
     ) {
         self.dependency = dependency
         self.fetchStoresUseCase = fetchStoresUseCase
         self.getStoresUseCase = getStoresUseCase
+        self.getStoreInfoUseCase = getStoreInfoUseCase
     }
     
     func refresh(
@@ -46,6 +50,12 @@ final class HomeViewModelImpl: HomeViewModel {
                 types: types,
                 stores: getStoresUseCase.execute(types: types)
             )
+        )
+    }
+    
+    func markerTapped(tag: UInt) {
+        getStoreInfoComplete.accept(
+            getStoreInfoUseCase.execute(tag: tag)
         )
     }
     

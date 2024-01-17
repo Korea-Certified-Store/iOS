@@ -25,7 +25,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let viewModel  = HomeViewModelImpl(
             dependency: HomeDependency(),
             fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
-            getStoresUseCase: GetStoresUseCaseImpl(repository: repository)
+            getStoresUseCase: GetStoresUseCaseImpl(repository: repository),
+            getStoreInfoUseCase: GetStoreInfoUseCaseImpl(repository: repository)
         )
         window?.rootViewController = HomeViewController(viewModel: viewModel)
         window?.makeKeyAndVisible()
