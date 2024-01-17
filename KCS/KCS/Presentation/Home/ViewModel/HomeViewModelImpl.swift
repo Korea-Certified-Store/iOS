@@ -11,32 +11,32 @@ import RxSwift
 final class HomeViewModelImpl: HomeViewModel {
     
     let fetchStoresUseCase: FetchStoresUseCase
-    let getStoresUseCase: GetStoresUseCase
+    let getFilteredStoresUseCase: GetFilteredStoresUseCase
     private let disposeBag = DisposeBag()
     
-    var refreshComplete = PublishRelay<LoadedStores>()
+    var refreshComplete = PublishRelay<[FilteredStores]>()
     
     let dependency: HomeDependency
     
     init(
         dependency: HomeDependency,
         fetchStoresUseCase: FetchStoresUseCase,
-        getStoresUseCase: GetStoresUseCase
+        getStoresUseCase: GetFilteredStoresUseCase
     ) {
         self.dependency = dependency
         self.fetchStoresUseCase = fetchStoresUseCase
-        self.getStoresUseCase = getStoresUseCase
+        self.getFilteredStoresUseCase = getStoresUseCase
     }
     
     func refresh(
         northWestLocation: Location,
         southEastLocation: Location,
-        types: [CertificationType] = [.goodPrice, .exemplary, .safe]
+        filters: [CertificationType] = [.goodPrice, .exemplary, .safe]
     ) {
         fetchStoresUseCase.execute(northWestLocation: northWestLocation, southEastLocation: southEastLocation)
             .subscribe(
                 onNext: { [weak self] _ in
-                    self?.applyFilter(types: types)
+                    self?.applyFilter(filters: filters)
                 },
                 onError: { error in
                     dump(error)
@@ -45,13 +45,8 @@ final class HomeViewModelImpl: HomeViewModel {
             .disposed(by: disposeBag)
     }
     
-    func applyFilter(types: [CertificationType]) {
-        refreshComplete.accept(
-            LoadedStores(
-                types: types,
-                stores: getStoresUseCase.execute(types: types)
-            )
-        )
+    func applyFilter(filters: [CertificationType]) {
+        refreshComplete.accept(getFilteredStoresUseCase.execute(filters: filters))
     }
     
 }

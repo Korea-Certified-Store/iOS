@@ -23,4 +23,24 @@ enum CertificationType: String {
             return "안심 식당"
         }
     }
+    
+    var tag: Int {
+        switch self {
+        case .goodPrice:
+            return 0
+        case .exemplary:
+            return 1
+        case .safe:
+            return 2
+        }
+    }
+    
+}
+
+extension CertificationType: Comparable {
+    
+    static func < (lhs: CertificationType, rhs: CertificationType) -> Bool {
+        return lhs.tag < rhs.tag
+    }
+    
 }
