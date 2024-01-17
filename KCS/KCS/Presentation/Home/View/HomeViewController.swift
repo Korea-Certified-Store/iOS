@@ -133,7 +133,6 @@ final class HomeViewController: UIViewController {
                     ),
                     types: getActivatedTypes()
                 )
-                button.isHidden = true
             }
             .disposed(by: self.disposeBag)
         
@@ -175,6 +174,7 @@ private extension HomeViewController {
                     let marker = Marker(type: lastType, position: location)
                     marker.mapView = self.mapView.mapView
                     self.markers.append(marker)
+                    refreshButton.isHidden = true
                 }
             }
             .disposed(by: disposeBag)
