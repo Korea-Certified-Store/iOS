@@ -55,6 +55,7 @@ struct StoreDTO: Codable {
         }
         
         return Store(
+            id: id,
             title: displayName,
             certificationTypes: certificationTypes,
             category: primaryTypeDisplayName,

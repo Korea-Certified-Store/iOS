@@ -9,6 +9,7 @@ import Foundation
 
 struct Store {
     
+    let id: Int
     let title: String
     let certificationTypes: [CertificationType]
     let category: String?
