@@ -133,6 +133,7 @@ final class HomeViewController: UIViewController {
                     ),
                     types: getActivatedTypes()
                 )
+                button.isHidden = true
             }
             .disposed(by: self.disposeBag)
         
