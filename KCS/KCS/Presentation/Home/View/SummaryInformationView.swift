@@ -174,9 +174,7 @@ extension SummaryInformationView {
     func setUIContents(store: Store) {
         storeTitle.text = store.title
         categoty.text = store.category
-        let subviews = certificationStackView.arrangedSubviews
-        certificationStackView.arrangedSubviews.forEach { certificationStackView.removeArrangedSubview($0) }
-        subviews.forEach { $0.removeFromSuperview() }
+        removeStackView()
         store.certificationTypes
             .map({
                 CertificationLabel(certificationType: $0)
@@ -211,6 +209,14 @@ extension SummaryInformationView {
 }
 
 private extension SummaryInformationView {
+    
+    func removeStackView() {
+        let subviews = certificationStackView.arrangedSubviews
+        certificationStackView.arrangedSubviews.forEach {
+            certificationStackView.removeArrangedSubview($0)
+        }
+        subviews.forEach { $0.removeFromSuperview() }
+    }
     
     func isOpen(open: String, close: String) -> String {
         let dateformat = DateFormatter()
