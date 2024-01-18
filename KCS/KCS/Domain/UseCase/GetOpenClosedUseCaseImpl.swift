@@ -35,8 +35,8 @@ private extension GetOpenClosedUseCaseImpl {
         var closeTimes: [Int] = []
         openHours.forEach { businessHour in
             do {
-                openTimes.append(try toSecond(businessHour: businessHour.open))
-                closeTimes.append(try toSecond(businessHour: businessHour.close))
+                openTimes.append(try toSecond(businessHour: businessHour.open, openClose: .open))
+                closeTimes.append(try toSecond(businessHour: businessHour.close, openClose: .close))
             } catch OpeningHourError.wrongHour {
                 print(OpeningHourError.wrongHour.description)
             } catch OpeningHourError.wrongMinute {
@@ -55,11 +55,14 @@ private extension GetOpenClosedUseCaseImpl {
         return OpenClosedType.closed
     }
     
-    func toSecond(businessHour: BusinessHour) throws -> Int {
-        let hour = businessHour.hour
+    func toSecond(businessHour: BusinessHour, openClose: OpenClose) throws -> Int {
+        var hour = businessHour.hour
         let minute = businessHour.minute
         if 0 <= hour && hour < 24 {
             if 0 <= minute && minute < 60 {
+                if openClose == OpenClose.close && hour == 0 {
+                    hour = 24
+                }
                 return (hour * 3600) + (minute * 60)
             } else {
                 throw OpeningHourError.wrongMinute
@@ -68,5 +71,12 @@ private extension GetOpenClosedUseCaseImpl {
             throw OpeningHourError.wrongHour
         }
     }
+    
+}
+
+enum OpenClose {
+    
+    case open
+    case close
     
 }
