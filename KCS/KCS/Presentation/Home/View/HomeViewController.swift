@@ -235,6 +235,8 @@ private extension HomeViewController {
                         let location = $0.location.toMapLocation()
                         let marker = Marker(certificationType: filteredStore.type, position: location)
                         marker.mapView = self.mapView.mapView
+                        marker.tag = UInt($0.id)
+                        self.markerTouchHandler(marker: marker)
                         self.markers.append(marker)
                     }
                 }
