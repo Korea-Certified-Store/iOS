@@ -72,6 +72,8 @@ final class SummaryInformationView: UIView {
     private let storeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.setLayerCorner(cornerRadius: 6)
+        imageView.clipsToBounds = true
         
         return imageView
     }()
