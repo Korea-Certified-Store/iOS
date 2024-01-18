@@ -41,20 +41,30 @@ final class SummaryInformationView: UIView {
         return label
     }()
     
-    private let storeOpenClosed: UILabel = {
+    private lazy var storeOpenClosed: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = UIColor.goodPrice
+        viewModel.getOpenClosed
+            .bind { [weak self] openClosedType in
+                label.text = openClosedType.rawValue
+            }
+            .disposed(by: disposeBag)
         
         return label
     }()
     
-    private let openingHour: UILabel = {
+    private lazy var openingHour: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.kcsGray
+        viewModel.getOpeningHour
+            .bind { [weak self] text in
+                label.text = text
+            }
+            .disposed(by: disposeBag)
         
         return label
     }()
@@ -87,7 +97,10 @@ final class SummaryInformationView: UIView {
         return view
     }()
     
-    init() {
+    private let viewModel: SummaryInformationViewModel
+    
+    init(viewModel: SummaryInformationViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         
         setBackgroundColor()
@@ -174,6 +187,8 @@ extension SummaryInformationView {
     func setUIContents(store: Store) {
         storeTitle.text = store.title
         categoty.text = store.category
+        viewModel.isOpenClosed(openingHour: store.openingHour)
+        viewModel.getOpeningHour(openingHour: store.openingHour)
         removeStackView()
         store.certificationTypes
             .map({
@@ -182,21 +197,6 @@ extension SummaryInformationView {
             .forEach {
                 certificationStackView.addArrangedSubview($0)
             }
-        if !store.openingHour.isEmpty {
-            let openHours = store.openingHour.filter({ $0.open.day.index == Date().weekDay })
-            if openHours.isEmpty {
-                storeOpenClosed.text = OpenClosedType.dayOff.rawValue
-                openingHour.text = ""
-            } else {
-                let openingHourString = openingHourString(regularOpeningHours: openHours)
-                storeOpenClosed.text = isOpen(open: openingHourString[0], close: openingHourString[1])
-                openingHour.text = "\(openingHourString[0]) - \(openingHourString[1])"
-            }
-        } else {
-            storeOpenClosed.text = OpenClosedType.none.rawValue
-            openingHour.text = ""
-        }
-        
         if let phoneNum = store.phoneNumber {
             storeCallButton.rx.tap
                 .bind { [weak self] _ in
@@ -216,38 +216,6 @@ private extension SummaryInformationView {
             certificationStackView.removeArrangedSubview($0)
         }
         subviews.forEach { $0.removeFromSuperview() }
-    }
-    
-    func isOpen(open: String, close: String) -> String {
-        let dateformat = DateFormatter()
-        dateformat.dateFormat = "HH:mm"
-        let now = Date().toSecond()
-        let close = dateformat.date(from: close)?.toSecond() ?? 86400
-        if let open = dateformat.date(from: open)?.toSecond() {
-            if open <= now && close >= now {
-                return OpenClosedType.open.rawValue
-            } else {
-                return OpenClosedType.closed.rawValue
-            }
-        }
-        return OpenClosedType.none.rawValue
-    }
-    
-    func openingHourString(regularOpeningHours: [RegularOpeningHours]) -> [String] {
-        var openingHourStrings: [String] = []
-        if let openHour = regularOpeningHours.first?.open.hour,
-           let openMin = regularOpeningHours.first?.open.minute {
-            openingHourStrings.append(String(format: "%02d:%02d", openHour, openMin))
-        }
-        if let closeHour = regularOpeningHours.last?.close.hour,
-           let closeMin = regularOpeningHours.last?.close.minute {
-            if closeHour == 0 {
-                openingHourStrings.append(String(format: "%02d:%02d", 24, closeMin))
-            } else {
-                openingHourStrings.append(String(format: "%02d:%02d", closeHour, closeMin))
-            }
-        }
-        return openingHourStrings
     }
     
     func callButtonTapped(phoneNum: String) {
