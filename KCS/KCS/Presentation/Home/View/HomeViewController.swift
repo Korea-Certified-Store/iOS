@@ -233,11 +233,7 @@ private extension HomeViewController {
                 filteredStores.forEach { filteredStore in
                     filteredStore.stores.forEach {
                         let location = $0.location.toMapLocation()
-                        let marker = Marker(certificationType: filteredStore.type, position: location)
-                        marker.mapView = self.mapView.mapView
-                        marker.tag = UInt($0.id)
-                        self.markerTouchHandler(marker: marker)
-                        self.markers.append(marker)
+                        self.setMarker(marker: Marker(certificationType: filteredStore.type, position: location), tag: UInt($0.id))
                     }
                 }
                 markerCancel()
@@ -252,6 +248,13 @@ private extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
+    }
+    
+    func setMarker(marker: Marker, tag: UInt) {
+        marker.tag = tag
+        marker.mapView = mapView.mapView
+        markerTouchHandler(marker: marker)
+        markers.append(marker)
     }
     
     func getActivatedTypes() -> [CertificationType] {
