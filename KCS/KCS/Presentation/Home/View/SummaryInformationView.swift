@@ -187,7 +187,7 @@ extension SummaryInformationView {
         if !store.openingHour.isEmpty {
             let openHours = store.openingHour.filter({ $0.open.day.index == Date().weekDay })
             if openHours.isEmpty {
-                storeOpenClosed.text = OpenClosedType.closed.rawValue
+                storeOpenClosed.text = OpenClosedType.dayOff.rawValue
                 openingHour.text = ""
             } else {
                 let openingHourString = openingHourString(regularOpeningHours: openHours)
@@ -221,7 +221,7 @@ private extension SummaryInformationView {
             if open <= now && close >= now {
                 return OpenClosedType.open.rawValue
             } else {
-                return OpenClosedType.closing.rawValue
+                return OpenClosedType.closed.rawValue
             }
         }
         return OpenClosedType.none.rawValue
