@@ -11,10 +11,6 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
     
     let repository: StoreRepository
     
-    init(repository: StoreRepository) {
-        self.repository = repository
-    }
-    
     func execute(
         northWestLocation: Location,
         southEastLocation: Location
