@@ -9,21 +9,17 @@ import UIKit
 
 final class SummaryInformationView: UIView {
     
-    private let store: Store
-    
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = store.title
-        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         label.textColor = UIColor.primary2
         
         return label
     }()
     
     private lazy var certificationStackView: UIStackView = {
-        let labels = store.certificationTypes.map({ CertificationLabel(certificationType: $0) })
-        let stack = UIStackView(arrangedSubviews: labels)
+        let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.spacing = 4
@@ -35,8 +31,7 @@ final class SummaryInformationView: UIView {
     private lazy var categoty: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = store.category
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor.kcsGray
         
         return label
@@ -45,7 +40,7 @@ final class SummaryInformationView: UIView {
     private let storeOpenClosed: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textColor = UIColor.goodPrice
         
         return label
@@ -54,7 +49,7 @@ final class SummaryInformationView: UIView {
     private let openingHour: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor.kcsGray
         
         return label
@@ -88,8 +83,7 @@ final class SummaryInformationView: UIView {
         return view
     }()
     
-    init(store: Store) {
-        self.store = store
+    init() {
         super.init(frame: .zero)
         
         setBackgroundColor()
@@ -128,7 +122,7 @@ private extension SummaryInformationView {
         ])
         
         NSLayoutConstraint.activate([
-            certificationStackView.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 8),
+            certificationStackView.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 10),
             certificationStackView.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
@@ -138,17 +132,17 @@ private extension SummaryInformationView {
         ])
         
         NSLayoutConstraint.activate([
-            storeOpenClosed.topAnchor.constraint(equalTo: certificationStackView.bottomAnchor, constant: 8),
+            storeOpenClosed.topAnchor.constraint(equalTo: certificationStackView.bottomAnchor, constant: 16),
             storeOpenClosed.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
             openingHour.centerYAnchor.constraint(equalTo: storeOpenClosed.centerYAnchor),
-            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 6)
+            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 8)
         ])
         
         NSLayoutConstraint.activate([
-            storeCallButton.topAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor, constant: 13),
+            storeCallButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -49),
             storeCallButton.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor),
             storeCallButton.widthAnchor.constraint(equalToConstant: 69),
             storeCallButton.heightAnchor.constraint(equalToConstant: 40)
@@ -167,6 +161,72 @@ private extension SummaryInformationView {
             dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
             dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
         ])
+    }
+    
+}
+
+extension SummaryInformationView {
+    
+    func setUIContents(store: Store) {
+        storeTitle.text = store.title
+        categoty.text = store.category
+        let subviews = certificationStackView.arrangedSubviews
+        certificationStackView.arrangedSubviews.forEach { certificationStackView.removeArrangedSubview($0) }
+        subviews.forEach { $0.removeFromSuperview() }
+        store.certificationTypes
+            .map({
+                CertificationLabel(certificationType: $0)
+            })
+            .forEach {
+                certificationStackView.addArrangedSubview($0)
+            }
+        if !store.openingHour.isEmpty {
+            let openHours = store.openingHour.filter({ $0.open.day.index == Date().weekDay })
+            if openHours.isEmpty {
+                storeOpenClosed.text = "휴무일"
+                openingHour.text = ""
+            } else {
+                let openingHourString = openingHourString(regularOpeningHours: openHours)
+                storeOpenClosed.text = isOpen(open: openingHourString[0], close: openingHourString[1])
+                openingHour.text = "\(openingHourString[0]) - \(openingHourString[1])"
+            }
+        } else {
+            storeOpenClosed.text = ""
+            openingHour.text = ""
+        }
+        
+    }
+    
+    func isOpen(open: String, close: String) -> String {
+        let dateformat = DateFormatter()
+        dateformat.dateFormat = "HH:mm"
+        let now = Date().toSecond()
+        let close = dateformat.date(from: close)?.toSecond() ?? 86400
+        if let open = dateformat.date(from: open)?.toSecond() {
+            if open <= now && close >= now {
+                return "영업 중"
+            } else {
+                return "금일 영업 마감"
+            }
+        }
+        return ""
+    }
+    
+    func openingHourString(regularOpeningHours: [RegularOpeningHours]) -> [String] {
+        var openingHourStrings: [String] = []
+        if let openHour = regularOpeningHours.first?.open.hour,
+           let openMin = regularOpeningHours.first?.open.minute {
+            openingHourStrings.append(String(format: "%02d:%02d", openHour, openMin))
+        }
+        if let closeHour = regularOpeningHours.last?.close.hour,
+           let closeMin = regularOpeningHours.last?.close.minute {
+            if closeHour == 0 {
+                openingHourStrings.append(String(format: "%02d:%02d", 24, closeMin))
+            } else {
+                openingHourStrings.append(String(format: "%02d:%02d", closeHour, closeMin))
+            }
+        }
+        return openingHourStrings
     }
     
 }

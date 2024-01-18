@@ -50,6 +50,7 @@
 		A8ACB7D32B57BA8E00540BD1 /* GetStoreInfoUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7D22B57BA8E00540BD1 /* GetStoreInfoUseCaseImpl.swift */; };
 		A8ACB7D52B57BAD200540BD1 /* GetStoreInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7D42B57BAD200540BD1 /* GetStoreInfoUseCase.swift */; };
 		A8ACB7D82B57BE7D00540BD1 /* StoreRepoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7D72B57BE7D00540BD1 /* StoreRepoError.swift */; };
+		A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7DA2B58B51A00540BD1 /* Date+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		A8ACB7D22B57BA8E00540BD1 /* GetStoreInfoUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreInfoUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8ACB7D42B57BAD200540BD1 /* GetStoreInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreInfoUseCase.swift; sourceTree = "<group>"; };
 		A8ACB7D72B57BE7D00540BD1 /* StoreRepoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepoError.swift; sourceTree = "<group>"; };
+		A8ACB7DA2B58B51A00540BD1 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		AA9EF30352C847A7C6DEC110 /* Pods-KCS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.release.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.release.xcconfig"; sourceTree = "<group>"; };
 		E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -210,6 +212,7 @@
 		5986DCDE2B3892E1005AE43B /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				A8ACB7D92B58B4FA00540BD1 /* Extension */,
 				59C306AA2B4FFA8C00862625 /* Entity */,
 				5977BE5A2B55356600725C90 /* UseCase */,
 				A8ACB7CC2B54ED3800540BD1 /* Interface */,
@@ -366,6 +369,14 @@
 				A8ACB7D72B57BE7D00540BD1 /* StoreRepoError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		A8ACB7D92B58B4FA00540BD1 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A8ACB7DA2B58B51A00540BD1 /* Date+.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		CBA0F2F7C6731F98AFE4E86D /* Frameworks */ = {
@@ -536,6 +547,7 @@
 				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
 				59C306CD2B5035B100862625 /* StoreAPI.swift in Sources */,
 				5977BE5E2B5535C700725C90 /* FetchStoresUseCase.swift in Sources */,
+				A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
 				5977BE6E2B55750100725C90 /* LoadedStores.swift in Sources */,

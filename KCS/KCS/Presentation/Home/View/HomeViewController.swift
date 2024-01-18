@@ -103,9 +103,12 @@ final class HomeViewController: UIViewController {
         return view
     }()
     
-    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor, constant: -29)
-    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor, constant: -29)
-    private lazy var summaryInfoBottomConstraint = summaryInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 224)
+    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor, 
+                                                                                       constant: -29)
+    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor, 
+                                                                                     constant: -29)
+    private lazy var summaryInfoBottomConstraint = summaryInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, 
+                                                                                                  constant: 224)
     
     private let requestLocationServiceAlert: UIAlertController = {
         let alertController = UIAlertController(
@@ -129,7 +132,7 @@ final class HomeViewController: UIViewController {
     private lazy var refreshButton: RefreshButton = {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.isHidden = true
+        button.isHidden = true
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
@@ -198,7 +201,8 @@ private extension HomeViewController {
             .bind { [weak self] store in
                 guard let self = self else { return }
                 guard let store = store else { return }
-                markerClicked(store: store)
+                markerClicked()
+                summaryInformationView.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
     }
@@ -240,7 +244,7 @@ private extension HomeViewController {
         }
     }
     
-    func markerClicked(store: Store) {
+    func markerClicked() {
         summaryInfoBottomConstraint.constant = 0
         locationBottomConstraint.constant = -8
         refreshBottomConstraint.constant = -8
