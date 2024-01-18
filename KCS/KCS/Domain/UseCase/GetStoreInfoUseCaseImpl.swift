@@ -11,13 +11,8 @@ struct GetStoreInfoUseCaseImpl: GetStoreInfoUseCase {
     
     let repository: StoreRepository
     
-    func execute(tag: UInt) -> Store? {
-        do {
-            return try repository.getStoreInfo(tag: tag)
-        } catch {
-            dump(error)
-        }
-        return nil
+    func execute(tag: UInt) throws -> Store {
+        return try repository.getStoreInfo(tag: tag)
     }
     
 }

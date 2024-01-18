@@ -13,6 +13,6 @@ protocol GetStoreInfoUseCase {
     
     init(repository: StoreRepository)
     
-    func execute(tag: UInt) -> Store?
+    func execute(tag: UInt) throws -> Store
     
 }

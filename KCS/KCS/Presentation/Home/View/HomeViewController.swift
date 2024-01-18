@@ -247,7 +247,6 @@ private extension HomeViewController {
         viewModel.getStoreInfoComplete
             .bind { [weak self] store in
                 guard let self = self else { return }
-                guard let store = store else { return }
                 markerClicked()
                 summaryInformationView.setUIContents(store: store)
             }
@@ -276,7 +275,11 @@ private extension HomeViewController {
             }
             marker.isSelected.toggle()
             if marker.isSelected {
-                viewModel.markerTapped(tag: marker.tag)
+                do {
+                    try viewModel.markerTapped(tag: marker.tag)
+                } catch {
+                    dump(error)
+                }
             }
             clickedMarker = marker
             

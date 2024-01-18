@@ -32,13 +32,13 @@ protocol HomeViewModelInput {
         filters: [CertificationType]
     )
     func applyFilter(filters: [CertificationType])
-    func markerTapped(tag: UInt)
+    func markerTapped(tag: UInt) throws
     
 }
 
 protocol HomeViewModelOutput {
     
-    var getStoreInfoComplete: PublishRelay<Store?> { get }
+    var getStoreInfoComplete: PublishRelay<Store> { get }
     var refreshComplete: PublishRelay<[FilteredStores]> { get }
     
 }
