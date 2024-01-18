@@ -139,7 +139,10 @@ final class HomeViewController: UIViewController {
     }()
     
     private lazy var summaryInformationView: SummaryInformationView = {
-        let viewModel = SummaryInformationViewModelImpl(getOpenClosedUseCase: GetOpenClosedUseCaseImpl())
+        let viewModel = SummaryInformationViewModelImpl(
+            getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
+            fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
+        )
         let view = SummaryInformationView(viewModel: viewModel)
         view.translatesAutoresizingMaskIntoConstraints = false
         
