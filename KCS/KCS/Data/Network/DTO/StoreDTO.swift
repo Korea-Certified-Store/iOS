@@ -62,7 +62,8 @@ struct StoreDTO: Codable {
             address: formattedAddress,
             phoneNumber: phoneNumber,
             location: location.toEntity(),
-            openingHour: openingHours
+            openingHour: openingHours,
+            localPhotos: localPhotos
         )
     }
     

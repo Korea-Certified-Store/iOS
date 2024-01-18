@@ -17,6 +17,7 @@ struct Store: Hashable {
     let phoneNumber: String?
     let location: Location
     let openingHour: [RegularOpeningHours]
+    let localPhotos: [String]
     
     static func == (lhs: Store, rhs: Store) -> Bool {
         return lhs.id == rhs.id
