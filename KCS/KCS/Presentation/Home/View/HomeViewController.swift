@@ -295,7 +295,7 @@ private extension HomeViewController {
         summaryInfoBottomConstraint.constant = 0
         locationBottomConstraint.constant = -8
         refreshBottomConstraint.constant = -8
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
@@ -304,7 +304,7 @@ private extension HomeViewController {
         summaryInfoBottomConstraint.constant = 224
         locationBottomConstraint.constant = -29
         refreshBottomConstraint.constant = -29
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
