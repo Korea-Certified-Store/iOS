@@ -35,7 +35,7 @@ final class SummaryInformationView: UIView {
     private lazy var categoty: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.kcsGray
         
         return label
@@ -44,7 +44,7 @@ final class SummaryInformationView: UIView {
     private let storeOpenClosed: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = UIColor.goodPrice
         
         return label
@@ -53,7 +53,7 @@ final class SummaryInformationView: UIView {
     private let openingHour: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.kcsGray
         
         return label
