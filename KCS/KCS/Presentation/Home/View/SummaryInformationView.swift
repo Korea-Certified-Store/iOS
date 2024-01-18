@@ -6,19 +6,23 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class SummaryInformationView: UIView {
     
-    private let storeTitle: UILabel = {
+    private let disposeBag = DisposeBag()
+    
+    private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         label.textColor = UIColor.primary2
         
         return label
     }()
     
-    private var certificationStackView: UIStackView = {
+    private lazy var certificationStackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
@@ -28,29 +32,39 @@ final class SummaryInformationView: UIView {
         return stack
     }()
     
-    private let categoty: UILabel = {
+    private lazy var categoty: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.kcsGray
         
         return label
     }()
     
-    private let storeOpenClosed: UILabel = {
+    private lazy var storeOpenClosed: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = UIColor.goodPrice
+        viewModel.getOpenClosed
+            .bind { [weak self] openClosedType in
+                label.text = openClosedType.rawValue
+            }
+            .disposed(by: disposeBag)
         
         return label
     }()
     
-    private let openingHour: UILabel = {
+    private lazy var openingHour: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.kcsGray
+        viewModel.getOpeningHour
+            .bind { [weak self] text in
+                label.text = text
+            }
+            .disposed(by: disposeBag)
         
         return label
     }()
@@ -83,7 +97,10 @@ final class SummaryInformationView: UIView {
         return view
     }()
     
-    override init(frame: CGRect) {
+    private let viewModel: SummaryInformationViewModel
+    
+    init(viewModel: SummaryInformationViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         
         setBackgroundColor()
@@ -122,7 +139,7 @@ private extension SummaryInformationView {
         ])
         
         NSLayoutConstraint.activate([
-            certificationStackView.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 8),
+            certificationStackView.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 10),
             certificationStackView.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
@@ -132,17 +149,17 @@ private extension SummaryInformationView {
         ])
         
         NSLayoutConstraint.activate([
-            storeOpenClosed.topAnchor.constraint(equalTo: certificationStackView.bottomAnchor, constant: 8),
+            storeOpenClosed.topAnchor.constraint(equalTo: certificationStackView.bottomAnchor, constant: 16),
             storeOpenClosed.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
             openingHour.centerYAnchor.constraint(equalTo: storeOpenClosed.centerYAnchor),
-            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 6)
+            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 8)
         ])
         
         NSLayoutConstraint.activate([
-            storeCallButton.topAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor, constant: 13),
+            storeCallButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -49),
             storeCallButton.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor),
             storeCallButton.widthAnchor.constraint(equalToConstant: 69),
             storeCallButton.heightAnchor.constraint(equalToConstant: 40)
@@ -161,6 +178,50 @@ private extension SummaryInformationView {
             dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
             dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
         ])
+    }
+    
+}
+
+extension SummaryInformationView {
+    
+    func setUIContents(store: Store) {
+        storeTitle.text = store.title
+        categoty.text = store.category
+        viewModel.isOpenClosed(openingHour: store.openingHour)
+        viewModel.getOpeningHour(openingHour: store.openingHour)
+        removeStackView()
+        store.certificationTypes
+            .map({
+                CertificationLabel(certificationType: $0)
+            })
+            .forEach {
+                certificationStackView.addArrangedSubview($0)
+            }
+        if let phoneNum = store.phoneNumber {
+            storeCallButton.rx.tap
+                .bind { [weak self] _ in
+                    self?.callButtonTapped(phoneNum: phoneNum)
+                }
+                .disposed(by: disposeBag)
+        }
+    }
+    
+}
+
+private extension SummaryInformationView {
+    
+    func removeStackView() {
+        let subviews = certificationStackView.arrangedSubviews
+        certificationStackView.arrangedSubviews.forEach {
+            certificationStackView.removeArrangedSubview($0)
+        }
+        subviews.forEach { $0.removeFromSuperview() }
+    }
+    
+    func callButtonTapped(phoneNum: String) {
+        if let url = URL(string: "tel://" + "\(phoneNum.filter { $0.isNumber })") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
 }

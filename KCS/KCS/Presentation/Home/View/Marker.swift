@@ -7,18 +7,25 @@
 
 import UIKit
 import NMapsMap
+import RxSwift
 
 final class Marker: NMFMarker {
     
-    var isSelected: Bool = false
+    var isSelected: Bool = false {
+        didSet {
+            setUI(type: certificationType)
+        }
+    }
+    
+    private let certificationType: CertificationType
 
-    init(type: CertificationType, position: NMGLatLng? = nil) {
+    init(certificationType: CertificationType, position: NMGLatLng? = nil) {
+        self.certificationType = certificationType
         super.init()
         if let position = position {
             self.position = position
         }
-        setUI(type: type)
-        setHandler(type: type)
+        setUI(type: certificationType)
     }
     
 }
@@ -48,15 +55,5 @@ private extension Marker {
         }
         self.iconImage = icon
     }
-    
-    func setHandler(type: CertificationType) {
-        touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            guard let self = self else { return false }
-            isSelected = !isSelected
-            setUI(type: type)
-            
-            return true
-        }
-    }
-    
+
 }
