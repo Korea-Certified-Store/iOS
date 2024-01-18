@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct RegularOpeningHours {
+struct RegularOpeningHours: Hashable {
     
     let open: BusinessHour
     let close: BusinessHour
     
 }
 
-struct BusinessHour {
+struct BusinessHour: Hashable {
     
     let day: Day
     let hour: Int

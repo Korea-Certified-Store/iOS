@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CertificationType: String {
+enum CertificationType: String, Hashable {
     
     case goodPrice = "착한가격업소"
     case exemplary = "모범음식점"

@@ -8,7 +8,7 @@
 import Foundation
 import NMapsMap
 
-struct Location {
+struct Location: Hashable{
     
     let longitude: Double
     let latitude: Double

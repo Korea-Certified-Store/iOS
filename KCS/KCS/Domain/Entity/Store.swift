@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Store {
+struct Store: Hashable {
     
     let id: Int
     let title: String
@@ -17,5 +17,9 @@ struct Store {
     let phoneNumber: String?
     let location: Location
     let openingHour: [RegularOpeningHours]
+    
+    static func == (lhs: Store, rhs: Store) -> Bool {
+        return lhs.id == rhs.id
+    }
     
 }

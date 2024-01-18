@@ -10,7 +10,11 @@ import Alamofire
 
 final class StoreRepositoryImpl: StoreRepository {
     
-    private var stores: [Store] = []
+    private var stores: [Store]
+    
+    init(stores: [Store] = []) {
+        self.stores = stores
+    }
     
     func fetchRefreshStores(
         northWestLocation: Location,
