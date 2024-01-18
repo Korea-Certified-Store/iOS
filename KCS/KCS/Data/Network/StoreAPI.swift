@@ -11,32 +11,38 @@ import Alamofire
 enum StoreAPI {
     
     case getStores(location: RequestLocationDTO)
+    case getImage(url: String)
     
 }
 
 extension StoreAPI: Router, URLRequestConvertible {
 
     public var baseURL: String {
-        return NetworkURL.storeURL
+        switch self {
+        case .getStores:
+            return NetworkURL.storeURL
+        case .getImage(let url):
+            return url
+        }
     }
     
     public var path: String {
         switch self {
-        case .getStores:
+        case .getStores, .getImage:
             return ""
         }
     }
     
     public var method: HTTPMethod {
         switch self {
-        case .getStores:
+        case .getStores, .getImage:
             return .get
         }
     }
     
     public var headers: [String: String] {
         switch self {
-        case .getStores:
+        case .getStores, .getImage:
             return [
                 "Content-Type": "application/json"
             ]
@@ -48,7 +54,8 @@ extension StoreAPI: Router, URLRequestConvertible {
             switch self {
             case let .getStores(location):
                 return try location.asDictionary()
-                
+            case .getImage:
+                return nil
             }
         } catch let error {
             dump(error)
@@ -62,6 +69,8 @@ extension StoreAPI: Router, URLRequestConvertible {
         switch self {
         case .getStores:
             return URLEncoding.default
+        case .getImage:
+            return nil
         }
     }
     
