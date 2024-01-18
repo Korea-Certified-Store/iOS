@@ -274,7 +274,7 @@ private extension HomeViewController {
             if clickedMarker != marker {
                 clickedMarker?.isSelected = false
             }
-            marker.isSelected = !marker.isSelected
+            marker.isSelected.toggle()
             if marker.isSelected {
                 viewModel.markerTapped(tag: marker.tag)
             }
@@ -417,7 +417,6 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         clickedMarker?.isSelected = false
-        clickedMarker = nil
         markerCancel()
     }
     
