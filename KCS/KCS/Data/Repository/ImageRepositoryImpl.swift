@@ -19,15 +19,19 @@ final class ImageRepositoryImpl: ImageRepository {
                     observer.onNext(Data(imageData))
                 } else {
                     AF.request(StoreAPI.getImage(url: url))
-                        .responseDecodable(of: Data.self) { response in
+                        .response(completionHandler: { response in
                             switch response.result {
                             case .success(let result):
-                                ImageCache.shared.setImageData(result as NSData, for: imageURL as NSURL)
-                                observer.onNext(result)
+                                if let resultData = result {
+                                    ImageCache.shared.setImageData(resultData as NSData, for: imageURL as NSURL)
+                                    observer.onNext(resultData)
+                                } else {
+                                    observer.onError(ImageRepositoryError.noImageData)
+                                }
                             case .failure(let error):
                                 observer.onError(error)
                             }
-                        }
+                        })
                 }
             }
             

@@ -42,10 +42,12 @@ extension StoreAPI: Router, URLRequestConvertible {
     
     public var headers: [String: String] {
         switch self {
-        case .getStores, .getImage:
+        case .getStores:
             return [
                 "Content-Type": "application/json"
             ]
+        case .getImage:
+            return [:]
         }
     }
     
