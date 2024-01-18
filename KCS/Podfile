@@ -1,9 +1,10 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '15.0'
 
+use_frameworks!
+
 target 'KCS' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
 
   # Pods for KCS
    
@@ -20,5 +21,12 @@ post_install do |installer|
       end
     end
   end
+
+end
+
+target 'KCSUnitTest' do
+
+  pod 'RxTest'
+  pod 'RxBlocking'
 
 end
