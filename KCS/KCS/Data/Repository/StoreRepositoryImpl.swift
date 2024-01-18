@@ -43,6 +43,13 @@ final class StoreRepositoryImpl: StoreRepository {
         return stores.filter { !$0.certificationTypes.filter { types.contains($0) }.isEmpty }
     }
     
+    func getStoreInfo(
+        tag: UInt
+    ) throws -> Store {
+        guard let store = stores.first(where: { $0.id == tag }) else { throw StoreRepoError.wrongStoreId }
+        return store
+    }
+    
     func fetchStoresInMockJSON() throws -> [Store] {
         guard let json = Bundle.main.url(forResource: "MockStoreResponse", withExtension: "json") else {
             throw JSONContentsError.bundleRead

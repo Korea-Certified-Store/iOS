@@ -18,4 +18,8 @@ protocol StoreRepository {
         types: [CertificationType]
     ) -> [Store]
     
+    func getStoreInfo(
+        tag: UInt
+    ) throws -> Store
+    
 }

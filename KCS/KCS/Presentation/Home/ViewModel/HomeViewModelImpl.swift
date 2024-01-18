@@ -11,9 +11,11 @@ import RxSwift
 final class HomeViewModelImpl: HomeViewModel {
     
     let fetchStoresUseCase: FetchStoresUseCase
+    let getStoreInfoUseCase: GetStoreInfoUseCase
     let getFilteredStoresUseCase: GetFilteredStoresUseCase
     private let disposeBag = DisposeBag()
     
+    var getStoreInfoComplete = PublishRelay<Store>()
     var refreshComplete = PublishRelay<[FilteredStores]>()
     
     let dependency: HomeDependency
@@ -21,11 +23,13 @@ final class HomeViewModelImpl: HomeViewModel {
     init(
         dependency: HomeDependency,
         fetchStoresUseCase: FetchStoresUseCase,
-        getStoresUseCase: GetFilteredStoresUseCase
+        getStoreInfoUseCase: GetStoreInfoUseCase,
+        getFilteredStoresUseCase: GetFilteredStoresUseCase
     ) {
         self.dependency = dependency
         self.fetchStoresUseCase = fetchStoresUseCase
-        self.getFilteredStoresUseCase = getStoresUseCase
+        self.getStoreInfoUseCase = getStoreInfoUseCase
+        self.getFilteredStoresUseCase = getFilteredStoresUseCase
     }
     
     func refresh(
@@ -47,6 +51,12 @@ final class HomeViewModelImpl: HomeViewModel {
     
     func applyFilter(filters: [CertificationType]) {
         refreshComplete.accept(getFilteredStoresUseCase.execute(filters: filters))
+    }
+    
+    func markerTapped(tag: UInt) throws {
+        getStoreInfoComplete.accept(
+            try getStoreInfoUseCase.execute(tag: tag)
+        )
     }
     
 }
