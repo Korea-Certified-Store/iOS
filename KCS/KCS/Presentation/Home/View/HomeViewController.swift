@@ -139,7 +139,8 @@ final class HomeViewController: UIViewController {
     }()
     
     private lazy var summaryInformationView: SummaryInformationView = {
-        let view = SummaryInformationView(viewModel: self.summaryViewModel)
+        let viewModel = SummaryInformationViewModelImpl(getOpenClosedUseCase: GetOpenClosedUseCaseImpl())
+        let view = SummaryInformationView(viewModel: viewModel)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -200,11 +201,9 @@ final class HomeViewController: UIViewController {
     private var activatedFilter: [CertificationType] = []
     
     private let viewModel: HomeViewModel
-    private let summaryViewModel: SummaryInformationViewModel
     
-    init(viewModel: HomeViewModel, summaryViewModel: SummaryInformationViewModel) {
+    init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
-        self.summaryViewModel = summaryViewModel
         super.init(nibName: nil, bundle: nil)
     }
     

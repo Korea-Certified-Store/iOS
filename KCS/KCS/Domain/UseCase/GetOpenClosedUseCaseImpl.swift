@@ -12,16 +12,15 @@ struct GetOpenClosedUseCaseImpl: GetOpenClosedUseCase {
     func execute(
         openingHours: [RegularOpeningHours]
     ) -> OpenClosedType {
-        if !openingHours.isEmpty {
+        if openingHours.isEmpty {
+            return OpenClosedType.none
+        } else {
             let openHours = openingHours.filter({ $0.open.day.index == Date().weekDay })
-            dump(openHours)
             if openHours.isEmpty {
                 return OpenClosedType.dayOff
             } else {
                 return isOpen(openHours: openHours)
             }
-        } else {
-            return OpenClosedType.none
         }
     }
     

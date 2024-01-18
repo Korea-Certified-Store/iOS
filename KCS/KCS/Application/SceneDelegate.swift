@@ -28,8 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             getStoreInfoUseCase: GetStoreInfoUseCaseImpl(repository: repository),
             getFilteredStoresUseCase: GetFilteredStoresUseCaseImpl(repository: repository)
         )
-        let summaryViewModel = SummaryInformationViewModelImpl(getOpenClosedUseCase: GetOpenClosedUseCaseImpl())
-        window?.rootViewController = HomeViewController(viewModel: viewModel, summaryViewModel: summaryViewModel)
+        window?.rootViewController = HomeViewController(viewModel: viewModel)
         window?.makeKeyAndVisible()
     }
 
