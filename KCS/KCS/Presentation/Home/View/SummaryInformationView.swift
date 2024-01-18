@@ -183,7 +183,7 @@ extension SummaryInformationView {
         if !store.openingHour.isEmpty {
             let openHours = store.openingHour.filter({ $0.open.day.index == Date().weekDay })
             if openHours.isEmpty {
-                storeOpenClosed.text = "휴무일"
+                storeOpenClosed.text = OpenClosedType.closed.rawValue
                 openingHour.text = ""
             } else {
                 let openingHourString = openingHourString(regularOpeningHours: openHours)
@@ -191,7 +191,7 @@ extension SummaryInformationView {
                 openingHour.text = "\(openingHourString[0]) - \(openingHourString[1])"
             }
         } else {
-            storeOpenClosed.text = ""
+            storeOpenClosed.text = OpenClosedType.none.rawValue
             openingHour.text = ""
         }
         
@@ -204,12 +204,12 @@ extension SummaryInformationView {
         let close = dateformat.date(from: close)?.toSecond() ?? 86400
         if let open = dateformat.date(from: open)?.toSecond() {
             if open <= now && close >= now {
-                return "영업 중"
+                return OpenClosedType.open.rawValue
             } else {
-                return "금일 영업 마감"
+                return OpenClosedType.closing.rawValue
             }
         }
-        return ""
+        return OpenClosedType.none.rawValue
     }
     
     func openingHourString(regularOpeningHours: [RegularOpeningHours]) -> [String] {
