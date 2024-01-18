@@ -40,8 +40,6 @@ private extension FilterButton {
     }
     
     func configurationHandler() {
-        changesSelectionAsPrimaryAction = true
-        
         let handler: UIButton.ConfigurationUpdateHandler = { [weak self] button in
             switch button.state {
             case .selected:

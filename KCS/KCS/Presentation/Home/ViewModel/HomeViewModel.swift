@@ -12,14 +12,14 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     var dependency: HomeDependency { get }
     
     var fetchStoresUseCase: FetchStoresUseCase { get }
-    var getStoresUseCase: GetStoresUseCase { get }
     var getStoreInfoUseCase: GetStoreInfoUseCase { get }
+    var getFilteredStoresUseCase: GetFilteredStoresUseCase { get }
     
     init(
         dependency: HomeDependency,
         fetchStoresUseCase: FetchStoresUseCase,
-        getStoresUseCase: GetStoresUseCase,
-        getStoreInfoUseCase: GetStoreInfoUseCase
+        getStoreInfoUseCase: GetStoreInfoUseCase,
+        getFilteredStoresUseCase: GetFilteredStoresUseCase
     )
     
 }
@@ -29,16 +29,16 @@ protocol HomeViewModelInput {
     func refresh(
         northWestLocation: Location,
         southEastLocation: Location,
-        types: [CertificationType]
-    ) 
-    func applyFilter(types: [CertificationType])
+        filters: [CertificationType]
+    )
+    func applyFilter(filters: [CertificationType])
     func markerTapped(tag: UInt)
     
 }
 
 protocol HomeViewModelOutput {
     
-    var refreshComplete: PublishRelay<LoadedStores> { get }
     var getStoreInfoComplete: PublishRelay<Store?> { get }
+    var refreshComplete: PublishRelay<[FilteredStores]> { get }
     
 }

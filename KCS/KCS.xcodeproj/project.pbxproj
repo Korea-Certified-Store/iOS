@@ -19,9 +19,9 @@
 		5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE602B55374000725C90 /* HomeViewModel.swift */; };
 		5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE652B553BA800725C90 /* HomeViewModelImpl.swift */; };
 		5977BE682B553C8300725C90 /* HomeDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE672B553C8300725C90 /* HomeDependency.swift */; };
-		5977BE6A2B554C2B00725C90 /* GetStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE692B554C2B00725C90 /* GetStoresUseCaseImpl.swift */; };
-		5977BE6C2B554CB700725C90 /* GetStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE6B2B554CB700725C90 /* GetStoresUseCase.swift */; };
-		5977BE6E2B55750100725C90 /* LoadedStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE6D2B55750100725C90 /* LoadedStores.swift */; };
+		5977BE6A2B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE692B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift */; };
+		5977BE6C2B554CB700725C90 /* GetFilteredStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE6B2B554CB700725C90 /* GetFilteredStoresUseCase.swift */; };
+		5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE732B57FA7A00725C90 /* FilteredStores.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -69,9 +69,9 @@
 		5977BE602B55374000725C90 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		5977BE652B553BA800725C90 /* HomeViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelImpl.swift; sourceTree = "<group>"; };
 		5977BE672B553C8300725C90 /* HomeDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDependency.swift; sourceTree = "<group>"; };
-		5977BE692B554C2B00725C90 /* GetStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresUseCaseImpl.swift; sourceTree = "<group>"; };
-		5977BE6B2B554CB700725C90 /* GetStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresUseCase.swift; sourceTree = "<group>"; };
-		5977BE6D2B55750100725C90 /* LoadedStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedStores.swift; sourceTree = "<group>"; };
+		5977BE692B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFilteredStoresUseCaseImpl.swift; sourceTree = "<group>"; };
+		5977BE6B2B554CB700725C90 /* GetFilteredStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFilteredStoresUseCase.swift; sourceTree = "<group>"; };
+		5977BE732B57FA7A00725C90 /* FilteredStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredStores.swift; sourceTree = "<group>"; };
 		5986DCE82B390A8D005AE43B /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
@@ -158,6 +158,7 @@
 				5977BE5D2B5535C700725C90 /* FetchStoresUseCase.swift */,
 				5977BE6B2B554CB700725C90 /* GetStoresUseCase.swift */,
 				A8ACB7D42B57BAD200540BD1 /* GetStoreInfoUseCase.swift */,
+				5977BE6B2B554CB700725C90 /* GetFilteredStoresUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -168,6 +169,7 @@
 				5977BE5B2B5535A100725C90 /* FetchStoresUseCaseImpl.swift */,
 				5977BE692B554C2B00725C90 /* GetStoresUseCaseImpl.swift */,
 				A8ACB7D22B57BA8E00540BD1 /* GetStoreInfoUseCaseImpl.swift */,
+				5977BE692B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -276,8 +278,8 @@
 				59C306C22B50114100862625 /* Day.swift */,
 				59C306C82B501B9D00862625 /* RegularOpeningHours.swift */,
 				59C306A52B4D966C00862625 /* CertificationType.swift */,
-				5977BE6D2B55750100725C90 /* LoadedStores.swift */,
 				A8ACB7DC2B58E3DE00540BD1 /* OpenClosedType.swift */,
+				5977BE732B57FA7A00725C90 /* FilteredStores.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -533,19 +535,20 @@
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A89087042B4E7F3500767225 /* FilterButton.swift in Sources */,
-				5977BE6C2B554CB700725C90 /* GetStoresUseCase.swift in Sources */,
+				5977BE6C2B554CB700725C90 /* GetFilteredStoresUseCase.swift in Sources */,
 				59C306C92B501B9D00862625 /* RegularOpeningHours.swift in Sources */,
 				59C306BF2B50109100862625 /* Location.swift in Sources */,
 				591A88812B384E600059E40F /* HomeViewController.swift in Sources */,
 				A8ACB7D52B57BAD200540BD1 /* GetStoreInfoUseCase.swift in Sources */,
 				5977BE6A2B554C2B00725C90 /* GetStoresUseCaseImpl.swift in Sources */,
+				5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */,
+				5977BE6A2B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift in Sources */,
 				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
 				59C306CD2B5035B100862625 /* StoreAPI.swift in Sources */,
 				5977BE5E2B5535C700725C90 /* FetchStoresUseCase.swift in Sources */,
 				A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
-				5977BE6E2B55750100725C90 /* LoadedStores.swift in Sources */,
 				59C306B02B4FFE4400862625 /* StoreResponse.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* FetchStoresUseCaseImpl.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
