@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class SummaryInformationView: UIView {
+    
+    private let disposeBag = DisposeBag()
     
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
@@ -195,7 +199,18 @@ extension SummaryInformationView {
             openingHour.text = ""
         }
         
+        if let phoneNum = store.phoneNumber {
+            storeCallButton.rx.tap
+                .bind { [weak self] _ in
+                    self?.callButtonTapped(phoneNum: phoneNum)
+                }
+                .disposed(by: disposeBag)
+        }
     }
+    
+}
+
+private extension SummaryInformationView {
     
     func isOpen(open: String, close: String) -> String {
         let dateformat = DateFormatter()
@@ -227,6 +242,12 @@ extension SummaryInformationView {
             }
         }
         return openingHourStrings
+    }
+    
+    func callButtonTapped(phoneNum: String) {
+        if let url = URL(string: "tel://" + "\(phoneNum.filter { $0.isNumber })") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
 }

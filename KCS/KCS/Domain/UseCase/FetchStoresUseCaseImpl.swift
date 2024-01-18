@@ -11,10 +11,6 @@ struct FetchStoresUseCaseImpl: FetchStoresUseCase {
     
     let repository: StoreRepository
     
-    init(repository: StoreRepository) {
-        self.repository = repository
-    }
-    
     func execute(
         northWestLocation: Location,
         southEastLocation: Location

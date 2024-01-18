@@ -11,10 +11,6 @@ struct GetStoresUseCaseImpl: GetStoresUseCase {
     
     let repository: StoreRepository
     
-    init(repository: StoreRepository) {
-        self.repository = repository
-    }
-    
     func execute(
         types: [CertificationType]
     ) -> [Store] {
