@@ -2,23 +2,17 @@
 //  FetchStoresUseCaseImpl.swift
 //  KCS
 //
-//  Created by 조성민 on 1/15/24.
+//  Created by 조성민 on 1/18/24.
 //
 
-import RxSwift
+import Foundation
 
 struct FetchStoresUseCaseImpl: FetchStoresUseCase {
     
     let repository: StoreRepository
     
-    func execute(
-        northWestLocation: Location,
-        southEastLocation: Location
-    ) -> Observable<Void> {
-        return repository.fetchStores(
-            northWestLocation: northWestLocation,
-            southEastLocation: southEastLocation
-        )
+    func execute() -> [Store] {
+        return repository.fetchStores()
     }
-    
+
 }

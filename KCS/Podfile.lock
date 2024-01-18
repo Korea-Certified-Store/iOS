@@ -3,19 +3,25 @@ PODS:
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.17.0):
     - NMapsGeometry
+  - RxBlocking (6.6.0):
+    - RxSwift (= 6.6.0)
   - RxCocoa (6.6.0):
     - RxRelay (= 6.6.0)
     - RxSwift (= 6.6.0)
   - RxRelay (6.6.0):
     - RxSwift (= 6.6.0)
   - RxSwift (6.6.0)
+  - RxTest (6.6.0):
+    - RxSwift (= 6.6.0)
   - SwiftLint (0.54.0)
 
 DEPENDENCIES:
   - Alamofire
   - NMapsMap
+  - RxBlocking
   - RxCocoa (= 6.6.0)
   - RxSwift (= 6.6.0)
+  - RxTest
   - SwiftLint
 
 SPEC REPOS:
@@ -23,20 +29,24 @@ SPEC REPOS:
     - Alamofire
     - NMapsGeometry
     - NMapsMap
+    - RxBlocking
     - RxCocoa
     - RxRelay
     - RxSwift
+    - RxTest
     - SwiftLint
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
+  RxBlocking: fbd1f8501443024f686e556f36dac79b0d5f4d7c
   RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
   RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
+  RxTest: a23f26bb53a5e146a0a69db4f0fa0b69001ce7f4
   SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
 
-PODFILE CHECKSUM: 78f2549305fd6b9a6865bb9bf13bcc5e8f5147ad
+PODFILE CHECKSUM: 0f88675320ac9cb6ad8c84bdece01c7160cd9d79
 
 COCOAPODS: 1.14.3

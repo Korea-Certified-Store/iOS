@@ -10,9 +10,10 @@ import RxSwift
 
 final class HomeViewModelImpl: HomeViewModel {
     
+    let fetchRefreshStoresUseCase: FetchRefreshStoresUseCase
     let fetchStoresUseCase: FetchStoresUseCase
     let getStoreInfoUseCase: GetStoreInfoUseCase
-    let getFilteredStoresUseCase: GetFilteredStoresUseCase
+    
     private let disposeBag = DisposeBag()
     
     var getStoreInfoComplete = PublishRelay<Store>()
@@ -22,14 +23,14 @@ final class HomeViewModelImpl: HomeViewModel {
     
     init(
         dependency: HomeDependency,
+        fetchRefreshStoresUseCase: FetchRefreshStoresUseCase,
         fetchStoresUseCase: FetchStoresUseCase,
-        getStoreInfoUseCase: GetStoreInfoUseCase,
-        getFilteredStoresUseCase: GetFilteredStoresUseCase
+        getStoreInfoUseCase: GetStoreInfoUseCase
     ) {
         self.dependency = dependency
+        self.fetchRefreshStoresUseCase = fetchRefreshStoresUseCase
         self.fetchStoresUseCase = fetchStoresUseCase
         self.getStoreInfoUseCase = getStoreInfoUseCase
-        self.getFilteredStoresUseCase = getFilteredStoresUseCase
     }
     
     func refresh(
@@ -37,10 +38,10 @@ final class HomeViewModelImpl: HomeViewModel {
         southEastLocation: Location,
         filters: [CertificationType] = [.goodPrice, .exemplary, .safe]
     ) {
-        fetchStoresUseCase.execute(northWestLocation: northWestLocation, southEastLocation: southEastLocation)
+        fetchRefreshStoresUseCase.execute(northWestLocation: northWestLocation, southEastLocation: southEastLocation)
             .subscribe(
-                onNext: { [weak self] _ in
-                    self?.applyFilter(filters: filters)
+                onNext: { [weak self] stores in
+                    self?.applyFilters(stores: stores, filters: filters)
                 },
                 onError: { error in
                     dump(error)
@@ -49,8 +50,43 @@ final class HomeViewModelImpl: HomeViewModel {
             .disposed(by: disposeBag)
     }
     
-    func applyFilter(filters: [CertificationType]) {
-        refreshComplete.accept(getFilteredStoresUseCase.execute(filters: filters))
+    func fetchFilteredStores(filters: [CertificationType]) {
+        applyFilters(stores: fetchStoresUseCase.execute(), filters: filters)
+    }
+    
+    func applyFilters(stores: [Store], filters: [CertificationType]) {
+        var goodPriceStores = FilteredStores(
+            type: .goodPrice,
+            stores: []
+        )
+        var exemplaryStores = FilteredStores(
+            type: .exemplary,
+            stores: []
+        )
+        var safeStores = FilteredStores(
+            type: .safe,
+            stores: []
+        )
+        
+        stores.forEach { store in
+            var type: CertificationType?
+            filters.forEach { filter in
+                if store.certificationTypes.contains(filter) {
+                    type = filter
+                }
+            }
+            if let checkedType = type {
+                switch checkedType {
+                case .goodPrice:
+                    goodPriceStores.stores.append(store)
+                case .exemplary:
+                    exemplaryStores.stores.append(store)
+                case .safe:
+                    safeStores.stores.append(store)
+                }
+            }
+        }
+        refreshComplete.accept([goodPriceStores, exemplaryStores, safeStores])
     }
     
     func markerTapped(tag: UInt) throws {

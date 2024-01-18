@@ -2,10 +2,10 @@
 //  FetchStoresUseCase.swift
 //  KCS
 //
-//  Created by 조성민 on 1/15/24.
+//  Created by 조성민 on 1/18/24.
 //
 
-import RxSwift
+import Foundation
 
 protocol FetchStoresUseCase {
     
@@ -13,9 +13,6 @@ protocol FetchStoresUseCase {
     
     init(repository: StoreRepository)
     
-    func execute(
-        northWestLocation: Location,
-        southEastLocation: Location
-    ) -> Observable<Void>
+    func execute() -> [Store]
 
 }
