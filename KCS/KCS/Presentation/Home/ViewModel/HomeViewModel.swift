@@ -11,13 +11,13 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     var dependency: HomeDependency { get }
     
+    var fetchRefreshStoresUseCase: FetchRefreshStoresUseCase { get }
     var fetchStoresUseCase: FetchStoresUseCase { get }
-    var getFilteredStoresUseCase: GetFilteredStoresUseCase { get }
     
     init(
         dependency: HomeDependency,
-        fetchStoresUseCase: FetchStoresUseCase,
-        getStoresUseCase: GetFilteredStoresUseCase
+        fetchRefreshStoresUseCase: FetchRefreshStoresUseCase,
+        fetchStoresUseCase: FetchStoresUseCase
     )
     
 }
@@ -29,7 +29,7 @@ protocol HomeViewModelInput {
         southEastLocation: Location,
         filters: [CertificationType]
     ) 
-    func applyFilter(filters: [CertificationType])
+    func fetchFilteredStores(filters: [CertificationType])
     
 }
 

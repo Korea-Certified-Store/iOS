@@ -27,7 +27,7 @@ final class HomeViewController: UIViewController {
                 } else {
                     activatedFilter.append(.goodPrice)
                 }
-                viewModel.applyFilter(filters: getActivatedTypes())
+                viewModel.fetchFilteredStores(filters: getActivatedTypes())
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -48,7 +48,7 @@ final class HomeViewController: UIViewController {
                 } else {
                     activatedFilter.append(.exemplary)
                 }
-                viewModel.applyFilter(filters: getActivatedTypes())
+                viewModel.fetchFilteredStores(filters: getActivatedTypes())
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -69,7 +69,7 @@ final class HomeViewController: UIViewController {
                 } else {
                     activatedFilter.append(.safe)
                 }
-                viewModel.applyFilter(filters: getActivatedTypes())
+                viewModel.fetchFilteredStores(filters: getActivatedTypes())
                 return !lastState
             }
             .bind(to: button.rx.isSelected)

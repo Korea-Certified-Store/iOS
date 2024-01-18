@@ -16,7 +16,12 @@ final class StoreRepositoryImplTests: XCTestCase {
         storeRepositoryImpl = StoreRepositoryImpl()
     }
 
-    func testExample() {
+    func test_Store가_없는_경우_getStores_결과는_빈_배열을_반환한다() {
+        // given
+        storeRepositoryImpl
+        // when
+        
+        // then
         
     }
 

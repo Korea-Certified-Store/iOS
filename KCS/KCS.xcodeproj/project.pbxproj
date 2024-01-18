@@ -14,15 +14,15 @@
 		591A88862B384E610059E40F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 591A88852B384E610059E40F /* Assets.xcassets */; };
 		591A88892B384E610059E40F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591A88872B384E610059E40F /* LaunchScreen.storyboard */; };
 		5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE572B5524D500725C90 /* RefreshButton.swift */; };
-		5977BE5C2B5535A100725C90 /* FetchStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE5B2B5535A100725C90 /* FetchStoresUseCaseImpl.swift */; };
-		5977BE5E2B5535C700725C90 /* FetchStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE5D2B5535C700725C90 /* FetchStoresUseCase.swift */; };
+		5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE5B2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift */; };
+		5977BE5E2B5535C700725C90 /* FetchRefreshStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE5D2B5535C700725C90 /* FetchRefreshStoresUseCase.swift */; };
 		5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE602B55374000725C90 /* HomeViewModel.swift */; };
 		5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE652B553BA800725C90 /* HomeViewModelImpl.swift */; };
 		5977BE682B553C8300725C90 /* HomeDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE672B553C8300725C90 /* HomeDependency.swift */; };
-		5977BE6A2B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE692B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift */; };
-		5977BE6C2B554CB700725C90 /* GetFilteredStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE6B2B554CB700725C90 /* GetFilteredStoresUseCase.swift */; };
 		5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE732B57FA7A00725C90 /* FilteredStores.swift */; };
 		5977BE8D2B5966F900725C90 /* KCSUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE8C2B5966F900725C90 /* KCSUnitTest.swift */; };
+		5977BE942B59738800725C90 /* FetchStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE932B59738800725C90 /* FetchStoresUseCase.swift */; };
+		5977BE962B5973B400725C90 /* FetchStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE952B5973B400725C90 /* FetchStoresUseCaseImpl.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -70,16 +70,16 @@
 		591A88882B384E610059E40F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		591A888A2B384E610059E40F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5977BE572B5524D500725C90 /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
-		5977BE5B2B5535A100725C90 /* FetchStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresUseCaseImpl.swift; sourceTree = "<group>"; };
-		5977BE5D2B5535C700725C90 /* FetchStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresUseCase.swift; sourceTree = "<group>"; };
+		5977BE5B2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRefreshStoresUseCaseImpl.swift; sourceTree = "<group>"; };
+		5977BE5D2B5535C700725C90 /* FetchRefreshStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRefreshStoresUseCase.swift; sourceTree = "<group>"; };
 		5977BE602B55374000725C90 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		5977BE652B553BA800725C90 /* HomeViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelImpl.swift; sourceTree = "<group>"; };
 		5977BE672B553C8300725C90 /* HomeDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDependency.swift; sourceTree = "<group>"; };
-		5977BE692B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFilteredStoresUseCaseImpl.swift; sourceTree = "<group>"; };
-		5977BE6B2B554CB700725C90 /* GetFilteredStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFilteredStoresUseCase.swift; sourceTree = "<group>"; };
 		5977BE732B57FA7A00725C90 /* FilteredStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredStores.swift; sourceTree = "<group>"; };
 		5977BE8A2B5966F900725C90 /* KCSUnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCSUnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5977BE8C2B5966F900725C90 /* KCSUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCSUnitTest.swift; sourceTree = "<group>"; };
+		5977BE932B59738800725C90 /* FetchStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresUseCase.swift; sourceTree = "<group>"; };
+		5977BE952B5973B400725C90 /* FetchStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresUseCaseImpl.swift; sourceTree = "<group>"; };
 		5986DCE82B390A8D005AE43B /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
@@ -167,8 +167,8 @@
 		5977BE592B55355D00725C90 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				5977BE5D2B5535C700725C90 /* FetchStoresUseCase.swift */,
-				5977BE6B2B554CB700725C90 /* GetFilteredStoresUseCase.swift */,
+				5977BE5D2B5535C700725C90 /* FetchRefreshStoresUseCase.swift */,
+				5977BE932B59738800725C90 /* FetchStoresUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -176,8 +176,8 @@
 		5977BE5A2B55356600725C90 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				5977BE5B2B5535A100725C90 /* FetchStoresUseCaseImpl.swift */,
-				5977BE692B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift */,
+				5977BE5B2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift */,
+				5977BE952B5973B400725C90 /* FetchStoresUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -570,19 +570,17 @@
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A89087042B4E7F3500767225 /* FilterButton.swift in Sources */,
-				5977BE6C2B554CB700725C90 /* GetFilteredStoresUseCase.swift in Sources */,
 				59C306C92B501B9D00862625 /* RegularOpeningHours.swift in Sources */,
 				59C306BF2B50109100862625 /* Location.swift in Sources */,
 				591A88812B384E600059E40F /* HomeViewController.swift in Sources */,
 				5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */,
-				5977BE6A2B554C2B00725C90 /* GetFilteredStoresUseCaseImpl.swift in Sources */,
 				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
 				59C306CD2B5035B100862625 /* StoreAPI.swift in Sources */,
-				5977BE5E2B5535C700725C90 /* FetchStoresUseCase.swift in Sources */,
+				5977BE5E2B5535C700725C90 /* FetchRefreshStoresUseCase.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
 				59C306B02B4FFE4400862625 /* StoreResponse.swift in Sources */,
-				5977BE5C2B5535A100725C90 /* FetchStoresUseCaseImpl.swift in Sources */,
+				5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */,
@@ -590,6 +588,7 @@
 				59C306B62B50027300862625 /* Store.swift in Sources */,
 				59C306B42B50015500862625 /* APIResponse.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
+				5977BE942B59738800725C90 /* FetchStoresUseCase.swift in Sources */,
 				59C306BB2B5003F500862625 /* NetworkURL.swift in Sources */,
 				59C306B22B50001F00862625 /* StoreRepositoryImpl.swift in Sources */,
 				591A887D2B384E600059E40F /* AppDelegate.swift in Sources */,
@@ -597,6 +596,7 @@
 				59C306C32B50114100862625 /* Day.swift in Sources */,
 				59C306AD2B4FFAC700862625 /* StoreDTO.swift in Sources */,
 				59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */,
+				5977BE962B5973B400725C90 /* FetchStoresUseCaseImpl.swift in Sources */,
 				591A887F2B384E600059E40F /* SceneDelegate.swift in Sources */,
 				59C306D82B50650D00862625 /* Encodable+.swift in Sources */,
 				5977BE682B553C8300725C90 /* HomeDependency.swift in Sources */,

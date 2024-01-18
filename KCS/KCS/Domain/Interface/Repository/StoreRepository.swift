@@ -9,13 +9,11 @@ import RxSwift
 
 protocol StoreRepository {
     
-    func fetchStores(
+    func fetchRefreshStores(
         northWestLocation: Location,
         southEastLocation: Location
-    ) -> Observable<Void>
+    ) -> Observable<[Store]>
     
-    func getStores(
-        types: [CertificationType]
-    ) -> [Store]
+    func fetchStores() -> [Store]
     
 }
