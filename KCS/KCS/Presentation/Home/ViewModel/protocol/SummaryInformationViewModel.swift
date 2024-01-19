@@ -15,19 +15,23 @@ protocol SummaryInformationViewModel: SummaryInformationViewModelInput, SummaryI
     
 }
 
-protocol SummaryInformationViewModelInput {
+enum SummaryInformationViewInputCase {
     
-    func setOpenClosed(
+    case setOpenClosed(
         openingHour: [RegularOpeningHours]
     )
-    
-    func setOpeningHour(
+    case setOpeningHour(
         openingHour: [RegularOpeningHours]
     )
-    
-    func fetchThumbnailImage(
+    case fetchThumbnailImage(
         url: String
     )
+    
+}
+
+protocol SummaryInformationViewModelInput {
+    
+    func action(input: SummaryInformationViewInputCase)
     
 }
 

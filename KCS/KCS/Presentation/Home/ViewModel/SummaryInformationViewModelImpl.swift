@@ -15,14 +15,29 @@ final class SummaryInformationViewModelImpl: SummaryInformationViewModel {
     let getOpenClosedUseCase: GetOpenClosedUseCase
     let fetchImageUseCase: FetchImageUseCase
     
+    var openClosedOutput = PublishRelay<OpenClosedType>()
+    var openingHourOutput = PublishRelay<String>()
+    var thumbnailImageOutput = PublishRelay<Data>()
+    
     init(getOpenClosedUseCase: GetOpenClosedUseCase, fetchImageUseCase: FetchImageUseCase) {
         self.getOpenClosedUseCase = getOpenClosedUseCase
         self.fetchImageUseCase = fetchImageUseCase
     }
     
-    var openClosedOutput = PublishRelay<OpenClosedType>()
-    var openingHourOutput = PublishRelay<String>()
-    var thumbnailImageOutput = PublishRelay<Data>()
+    func action(input: SummaryInformationViewInputCase) {
+        switch input {
+        case .setOpenClosed(let openingHour):
+            setOpenClosed(openingHour: openingHour)
+        case .setOpeningHour(let openingHour):
+            setOpeningHour(openingHour: openingHour)
+        case .fetchThumbnailImage(let url):
+            fetchThumbnailImage(url: url)
+        }
+    }
+    
+}
+
+private extension SummaryInformationViewModelImpl {
     
     func setOpenClosed(
         openingHour: [RegularOpeningHours]

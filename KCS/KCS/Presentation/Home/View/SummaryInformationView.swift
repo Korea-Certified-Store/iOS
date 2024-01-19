@@ -198,8 +198,8 @@ extension SummaryInformationView {
     func setUIContents(store: Store) {
         storeTitle.text = store.title
         categoty.text = store.category
-        viewModel.setOpenClosed(openingHour: store.openingHour)
-        viewModel.setOpeningHour(openingHour: store.openingHour)
+        viewModel.action(input: .setOpenClosed(openingHour: store.openingHour))
+        viewModel.action(input: .setOpeningHour(openingHour: store.openingHour))
         removeStackView()
         store.certificationTypes
             .map({
@@ -216,7 +216,7 @@ extension SummaryInformationView {
                 .disposed(by: disposeBag)
         }
         if let thumbnailURL = store.localPhotos.first {
-            viewModel.fetchThumbnailImage(url: thumbnailURL)
+            viewModel.action(input: .fetchThumbnailImage(url: thumbnailURL))
         }
     }
     
