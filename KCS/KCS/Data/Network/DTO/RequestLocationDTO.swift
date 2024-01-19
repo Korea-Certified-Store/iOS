@@ -11,7 +11,11 @@ struct RequestLocationDTO: Encodable {
     
     let nwLong: Double
     let nwLat: Double
+    let swLong: Double
+    let swLat: Double
     let seLong: Double
     let seLat: Double
+    let neLong: Double
+    let neLat: Double
     
 }

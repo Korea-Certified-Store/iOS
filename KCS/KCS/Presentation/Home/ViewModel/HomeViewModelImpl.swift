@@ -36,10 +36,12 @@ final class HomeViewModelImpl: HomeViewModel {
     func action(input: HomeViewModelInputCase) {
         do {
             switch input {
-            case .refresh(let northWestLocation, let southEastLocation, let filters):
+            case .refresh(let northWestLocation, let southWestLocation, let southEastLocation, let northEastLocation, let filters):
                 refresh(
                     northWestLocation: northWestLocation,
+                    southWestLocation: southWestLocation,
                     southEastLocation: southEastLocation,
+                    northEastLocation: northEastLocation,
                     filters: filters
                 )
             case .fetchFilteredStores(let filters):
@@ -58,10 +60,17 @@ private extension HomeViewModelImpl {
     
     func refresh(
         northWestLocation: Location,
+        southWestLocation: Location,
         southEastLocation: Location,
+        northEastLocation: Location,
         filters: [CertificationType] = [.goodPrice, .exemplary, .safe]
     ) {
-        fetchRefreshStoresUseCase.execute(northWestLocation: northWestLocation, southEastLocation: southEastLocation)
+        fetchRefreshStoresUseCase.execute(
+            northWestLocation: northWestLocation,
+            southWestLocation: southWestLocation,
+            southEastLocation: southEastLocation,
+            northEastLocation: northEastLocation
+        )
             .subscribe(
                 onNext: { [weak self] stores in
                     self?.applyFilters(stores: stores, filters: filters)

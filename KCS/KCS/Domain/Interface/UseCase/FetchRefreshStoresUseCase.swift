@@ -15,7 +15,9 @@ protocol FetchRefreshStoresUseCase {
     
     func execute(
         northWestLocation: Location,
-        southEastLocation: Location
+        southWestLocation: Location,
+        southEastLocation: Location,
+        northEastLocation: Location
     ) -> Observable<[Store]>
 
 }
