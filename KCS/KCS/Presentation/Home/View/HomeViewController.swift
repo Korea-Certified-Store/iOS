@@ -16,64 +16,28 @@ final class HomeViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     private lazy var goodPriceFilterButton: FilterButton = {
-        let button = FilterButton(title: "착한 가격 업소", color: UIColor.goodPrice)
+        let type = CertificationType.goodPrice
+        let button = FilterButton(type: type)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.rx.tap
-            .scan(false) { [weak self] (lastState, _) in
-                guard let self = self else { return lastState }
-                if lastState {
-                    guard let lastIndex = activatedFilter.lastIndex(of: .goodPrice) else { return lastState }
-                    activatedFilter.remove(at: lastIndex)
-                } else {
-                    activatedFilter.append(.goodPrice)
-                }
-                viewModel.action(input: .fetchFilteredStores(filters: getActivatedTypes()))
-                return !lastState
-            }
-            .bind(to: button.rx.isSelected)
-            .disposed(by: disposeBag)
+        bindFilterButton(button: button, type: type)
         
         return button
     }()
     
     private lazy var exemplaryFilterButton: FilterButton = {
-        let button = FilterButton(title: "모범 음식점", color: UIColor.exemplary)
+        let type = CertificationType.exemplary
+        let button = FilterButton(type: type)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.rx.tap
-            .scan(false) { [weak self] (lastState, _) in
-                guard let self = self else { return lastState }
-                if lastState {
-                    guard let lastIndex = activatedFilter.lastIndex(of: .exemplary) else { return lastState }
-                    activatedFilter.remove(at: lastIndex)
-                } else {
-                    activatedFilter.append(.exemplary)
-                }
-                viewModel.action(input: .fetchFilteredStores(filters: getActivatedTypes()))
-                return !lastState
-            }
-            .bind(to: button.rx.isSelected)
-            .disposed(by: disposeBag)
+        bindFilterButton(button: button, type: type)
         
         return button
     }()
     
     private lazy var safeFilterButton: FilterButton = {
-        let button = FilterButton(title: "안심 식당", color: UIColor.safe)
+        let type = CertificationType.safe
+        let button = FilterButton(type: type)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.rx.tap
-            .scan(false) { [weak self] (lastState, _) in
-                guard let self = self else { return lastState }
-                if lastState {
-                    guard let lastIndex = activatedFilter.lastIndex(of: .safe) else { return lastState }
-                    activatedFilter.remove(at: lastIndex)
-                } else {
-                    activatedFilter.append(.safe)
-                }
-                viewModel.action(input: .fetchFilteredStores(filters: getActivatedTypes()))
-                return !lastState
-            }
-            .bind(to: button.rx.isSelected)
-            .disposed(by: disposeBag)
+        bindFilterButton(button: button, type: type)
         
         return button
     }()
@@ -169,21 +133,32 @@ final class HomeViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                let startPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-                let endPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+                let northWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+                let southWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+                let southEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+                let northEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
                 viewModel.action(
                     input: .refresh(
                         northWestLocation: Location(
-                            longitude: startPoint.lng,
-                            latitude: startPoint.lat
+                            longitude: northWestPoint.lng,
+                            latitude: northWestPoint.lat
+                        ),
+                        southWestLocation: Location(
+                            longitude: southWestPoint.lng,
+                            latitude: southWestPoint.lat
                         ),
                         southEastLocation: Location(
-                            longitude: endPoint.lng,
-                            latitude: endPoint.lat
+                            longitude: southEastPoint.lng,
+                            latitude: southEastPoint.lat
+                        ),
+                        northEastLocation: Location(
+                            longitude: northEastPoint.lng,
+                            latitude: northEastPoint.lat
                         ),
                         filters: getActivatedTypes()
                     )
                 )
+                refreshButton.isHidden = true
             }
             .disposed(by: self.disposeBag)
         
@@ -219,11 +194,9 @@ final class HomeViewController: UIViewController {
 private extension HomeViewController {
     
     func bind() {
-        
         viewModel.refreshOutput
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
-                self.refreshButton.isHidden = true
                 self.markers.forEach { $0.mapView = nil }
                 filteredStores.forEach { filteredStore in
                     filteredStore.stores.forEach {
@@ -243,7 +216,23 @@ private extension HomeViewController {
                 storeInformationViewController?.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindFilterButton(button: FilterButton, type: CertificationType) {
+        button.rx.tap
+            .scan(false) { [weak self] (lastState, _) in
+                guard let self = self else { return lastState }
+                if lastState {
+                    guard let lastIndex = activatedFilter.lastIndex(of: type) else { return lastState }
+                    activatedFilter.remove(at: lastIndex)
+                } else {
+                    activatedFilter.append(type)
+                }
+                viewModel.action(input: .fetchFilteredStores(filters: getActivatedTypes()))
+                return !lastState
+            }
+            .bind(to: button.rx.isSelected)
+            .disposed(by: disposeBag)
     }
     
     func setMarker(marker: Marker, tag: UInt) {
@@ -405,21 +394,33 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         if reason == NMFMapChangedByDeveloper {
             mapView.positionMode = .direction
             locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
-            let startPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-            let endPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+            
+            let northWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+            let southWestPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+            let southEastPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+            let northEastPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
             viewModel.action(
                 input: .refresh(
                     northWestLocation: Location(
-                        longitude: startPoint.lng,
-                        latitude: startPoint.lat
+                        longitude: northWestPoint.lng,
+                        latitude: northWestPoint.lat
+                    ),
+                    southWestLocation: Location(
+                        longitude: southWestPoint.lng,
+                        latitude: southWestPoint.lat
                     ),
                     southEastLocation: Location(
-                        longitude: endPoint.lng,
-                        latitude: endPoint.lat
+                        longitude: southEastPoint.lng,
+                        latitude: southEastPoint.lat
+                    ),
+                    northEastLocation: Location(
+                        longitude: northEastPoint.lng,
+                        latitude: northEastPoint.lat
                     ),
                     filters: getActivatedTypes()
                 )
             )
+            refreshButton.isHidden = true
         }
     }
     

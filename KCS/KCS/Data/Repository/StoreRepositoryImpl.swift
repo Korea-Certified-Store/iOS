@@ -18,14 +18,20 @@ final class StoreRepositoryImpl: StoreRepository {
     
     func fetchRefreshStores(
         northWestLocation: Location,
-        southEastLocation: Location
+        southWestLocation: Location,
+        southEastLocation: Location,
+        northEastLocation: Location
     ) -> Observable<[Store]> {
         return Observable<[Store]>.create { observer -> Disposable in
             AF.request(StoreAPI.getStores(location: RequestLocationDTO(
                 nwLong: northWestLocation.longitude,
                 nwLat: northWestLocation.latitude,
+                swLong: southWestLocation.longitude,
+                swLat: southWestLocation.latitude,
                 seLong: southEastLocation.longitude,
-                seLat: southEastLocation.latitude
+                seLat: southEastLocation.latitude,
+                neLong: northEastLocation.longitude,
+                neLat: northEastLocation.latitude
             )))
             .responseDecodable(of: StoreResponse.self) { [weak self] response in
                 switch response.result {

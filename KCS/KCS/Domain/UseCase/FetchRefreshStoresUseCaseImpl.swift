@@ -13,11 +13,15 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
     
     func execute(
         northWestLocation: Location,
-        southEastLocation: Location
+        southWestLocation: Location,
+        southEastLocation: Location,
+        northEastLocation: Location
     ) -> Observable<[Store]> {
         return repository.fetchRefreshStores(
             northWestLocation: northWestLocation,
-            southEastLocation: southEastLocation
+            southWestLocation: southWestLocation,
+            southEastLocation: southEastLocation,
+            northEastLocation: northEastLocation
         )
     }
     

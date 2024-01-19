@@ -9,9 +9,10 @@ import UIKit
 
 final class FilterButton: UIButton {
     
-    init(title: String, color: UIColor) {
+    init(type: CertificationType) {
         super.init(frame: .zero)
-        configure(title: title, color: color)
+        setUI()
+        setContents(type: type)
         setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
         configurationHandler()
     }
@@ -24,18 +25,26 @@ final class FilterButton: UIButton {
 
 private extension FilterButton {
     
-    func configure(title: String, color: UIColor) {
-        var titleAttribute = AttributedString.init(title)
-        titleAttribute.font = .systemFont(ofSize: 10)
-        
+    func setUI() {
         var config = UIButton.Configuration.filled()
-        config.attributedTitle = titleAttribute
-        config.image = SystemImage.circle?.withTintColor(color, renderingMode: .alwaysOriginal)
         config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 10)
         config.imagePlacement = .leading
         config.imagePadding = 5
         config.cornerStyle = .capsule
         config.contentInsets = NSDirectionalEdgeInsets(top: 11, leading: 10, bottom: 11, trailing: 10)
+        configuration = config
+    }
+    
+    func setContents(type: CertificationType) {
+        var titleAttribute = AttributedString.init(type.description)
+        titleAttribute.font = .systemFont(ofSize: 10)
+        
+        guard var config = configuration else { return }
+        config.attributedTitle = titleAttribute
+        config.image = SystemImage.circle?.withTintColor(
+            getColor(type: type),
+            renderingMode: .alwaysOriginal
+        )
         configuration = config
     }
     
@@ -53,6 +62,17 @@ private extension FilterButton {
             }
         }
         configurationUpdateHandler = handler
+    }
+    
+    func getColor(type: CertificationType) -> UIColor {
+        switch type {
+        case .goodPrice:
+            return .goodPrice
+        case .exemplary:
+            return .exemplary
+        case .safe:
+            return .safe
+        }
     }
     
 }

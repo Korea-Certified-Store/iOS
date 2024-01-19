@@ -11,7 +11,9 @@ protocol StoreRepository {
     
     func fetchRefreshStores(
         northWestLocation: Location,
-        southEastLocation: Location
+        southWestLocation: Location,
+        southEastLocation: Location,
+        northEastLocation: Location
     ) -> Observable<[Store]>
     
     func fetchStores() -> [Store]

@@ -28,7 +28,9 @@ enum HomeViewModelInputCase {
     
     case refresh(
         northWestLocation: Location,
+        southWestLocation: Location,
         southEastLocation: Location,
+        northEastLocation: Location,
         filters: [CertificationType]
     )
     case fetchFilteredStores(

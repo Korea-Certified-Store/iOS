@@ -15,7 +15,15 @@ extension UIView {
         layer.shadowColor = UIColor.primary1.cgColor
     }
     
-    func setLayerCorner(cornerRadius: CGFloat, maskedCorners: CACornerMask = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner]) {
+    func setLayerCorner(
+        cornerRadius: CGFloat,
+        maskedCorners: CACornerMask = [
+            .layerMaxXMaxYCorner,
+            .layerMaxXMinYCorner,
+            .layerMinXMaxYCorner,
+            .layerMinXMinYCorner
+        ]
+    ) {
         layer.cornerRadius = cornerRadius
         layer.maskedCorners = maskedCorners
     }
