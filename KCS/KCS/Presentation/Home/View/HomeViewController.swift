@@ -208,7 +208,7 @@ private extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.getStoreInfoOutput
+        viewModel.getStoreInformationOutput
             .bind { [weak self] store in
                 guard let self = self else { return }
                 markerClicked()

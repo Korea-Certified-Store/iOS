@@ -18,7 +18,7 @@ protocol StoreRepository {
     
     func fetchStores() -> [Store]
     
-    func getStoreInfo(
+    func getStoreInformation(
         tag: UInt
     ) throws -> Store
     

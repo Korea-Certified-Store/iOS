@@ -13,13 +13,13 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     var fetchRefreshStoresUseCase: FetchRefreshStoresUseCase { get }
     var fetchStoresUseCase: FetchStoresUseCase { get }
-    var getStoreInfoUseCase: GetStoreInfoUseCase { get }
+    var getStoreInformationUseCase: GetStoreInformationUseCase { get }
     
     init(
         dependency: HomeDependency,
         fetchRefreshStoresUseCase: FetchRefreshStoresUseCase,
         fetchStoresUseCase: FetchStoresUseCase,
-        getStoreInfoUseCase: GetStoreInfoUseCase
+        getStoreInformationUseCase: GetStoreInformationUseCase
     )
     
 }
@@ -50,7 +50,7 @@ protocol HomeViewModelInput {
 
 protocol HomeViewModelOutput {
     
-    var getStoreInfoOutput: PublishRelay<Store> { get }
+    var getStoreInformationOutput: PublishRelay<Store> { get }
     var refreshOutput: PublishRelay<[FilteredStores]> { get }
     
 }
