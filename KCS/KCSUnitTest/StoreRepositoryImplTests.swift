@@ -37,7 +37,8 @@ final class StoreRepositoryImplTests: XCTestCase {
                 address: "",
                 phoneNumber: "",
                 location: Location(longitude: 0, latitude: 0),
-                openingHour: []
+                openingHour: [],
+                localPhotos: []
             ),
             Store(
                 id: 1, title: "",
@@ -46,7 +47,8 @@ final class StoreRepositoryImplTests: XCTestCase {
                 address: "",
                 phoneNumber: "",
                 location: Location(longitude: 0, latitude: 0),
-                openingHour: []
+                openingHour: [],
+                localPhotos: []
             ),
             Store(
                 id: 2, title: "",
@@ -55,7 +57,8 @@ final class StoreRepositoryImplTests: XCTestCase {
                 address: "",
                 phoneNumber: "",
                 location: Location(longitude: 0, latitude: 0),
-                openingHour: []
+                openingHour: [],
+                localPhotos: []
             ),
             Store(
                 id: 3, title: "",
@@ -64,7 +67,8 @@ final class StoreRepositoryImplTests: XCTestCase {
                 address: "",
                 phoneNumber: "",
                 location: Location(longitude: 0, latitude: 0),
-                openingHour: []
+                openingHour: [],
+                localPhotos: []
             )
         ]
         storeRepositoryImpl = StoreRepositoryImpl(stores: stores)
@@ -74,18 +78,13 @@ final class StoreRepositoryImplTests: XCTestCase {
     
     func test_fetchRefreshStores_결과는_에러가_발생하지_않는다() {
         let observable = storeRepositoryImpl.fetchRefreshStores(
-                northWestLocation: Location(longitude: 0, latitude: 0),
-                southEastLocation: Location(longitude: 0, latitude: 0)
-            )
+            northWestLocation: Location(longitude: 0, latitude: 0),
+            southWestLocation: Location(longitude: 0, latitude: 0),
+            southEastLocation: Location(longitude: 0, latitude: 0),
+            northEastLocation: Location(longitude: 0, latitude: 0)
+        )
         
-        do {
-            let result = try observable.toBlocking().first()
-        } catch let error as AFError {
-            XCTFail(error.localizedDescription)
-        } catch {
-            XCTFail(error.localizedDescription)
-        }
-        
+        XCTAssertNoThrow(try observable.toBlocking().first())
     }
     
 }
