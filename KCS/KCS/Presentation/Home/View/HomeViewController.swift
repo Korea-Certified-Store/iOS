@@ -294,6 +294,7 @@ private extension HomeViewController {
             fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
         )
         storeInformationViewController = StoreInformationViewController(viewModel: storeViewModel)
+        storeInformationViewController?.transitioningDelegate = self
        
         if let viewController = storeInformationViewController {
             if let sheet = viewController.sheetPresentationController {
@@ -431,6 +432,21 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         clickedMarker?.isSelected = false
         markerCancel()
+    }
+    
+}
+
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        clickedMarker?.isSelected = false
+        locationBottomConstraint.constant = -16
+        refreshBottomConstraint.constant = -17
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+        
+        return nil
     }
     
 }
