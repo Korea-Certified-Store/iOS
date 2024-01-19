@@ -102,10 +102,14 @@ final class HomeViewController: UIViewController {
         return map
     }()
         
-    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
-                                                                                       constant: -16)
-    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
-                                                                                     constant: -17)
+    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(
+        equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
+        constant: -16
+    )
+    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(
+        equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
+        constant: -17
+    )
     
     private let requestLocationServiceAlert: UIAlertController = {
         let alertController = UIAlertController(

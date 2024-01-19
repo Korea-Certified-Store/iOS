@@ -143,8 +143,8 @@ private extension StoreInformationViewController {
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            storeTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 27),
-            storeTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+            storeTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
+            storeTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
         
         NSLayoutConstraint.activate([
@@ -175,8 +175,8 @@ private extension StoreInformationViewController {
         ])
         
         NSLayoutConstraint.activate([
-            storeImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 27),
-            storeImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            storeImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
+            storeImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             storeImageView.widthAnchor.constraint(equalToConstant: 116),
             storeImageView.heightAnchor.constraint(equalToConstant: 116)
         ])
