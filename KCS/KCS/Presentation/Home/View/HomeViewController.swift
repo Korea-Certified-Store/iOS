@@ -138,23 +138,20 @@ final class HomeViewController: UIViewController {
         return map
     }()
     
-    private lazy var summaryInformationView: SummaryInformationView = {
+    private let storeInformationViewController: StoreInformationViewController = {
         let viewModel = SummaryInformationViewModelImpl(
             getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
             fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
         )
-        let view = SummaryInformationView(viewModel: viewModel)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
+        let viewController = StoreInformationViewController(viewModel: viewModel)
+            
+        return viewController
     }()
     
-    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor,
-                                                                                       constant: -29)
-    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor,
-                                                                                     constant: -29)
-    private lazy var summaryInfoBottomConstraint = summaryInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor,
-                                                                                                  constant: 224)
+    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor,
+                                                                                       constant: -37)
+    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor,
+                                                                                     constant: -38)
     
     private let requestLocationServiceAlert: UIAlertController = {
         let alertController = UIAlertController(
@@ -249,8 +246,9 @@ private extension HomeViewController {
         viewModel.getStoreInfoOutput
             .bind { [weak self] store in
                 guard let self = self else { return }
+                storeInformationViewController.setUIContents(store: store)
+                presentStoreView()
                 markerClicked()
-                summaryInformationView.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
         
@@ -293,7 +291,6 @@ private extension HomeViewController {
     }
     
     func markerClicked() {
-        summaryInfoBottomConstraint.constant = 0
         locationBottomConstraint.constant = -8
         refreshBottomConstraint.constant = -8
         UIView.animate(withDuration: 0.3) {
@@ -302,12 +299,25 @@ private extension HomeViewController {
     }
     
     func markerCancel() {
-        summaryInfoBottomConstraint.constant = 224
         locationBottomConstraint.constant = -29
         refreshBottomConstraint.constant = -29
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
+        dismiss(animated: true)
+    }
+    
+    func presentStoreView() {
+        if let sheet = storeInformationViewController.sheetPresentationController {
+            let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
+            let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
+                return 224
+            }
+            sheet.detents = [.medium()]
+            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.preferredCornerRadius = 15
+        }
+        present(storeInformationViewController, animated: true)
     }
     
 }
@@ -341,7 +351,6 @@ private extension HomeViewController {
     
     func addUIComponents() {
         view.addSubview(mapView)
-        mapView.addSubview(summaryInformationView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
         mapView.addSubview(refreshButton)
@@ -353,13 +362,6 @@ private extension HomeViewController {
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             mapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-        ])
-        
-        NSLayoutConstraint.activate([
-            summaryInformationView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
-            summaryInformationView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
-            summaryInformationView.heightAnchor.constraint(equalToConstant: 224),
-            summaryInfoBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
