@@ -146,17 +146,27 @@ final class HomeViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                let startPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-                let endPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+                let northWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+                let southWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+                let southEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+                let northEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
                 viewModel.action(
                     input: .refresh(
                         northWestLocation: Location(
-                            longitude: startPoint.lng,
-                            latitude: startPoint.lat
+                            longitude: northWestPoint.lng,
+                            latitude: northWestPoint.lat
+                        ),
+                        southWestLocation: Location(
+                            longitude: southWestPoint.lng,
+                            latitude: southWestPoint.lat
                         ),
                         southEastLocation: Location(
-                            longitude: endPoint.lng,
-                            latitude: endPoint.lat
+                            longitude: southEastPoint.lng,
+                            latitude: southEastPoint.lat
+                        ),
+                        northEastLocation: Location(
+                            longitude: northEastPoint.lng,
+                            latitude: northEastPoint.lat
                         ),
                         filters: getActivatedTypes()
                     )
@@ -382,17 +392,28 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         if reason == NMFMapChangedByDeveloper {
             mapView.positionMode = .direction
             locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
-            let startPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-            let endPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+            
+            let northWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+            let southWestPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+            let southEastPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+            let northEastPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
             viewModel.action(
                 input: .refresh(
                     northWestLocation: Location(
-                        longitude: startPoint.lng,
-                        latitude: startPoint.lat
+                        longitude: northWestPoint.lng,
+                        latitude: northWestPoint.lat
+                    ),
+                    southWestLocation: Location(
+                        longitude: southWestPoint.lng,
+                        latitude: southWestPoint.lat
                     ),
                     southEastLocation: Location(
-                        longitude: endPoint.lng,
-                        latitude: endPoint.lat
+                        longitude: southEastPoint.lng,
+                        latitude: southEastPoint.lat
+                    ),
+                    northEastLocation: Location(
+                        longitude: northEastPoint.lng,
+                        latitude: northEastPoint.lat
                     ),
                     filters: getActivatedTypes()
                 )
