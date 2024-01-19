@@ -10,14 +10,19 @@ import RxRelay
 
 final class SummaryInformationViewModelImpl: SummaryInformationViewModel {
     
-    let getOpenClosedUseCase: GetOpenClosedUseCase
+    private let disposeBag = DisposeBag()
     
-    init(getOpenClosedUseCase: GetOpenClosedUseCase) {
+    let getOpenClosedUseCase: GetOpenClosedUseCase
+    let fetchImageUseCase: FetchImageUseCase
+    
+    init(getOpenClosedUseCase: GetOpenClosedUseCase, fetchImageUseCase: FetchImageUseCase) {
         self.getOpenClosedUseCase = getOpenClosedUseCase
+        self.fetchImageUseCase = fetchImageUseCase
     }
     
     var getOpenClosed = PublishRelay<OpenClosedType>()
     var getOpeningHour = PublishRelay<String>()
+    var setThumbnailImage = PublishRelay<Data>()
     
     func isOpenClosed(
         openingHour: [RegularOpeningHours]
@@ -29,6 +34,19 @@ final class SummaryInformationViewModelImpl: SummaryInformationViewModel {
         openingHour: [RegularOpeningHours]
     ) {
         getOpeningHour.accept(openingHourString(openingHour: openingHour))
+    }
+    
+    func setThumbnailImage(url: String) {
+        fetchImageUseCase.execute(url: url)
+            .subscribe(
+                onNext: { [weak self] imageData in
+                    self?.setThumbnailImage.accept(imageData)
+                },
+                onError: { error in
+                    print(error.localizedDescription)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

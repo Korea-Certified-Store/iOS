@@ -72,6 +72,8 @@ final class SummaryInformationView: UIView {
     private let storeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.setLayerCorner(cornerRadius: 6)
+        imageView.clipsToBounds = true
         
         return imageView
     }()
@@ -108,6 +110,7 @@ final class SummaryInformationView: UIView {
         setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addUIComponents()
         configureConstraints()
+        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -116,6 +119,14 @@ final class SummaryInformationView: UIView {
 }
 
 private extension SummaryInformationView {
+    
+    func bind() {
+        viewModel.setThumbnailImage
+            .subscribe(onNext: { [weak self] data in
+                self?.storeImageView.image = UIImage(data: data)
+            })
+            .disposed(by: disposeBag)
+    }
     
     func setBackgroundColor() {
         backgroundColor = .white
@@ -203,6 +214,9 @@ extension SummaryInformationView {
                     self?.callButtonTapped(phoneNum: phoneNum)
                 }
                 .disposed(by: disposeBag)
+        }
+        if let thumbnailURL = store.localPhotos.first {
+            viewModel.setThumbnailImage(url: thumbnailURL)
         }
     }
     
