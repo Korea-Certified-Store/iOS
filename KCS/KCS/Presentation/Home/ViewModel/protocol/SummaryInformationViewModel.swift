@@ -17,15 +17,15 @@ protocol SummaryInformationViewModel: SummaryInformationViewModelInput, SummaryI
 
 protocol SummaryInformationViewModelInput {
     
-    func isOpenClosed(
+    func setOpenClosed(
         openingHour: [RegularOpeningHours]
     )
     
-    func getOpeningHour(
+    func setOpeningHour(
         openingHour: [RegularOpeningHours]
     )
     
-    func setThumbnailImage(
+    func fetchThumbnailImage(
         url: String
     )
     
@@ -33,8 +33,8 @@ protocol SummaryInformationViewModelInput {
 
 protocol SummaryInformationViewModelOutput {
     
-    var getOpeningHour: PublishRelay<String> { get }
-    var getOpenClosed: PublishRelay<OpenClosedType> { get }
-    var setThumbnailImage: PublishRelay<Data> { get }
+    var openingHourOutput: PublishRelay<String> { get }
+    var openClosedOutput: PublishRelay<OpenClosedType> { get }
+    var thumbnailImageOutput: PublishRelay<Data> { get }
     
 }
