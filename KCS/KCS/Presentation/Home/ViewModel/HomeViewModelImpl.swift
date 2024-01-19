@@ -33,6 +33,29 @@ final class HomeViewModelImpl: HomeViewModel {
         self.getStoreInfoUseCase = getStoreInfoUseCase
     }
     
+    func action(input: HomeViewModelInputCase) {
+        do {
+            switch input {
+            case .refresh(let northWestLocation, let southEastLocation, let filters):
+                refresh(
+                    northWestLocation: northWestLocation,
+                    southEastLocation: southEastLocation,
+                    filters: filters
+                )
+            case .fetchFilteredStores(let filters):
+                fetchFilteredStores(filters: filters)
+            case .markerTapped(let tag):
+                try markerTapped(tag: tag)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+}
+
+private extension HomeViewModelImpl {
+    
     func refresh(
         northWestLocation: Location,
         southEastLocation: Location,

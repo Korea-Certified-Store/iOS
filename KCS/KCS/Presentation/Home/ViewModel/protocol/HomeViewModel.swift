@@ -24,15 +24,26 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
 }
 
-protocol HomeViewModelInput {
+enum HomeViewModelInputCase {
     
-    func refresh(
+    case refresh(
         northWestLocation: Location,
         southEastLocation: Location,
         filters: [CertificationType]
-    ) 
-    func fetchFilteredStores(filters: [CertificationType])
-    func markerTapped(tag: UInt) throws
+    )
+    case fetchFilteredStores(
+        filters: [CertificationType]
+    )
+    case markerTapped(
+        tag: UInt
+    )
+    
+}
+
+protocol HomeViewModelInput {
+    
+    func action(input: HomeViewModelInputCase)
+    
 }
 
 protocol HomeViewModelOutput {

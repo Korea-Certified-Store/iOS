@@ -27,7 +27,7 @@ final class HomeViewController: UIViewController {
                 } else {
                     activatedFilter.append(.goodPrice)
                 }
-                viewModel.fetchFilteredStores(filters: getActivatedTypes())
+                viewModel.action(input: .fetchFilteredStores(filters: getActivatedTypes()))
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -48,7 +48,7 @@ final class HomeViewController: UIViewController {
                 } else {
                     activatedFilter.append(.exemplary)
                 }
-                viewModel.fetchFilteredStores(filters: getActivatedTypes())
+                viewModel.action(input: .fetchFilteredStores(filters: getActivatedTypes()))
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -69,7 +69,7 @@ final class HomeViewController: UIViewController {
                 } else {
                     activatedFilter.append(.safe)
                 }
-                viewModel.fetchFilteredStores(filters: getActivatedTypes())
+                viewModel.action(input: .fetchFilteredStores(filters: getActivatedTypes()))
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -122,7 +122,7 @@ final class HomeViewController: UIViewController {
     
     private var markers: [Marker] = []
     private var clickedMarker: Marker?
-
+    
     private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
@@ -149,11 +149,11 @@ final class HomeViewController: UIViewController {
         return view
     }()
     
-    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor, 
+    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor,
                                                                                        constant: -29)
-    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor, 
+    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor,
                                                                                      constant: -29)
-    private lazy var summaryInfoBottomConstraint = summaryInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, 
+    private lazy var summaryInfoBottomConstraint = summaryInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor,
                                                                                                   constant: 224)
     
     private let requestLocationServiceAlert: UIAlertController = {
@@ -184,16 +184,18 @@ final class HomeViewController: UIViewController {
                 guard let self = self else { return }
                 let startPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
                 let endPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-                viewModel.refresh(
-                    northWestLocation: Location(
-                        longitude: startPoint.lng,
-                        latitude: startPoint.lat
-                    ),
-                    southEastLocation: Location(
-                        longitude: endPoint.lng,
-                        latitude: endPoint.lat
-                    ),
-                    filters: getActivatedTypes()
+                viewModel.action(
+                    input: .refresh(
+                        northWestLocation: Location(
+                            longitude: startPoint.lng,
+                            latitude: startPoint.lat
+                        ),
+                        southEastLocation: Location(
+                            longitude: endPoint.lng,
+                            latitude: endPoint.lat
+                        ),
+                        filters: getActivatedTypes()
+                    )
                 )
             }
             .disposed(by: self.disposeBag)
@@ -282,11 +284,7 @@ private extension HomeViewController {
             }
             marker.isSelected.toggle()
             if marker.isSelected {
-                do {
-                    try viewModel.markerTapped(tag: marker.tag)
-                } catch {
-                    dump(error)
-                }
+                viewModel.action(input: .markerTapped(tag: marker.tag))
             }
             clickedMarker = marker
             
@@ -407,16 +405,18 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
             let startPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
             let endPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-            viewModel.refresh(
-                northWestLocation: Location(
-                    longitude: startPoint.lng,
-                    latitude: startPoint.lat
-                ),
-                southEastLocation: Location(
-                    longitude: endPoint.lng,
-                    latitude: endPoint.lat
-                ),
-                filters: getActivatedTypes()
+            viewModel.action(
+                input: .refresh(
+                    northWestLocation: Location(
+                        longitude: startPoint.lng,
+                        latitude: startPoint.lat
+                    ),
+                    southEastLocation: Location(
+                        longitude: endPoint.lng,
+                        latitude: endPoint.lat
+                    ),
+                    filters: getActivatedTypes()
+                )
             )
         }
     }
