@@ -1,8 +1,8 @@
 //
-//  StoreRepositoryImplTests.swift
-//  StoreRepositoryImplTests
+//  FetchStoresUseCaseImplTests.swift
+//  KCSUnitTest
 //
-//  Created by 조성민 on 1/18/24.
+//  Created by 조성민 on 1/19/24.
 //
 
 import XCTest
@@ -10,25 +10,26 @@ import XCTest
 import RxSwift
 import RxTest
 import RxBlocking
-import Alamofire
 
-final class StoreRepositoryImplTests: XCTestCase {
+final class FetchStoresUseCaseImplTests: XCTestCase {
 
-    var storeRepositoryImpl: StoreRepositoryImpl!
+    var fetchStoresUseCaseImpl: FetchStoresUseCaseImpl!
     var disposeBag: DisposeBag!
     
     override func setUp() {
-        storeRepositoryImpl = StoreRepositoryImpl()
         disposeBag = DisposeBag()
     }
 
-    func test_Store가_없는_경우_getStores_결과는_빈_배열을_반환한다() {
-        storeRepositoryImpl = StoreRepositoryImpl(stores: [])
+    func test_Store가_없으면_execute의_결과는_빈_배열을_반환한다() {
+        fetchStoresUseCaseImpl = FetchStoresUseCaseImpl(
+            repository: StoreRepositoryImpl(stores: [])
+        )
+        let result = fetchStoresUseCaseImpl.execute()
         
-        XCTAssertTrue(storeRepositoryImpl.fetchStores().isEmpty)
+        XCTAssertTrue(result.isEmpty)
     }
     
-    func test_Store가_있는_경우_getStores_결과는_Store_전체_배열을_반환한다() {
+    func test_Store가_있으면_execute의_결과는_모든_Store를_포함하는_배열을_반환한다() {
         let stores = [
             Store(
                 id: 0, title: "",
@@ -71,25 +72,12 @@ final class StoreRepositoryImplTests: XCTestCase {
                 localPhotos: []
             )
         ]
-        storeRepositoryImpl = StoreRepositoryImpl(stores: stores)
+        fetchStoresUseCaseImpl = FetchStoresUseCaseImpl(
+            repository: StoreRepositoryImpl(stores: stores)
+        )
+        let result = fetchStoresUseCaseImpl.execute()
         
-        XCTAssertEqual(storeRepositoryImpl.fetchStores(), stores)
+        XCTAssertEqual(result, stores)
     }
-    
-    func test_fetchRefreshStores_결과는_에러가_발생하지_않는다() {
-        let observable = storeRepositoryImpl.fetchRefreshStores(
-                northWestLocation: Location(longitude: 0, latitude: 0),
-                southEastLocation: Location(longitude: 0, latitude: 0)
-            )
-        
-        do {
-            let result = try observable.toBlocking().first()
-        } catch let error as AFError {
-            XCTFail(error.localizedDescription)
-        } catch {
-            XCTFail(error.localizedDescription)
-        }
-        
-    }
-    
+
 }
