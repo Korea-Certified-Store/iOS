@@ -137,21 +137,11 @@ final class HomeViewController: UIViewController {
         
         return map
     }()
-    
-    private let storeInformationViewController: StoreInformationViewController = {
-        let viewModel = SummaryInformationViewModelImpl(
-            getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-            fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
-        )
-        let viewController = StoreInformationViewController(viewModel: viewModel)
-            
-        return viewController
-    }()
-    
-    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor,
-                                                                                       constant: -37)
-    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor,
-                                                                                     constant: -38)
+        
+    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
+                                                                                       constant: -16)
+    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
+                                                                                     constant: -17)
     
     private let requestLocationServiceAlert: UIAlertController = {
         let alertController = UIAlertController(
@@ -202,6 +192,8 @@ final class HomeViewController: UIViewController {
     
     private var activatedFilter: [CertificationType] = []
     
+    private var storeInformationViewController: StoreInformationViewController?
+    
     private let viewModel: HomeViewModel
     
     init(viewModel: HomeViewModel) {
@@ -246,9 +238,9 @@ private extension HomeViewController {
         viewModel.getStoreInfoOutput
             .bind { [weak self] store in
                 guard let self = self else { return }
-                storeInformationViewController.setUIContents(store: store)
-                presentStoreView()
                 markerClicked()
+                presentStoreView()
+                storeInformationViewController?.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
         
@@ -291,33 +283,41 @@ private extension HomeViewController {
     }
     
     func markerClicked() {
-        locationBottomConstraint.constant = -8
-        refreshBottomConstraint.constant = -8
+        locationBottomConstraint.constant = -240
+        refreshBottomConstraint.constant = -240
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
     
     func markerCancel() {
-        locationBottomConstraint.constant = -29
-        refreshBottomConstraint.constant = -29
+        locationBottomConstraint.constant = -16
+        refreshBottomConstraint.constant = -17
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-        dismiss(animated: true)
+        storeInformationViewController?.dismiss(animated: true)
     }
     
     func presentStoreView() {
-        if let sheet = storeInformationViewController.sheetPresentationController {
-            let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
-            let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
-                return 224
+        let storeViewModel = SummaryInformationViewModelImpl(
+            getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
+            fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
+        )
+        storeInformationViewController = StoreInformationViewController(viewModel: storeViewModel)
+       
+        if let viewController = storeInformationViewController {
+            if let sheet = viewController.sheetPresentationController {
+                let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
+                let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
+                    return 224
+                }
+                sheet.detents = [detent]
+                sheet.largestUndimmedDetentIdentifier = detentIdentifier
+                sheet.preferredCornerRadius = 15
             }
-            sheet.detents = [.medium()]
-            sheet.largestUndimmedDetentIdentifier = .medium
-            sheet.preferredCornerRadius = 15
+            present(viewController, animated: true)
         }
-        present(storeInformationViewController, animated: true)
     }
     
 }
