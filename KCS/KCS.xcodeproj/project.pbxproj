@@ -56,7 +56,7 @@
 		A890870F2B4F836C00767225 /* SummaryInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870E2B4F836C00767225 /* SummaryInformationView.swift */; };
 		A8ACB7D32B57BA8E00540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7D22B57BA8E00540BD1 /* GetStoreInformationUseCaseImpl.swift */; };
 		A8ACB7D52B57BAD200540BD1 /* GetStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7D42B57BAD200540BD1 /* GetStoreInformationUseCase.swift */; };
-		A8ACB7D82B57BE7D00540BD1 /* StoreRepoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7D72B57BE7D00540BD1 /* StoreRepoError.swift */; };
+		A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7D72B57BE7D00540BD1 /* StoreRepositoryError.swift */; };
 		A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7DA2B58B51A00540BD1 /* Date+.swift */; };
 		A8ACB7DD2B58E3DE00540BD1 /* OpenClosedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7DC2B58E3DE00540BD1 /* OpenClosedType.swift */; };
 		A8ACB7DF2B594F4B00540BD1 /* SummaryInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7DE2B594F4B00540BD1 /* SummaryInformationViewModel.swift */; };
@@ -134,7 +134,7 @@
 		A890870E2B4F836C00767225 /* SummaryInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryInformationView.swift; sourceTree = "<group>"; };
 		A8ACB7D22B57BA8E00540BD1 /* GetStoreInformationUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8ACB7D42B57BAD200540BD1 /* GetStoreInformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCase.swift; sourceTree = "<group>"; };
-		A8ACB7D72B57BE7D00540BD1 /* StoreRepoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepoError.swift; sourceTree = "<group>"; };
+		A8ACB7D72B57BE7D00540BD1 /* StoreRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepositoryError.swift; sourceTree = "<group>"; };
 		A8ACB7DA2B58B51A00540BD1 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		A8ACB7DC2B58E3DE00540BD1 /* OpenClosedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClosedType.swift; sourceTree = "<group>"; };
 		A8ACB7DE2B594F4B00540BD1 /* SummaryInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryInformationViewModel.swift; sourceTree = "<group>"; };
@@ -191,8 +191,8 @@
 		591A887B2B384E600059E40F /* KCS */ = {
 			isa = PBXGroup;
 			children = (
-				5986DCDE2B3892E1005AE43B /* Domain */,
 				5986DCDD2B3892D8005AE43B /* Data */,
+				5986DCDE2B3892E1005AE43B /* Domain */,
 				5986DCDF2B3892EB005AE43B /* Presentation */,
 				5986DCDC2B389252005AE43B /* Resource */,
 				5986DCE02B3893D1005AE43B /* Util */,
@@ -435,7 +435,7 @@
 		A8ACB7D62B57BE4E00540BD1 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				A8ACB7D72B57BE7D00540BD1 /* StoreRepoError.swift */,
+				A8ACB7D72B57BE7D00540BD1 /* StoreRepositoryError.swift */,
 				59F478B02B59BB00002FEF9E /* ImageRepositoryError.swift */,
 			);
 			path = Error;
@@ -713,7 +713,7 @@
 				A8ACB7E22B594F7400540BD1 /* SummaryInformationViewModelImpl.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
-				A8ACB7D82B57BE7D00540BD1 /* StoreRepoError.swift in Sources */,
+				A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */,
 				59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */,
 				59C306CB2B50357900862625 /* Router.swift in Sources */,
 				A8ACB7E82B595A2100540BD1 /* GetOpenClosedUseCase.swift in Sources */,
