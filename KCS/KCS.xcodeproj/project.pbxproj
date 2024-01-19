@@ -49,6 +49,7 @@
 		59F478B32B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478B22B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift */; };
 		59F478B52B59BE0B002FEF9E /* FetchImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478B42B59BE0B002FEF9E /* FetchImageUseCase.swift */; };
 		59F478BB2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478BA2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift */; };
+		59F478BD2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478BC2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift */; };
 		8FE699E5DAEEDFE5A53D5E82 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */; };
 		A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802D1F52B5277620091FDE7 /* CertificationLabel.swift */; };
 		A89087042B4E7F3500767225 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087032B4E7F3500767225 /* FilterButton.swift */; };
@@ -127,6 +128,7 @@
 		59F478B22B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageUseCaseImpl.swift; sourceTree = "<group>"; };
 		59F478B42B59BE0B002FEF9E /* FetchImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageUseCase.swift; sourceTree = "<group>"; };
 		59F478BA2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImplTests.swift; sourceTree = "<group>"; };
+		59F478BC2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresUseCaseImplTests.swift; sourceTree = "<group>"; };
 		5FF0FF2386EEB69182D6EA4C /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 		9EA5C8EA72EA9E937C11400A /* Pods-KCS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.debug.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.debug.xcconfig"; sourceTree = "<group>"; };
 		A802D1F52B5277620091FDE7 /* CertificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationLabel.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 			children = (
 				5977BE8C2B5966F900725C90 /* StoreRepositoryImplTests.swift */,
 				59F478BA2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift */,
+				59F478BC2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift */,
 			);
 			path = KCSUnitTest;
 			sourceTree = "<group>";
@@ -746,6 +749,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59F478BD2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift in Sources */,
 				5977BE8D2B5966F900725C90 /* StoreRepositoryImplTests.swift in Sources */,
 				59F478BB2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift in Sources */,
 			);
