@@ -15,26 +15,30 @@ protocol SummaryInformationViewModel: SummaryInformationViewModelInput, SummaryI
     
 }
 
-protocol SummaryInformationViewModelInput {
+enum SummaryInformationViewInputCase {
     
-    func isOpenClosed(
+    case setOpenClosed(
         openingHour: [RegularOpeningHours]
     )
-    
-    func getOpeningHour(
+    case setOpeningHour(
         openingHour: [RegularOpeningHours]
     )
-    
-    func setThumbnailImage(
+    case fetchThumbnailImage(
         url: String
     )
     
 }
 
+protocol SummaryInformationViewModelInput {
+    
+    func action(input: SummaryInformationViewInputCase)
+    
+}
+
 protocol SummaryInformationViewModelOutput {
     
-    var getOpeningHour: PublishRelay<String> { get }
-    var getOpenClosed: PublishRelay<OpenClosedType> { get }
-    var setThumbnailImage: PublishRelay<Data> { get }
+    var openingHourOutput: PublishRelay<String> { get }
+    var openClosedOutput: PublishRelay<OpenClosedType> { get }
+    var thumbnailImageOutput: PublishRelay<Data> { get }
     
 }

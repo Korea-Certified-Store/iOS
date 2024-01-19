@@ -15,32 +15,47 @@ final class SummaryInformationViewModelImpl: SummaryInformationViewModel {
     let getOpenClosedUseCase: GetOpenClosedUseCase
     let fetchImageUseCase: FetchImageUseCase
     
+    var openClosedOutput = PublishRelay<OpenClosedType>()
+    var openingHourOutput = PublishRelay<String>()
+    var thumbnailImageOutput = PublishRelay<Data>()
+    
     init(getOpenClosedUseCase: GetOpenClosedUseCase, fetchImageUseCase: FetchImageUseCase) {
         self.getOpenClosedUseCase = getOpenClosedUseCase
         self.fetchImageUseCase = fetchImageUseCase
     }
     
-    var getOpenClosed = PublishRelay<OpenClosedType>()
-    var getOpeningHour = PublishRelay<String>()
-    var setThumbnailImage = PublishRelay<Data>()
-    
-    func isOpenClosed(
-        openingHour: [RegularOpeningHours]
-    ) {
-        getOpenClosed.accept(getOpenClosedUseCase.execute(openingHours: openingHour))
+    func action(input: SummaryInformationViewInputCase) {
+        switch input {
+        case .setOpenClosed(let openingHour):
+            setOpenClosed(openingHour: openingHour)
+        case .setOpeningHour(let openingHour):
+            setOpeningHour(openingHour: openingHour)
+        case .fetchThumbnailImage(let url):
+            fetchThumbnailImage(url: url)
+        }
     }
     
-    func getOpeningHour(
+}
+
+private extension SummaryInformationViewModelImpl {
+    
+    func setOpenClosed(
         openingHour: [RegularOpeningHours]
     ) {
-        getOpeningHour.accept(openingHourString(openingHour: openingHour))
+        openClosedOutput.accept(getOpenClosedUseCase.execute(openingHours: openingHour))
     }
     
-    func setThumbnailImage(url: String) {
+    func setOpeningHour(
+        openingHour: [RegularOpeningHours]
+    ) {
+        openingHourOutput.accept(openingHourString(openingHour: openingHour))
+    }
+    
+    func fetchThumbnailImage(url: String) {
         fetchImageUseCase.execute(url: url)
             .subscribe(
                 onNext: { [weak self] imageData in
-                    self?.setThumbnailImage.accept(imageData)
+                    self?.thumbnailImageOutput.accept(imageData)
                 },
                 onError: { error in
                     print(error.localizedDescription)

@@ -46,7 +46,7 @@ final class SummaryInformationView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = UIColor.goodPrice
-        viewModel.getOpenClosed
+        viewModel.openClosedOutput
             .bind { [weak self] openClosedType in
                 label.text = openClosedType.rawValue
             }
@@ -60,7 +60,7 @@ final class SummaryInformationView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.kcsGray
-        viewModel.getOpeningHour
+        viewModel.openingHourOutput
             .bind { [weak self] text in
                 label.text = text
             }
@@ -121,7 +121,7 @@ final class SummaryInformationView: UIView {
 private extension SummaryInformationView {
     
     func bind() {
-        viewModel.setThumbnailImage
+        viewModel.thumbnailImageOutput
             .subscribe(onNext: { [weak self] data in
                 self?.storeImageView.image = UIImage(data: data)
             })
@@ -198,8 +198,8 @@ extension SummaryInformationView {
     func setUIContents(store: Store) {
         storeTitle.text = store.title
         categoty.text = store.category
-        viewModel.isOpenClosed(openingHour: store.openingHour)
-        viewModel.getOpeningHour(openingHour: store.openingHour)
+        viewModel.action(input: .setOpenClosed(openingHour: store.openingHour))
+        viewModel.action(input: .setOpeningHour(openingHour: store.openingHour))
         removeStackView()
         store.certificationTypes
             .map({
@@ -216,7 +216,7 @@ extension SummaryInformationView {
                 .disposed(by: disposeBag)
         }
         if let thumbnailURL = store.localPhotos.first {
-            viewModel.setThumbnailImage(url: thumbnailURL)
+            viewModel.action(input: .fetchThumbnailImage(url: thumbnailURL))
         }
     }
     
