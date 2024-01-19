@@ -48,7 +48,7 @@ protocol HomeViewModelInput {
 
 protocol HomeViewModelOutput {
     
-    var getStoreInfoComplete: PublishRelay<Store> { get }
-    var refreshComplete: PublishRelay<[FilteredStores]> { get }
+    var getStoreInfoOutput: PublishRelay<Store> { get }
+    var refreshOutput: PublishRelay<[FilteredStores]> { get }
     
 }

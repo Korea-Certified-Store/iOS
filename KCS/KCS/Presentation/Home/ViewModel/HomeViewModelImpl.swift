@@ -16,8 +16,8 @@ final class HomeViewModelImpl: HomeViewModel {
     
     private let disposeBag = DisposeBag()
     
-    var getStoreInfoComplete = PublishRelay<Store>()
-    var refreshComplete = PublishRelay<[FilteredStores]>()
+    var getStoreInfoOutput = PublishRelay<Store>()
+    var refreshOutput = PublishRelay<[FilteredStores]>()
     
     let dependency: HomeDependency
     
@@ -109,11 +109,11 @@ private extension HomeViewModelImpl {
                 }
             }
         }
-        refreshComplete.accept([goodPriceStores, exemplaryStores, safeStores])
+        refreshOutput.accept([goodPriceStores, exemplaryStores, safeStores])
     }
     
     func markerTapped(tag: UInt) throws {
-        getStoreInfoComplete.accept(
+        getStoreInfoOutput.accept(
             try getStoreInfoUseCase.execute(tag: tag)
         )
     }

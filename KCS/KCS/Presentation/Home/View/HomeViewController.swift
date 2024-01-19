@@ -231,7 +231,7 @@ private extension HomeViewController {
     
     func bind() {
         
-        viewModel.refreshComplete
+        viewModel.refreshOutput
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.refreshButton.isHidden = true
@@ -246,7 +246,7 @@ private extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.getStoreInfoComplete
+        viewModel.getStoreInfoOutput
             .bind { [weak self] store in
                 guard let self = self else { return }
                 markerClicked()
