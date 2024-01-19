@@ -1,5 +1,5 @@
 //
-//  GetStoreInfoUseCase.swift
+//  GetStoreInformationUseCase.swift
 //  KCS
 //
 //  Created by 김영현 on 1/17/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol GetStoreInfoUseCase {
+protocol GetStoreInformationUseCase {
     
     var repository: StoreRepository { get }
     

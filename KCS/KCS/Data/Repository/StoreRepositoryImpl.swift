@@ -52,10 +52,10 @@ final class StoreRepositoryImpl: StoreRepository {
         return stores
     }
     
-    func getStoreInfo(
+    func getStoreInformation(
         tag: UInt
     ) throws -> Store {
-        guard let store = stores.first(where: { $0.id == tag }) else { throw StoreRepoError.wrongStoreId }
+        guard let store = stores.first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
         return store
     }
     

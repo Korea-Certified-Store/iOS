@@ -1,5 +1,5 @@
 //
-//  StoreRepoError.swift
+//  StoreRepositoryError.swift
 //  KCS
 //
 //  Created by 김영현 on 1/17/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StoreRepoError: Error, LocalizedError {
+enum StoreRepositoryError: Error, LocalizedError {
     
     case wrongStoreId
     
