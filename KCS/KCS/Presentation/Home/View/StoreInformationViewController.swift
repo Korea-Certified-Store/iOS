@@ -1,5 +1,5 @@
 //
-//  SummaryInformationView.swift
+//  StoreInformationViewController.swift
 //  KCS
 //
 //  Created by 김영현 on 1/11/24.
@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SummaryInformationView: UIView {
+final class StoreInformationViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
@@ -103,11 +103,9 @@ final class SummaryInformationView: UIView {
     
     init(viewModel: SummaryInformationViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(nibName: nil, bundle: nil)
         
         setBackgroundColor()
-        setLayerShadow(shadowOffset: .zero)
-        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addUIComponents()
         configureConstraints()
         bind()
@@ -118,7 +116,7 @@ final class SummaryInformationView: UIView {
     }
 }
 
-private extension SummaryInformationView {
+private extension StoreInformationViewController {
     
     func bind() {
         viewModel.thumbnailImageOutput
@@ -129,24 +127,24 @@ private extension SummaryInformationView {
     }
     
     func setBackgroundColor() {
-        backgroundColor = .white
+        view.backgroundColor = .white
     }
     
     func addUIComponents() {
-        addSubview(storeTitle)
-        addSubview(certificationStackView)
-        addSubview(categoty)
-        addSubview(storeOpenClosed)
-        addSubview(openingHour)
-        addSubview(storeImageView)
-        addSubview(storeCallButton)
-        addSubview(dismissIndicatorView)
+        view.addSubview(storeTitle)
+        view.addSubview(certificationStackView)
+        view.addSubview(categoty)
+        view.addSubview(storeOpenClosed)
+        view.addSubview(openingHour)
+        view.addSubview(storeImageView)
+        view.addSubview(storeCallButton)
+        view.addSubview(dismissIndicatorView)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            storeTitle.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            storeTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+            storeTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
+            storeTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
         
         NSLayoutConstraint.activate([
@@ -170,22 +168,22 @@ private extension SummaryInformationView {
         ])
         
         NSLayoutConstraint.activate([
-            storeCallButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -49),
+            storeCallButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -49),
             storeCallButton.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor),
             storeCallButton.widthAnchor.constraint(equalToConstant: 69),
             storeCallButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         NSLayoutConstraint.activate([
-            storeImageView.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            storeImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            storeImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
+            storeImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             storeImageView.widthAnchor.constraint(equalToConstant: 116),
             storeImageView.heightAnchor.constraint(equalToConstant: 116)
         ])
         
         NSLayoutConstraint.activate([
-            dismissIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            dismissIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            dismissIndicatorView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+            dismissIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
             dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
         ])
@@ -193,7 +191,7 @@ private extension SummaryInformationView {
     
 }
 
-extension SummaryInformationView {
+extension StoreInformationViewController {
     
     func setUIContents(store: Store) {
         storeTitle.text = store.title
@@ -222,7 +220,7 @@ extension SummaryInformationView {
     
 }
 
-private extension SummaryInformationView {
+private extension StoreInformationViewController {
     
     func removeStackView() {
         let subviews = certificationStackView.arrangedSubviews

@@ -101,24 +101,15 @@ final class HomeViewController: UIViewController {
         
         return map
     }()
-    
-    private lazy var summaryInformationView: SummaryInformationView = {
-        let viewModel = SummaryInformationViewModelImpl(
-            getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-            fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
-        )
-        let view = SummaryInformationView(viewModel: viewModel)
-        view.translatesAutoresizingMaskIntoConstraints = false
         
-        return view
-    }()
-    
-    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor,
-                                                                                       constant: -29)
-    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(equalTo: summaryInformationView.topAnchor,
-                                                                                     constant: -29)
-    private lazy var summaryInfoBottomConstraint = summaryInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor,
-                                                                                                  constant: 224)
+    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(
+        equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
+        constant: -16
+    )
+    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(
+        equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
+        constant: -17
+    )
     
     private let requestLocationServiceAlert: UIAlertController = {
         let alertController = UIAlertController(
@@ -180,6 +171,8 @@ final class HomeViewController: UIViewController {
     
     private var activatedFilter: [CertificationType] = []
     
+    private var storeInformationViewController: StoreInformationViewController?
+    
     private let viewModel: HomeViewModel
     
     init(viewModel: HomeViewModel) {
@@ -223,7 +216,8 @@ private extension HomeViewController {
             .bind { [weak self] store in
                 guard let self = self else { return }
                 markerClicked()
-                summaryInformationView.setUIContents(store: store)
+                presentStoreView()
+                storeInformationViewController?.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
     }
@@ -282,20 +276,41 @@ private extension HomeViewController {
     }
     
     func markerClicked() {
-        summaryInfoBottomConstraint.constant = 0
-        locationBottomConstraint.constant = -8
-        refreshBottomConstraint.constant = -8
+        locationBottomConstraint.constant = -240
+        refreshBottomConstraint.constant = -240
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
     
     func markerCancel() {
-        summaryInfoBottomConstraint.constant = 224
-        locationBottomConstraint.constant = -29
-        refreshBottomConstraint.constant = -29
+        locationBottomConstraint.constant = -16
+        refreshBottomConstraint.constant = -17
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
+        }
+        storeInformationViewController?.dismiss(animated: true)
+    }
+    
+    func presentStoreView() {
+        let storeViewModel = SummaryInformationViewModelImpl(
+            getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
+            fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
+        )
+        storeInformationViewController = StoreInformationViewController(viewModel: storeViewModel)
+        storeInformationViewController?.transitioningDelegate = self
+       
+        if let viewController = storeInformationViewController {
+            if let sheet = viewController.sheetPresentationController {
+                let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
+                let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
+                    return 224
+                }
+                sheet.detents = [detent]
+                sheet.largestUndimmedDetentIdentifier = detentIdentifier
+                sheet.preferredCornerRadius = 15
+            }
+            present(viewController, animated: true)
         }
     }
     
@@ -330,7 +345,6 @@ private extension HomeViewController {
     
     func addUIComponents() {
         view.addSubview(mapView)
-        mapView.addSubview(summaryInformationView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
         mapView.addSubview(refreshButton)
@@ -342,13 +356,6 @@ private extension HomeViewController {
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             mapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-        ])
-        
-        NSLayoutConstraint.activate([
-            summaryInformationView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
-            summaryInformationView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
-            summaryInformationView.heightAnchor.constraint(equalToConstant: 224),
-            summaryInfoBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
@@ -429,6 +436,21 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         clickedMarker?.isSelected = false
         markerCancel()
+    }
+    
+}
+
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        clickedMarker?.isSelected = false
+        locationBottomConstraint.constant = -16
+        refreshBottomConstraint.constant = -17
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+        
+        return nil
     }
     
 }
