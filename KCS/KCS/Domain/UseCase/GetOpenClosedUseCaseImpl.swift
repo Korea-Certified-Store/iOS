@@ -67,10 +67,8 @@ private extension GetOpenClosedUseCaseImpl {
     }
     
     func getOpenClosedString(openingHour: [RegularOpeningHours], openClosedType: OpenClose) -> String {
-        
         let openCloseTime = getOpenClosedTimeArray(openingHours: openingHour)
         var nextTime = openCloseTime.filter({ $0 > Date().toSecond() })
-        
         switch openClosedType {
         case .open:
             let nextTime = nextTime.removeFirst()
@@ -95,34 +93,41 @@ private extension GetOpenClosedUseCaseImpl {
     }
     
     func getOpenClosedTimeArray(openingHours: [RegularOpeningHours]) -> [Int] {
-        
         var openCloseTime: [Int] = []
-        
-        let todayOpenHours = openingHours.filter { $0.open.day.index == Date().weekDay }
-        let yesterdayOpenHours = openingHours.filter { hour in
-            let yesterdayWeekDay = (Date().weekDay - 1) % 7 == 0 ? 7 : (Date().weekDay + 1) % 7
-            return hour.open.day.index == yesterdayWeekDay
-        }
-        let tomorrowOpenHours = openingHours.filter { hour in
-            let tomorrowWeekDay = (Date().weekDay + 1) % 7 == 0 ? 7 : (Date().weekDay + 1) % 7
-            return hour.open.day.index == tomorrowWeekDay
-        }
-        
+        let todayOpenHours = filteredOpeningHours(openingHours: openingHours, day: 0)
         if todayOpenHours.isEmpty {
             return []
         }
+        let yesterdayOpenHours = filteredOpeningHours(openingHours: openingHours, day: -1)
+        let tomorrowOpenHours = filteredOpeningHours(openingHours: openingHours, day: 1)
         
-        if let businessHour = yesterdayOpenHours.last?.close {
+        openCloseTime.append(contentsOf: appendYesterdayClosedHour(openingHours: yesterdayOpenHours))
+        openCloseTime.append(contentsOf: appendTodayOpenClosedHour(openingHours: todayOpenHours))
+        openCloseTime.append(contentsOf: appendTomorrowOpenHour(openingHours: tomorrowOpenHours))
+        
+        return openCloseTime
+    }
+    
+    func filteredOpeningHours(openingHours: [RegularOpeningHours], day: Int) -> [RegularOpeningHours] {
+        openingHours.filter { hour in
+            let weekDay = (Date().weekDay + day) % 7 == 0 ? 7 : (Date().weekDay + day) % 7
+            return hour.open.day.index == weekDay
+        }
+    }
+    
+    func appendYesterdayClosedHour(openingHours: [RegularOpeningHours]) -> [Int] {
+        if let businessHour = openingHours.last?.close {
             if let time = catchHourError(businessHour: businessHour, openClose: .close) {
-                openCloseTime.append(time - 86400)
-            } else {
-                openCloseTime.append(0)
+                return [time - 86400]
             }
-        } else {
-            openCloseTime.append(0)
         }
         
-        todayOpenHours.forEach { businessHour in
+        return [0]
+    }
+    
+    func appendTodayOpenClosedHour(openingHours: [RegularOpeningHours]) -> [Int] {
+        var openCloseTime: [Int] = []
+        openingHours.forEach { businessHour in
             if let openHour = catchHourError(businessHour: businessHour.open, openClose: .open),
                let closeHour = catchHourError(businessHour: businessHour.close, openClose: .close) {
                 openCloseTime.append(openHour)
@@ -130,17 +135,17 @@ private extension GetOpenClosedUseCaseImpl {
             }
         }
         
-        if let businessHour = tomorrowOpenHours.first?.open {
+        return openCloseTime
+    }
+    
+    func appendTomorrowOpenHour(openingHours: [RegularOpeningHours]) -> [Int] {
+        if let businessHour = openingHours.first?.open {
             if let time = catchHourError(businessHour: businessHour, openClose: .open) {
-                openCloseTime.append(time + 86400)
-            } else {
-                openCloseTime.append(86400 * 2)
+                return [time + 86400]
             }
-        } else {
-            openCloseTime.append(86400 * 2)
         }
         
-        return openCloseTime
+        return [86400 * 2]
     }
     
     func catchHourError(businessHour: BusinessHour, openClose: OpenClose) -> Int? {
