@@ -9,6 +9,6 @@ import Foundation
 
 enum NetworkURL {
     
-    static let storeURL = "http://13.124.127.77:8080/api/v1/storecertification/byLocation"
+    static let storeURL = "http://35.216.42.117:8080/api/v1/storecertification/byLocation"
     
 }

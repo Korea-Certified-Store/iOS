@@ -10,10 +10,7 @@ import RxSwift
 protocol StoreRepository {
     
     func fetchRefreshStores(
-        northWestLocation: Location,
-        southWestLocation: Location,
-        southEastLocation: Location,
-        northEastLocation: Location
+        requestLocation: RequestLocation
     ) -> Observable<[Store]>
     
     func fetchStores() -> [Store]

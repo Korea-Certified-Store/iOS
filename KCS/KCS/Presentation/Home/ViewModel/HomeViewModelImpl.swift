@@ -36,12 +36,9 @@ final class HomeViewModelImpl: HomeViewModel {
     func action(input: HomeViewModelInputCase) {
         do {
             switch input {
-            case .refresh(let northWestLocation, let southWestLocation, let southEastLocation, let northEastLocation, let filters):
+            case .refresh(let requestLocation, let filters):
                 refresh(
-                    northWestLocation: northWestLocation,
-                    southWestLocation: southWestLocation,
-                    southEastLocation: southEastLocation,
-                    northEastLocation: northEastLocation,
+                    requestLocation: requestLocation,
                     filters: filters
                 )
             case .fetchFilteredStores(let filters):
@@ -59,27 +56,21 @@ final class HomeViewModelImpl: HomeViewModel {
 private extension HomeViewModelImpl {
     
     func refresh(
-        northWestLocation: Location,
-        southWestLocation: Location,
-        southEastLocation: Location,
-        northEastLocation: Location,
+        requestLocation: RequestLocation,
         filters: [CertificationType] = [.goodPrice, .exemplary, .safe]
     ) {
         fetchRefreshStoresUseCase.execute(
-            northWestLocation: northWestLocation,
-            southWestLocation: southWestLocation,
-            southEastLocation: southEastLocation,
-            northEastLocation: northEastLocation
+            requestLocation: requestLocation
         )
-            .subscribe(
-                onNext: { [weak self] stores in
-                    self?.applyFilters(stores: stores, filters: filters)
-                },
-                onError: { error in
-                    dump(error)
-                }
-            )
-            .disposed(by: disposeBag)
+        .subscribe(
+            onNext: { [weak self] stores in
+                self?.applyFilters(stores: stores, filters: filters)
+            },
+            onError: { error in
+                dump(error)
+            }
+        )
+        .disposed(by: disposeBag)
     }
     
     func fetchFilteredStores(filters: [CertificationType]) {
