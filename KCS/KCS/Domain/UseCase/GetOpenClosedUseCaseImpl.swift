@@ -75,7 +75,7 @@ private extension GetOpenClosedUseCaseImpl {
         let nextTime = openCloseTime.filter({ $0 > Date().toSecond() })
         
         switch openClosedType {
-        case .open: // 00:00에 영업 시작
+        case .open:
             if let nextTime = nextTime.first {
                 if nextTime != 86400 * 2 {
                     let hour = (nextTime % 86400) / 3600
@@ -83,15 +83,15 @@ private extension GetOpenClosedUseCaseImpl {
                     return String(format: "%02d:%02d에 영업 시작", hour, minute)
                 }
             }
-        case .close: // 00:00에 영업 종료 or 00:00에 브레이크 타임 시작
+        case .close:
             if nextTime.count > 1 {
                 let firstNextTime = nextTime[0]
                 let secondNextTime = nextTime[1]
                 let hour = (firstNextTime % 86400) / 3600
                 let minute = (firstNextTime % 3600) / 60
-                if secondNextTime - firstNextTime <= 10800 { // 브레이크 타임
+                if secondNextTime - firstNextTime <= 10800 {
                     return String(format: "%02d:%02d에 브레이크타임 시작", hour, minute)
-                } else { // 영업 종료
+                } else {
                     return String(format: "%02d:%02d에 영업 종료", hour, minute)
                 }
             }
