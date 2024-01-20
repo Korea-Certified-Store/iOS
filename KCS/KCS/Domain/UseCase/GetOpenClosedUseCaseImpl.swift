@@ -122,7 +122,7 @@ private extension GetOpenClosedUseCaseImpl {
             }
         }
         
-        return [0]
+        return [.zero]
     }
     
     func appendTodayOpenClosedHour(openingHours: [RegularOpeningHours]) -> [Int] {
