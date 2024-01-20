@@ -20,7 +20,6 @@ struct GetOpenClosedUseCaseImpl: GetOpenClosedUseCase {
 private extension GetOpenClosedUseCaseImpl {
     
     func getOpenClosedContent(openingHour: [RegularOpeningHours]) -> OpenClosedContent {
-        dump(openingHour)
         let nowOpenClosedType = getOpenClosedType(openingHour: openingHour)
         lazy var openingHourString: String = {
             switch nowOpenClosedType {
@@ -34,22 +33,20 @@ private extension GetOpenClosedUseCaseImpl {
         }()
         
         return OpenClosedContent(openClosedType: nowOpenClosedType, openingHour: openingHourString)
-        
     }
 }
 
 private extension GetOpenClosedUseCaseImpl {
     
     func getOpenClosedType(openingHour: [RegularOpeningHours]) -> OpenClosedType {
-        
         if openingHour.isEmpty {
             return OpenClosedType.none
         }
-        
         let openCloseTime = getOpenClosedTimeArray(openingHours: openingHour)
-        
+        if openCloseTime.isEmpty {
+            return OpenClosedType.dayOff
+        }
         let now = Date().toSecond()
-        
         for idx in 0..<(openCloseTime.count - 1) {
             let firstTime = openCloseTime[idx]
             let secondTime = openCloseTime[idx + 1]
@@ -72,32 +69,29 @@ private extension GetOpenClosedUseCaseImpl {
     func getOpenClosedString(openingHour: [RegularOpeningHours], openClosedType: OpenClose) -> String {
         
         let openCloseTime = getOpenClosedTimeArray(openingHours: openingHour)
-        let nextTime = openCloseTime.filter({ $0 > Date().toSecond() })
+        var nextTime = openCloseTime.filter({ $0 > Date().toSecond() })
         
         switch openClosedType {
         case .open:
-            if let nextTime = nextTime.first {
-                if nextTime != 86400 * 2 {
-                    let hour = (nextTime % 86400) / 3600
-                    let minute = (nextTime % 3600) / 60
-                    return String(format: "%02d:%02d에 영업 시작", hour, minute)
-                }
+            let nextTime = nextTime.removeFirst()
+            if nextTime != 86400 * 2 {
+                let hour = (nextTime % 86400) / 3600
+                let minute = (nextTime % 3600) / 60
+                return String(format: "%02d:%02d에 영업 시작", hour, minute)
+            } else {
+                return ""
             }
         case .close:
-            if nextTime.count > 1 {
-                let firstNextTime = nextTime[0]
-                let secondNextTime = nextTime[1]
-                let hour = (firstNextTime % 86400) / 3600
-                let minute = (firstNextTime % 3600) / 60
-                if secondNextTime - firstNextTime <= 10800 {
-                    return String(format: "%02d:%02d에 브레이크타임 시작", hour, minute)
-                } else {
-                    return String(format: "%02d:%02d에 영업 종료", hour, minute)
-                }
+            let firstNextTime = nextTime.removeFirst()
+            let secondNextTime = nextTime.removeFirst()
+            let hour = (firstNextTime % 86400) / 3600
+            let minute = (firstNextTime % 3600) / 60
+            if secondNextTime - firstNextTime <= 10800 {
+                return String(format: "%02d:%02d에 브레이크타임 시작", hour, minute)
+            } else {
+                return String(format: "%02d:%02d에 영업 종료", hour, minute)
             }
         }
-
-        return ""
     }
     
     func getOpenClosedTimeArray(openingHours: [RegularOpeningHours]) -> [Int] {
