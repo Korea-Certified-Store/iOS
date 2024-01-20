@@ -293,7 +293,7 @@ private extension HomeViewController {
     }
     
     func presentStoreView() {
-        let storeViewModel = SummaryInformationViewModelImpl(
+        let storeViewModel = StoreInformationViewModelImpl(
             getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
             fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
         )

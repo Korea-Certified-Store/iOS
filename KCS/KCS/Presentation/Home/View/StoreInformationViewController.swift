@@ -46,11 +46,6 @@ final class StoreInformationViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = UIColor.goodPrice
-        viewModel.openClosedOutput
-            .bind { [weak self] openClosedType in
-                label.text = openClosedType.rawValue
-            }
-            .disposed(by: disposeBag)
         
         return label
     }()
@@ -60,11 +55,6 @@ final class StoreInformationViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.kcsGray
-        viewModel.openingHourOutput
-            .bind { [weak self] text in
-                label.text = text
-            }
-            .disposed(by: disposeBag)
         
         return label
     }()
@@ -99,9 +89,9 @@ final class StoreInformationViewController: UIViewController {
         return view
     }()
     
-    private let viewModel: SummaryInformationViewModel
+    private let viewModel: StoreInformationViewModel
     
-    init(viewModel: SummaryInformationViewModel) {
+    init(viewModel: StoreInformationViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
@@ -124,6 +114,14 @@ private extension StoreInformationViewController {
                 self?.storeImageView.image = UIImage(data: data)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.openClosedOutput
+            .bind { [weak self] openClosedContent in
+                self?.storeOpenClosed.text = openClosedContent.openClosedType.rawValue
+                self?.openingHour.text = openClosedContent.openingHour
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     func setBackgroundColor() {
@@ -196,8 +194,6 @@ extension StoreInformationViewController {
     func setUIContents(store: Store) {
         storeTitle.text = store.title
         categoty.text = store.category
-        viewModel.action(input: .setOpenClosed(openingHour: store.openingHour))
-        viewModel.action(input: .setOpeningHour(openingHour: store.openingHour))
         removeStackView()
         store.certificationTypes
             .map({
@@ -213,9 +209,10 @@ extension StoreInformationViewController {
                 }
                 .disposed(by: disposeBag)
         }
-        if let thumbnailURL = store.localPhotos.first {
-            viewModel.action(input: .fetchThumbnailImage(url: thumbnailURL))
-        }
+        viewModel.action(input: .setInformationView(
+            openingHour: store.openingHour,
+            url: store.localPhotos.first)
+        )
     }
     
 }
