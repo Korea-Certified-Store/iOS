@@ -11,6 +11,6 @@ protocol GetOpenClosedUseCase {
     
     func execute(
         openingHours: [RegularOpeningHours]
-    ) -> OpenClosedType
+    ) -> OpenClosedContent
     
 }
