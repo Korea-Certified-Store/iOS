@@ -19,6 +19,10 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
         return repository.fetchRefreshStores(requestLocation: newLocation)
     }
     
+}
+
+private extension FetchRefreshStoresUseCaseImpl {
+    
     func parallelTranslate (requestLocation: RequestLocation) -> RequestLocation {
         let distance1 = sqrt(
             pow(requestLocation.northWest.longitude - requestLocation.southWest.longitude, 2)
@@ -75,7 +79,7 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
         let slope = (loc2.latitude - loc1.latitude) / (loc2.longitude - loc1.longitude)
         let constant1 = 0.035 * sqrt(pow(slope, 2) + 1) - slope * center.longitude + center.latitude
         let constant2 = (-0.035) * sqrt(pow(slope, 2) + 1) - slope * center.longitude + center.latitude
-
+        
         return RequestLocation(
             northWest: getNewLocation(location: loc1, slope: slope, constant: constant1),
             southWest: getNewLocation(location: loc1, slope: slope, constant: constant2),
@@ -83,6 +87,7 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
             northEast: getNewLocation(location: loc2, slope: slope, constant: constant1)
         )
     }
+    
     func getNewLocation(location: Location, slope: Double, constant: Double) -> Location {
         return Location(
             longitude: (location.latitude + (location.longitude / slope) - constant) / (slope + 1 / slope),

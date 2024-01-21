@@ -26,6 +26,9 @@
 		5977BE9A2B59AC3300725C90 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE992B59AC3300725C90 /* ImageRepository.swift */; };
 		5977BE9C2B59AC8D00725C90 /* ImageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */; };
 		5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE9D2B59ACE800725C90 /* ImageCache.swift */; };
+		598CC4D82B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */; };
+		598CC4DB2B5D344C0043D064 /* MockSuccessStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */; };
+		598CC4DD2B5D44940043D064 /* MockFailStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -106,6 +109,9 @@
 		5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryImpl.swift; sourceTree = "<group>"; };
 		5977BE9D2B59ACE800725C90 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		5986DCE82B390A8D005AE43B /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
+		598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRefreshStoresUseCaseImplTests.swift; sourceTree = "<group>"; };
+		598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSuccessStoreRepository.swift; sourceTree = "<group>"; };
+		598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFailStoreRepository.swift; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
 		59C306A82B4FF9AF00862625 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
@@ -246,9 +252,11 @@
 		5977BE8B2B5966F900725C90 /* KCSUnitTest */ = {
 			isa = PBXGroup;
 			children = (
+				598CC4D92B5D342F0043D064 /* MockRepository */,
 				5977BE8C2B5966F900725C90 /* StoreRepositoryImplTests.swift */,
 				59F478BA2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift */,
 				59F478BC2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift */,
+				598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */,
 			);
 			path = KCSUnitTest;
 			sourceTree = "<group>";
@@ -330,6 +338,15 @@
 				5977BE572B5524D500725C90 /* RefreshButton.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		598CC4D92B5D342F0043D064 /* MockRepository */ = {
+			isa = PBXGroup;
+			children = (
+				598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */,
+				598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */,
+			);
+			path = MockRepository;
 			sourceTree = "<group>";
 		};
 		59C306A72B4FF98600862625 /* Repository */ = {
@@ -755,8 +772,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				59F478BD2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift in Sources */,
+				598CC4DB2B5D344C0043D064 /* MockSuccessStoreRepository.swift in Sources */,
 				5977BE8D2B5966F900725C90 /* StoreRepositoryImplTests.swift in Sources */,
+				598CC4D82B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift in Sources */,
 				59F478BB2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift in Sources */,
+				598CC4DD2B5D44940043D064 /* MockFailStoreRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -981,7 +1001,7 @@
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = KoreaCertifiedStore.KCSUnitTest;
@@ -1006,7 +1026,7 @@
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = KoreaCertifiedStore.KCSUnitTest;
