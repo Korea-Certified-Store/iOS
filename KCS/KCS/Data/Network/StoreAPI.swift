@@ -20,7 +20,11 @@ extension StoreAPI: Router, URLRequestConvertible {
     public var baseURL: String {
         switch self {
         case .getStores:
-            return NetworkURL.storeURL
+            do {
+                return try getURL(type: .develop)
+            } catch {
+                return ""
+            }
         case .getImage(let url):
             return url
         }
@@ -90,6 +94,28 @@ extension StoreAPI: Router, URLRequestConvertible {
         }
         
         return request
+    }
+    
+}
+
+private extension StoreAPI {
+    
+    enum URLType {
+        
+        case develop
+        case product
+        
+    }
+    
+    func getURL(type: URLType) throws -> String {
+        switch type {
+        case .develop:
+            guard let url = Bundle.main.object(forInfoDictionaryKey: "DEV_SERVER_URL") as? String else { throw NetworkError.wrongURL }
+            return url
+        case .product:
+            guard let url = Bundle.main.object(forInfoDictionaryKey: "PROD_SERVER_URL") as? String else { throw NetworkError.wrongURL }
+            return url
+        }
     }
     
 }

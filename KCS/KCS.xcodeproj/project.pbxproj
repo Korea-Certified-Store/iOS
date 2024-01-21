@@ -34,7 +34,6 @@
 		59C306B22B50001F00862625 /* StoreRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306B12B50001F00862625 /* StoreRepositoryImpl.swift */; };
 		59C306B42B50015500862625 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306B32B50015500862625 /* APIResponse.swift */; };
 		59C306B62B50027300862625 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306B52B50027300862625 /* Store.swift */; };
-		59C306BB2B5003F500862625 /* NetworkURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306BA2B5003F500862625 /* NetworkURL.swift */; };
 		59C306BD2B500D3D00862625 /* MockStoreResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C306BC2B500D3D00862625 /* MockStoreResponse.json */; };
 		59C306BF2B50109100862625 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306BE2B50109100862625 /* Location.swift */; };
 		59C306C32B50114100862625 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306C22B50114100862625 /* Day.swift */; };
@@ -114,7 +113,6 @@
 		59C306B12B50001F00862625 /* StoreRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepositoryImpl.swift; sourceTree = "<group>"; };
 		59C306B32B50015500862625 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		59C306B52B50027300862625 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		59C306BA2B5003F500862625 /* NetworkURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkURL.swift; sourceTree = "<group>"; };
 		59C306BC2B500D3D00862625 /* MockStoreResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockStoreResponse.json; sourceTree = "<group>"; };
 		59C306BE2B50109100862625 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		59C306C22B50114100862625 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
@@ -372,7 +370,6 @@
 				59C306D42B50629400862625 /* Error */,
 				59C306B72B50033200862625 /* Response */,
 				59C306AB2B4FFABA00862625 /* DTO */,
-				59C306BA2B5003F500862625 /* NetworkURL.swift */,
 				59C306CA2B50357900862625 /* Router.swift */,
 				59C306CC2B5035B100862625 /* StoreAPI.swift */,
 			);
@@ -731,7 +728,6 @@
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
 				5977BE942B59738800725C90 /* FetchStoresUseCase.swift in Sources */,
 				59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */,
-				59C306BB2B5003F500862625 /* NetworkURL.swift in Sources */,
 				59C306B22B50001F00862625 /* StoreRepositoryImpl.swift in Sources */,
 				5977BE9A2B59AC3300725C90 /* ImageRepository.swift in Sources */,
 				591A887D2B384E600059E40F /* AppDelegate.swift in Sources */,
