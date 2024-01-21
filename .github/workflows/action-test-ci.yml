@@ -35,8 +35,8 @@ jobs:
       # CocoaPod 을 사용하므로 설치후 테스트 진행
       - name: Install CocoaPods
         run: |
-          gem install cocoapods
-          pod install --repo-update --clean-install --project-directory=KCS
+          bundle install
+          bundle exec pod install --repo-update
 
       - name: Build and test
         run: |          
