@@ -35,10 +35,9 @@ jobs:
       # CocoaPod 을 사용하므로 설치후 테스트 진행
       - name: Install CocoaPods
         run: |
+          cd KCS
           pod install --repo-update --clean-install --project-directory=KCS
 
       - name: Build and test
-        uses: ty0x2333/cocoapods-action@master
-        with:
-          additional_build_params: -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
-          workspace: KCS/
+        run: |          
+          xcodebuild clean test -workspace KCS/KCS.xcworkspace -scheme KCS -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
