@@ -23,6 +23,7 @@ extension StoreAPI: Router, URLRequestConvertible {
             do {
                 return try getURL(type: .develop)
             } catch {
+                print(error.localizedDescription)
                 return ""
             }
         case .getImage(let url):
