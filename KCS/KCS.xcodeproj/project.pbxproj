@@ -715,7 +715,6 @@
 				A890870F2B4F836C00767225 /* StoreInformationViewController.swift in Sources */,
 				A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */,
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
-				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A89087042B4E7F3500767225 /* FilterButton.swift in Sources */,
 				59F478B12B59BB00002FEF9E /* ImageRepositoryError.swift in Sources */,
 				59C306C92B501B9D00862625 /* RegularOpeningHours.swift in Sources */,

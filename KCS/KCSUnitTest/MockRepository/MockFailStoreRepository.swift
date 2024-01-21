@@ -26,5 +26,4 @@ struct MockFailStoreRepository: StoreRepository {
         throw StoreRepositoryError.wrongStoreId
     }
     
-    
 }
