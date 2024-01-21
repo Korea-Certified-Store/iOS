@@ -23,5 +23,9 @@ final class ImageCache {
     func setImageData(_ data: NSData, for key: NSURL) {
         cache.setObject(data, forKey: key as NSURL)
     }
+    
+    func clearCache() {
+        cache.removeAllObjects()
+    }
 
 }
