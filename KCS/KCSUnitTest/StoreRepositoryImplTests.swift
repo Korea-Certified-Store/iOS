@@ -78,10 +78,12 @@ final class StoreRepositoryImplTests: XCTestCase {
     
     func test_fetchRefreshStores_결과는_에러가_발생하지_않는다() {
         let observable = storeRepositoryImpl.fetchRefreshStores(
-            northWestLocation: Location(longitude: 0, latitude: 0),
-            southWestLocation: Location(longitude: 0, latitude: 0),
-            southEastLocation: Location(longitude: 0, latitude: 0),
-            northEastLocation: Location(longitude: 0, latitude: 0)
+            requestLocation: RequestLocation(
+                northWest: Location(longitude: 0, latitude: 0),
+                southWest: Location(longitude: 0, latitude: 0),
+                southEast: Location(longitude: 0, latitude: 0),
+                northEast: Location(longitude: 0, latitude: 0)
+            )
         )
         
         XCTAssertNoThrow(try observable.toBlocking().first())

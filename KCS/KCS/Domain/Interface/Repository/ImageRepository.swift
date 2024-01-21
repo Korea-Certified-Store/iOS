@@ -9,6 +9,8 @@ import RxSwift
 
 protocol ImageRepository {
     
+    var cache: ImageCache { get }
+    
     func fetchImage(
         url: String
     ) -> Observable<Data>
