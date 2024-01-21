@@ -231,6 +231,7 @@
 				A8ACB7EB2B59644100540BD1 /* Error */,
 				5977BE5B2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift */,
 				5977BE972B5999E000725C90 /* FetchStoresUseCaseImpl.swift */,
+				A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */,
 				A8ACB7E92B595A3E00540BD1 /* GetOpenClosedUseCaseImpl.swift */,
 				59F478B22B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift */,
 			);
@@ -294,7 +295,6 @@
 			isa = PBXGroup;
 			children = (
 				59C306AA2B4FFA8C00862625 /* Entity */,
-				A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */,
 				5977BE5A2B55356600725C90 /* UseCase */,
 				A8ACB7CC2B54ED3800540BD1 /* Interface */,
 			);
