@@ -8,14 +8,20 @@
 import RxSwift
 import Alamofire
 
-final class ImageRepositoryImpl: ImageRepository {
+struct ImageRepositoryImpl: ImageRepository {
+    
+    var cache: ImageCache
+    
+    init(cache: ImageCache = ImageCache.shared) {
+        self.cache = cache
+    }
     
     func fetchImage(
         url: String
     ) -> Observable<Data> {
         return Observable<Data>.create { observer -> Disposable in
             if let imageURL = URL(string: url) {
-                if let imageData = ImageCache.shared.getImageData(for: imageURL as NSURL) {
+                if let imageData = cache.getImageData(for: imageURL as NSURL) {
                     observer.onNext(Data(imageData))
                 } else {
                     AF.request(StoreAPI.getImage(url: url))
@@ -23,7 +29,7 @@ final class ImageRepositoryImpl: ImageRepository {
                             switch response.result {
                             case .success(let result):
                                 if let resultData = result {
-                                    ImageCache.shared.setImageData(resultData as NSData, for: imageURL as NSURL)
+                                    cache.setImageData(resultData as NSData, for: imageURL as NSURL)
                                     observer.onNext(resultData)
                                 } else {
                                     observer.onError(ImageRepositoryError.noImageData)
