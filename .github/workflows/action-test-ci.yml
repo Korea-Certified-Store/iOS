@@ -38,6 +38,6 @@ jobs:
           pod install --repo-update --clean-install --project-directory=KCS
 
       - name: Build and test
-       - uses: ty0x2333/cocoapods-action@master
+        uses: ty0x2333/cocoapods-action@master
         with:
           additional_build_params: -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
