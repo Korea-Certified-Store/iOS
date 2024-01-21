@@ -15,7 +15,7 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
         requestLocation: RequestLocation
     ) -> Observable<[Store]> {
         let newLocation = parallelTranslate(requestLocation: requestLocation)
-        
+        dump(newLocation)
         return repository.fetchRefreshStores(requestLocation: newLocation)
     }
     
@@ -73,7 +73,6 @@ private extension FetchRefreshStoresUseCaseImpl {
                 southEast: Location(longitude: center.longitude - 0.035, latitude: loc2.latitude),
                 northEast: Location(longitude: center.longitude + 0.035, latitude: loc2.latitude)
             )
-            
         }
         
         let slope = (loc2.latitude - loc1.latitude) / (loc2.longitude - loc1.longitude)

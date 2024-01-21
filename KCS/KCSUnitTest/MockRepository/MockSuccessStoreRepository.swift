@@ -30,17 +30,38 @@ struct MockSuccessStoreRepository: StoreRepository {
     
     func fetchRefreshStores(requestLocation: KCS.RequestLocation) -> RxSwift.Observable<[KCS.Store]> {
         
-        dump(requestLocation)
+        func isPointInsideRectangle(rectangle: RequestLocation, point: Location) -> Bool {
+            let sideWest = vector(from: rectangle.northWest, to: rectangle.southWest)
+            let sideSouth = vector(from: rectangle.southWest, to: rectangle.southEast)
+            let sideEast = vector(from: rectangle.southEast, to: rectangle.northEast)
+            let sideNorth = vector(from: rectangle.northEast, to: rectangle.northWest)
+            
+            let vectorFromWest = vector(from: rectangle.northWest, to: point)
+            let vectorFromSouth = vector(from: rectangle.southWest, to: point)
+            let vectorFromEast = vector(from: rectangle.southEast, to: point)
+            let vectorFromNorth = vector(from: rectangle.northEast, to: point)
+            
+            let crossWest = crossProduct(sideWest, vectorFromWest)
+            let crossSouth = crossProduct(sideSouth, vectorFromSouth)
+            let crossEast = crossProduct(sideEast, vectorFromEast)
+            let crossNorth = crossProduct(sideNorth, vectorFromNorth)
+            
+            return crossWest * crossSouth > 0 && crossSouth * crossEast > 0 && crossEast * crossNorth > 0
+        }
+
+        func crossProduct(_ vector1: Location, _ vector2: Location) -> Double {
+            return vector1.longitude * vector2.latitude - vector1.latitude * vector2.longitude
+        }
+
+        func vector(from point1: Location, to point2: Location) -> Location {
+            return Location(longitude: point2.longitude - point1.longitude, latitude: point2.latitude - point1.latitude)
+        }
+        
         var result: [Store] = []
         stores.forEach { store in
-            if requestLocation.northWest.longitude > store.location.longitude
-                && requestLocation.northWest.latitude < store.location.latitude
-                && requestLocation.northEast.longitude > store.location.longitude
-                && requestLocation.northEast.latitude > store.location.latitude
-                && requestLocation.southWest.longitude < store.location.longitude
-                && requestLocation.southWest.latitude < store.location.latitude
-                && requestLocation.southEast.longitude < store.location.longitude
-                && requestLocation.southEast.latitude > store.location.latitude {
+            if isPointInsideRectangle(
+                rectangle: requestLocation,
+                point: store.location) {
                 result.append(store)
             }
         }
@@ -63,4 +84,5 @@ struct MockSuccessStoreRepository: StoreRepository {
     func getAllStores() -> [Store] {
         return stores
     }
+        
 }
