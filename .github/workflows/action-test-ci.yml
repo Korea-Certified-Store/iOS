@@ -36,7 +36,7 @@ jobs:
       - name: Install CocoaPods
         run: |
           bundle install
-          bundle exec pod install --repo-update
+          bundle exec pod install --repo-update --clean-install --project-directory=KCS
 
       - name: Build and test
         run: |          
