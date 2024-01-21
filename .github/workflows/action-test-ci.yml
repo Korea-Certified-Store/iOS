@@ -39,4 +39,4 @@ jobs:
 
       - name: Build and test
         run: |          
-          xcodebuild -workspace KCS/KCS.xcworkspace -scheme KCS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14, OS=latest' test
+          xcodebuild -workspace KCS/KCS.xcworkspace -scheme KCS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' test
