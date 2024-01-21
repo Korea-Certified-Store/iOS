@@ -29,7 +29,23 @@ struct MockSuccessStoreRepository: StoreRepository {
     }
     
     func fetchRefreshStores(requestLocation: KCS.RequestLocation) -> RxSwift.Observable<[KCS.Store]> {
-        return .just(stores)
+        
+        dump(requestLocation)
+        var result: [Store] = []
+        stores.forEach { store in
+            if requestLocation.northWest.longitude > store.location.longitude
+                && requestLocation.northWest.latitude < store.location.latitude
+                && requestLocation.northEast.longitude > store.location.longitude
+                && requestLocation.northEast.latitude > store.location.latitude
+                && requestLocation.southWest.longitude < store.location.longitude
+                && requestLocation.southWest.latitude < store.location.latitude
+                && requestLocation.southEast.longitude < store.location.longitude
+                && requestLocation.southEast.latitude > store.location.latitude {
+                result.append(store)
+            }
+        }
+        
+        return .just(result)
     }
     
     func fetchStores() -> [KCS.Store] {
