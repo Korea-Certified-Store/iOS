@@ -9,6 +9,10 @@
 	</dict>
 	<key>NMAP_CLIENT_ID</key>
 	<string>$(NMAP_CLIENT_ID)</string>
+	<key>DEV_SERVER_URL</key>
+	<string>$(DEV_SERVER_URL)</string>
+	<key>PROD_SERVER_URL</key>
+	<string>$(PROD_SERVER_URL)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

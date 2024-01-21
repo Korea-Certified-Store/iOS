@@ -138,26 +138,28 @@ final class HomeViewController: UIViewController {
             .bind { [weak self] _ in
                 guard let self = self else { return }
                 let northWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-                let southWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+                let southWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
                 let southEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-                let northEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
+                let northEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
                 viewModel.action(
                     input: .refresh(
-                        northWestLocation: Location(
-                            longitude: northWestPoint.lng,
-                            latitude: northWestPoint.lat
-                        ),
-                        southWestLocation: Location(
-                            longitude: southWestPoint.lng,
-                            latitude: southWestPoint.lat
-                        ),
-                        southEastLocation: Location(
-                            longitude: southEastPoint.lng,
-                            latitude: southEastPoint.lat
-                        ),
-                        northEastLocation: Location(
-                            longitude: northEastPoint.lng,
-                            latitude: northEastPoint.lat
+                        requestLocation: RequestLocation(
+                            northWest: Location(
+                                longitude: northWestPoint.lng,
+                                latitude: northWestPoint.lat
+                            ),
+                            southWest: Location(
+                                longitude: southWestPoint.lng,
+                                latitude: southWestPoint.lat
+                            ),
+                            southEast: Location(
+                                longitude: southEastPoint.lng,
+                                latitude: southEastPoint.lat
+                            ),
+                            northEast: Location(
+                                longitude: northEastPoint.lng,
+                                latitude: northEastPoint.lat
+                            )
                         ),
                         filters: getActivatedTypes()
                     )
@@ -401,26 +403,28 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
             
             let northWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-            let southWestPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+            let southWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
             let southEastPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-            let northEastPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
+            let northEastPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
             viewModel.action(
                 input: .refresh(
-                    northWestLocation: Location(
-                        longitude: northWestPoint.lng,
-                        latitude: northWestPoint.lat
-                    ),
-                    southWestLocation: Location(
-                        longitude: southWestPoint.lng,
-                        latitude: southWestPoint.lat
-                    ),
-                    southEastLocation: Location(
-                        longitude: southEastPoint.lng,
-                        latitude: southEastPoint.lat
-                    ),
-                    northEastLocation: Location(
-                        longitude: northEastPoint.lng,
-                        latitude: northEastPoint.lat
+                    requestLocation: RequestLocation(
+                        northWest: Location(
+                            longitude: northWestPoint.lng,
+                            latitude: northWestPoint.lat
+                        ),
+                        southWest: Location(
+                            longitude: southWestPoint.lng,
+                            latitude: southWestPoint.lat
+                        ),
+                        southEast: Location(
+                            longitude: southEastPoint.lng,
+                            latitude: southEastPoint.lat
+                        ),
+                        northEast: Location(
+                            longitude: northEastPoint.lng,
+                            latitude: northEastPoint.lat
+                        )
                     ),
                     filters: getActivatedTypes()
                 )

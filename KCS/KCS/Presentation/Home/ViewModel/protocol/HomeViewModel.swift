@@ -27,10 +27,7 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
 enum HomeViewModelInputCase {
     
     case refresh(
-        northWestLocation: Location,
-        southWestLocation: Location,
-        southEastLocation: Location,
-        northEastLocation: Location,
+        requestLocation: RequestLocation,
         filters: [CertificationType]
     )
     case fetchFilteredStores(
