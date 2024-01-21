@@ -40,4 +40,5 @@ jobs:
       - name: Build and test
         uses: ty0x2333/cocoapods-action@master
         with:
-          additional_build_params:  -scheme KCS -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
+          additional_build_params: -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
+          workspace: KCS/
