@@ -1,0 +1,35 @@
+name: test-ci
+
+# 트리거 조건 (push 하거나 PR 하면 하단의 jobs를 실행하겠다는 뜻)
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+      
+
+# 트리거 발생 시 실행할 작업들 
+jobs:
+  test:  
+    runs-on: macos-latest  # iOS 플랫폼에서 실행
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      # CocoaPod 을 사용하므로 설치후 테스트 진행
+      - name: Install CocoaPods
+        run: pod install --repo-update --clean-install --project-directory=KCS
+
+      - name: Build and test
+        run: |          
+          xcodebuild clean test -workspace KCS/KCS.xcworkspace \
+          -scheme KCS \
+          -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2'
+          # ❗-project 옵션으로 scheme 설정
+          # ❗-destination 옵션으로 OS 버전이 설정
