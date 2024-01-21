@@ -36,7 +36,7 @@ jobs:
       - name: Install CocoaPods
         run: |
           cd KCS
-          pod install --repo-update --clean-install --project-directory=KCS
+          pod install --repo-update --clean-install 
 
       - name: Build and test
         run: |          
