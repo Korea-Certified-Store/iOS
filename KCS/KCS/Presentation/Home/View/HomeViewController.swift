@@ -275,7 +275,7 @@ private extension HomeViewController {
     }
     
     func markerClicked(height: CGFloat) {
-        mapView.mapView.logoMargin = setNaverLogoMargin(height: height)
+        mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         locationBottomConstraint.constant = -height
         refreshBottomConstraint.constant = -height
         UIView.animate(withDuration: 0.3) {
@@ -284,7 +284,7 @@ private extension HomeViewController {
     }
     
     func markerCancel() {
-        mapView.mapView.logoMargin = setNaverLogoMargin(height: 0)
+        mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         locationBottomConstraint.constant = -16
         refreshBottomConstraint.constant = -17
         UIView.animate(withDuration: 0.3) {
@@ -293,20 +293,20 @@ private extension HomeViewController {
         storeInformationViewController?.dismiss(animated: true)
     }
     
-    func setNaverLogoMargin(height: CGFloat) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-    }
-    
     func presentStoreView() {
         let storeViewModel = StoreInformationViewModelImpl(
             getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
             fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
         )
-        storeInformationViewController = StoreInformationViewController(viewModel: storeViewModel)
+        let contentHeightObserver = PublishRelay<CGFloat>()
+        storeInformationViewController = StoreInformationViewController(
+            viewModel: storeViewModel,
+            contentHeightObserver: contentHeightObserver
+        )
         storeInformationViewController?.transitioningDelegate = self
         
         if let viewController = storeInformationViewController {
-            viewController.contentHeightObserver
+            contentHeightObserver
                 .bind { [weak self] contentHeight in
                     guard let self = self else { return }
                     let bottomSafeArea: CGFloat = 34

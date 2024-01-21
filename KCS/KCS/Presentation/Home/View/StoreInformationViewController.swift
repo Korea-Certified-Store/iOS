@@ -33,7 +33,7 @@ final class StoreInformationViewController: UIViewController {
         return stack
     }()
     
-    private lazy var categoty: UILabel = {
+    private lazy var category: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
@@ -65,7 +65,7 @@ final class StoreInformationViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.setLayerCorner(cornerRadius: 6)
         imageView.clipsToBounds = true
-        imageView.image = UIImage.defaultStore
+        imageView.image = UIImage.basicStore
         
         return imageView
     }()
@@ -91,11 +91,12 @@ final class StoreInformationViewController: UIViewController {
         return view
     }()
     
-    let contentHeightObserver = PublishRelay<CGFloat>()
     private let viewModel: StoreInformationViewModel
+    private let contentHeightObserver: PublishRelay<CGFloat>
     
-    init(viewModel: StoreInformationViewModel) {
+    init(viewModel: StoreInformationViewModel, contentHeightObserver: PublishRelay<CGFloat>) {
         self.viewModel = viewModel
+        self.contentHeightObserver = contentHeightObserver
         super.init(nibName: nil, bundle: nil)
         
         setBackgroundColor()
@@ -134,7 +135,7 @@ private extension StoreInformationViewController {
     func addUIComponents() {
         view.addSubview(storeTitle)
         view.addSubview(certificationStackView)
-        view.addSubview(categoty)
+        view.addSubview(category)
         view.addSubview(storeOpenClosed)
         view.addSubview(openingHour)
         view.addSubview(storeImageView)
@@ -150,12 +151,12 @@ private extension StoreInformationViewController {
         ])
         
         NSLayoutConstraint.activate([
-            categoty.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 4),
-            categoty.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
+            category.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 4),
+            category.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            certificationStackView.topAnchor.constraint(equalTo: categoty.bottomAnchor, constant: 9),
+            certificationStackView.topAnchor.constraint(equalTo: category.bottomAnchor, constant: 9),
             certificationStackView.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
@@ -197,7 +198,7 @@ extension StoreInformationViewController {
     
     func setUIContents(store: Store) {
         storeTitle.text = store.title
-        categoty.text = store.category
+        category.text = store.category
         removeStackView()
         store.certificationTypes
             .map({
