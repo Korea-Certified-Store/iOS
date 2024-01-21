@@ -18,6 +18,7 @@ final class StoreInformationViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         label.textColor = UIColor.primary2
+        label.numberOfLines = 2
         
         return label
     }()
@@ -89,6 +90,7 @@ final class StoreInformationViewController: UIViewController {
         return view
     }()
     
+    let contentHeightObserver = PublishRelay<CGFloat>()
     private let viewModel: StoreInformationViewModel
     
     init(viewModel: StoreInformationViewModel) {
@@ -142,7 +144,8 @@ private extension StoreInformationViewController {
     func configureConstraints() {
         NSLayoutConstraint.activate([
             storeTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
-            storeTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
+            storeTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            storeTitle.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -156)
         ])
         
         NSLayoutConstraint.activate([
@@ -213,6 +216,11 @@ extension StoreInformationViewController {
             openingHour: store.openingHour,
             url: store.localPhotos.first)
         )
+        if storeTitle.numberOfVisibleLines > 1 {
+            contentHeightObserver.accept(253)
+        } else {
+            contentHeightObserver.accept(230)
+        }
     }
     
 }

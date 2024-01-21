@@ -215,7 +215,6 @@ private extension HomeViewController {
         viewModel.getStoreInformationOutput
             .bind { [weak self] store in
                 guard let self = self else { return }
-                markerClicked()
                 presentStoreView()
                 storeInformationViewController?.setUIContents(store: store)
             }
@@ -275,9 +274,9 @@ private extension HomeViewController {
         }
     }
     
-    func markerClicked() {
-        locationBottomConstraint.constant = -240
-        refreshBottomConstraint.constant = -240
+    func markerClicked(height: CGFloat) {
+        locationBottomConstraint.constant = -height
+        refreshBottomConstraint.constant = -height
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -299,17 +298,25 @@ private extension HomeViewController {
         )
         storeInformationViewController = StoreInformationViewController(viewModel: storeViewModel)
         storeInformationViewController?.transitioningDelegate = self
-       
+        
         if let viewController = storeInformationViewController {
-            if let sheet = viewController.sheetPresentationController {
-                let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
-                let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
-                    return 224
+            let bottomSafeArea: CGFloat = 34
+            storeInformationViewController?.contentHeightObserver
+                .bind { [weak self] contentHeight in
+                    guard let self = self else { return }
+                    let height = contentHeight - bottomSafeArea
+                    if let sheet = viewController.sheetPresentationController {
+                        let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
+                        let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
+                            return height
+                        }
+                        sheet.detents = [detent]
+                        sheet.largestUndimmedDetentIdentifier = detentIdentifier
+                        sheet.preferredCornerRadius = 15
+                    }
+                    markerClicked(height: contentHeight - bottomSafeArea + 16)
                 }
-                sheet.detents = [detent]
-                sheet.largestUndimmedDetentIdentifier = detentIdentifier
-                sheet.preferredCornerRadius = 15
-            }
+                .disposed(by: disposeBag)
             present(viewController, animated: true)
         }
     }
