@@ -16,7 +16,7 @@ on:
 # 트리거 발생 시 실행할 작업들 
 jobs:
   test:  
-    runs-on: macos-latest  # iOS 플랫폼에서 실행
+    runs-on: macos-13  # iOS 플랫폼에서 실행
 
     steps:
       - name: List Xcode installations
