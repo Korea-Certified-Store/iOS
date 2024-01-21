@@ -21,9 +21,9 @@ jobs:
     steps:
       #Select your required version
       - name: Select Xcode 15.0
-        uses: maxim-lobanov/setup-xcode@v1
-          with:
-            xcode-version: '15.0'
+        uses: maxim-lobanov/setup-xcode
+        with:
+          xcode-version: '15.0'
 
       - name: Checkout repository
         uses: actions/checkout@v3
