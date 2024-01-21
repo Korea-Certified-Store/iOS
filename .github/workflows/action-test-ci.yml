@@ -18,6 +18,7 @@ jobs:
   test:  
     runs-on: macos-13  # iOS 플랫폼에서 실행
 
+    steps:
       #Select your required version
       - name: Select Xcode 15.1
         run: sudo xcode-select -s /Applications/Xcode_15.1.app/Contents/Developer
