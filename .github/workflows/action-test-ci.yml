@@ -32,11 +32,15 @@ jobs:
         run: |
           echo $ENV >> $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
       
+      - name: Set up Xcode
+        uses: actions/setup-xcode@v3
+        with:
+          xcode-version: '15'
+      
       # CocoaPod 을 사용하므로 설치후 테스트 진행
       - name: Install CocoaPods
         run: |
-          bundle install
-          bundle exec pod install --repo-update --clean-install --project-directory=KCS
+          pod install --repo-update --clean-install --project-directory=KCS
 
       - name: Build and test
         run: |          
