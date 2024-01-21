@@ -46,7 +46,7 @@ private extension FetchRefreshStoresUseCaseImpl {
                 center: center
             )
             if distance2 > 0.07 {
-                return translateHeightLocations(
+                newLocation = translateHeightLocations(
                     loc1: newLocation.northEast,
                     loc2: newLocation.southEast,
                     center: center
