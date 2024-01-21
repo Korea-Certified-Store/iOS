@@ -71,37 +71,22 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
             )
             
         }
+        
         let slope = (loc2.latitude - loc1.latitude) / (loc2.longitude - loc1.longitude)
-        
         let constant1 = 0.035 * sqrt(pow(slope, 2) + 1) - slope * center.longitude + center.latitude
-        
         let constant2 = (-0.035) * sqrt(pow(slope, 2) + 1) - slope * center.longitude + center.latitude
 
-        let newNorthWest = Location(
-            longitude: (loc1.latitude + (loc1.longitude / slope) - constant1) / (slope + 1 / slope),
-            latitude: (slope * loc1.latitude + loc1.longitude + constant1 / slope) / (slope + 1 / slope)
-        )
-        
-        let newNorthEast = Location(
-            longitude: (loc2.latitude + (loc2.longitude / slope) - constant1) / (slope + 1 / slope),
-            latitude: (slope * loc2.latitude + loc2.longitude + constant1 / slope) / (slope + 1 / slope)
-        )
-        
-        let newSouthEast = Location(
-            longitude: (loc2.latitude + (loc2.longitude / slope) - constant2) / (slope + 1 / slope),
-            latitude: (slope * loc2.latitude + loc2.longitude + constant2 / slope) / (slope + 1 / slope)
-        )
-        
-        let newSouthWest = Location(
-            longitude: (loc1.latitude + (loc1.longitude / slope) - constant2) / (slope + 1 / slope),
-            latitude: (slope * loc1.latitude + loc1.longitude + constant2 / slope) / (slope + 1 / slope)
-        )
-        
         return RequestLocation(
-            northWest: newNorthWest,
-            southWest: newSouthWest,
-            southEast: newSouthEast,
-            northEast: newNorthEast
+            northWest: getNewLocation(location: loc1, slope: slope, constant: constant1),
+            southWest: getNewLocation(location: loc1, slope: slope, constant: constant2),
+            southEast: getNewLocation(location: loc2, slope: slope, constant: constant2),
+            northEast: getNewLocation(location: loc2, slope: slope, constant: constant1)
+        )
+    }
+    func getNewLocation(location: Location, slope: Double, constant: Double) -> Location {
+        return Location(
+            longitude: (location.latitude + (location.longitude / slope) - constant) / (slope + 1 / slope),
+            latitude: (slope * location.latitude + location.longitude + constant / slope) / (slope + 1 / slope)
         )
     }
     
