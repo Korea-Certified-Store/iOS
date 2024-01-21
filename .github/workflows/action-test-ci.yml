@@ -25,7 +25,7 @@ jobs:
       - name: Copy secrets to github action
         env:
           ENV: ${{ secrets.ENV }}  # repository secrets 에서 가져옴
-          OCCUPY_SECRET_DIR: .  # 레포지토리 내 파일 의 위치
+          OCCUPY_SECRET_DIR: ./KCS  # 레포지토리 내 파일 의 위치
           OCCUPY_SECRET_DIR_FILE_NAME: Secret.xcconfig  # 파일 이름
 
         # secrets 값 복사
