@@ -18,10 +18,6 @@ jobs:
   test:  
     runs-on: macos-13  # iOS 플랫폼에서 실행
 
-    steps:
-      - name: List Xcode installations
-        run: sudo ls -1 /Applications | grep "Xcode"
-
       #Select your required version
       - name: Select Xcode 15.1
         run: sudo xcode-select -s /Applications/Xcode_15.1.app/Contents/Developer
@@ -46,4 +42,4 @@ jobs:
 
       - name: Build and test
         run: |          
-          xcodebuild -workspace KCS/KCS.xcworkspace -scheme KCS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' test
+          xcodebuild clean test -workspace KCS/KCS.xcworkspace -scheme KCS -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
