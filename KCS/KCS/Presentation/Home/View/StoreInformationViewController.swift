@@ -16,7 +16,7 @@ final class StoreInformationViewController: UIViewController {
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 22, weight: .medium)
+        label.font = UIFont.pretendard(size: 22, weight: .bold)
         label.textColor = UIColor.primary2
         label.numberOfLines = 2
         
@@ -36,7 +36,7 @@ final class StoreInformationViewController: UIViewController {
     private lazy var categoty: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.pretendard(size: 13, weight: .regular)
         label.textColor = UIColor.kcsGray
         
         return label
@@ -45,7 +45,7 @@ final class StoreInformationViewController: UIViewController {
     private lazy var storeOpenClosed: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.pretendard(size: 15, weight: .regular)
         label.textColor = UIColor.goodPrice
         
         return label
@@ -54,7 +54,7 @@ final class StoreInformationViewController: UIViewController {
     private lazy var openingHour: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.pretendard(size: 13, weight: .regular)
         label.textColor = UIColor.kcsGray
         
         return label
