@@ -146,27 +146,27 @@ private extension StoreInformationViewController {
         ])
         
         NSLayoutConstraint.activate([
-            certificationStackView.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 10),
+            categoty.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 4),
+            categoty.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            certificationStackView.topAnchor.constraint(equalTo: categoty.bottomAnchor, constant: 9),
             certificationStackView.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            categoty.centerYAnchor.constraint(equalTo: storeTitle.centerYAnchor, constant: 2),
-            categoty.leadingAnchor.constraint(equalTo: storeTitle.trailingAnchor, constant: 4)
-        ])
-        
-        NSLayoutConstraint.activate([
-            storeOpenClosed.topAnchor.constraint(equalTo: certificationStackView.bottomAnchor, constant: 16),
+            storeOpenClosed.topAnchor.constraint(equalTo: certificationStackView.bottomAnchor, constant: 8),
             storeOpenClosed.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
             openingHour.centerYAnchor.constraint(equalTo: storeOpenClosed.centerYAnchor),
-            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 8)
+            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 12)
         ])
         
         NSLayoutConstraint.activate([
-            storeCallButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -49),
+            storeCallButton.topAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor, constant: 21),
             storeCallButton.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor),
             storeCallButton.widthAnchor.constraint(equalToConstant: 69),
             storeCallButton.heightAnchor.constraint(equalToConstant: 40)
@@ -175,8 +175,8 @@ private extension StoreInformationViewController {
         NSLayoutConstraint.activate([
             storeImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
             storeImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            storeImageView.widthAnchor.constraint(equalToConstant: 116),
-            storeImageView.heightAnchor.constraint(equalToConstant: 116)
+            storeImageView.widthAnchor.constraint(equalToConstant: 132),
+            storeImageView.heightAnchor.constraint(equalToConstant: 132)
         ])
         
         NSLayoutConstraint.activate([
