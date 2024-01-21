@@ -275,6 +275,7 @@ private extension HomeViewController {
     }
     
     func markerClicked(height: CGFloat) {
+        mapView.mapView.logoMargin = setNaverLogoMargin(height: height)
         locationBottomConstraint.constant = -height
         refreshBottomConstraint.constant = -height
         UIView.animate(withDuration: 0.3) {
@@ -283,12 +284,17 @@ private extension HomeViewController {
     }
     
     func markerCancel() {
+        mapView.mapView.logoMargin = setNaverLogoMargin(height: 0)
         locationBottomConstraint.constant = -16
         refreshBottomConstraint.constant = -17
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
         storeInformationViewController?.dismiss(animated: true)
+    }
+    
+    func setNaverLogoMargin(height: CGFloat) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
     }
     
     func presentStoreView() {
