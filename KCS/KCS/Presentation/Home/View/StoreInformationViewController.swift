@@ -65,6 +65,7 @@ final class StoreInformationViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.setLayerCorner(cornerRadius: 6)
         imageView.clipsToBounds = true
+        imageView.image = UIImage.defaultStore
         
         return imageView
     }()
