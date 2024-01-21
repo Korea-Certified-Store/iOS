@@ -217,7 +217,6 @@ private extension HomeViewController {
         viewModel.getStoreInformationOutput
             .bind { [weak self] store in
                 guard let self = self else { return }
-                markerClicked()
                 presentStoreView()
                 storeInformationViewController?.setUIContents(store: store)
             }
@@ -277,15 +276,17 @@ private extension HomeViewController {
         }
     }
     
-    func markerClicked() {
-        locationBottomConstraint.constant = -240
-        refreshBottomConstraint.constant = -240
+    func markerClicked(height: CGFloat) {
+        mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        locationBottomConstraint.constant = -height
+        refreshBottomConstraint.constant = -height
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
     
     func markerCancel() {
+        mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         locationBottomConstraint.constant = -16
         refreshBottomConstraint.constant = -17
         UIView.animate(withDuration: 0.3) {
@@ -299,19 +300,31 @@ private extension HomeViewController {
             getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
             fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
         )
-        storeInformationViewController = StoreInformationViewController(viewModel: storeViewModel)
+        let contentHeightObserver = PublishRelay<CGFloat>()
+        storeInformationViewController = StoreInformationViewController(
+            viewModel: storeViewModel,
+            contentHeightObserver: contentHeightObserver
+        )
         storeInformationViewController?.transitioningDelegate = self
-       
+        
         if let viewController = storeInformationViewController {
-            if let sheet = viewController.sheetPresentationController {
-                let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
-                let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
-                    return 224
+            contentHeightObserver
+                .bind { [weak self] contentHeight in
+                    guard let self = self else { return }
+                    let bottomSafeArea: CGFloat = 34
+                    let height = contentHeight - bottomSafeArea
+                    if let sheet = viewController.sheetPresentationController {
+                        let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
+                        let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
+                            return height
+                        }
+                        sheet.detents = [detent]
+                        sheet.largestUndimmedDetentIdentifier = detentIdentifier
+                        sheet.preferredCornerRadius = 15
+                    }
+                    markerClicked(height: contentHeight - bottomSafeArea + 16)
                 }
-                sheet.detents = [detent]
-                sheet.largestUndimmedDetentIdentifier = detentIdentifier
-                sheet.preferredCornerRadius = 15
-            }
+                .disposed(by: disposeBag)
             present(viewController, animated: true)
         }
     }
