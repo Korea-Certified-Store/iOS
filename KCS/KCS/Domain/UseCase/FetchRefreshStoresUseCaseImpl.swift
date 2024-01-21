@@ -15,7 +15,6 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
         requestLocation: RequestLocation
     ) -> Observable<[Store]> {
         let newLocation = parallelTranslate(requestLocation: requestLocation)
-        dump(newLocation)
         return repository.fetchRefreshStores(requestLocation: newLocation)
     }
     
