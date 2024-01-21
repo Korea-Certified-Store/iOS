@@ -306,10 +306,10 @@ private extension HomeViewController {
         storeInformationViewController?.transitioningDelegate = self
         
         if let viewController = storeInformationViewController {
-            let bottomSafeArea: CGFloat = 34
-            storeInformationViewController?.contentHeightObserver
+            viewController.contentHeightObserver
                 .bind { [weak self] contentHeight in
                     guard let self = self else { return }
+                    let bottomSafeArea: CGFloat = 34
                     let height = contentHeight - bottomSafeArea
                     if let sheet = viewController.sheetPresentationController {
                         let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
