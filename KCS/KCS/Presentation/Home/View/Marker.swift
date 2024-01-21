@@ -16,7 +16,7 @@ final class Marker: NMFMarker {
             setUI(type: certificationType)
         }
     }
-    
+    private lazy var unselectedGlobalZIndex: Int = self.globalZIndex
     private let certificationType: CertificationType
 
     init(certificationType: CertificationType, position: NMGLatLng? = nil) {
@@ -43,6 +43,7 @@ private extension Marker {
             case .safe:
                 icon = NMFOverlayImage(image: UIImage.markerSafeSelected)
             }
+            self.globalZIndex = 300000
         } else {
             switch type {
             case .goodPrice:
@@ -52,6 +53,7 @@ private extension Marker {
             case .safe:
                 icon = NMFOverlayImage(image: UIImage.markerSafeNormal)
             }
+            self.globalZIndex = unselectedGlobalZIndex
         }
         self.iconImage = icon
     }
