@@ -32,11 +32,6 @@ jobs:
         run: |
           echo $ENV >> $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
       
-      - name: Set up Xcode
-        uses: actions/setup-xcode@v3
-        with:
-          xcode-version: '15'
-      
       # CocoaPod 을 사용하므로 설치후 테스트 진행
       - name: Install CocoaPods
         run: |
@@ -44,8 +39,4 @@ jobs:
 
       - name: Build and test
         run: |          
-          xcodebuild clean test -workspace KCS/KCS.xcworkspace \
-          -scheme KCS \
-          -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2'
-          # ❗-project 옵션으로 scheme 설정
-          # ❗-destination 옵션으로 OS 버전이 설정
+          xcodebuild clean test -workspace KCS/KCS.xcworkspace -scheme KCS -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
