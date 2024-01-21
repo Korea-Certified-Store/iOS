@@ -22,7 +22,7 @@ final class FetchStoresUseCaseImplTests: XCTestCase {
 
     func test_Store가_없으면_execute의_결과는_빈_배열을_반환한다() {
         fetchStoresUseCaseImpl = FetchStoresUseCaseImpl(
-            repository: StoreRepositoryImpl(stores: [])
+            repository: MockSuccessStoreRepository(stores: [])
         )
         let result = fetchStoresUseCaseImpl.execute()
         
@@ -73,7 +73,7 @@ final class FetchStoresUseCaseImplTests: XCTestCase {
             )
         ]
         fetchStoresUseCaseImpl = FetchStoresUseCaseImpl(
-            repository: StoreRepositoryImpl(stores: stores)
+            repository: MockSuccessStoreRepository(stores: stores)
         )
         let result = fetchStoresUseCaseImpl.execute()
         
