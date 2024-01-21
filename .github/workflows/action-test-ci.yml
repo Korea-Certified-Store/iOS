@@ -21,6 +21,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Copy secrets to github action
+        env:
+          ENV: ${{ secrets.ENV }}  # repository secrets 에서 가져옴
+          OCCUPY_SECRET_DIR: ./KCS  # 레포지토리 내 파일 의 위치
+          OCCUPY_SECRET_DIR_FILE_NAME: Secret.xcconfig  # 파일 이름
+
+        # secrets 값 복사
+        run: |
+          echo $ENV >> $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
       
       # CocoaPod 을 사용하므로 설치후 테스트 진행
       - name: Install CocoaPods
