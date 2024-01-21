@@ -39,5 +39,6 @@ jobs:
 
       - name: Build and test
         uses: ty0x2333/cocoapods-action@master
+        run: cd KCS
         with:
           additional_build_params: -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
