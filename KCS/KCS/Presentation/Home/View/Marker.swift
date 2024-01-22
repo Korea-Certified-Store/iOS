@@ -43,7 +43,7 @@ private extension Marker {
             case .safe:
                 icon = NMFOverlayImage(image: UIImage.markerSafeSelected)
             }
-            self.globalZIndex = 300000
+            self.globalZIndex = 250000
         } else {
             switch type {
             case .goodPrice:
