@@ -212,7 +212,7 @@ private extension HomeViewController {
                         self.setMarker(marker: Marker(certificationType: filteredStore.type, position: location), tag: UInt($0.id))
                     }
                 }
-                markerCancel()
+                storeInformationViewController?.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -263,19 +263,29 @@ private extension HomeViewController {
     
     func markerTouchHandler(marker: Marker) {
         marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            guard let self = self else { return true }
-            markerCancel()
-            if clickedMarker != marker {
-                clickedMarker?.isSelected = false
+            if let clickedMarker = self?.clickedMarker {
+                if clickedMarker == marker { return true }
+                if clickedMarker.isSelected {
+                    self?.storeInformationViewController?.dismiss(animated: true) { [weak self] in
+                        self?.markerSelected(marker: marker)
+                    }
+                } else {
+                    self?.markerSelected(marker: marker)
+                }
+            } else {
+                self?.markerSelected(marker: marker)
             }
-            marker.isSelected.toggle()
-            if marker.isSelected {
-                viewModel.action(input: .markerTapped(tag: marker.tag))
-            }
-            clickedMarker = marker
             
             return true
         }
+    }
+    
+    func markerSelected(marker: Marker) {
+        marker.isSelected.toggle()
+        if marker.isSelected {
+            viewModel.action(input: .markerTapped(tag: marker.tag))
+        }
+        clickedMarker = marker
     }
     
     func markerClicked(height: CGFloat) {
@@ -285,16 +295,6 @@ private extension HomeViewController {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-    }
-    
-    func markerCancel() {
-        mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        locationBottomConstraint.constant = -16
-        refreshBottomConstraint.constant = -17
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-        storeInformationViewController?.dismiss(animated: true)
     }
     
     func presentStoreView() {
@@ -454,8 +454,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
 extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        clickedMarker?.isSelected = false
-        markerCancel()
+        storeInformationViewController?.dismiss(animated: true)
     }
     
 }
@@ -464,7 +463,7 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         dismissObserver
-            .bind { [weak self] bool in
+            .bind { [weak self] in
                 guard let self = self else { return }
                 clickedMarker?.isSelected = false
                 mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
