@@ -923,6 +923,7 @@
 		};
 		591A888C2B384E610059E40F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5986DCE82B390A8D005AE43B /* Secret.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
