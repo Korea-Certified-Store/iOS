@@ -65,7 +65,7 @@ extension StoreAPI: Router, URLRequestConvertible {
                 return nil
             }
         } catch let error {
-            dump(error)
+            print(error.localizedDescription)
             return nil
         }
     }
