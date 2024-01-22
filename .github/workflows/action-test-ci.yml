@@ -20,8 +20,8 @@ jobs:
 
     steps:
       #Select your required version
-      - name: Select Xcode 15.0
-        run: sudo xcode-select -s /Applications/Xcode_15.0.app/Contents/Developer
+      - name: Select Xcode 15.1
+        run: sudo xcode-select -s /Applications/Xcode_15.1.app/Contents/Developer
 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -35,12 +35,14 @@ jobs:
         # secrets 값 복사
         run: |
           echo $ENV >> $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
-      
-      # CocoaPod 을 사용하므로 설치후 테스트 진행
-      - name: Install CocoaPods
-        run: |
-          pod install --repo-update --clean-install --project-directory=KCS
 
-      - name: Build and test
-        run: |          
-          xcodebuild clean test -workspace KCS/KCS.xcworkspace -scheme KCS -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
+      - name: Install Gems
+        if: steps.cache_gems.outputs.cache-hit != 'true'
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Install Pods Release
+        if: steps.cache_pods.outputs.cache-hit != 'true'
+        run: bundle exec pod install --repo-update
+
+      - name: Run tests
+        run: bundle exec fastlane test
