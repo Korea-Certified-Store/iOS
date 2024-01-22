@@ -41,6 +41,9 @@ jobs:
         run: |
           pod install --repo-update --clean-install --project-directory=KCS
 
+      - name: Build
+        run: xcodebuild build-for-testing -workspace KCS/KCS.xcworkspace -scheme "KCS" -destination "platform=iOS Simulator,name=iPhone 14,OS=17.2" 
+
       - name: Build and test
         run: |          
-          xcodebuild clean test -workspace KCS/KCS.xcworkspace -scheme KCS -destination "platform=iOS Simulator,name=iPhone 14,OS=17.2"
+          xcodebuild test-without-building -workspace KCS/KCS.xcworkspace -scheme "KCS" -destination "platform=iOS Simulator,name=iPhone 14,OS=17.2"
