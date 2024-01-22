@@ -175,6 +175,8 @@ final class HomeViewController: UIViewController {
     
     private var storeInformationViewController: StoreInformationViewController?
     
+    private let dismissObserver = PublishRelay<Bool>()
+    
     private let viewModel: HomeViewModel
     
     init(viewModel: HomeViewModel) {
@@ -303,7 +305,8 @@ private extension HomeViewController {
         let contentHeightObserver = PublishRelay<CGFloat>()
         storeInformationViewController = StoreInformationViewController(
             viewModel: storeViewModel,
-            contentHeightObserver: contentHeightObserver
+            contentHeightObserver: contentHeightObserver,
+            dismissObserver: dismissObserver
         )
         storeInformationViewController?.transitioningDelegate = self
         
@@ -460,12 +463,19 @@ extension HomeViewController: NMFMapViewTouchDelegate {
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        clickedMarker?.isSelected = false
-        locationBottomConstraint.constant = -16
-        refreshBottomConstraint.constant = -17
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
+        dismissObserver
+            .bind { [weak self] bool in
+                guard let self = self else { return }
+                if bool {
+                    clickedMarker?.isSelected = false
+                    locationBottomConstraint.constant = -16
+                    refreshBottomConstraint.constant = -17
+                    UIView.animate(withDuration: 0.3) {
+                        self.view.layoutIfNeeded()
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
         
         return nil
     }
