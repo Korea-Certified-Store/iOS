@@ -51,7 +51,7 @@ struct StoreDTO: Codable {
         } catch let error as JSONContentsError {
             print(error.errorDescription)
         } catch let error {
-            dump(error)
+            print(error.localizedDescription)
         }
         
         return Store(

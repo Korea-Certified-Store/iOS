@@ -67,7 +67,7 @@ private extension HomeViewModelImpl {
                 self?.applyFilters(stores: stores, filters: filters)
             },
             onError: { error in
-                dump(error)
+                print(error.localizedDescription)
             }
         )
         .disposed(by: disposeBag)
