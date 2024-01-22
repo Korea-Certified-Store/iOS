@@ -30,7 +30,7 @@ private extension RefreshButton {
         var config = UIButton.Configuration.filled()
         config.attributedTitle = titleAttribute
         config.baseBackgroundColor = .white
-        config.baseForegroundColor = .label
+        config.baseForegroundColor = .black
         config.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)
         config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 10)
         config.imagePlacement = .leading
