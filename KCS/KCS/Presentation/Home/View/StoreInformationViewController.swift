@@ -93,16 +93,22 @@ final class StoreInformationViewController: UIViewController {
     
     private let viewModel: StoreInformationViewModel
     private let contentHeightObserver: PublishRelay<CGFloat>
+    private let dismissObserver: PublishRelay<Void>
     
-    init(viewModel: StoreInformationViewModel, contentHeightObserver: PublishRelay<CGFloat>) {
+    init(viewModel: StoreInformationViewModel, contentHeightObserver: PublishRelay<CGFloat>, dismissObserver: PublishRelay<Void>) {
         self.viewModel = viewModel
         self.contentHeightObserver = contentHeightObserver
+        self.dismissObserver = dismissObserver
         super.init(nibName: nil, bundle: nil)
         
         setBackgroundColor()
         addUIComponents()
         configureConstraints()
         bind()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        dismissObserver.accept(())
     }
     
     required init?(coder: NSCoder) {
