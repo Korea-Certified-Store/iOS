@@ -1,0 +1,49 @@
+name: test-ci
+
+# 트리거 조건 (push 하거나 PR 하면 하단의 jobs를 실행하겠다는 뜻)
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+      
+
+# 트리거 발생 시 실행할 작업들 
+jobs:
+  test:  
+    runs-on: macos-13  # iOS 플랫폼에서 실행
+
+    steps:
+      #Select your required version
+      - name: Select Xcode 15.1
+        run: sudo xcode-select -s /Applications/Xcode_15.1.app/Contents/Developer
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy secrets to github action
+        env:
+          ENV: ${{ secrets.ENV }}  # repository secrets 에서 가져옴
+          OCCUPY_SECRET_DIR: ./KCS  # 레포지토리 내 파일 의 위치
+          OCCUPY_SECRET_DIR_FILE_NAME: Secret.xcconfig  # 파일 이름
+
+        # secrets 값 복사
+        run: |
+          echo $ENV >> $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
+      
+      # CocoaPod 을 사용하므로 설치후 테스트 진행
+      - name: Install CocoaPods
+        run: |
+          pod install --repo-update --clean-install --project-directory=KCS
+
+      - name: Build
+        run: xcodebuild build-for-testing -workspace KCS/KCS.xcworkspace -scheme "KCS" -destination "platform=iOS Simulator,name=iPhone 14,OS=17.2" 
+
+      - name: Test
+        run: |          
+          xcodebuild test-without-building -scheme "KCS" -destination "platform=iOS Simulator,name=iPhone 14,OS=17.2"
