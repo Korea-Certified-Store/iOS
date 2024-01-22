@@ -175,7 +175,7 @@ final class HomeViewController: UIViewController {
     
     private var storeInformationViewController: StoreInformationViewController?
     
-    private let dismissObserver = PublishRelay<Bool>()
+    private let dismissObserver = PublishRelay<Void>()
     
     private let viewModel: HomeViewModel
     
@@ -466,14 +466,12 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
         dismissObserver
             .bind { [weak self] bool in
                 guard let self = self else { return }
-                if bool {
-                    clickedMarker?.isSelected = false
-                    mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                    locationBottomConstraint.constant = -16
-                    refreshBottomConstraint.constant = -17
-                    UIView.animate(withDuration: 0.3) {
-                        self.view.layoutIfNeeded()
-                    }
+                clickedMarker?.isSelected = false
+                mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                locationBottomConstraint.constant = -16
+                refreshBottomConstraint.constant = -17
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
                 }
             }
             .disposed(by: disposeBag)

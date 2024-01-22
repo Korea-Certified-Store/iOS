@@ -93,9 +93,9 @@ final class StoreInformationViewController: UIViewController {
     
     private let viewModel: StoreInformationViewModel
     private let contentHeightObserver: PublishRelay<CGFloat>
-    private let dismissObserver: PublishRelay<Bool>
+    private let dismissObserver: PublishRelay<Void>
     
-    init(viewModel: StoreInformationViewModel, contentHeightObserver: PublishRelay<CGFloat>, dismissObserver: PublishRelay<Bool>) {
+    init(viewModel: StoreInformationViewModel, contentHeightObserver: PublishRelay<CGFloat>, dismissObserver: PublishRelay<Void>) {
         self.viewModel = viewModel
         self.contentHeightObserver = contentHeightObserver
         self.dismissObserver = dismissObserver
@@ -108,7 +108,7 @@ final class StoreInformationViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        dismissObserver.accept(true)
+        dismissObserver.accept(())
     }
     
     required init?(coder: NSCoder) {
