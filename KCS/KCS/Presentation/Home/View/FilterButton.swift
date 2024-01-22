@@ -37,7 +37,7 @@ private extension FilterButton {
     
     func setContents(type: CertificationType) {
         var titleAttribute = AttributedString.init(type.description)
-        titleAttribute.font = .systemFont(ofSize: 10)
+        titleAttribute.font = UIFont.pretendard(size: 12, weight: .medium)
         
         guard var config = configuration else { return }
         config.attributedTitle = titleAttribute

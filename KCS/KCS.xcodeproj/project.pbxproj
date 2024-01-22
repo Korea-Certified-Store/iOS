@@ -26,6 +26,9 @@
 		5977BE9A2B59AC3300725C90 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE992B59AC3300725C90 /* ImageRepository.swift */; };
 		5977BE9C2B59AC8D00725C90 /* ImageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */; };
 		5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE9D2B59ACE800725C90 /* ImageCache.swift */; };
+		598CC4D82B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */; };
+		598CC4DB2B5D344C0043D064 /* MockSuccessStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */; };
+		598CC4DD2B5D44940043D064 /* MockFailStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -54,6 +57,17 @@
 		8FE699E5DAEEDFE5A53D5E82 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */; };
 		A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802D1F52B5277620091FDE7 /* CertificationLabel.swift */; };
 		A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */; };
+		A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */; };
+		A81EFBC02B5D597400D0C0D7 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBB72B5D597400D0C0D7 /* Pretendard-Medium.ttf */; };
+		A81EFBC12B5D597400D0C0D7 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBB82B5D597400D0C0D7 /* Pretendard-Black.ttf */; };
+		A81EFBC22B5D597400D0C0D7 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBB92B5D597400D0C0D7 /* Pretendard-Regular.ttf */; };
+		A81EFBC32B5D597400D0C0D7 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBBA2B5D597400D0C0D7 /* Pretendard-Thin.ttf */; };
+		A81EFBC42B5D597400D0C0D7 /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBBB2B5D597400D0C0D7 /* Pretendard-ExtraLight.ttf */; };
+		A81EFBC52B5D597400D0C0D7 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBBC2B5D597400D0C0D7 /* Pretendard-SemiBold.ttf */; };
+		A81EFBC62B5D597400D0C0D7 /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBBD2B5D597400D0C0D7 /* Pretendard-ExtraBold.ttf */; };
+		A81EFBC72B5D597400D0C0D7 /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBBE2B5D597400D0C0D7 /* Pretendard-Bold.ttf */; };
+		A81EFBC82B5D597400D0C0D7 /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBBF2B5D597400D0C0D7 /* Pretendard-Light.ttf */; };
+		A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */; };
 		A89087042B4E7F3500767225 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087032B4E7F3500767225 /* FilterButton.swift */; };
 		A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* SystemImage.swift */; };
 		A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870C2B4EF91600767225 /* UIView+SetLayer.swift */; };
@@ -107,6 +121,9 @@
 		5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryImpl.swift; sourceTree = "<group>"; };
 		5977BE9D2B59ACE800725C90 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		5986DCE82B390A8D005AE43B /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
+		598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRefreshStoresUseCaseImplTests.swift; sourceTree = "<group>"; };
+		598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSuccessStoreRepository.swift; sourceTree = "<group>"; };
+		598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFailStoreRepository.swift; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
 		59C306A82B4FF9AF00862625 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
@@ -136,6 +153,17 @@
 		9EA5C8EA72EA9E937C11400A /* Pods-KCS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.debug.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.debug.xcconfig"; sourceTree = "<group>"; };
 		A802D1F52B5277620091FDE7 /* CertificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationLabel.swift; sourceTree = "<group>"; };
 		A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClosedContent.swift; sourceTree = "<group>"; };
+		A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		A81EFBB72B5D597400D0C0D7 /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
+		A81EFBB82B5D597400D0C0D7 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
+		A81EFBB92B5D597400D0C0D7 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
+		A81EFBBA2B5D597400D0C0D7 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
+		A81EFBBB2B5D597400D0C0D7 /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
+		A81EFBBC2B5D597400D0C0D7 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
+		A81EFBBD2B5D597400D0C0D7 /* Pretendard-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.ttf"; sourceTree = "<group>"; };
+		A81EFBBE2B5D597400D0C0D7 /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
+		A81EFBBF2B5D597400D0C0D7 /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
+		A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		A89087032B4E7F3500767225 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		A89087092B4EF00B00767225 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		A890870C2B4EF91600767225 /* UIView+SetLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SetLayer.swift"; sourceTree = "<group>"; };
@@ -248,9 +276,11 @@
 		5977BE8B2B5966F900725C90 /* KCSUnitTest */ = {
 			isa = PBXGroup;
 			children = (
+				598CC4D92B5D342F0043D064 /* MockRepository */,
 				5977BE8C2B5966F900725C90 /* StoreRepositoryImplTests.swift */,
 				59F478BA2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift */,
 				59F478BC2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift */,
+				598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */,
 				59F478C02B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift */,
 			);
 			path = KCSUnitTest;
@@ -268,6 +298,7 @@
 		5986DCDC2B389252005AE43B /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				A81EFBB62B5D597400D0C0D7 /* font */,
 				59C306BC2B500D3D00862625 /* MockStoreResponse.json */,
 				591A888A2B384E610059E40F /* Info.plist */,
 				591A88852B384E610059E40F /* Assets.xcassets */,
@@ -333,6 +364,15 @@
 				5977BE572B5524D500725C90 /* RefreshButton.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		598CC4D92B5D342F0043D064 /* MockRepository */ = {
+			isa = PBXGroup;
+			children = (
+				598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */,
+				598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */,
+			);
+			path = MockRepository;
 			sourceTree = "<group>";
 		};
 		59C306A72B4FF98600862625 /* Repository */ = {
@@ -416,11 +456,29 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		A81EFBB62B5D597400D0C0D7 /* font */ = {
+			isa = PBXGroup;
+			children = (
+				A81EFBB72B5D597400D0C0D7 /* Pretendard-Medium.ttf */,
+				A81EFBB82B5D597400D0C0D7 /* Pretendard-Black.ttf */,
+				A81EFBB92B5D597400D0C0D7 /* Pretendard-Regular.ttf */,
+				A81EFBBA2B5D597400D0C0D7 /* Pretendard-Thin.ttf */,
+				A81EFBBB2B5D597400D0C0D7 /* Pretendard-ExtraLight.ttf */,
+				A81EFBBC2B5D597400D0C0D7 /* Pretendard-SemiBold.ttf */,
+				A81EFBBD2B5D597400D0C0D7 /* Pretendard-ExtraBold.ttf */,
+				A81EFBBE2B5D597400D0C0D7 /* Pretendard-Bold.ttf */,
+				A81EFBBF2B5D597400D0C0D7 /* Pretendard-Light.ttf */,
+			);
+			path = font;
+			sourceTree = "<group>";
+		};
 		A890870B2B4EF8F900767225 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				A8ACB7DA2B58B51A00540BD1 /* Date+.swift */,
 				A890870C2B4EF91600767225 /* UIView+SetLayer.swift */,
+				A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */,
+				A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -576,10 +634,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A81EFBC32B5D597400D0C0D7 /* Pretendard-Thin.ttf in Resources */,
 				59C306BD2B500D3D00862625 /* MockStoreResponse.json in Resources */,
+				A81EFBC62B5D597400D0C0D7 /* Pretendard-ExtraBold.ttf in Resources */,
+				A81EFBC52B5D597400D0C0D7 /* Pretendard-SemiBold.ttf in Resources */,
+				A81EFBC22B5D597400D0C0D7 /* Pretendard-Regular.ttf in Resources */,
+				A81EFBC02B5D597400D0C0D7 /* Pretendard-Medium.ttf in Resources */,
 				59053D0B2B3889A200D190CC /* .swiftlint.yml in Resources */,
 				591A88892B384E610059E40F /* LaunchScreen.storyboard in Resources */,
+				A81EFBC82B5D597400D0C0D7 /* Pretendard-Light.ttf in Resources */,
+				A81EFBC42B5D597400D0C0D7 /* Pretendard-ExtraLight.ttf in Resources */,
 				591A88862B384E610059E40F /* Assets.xcassets in Resources */,
+				A81EFBC72B5D597400D0C0D7 /* Pretendard-Bold.ttf in Resources */,
+				A81EFBC12B5D597400D0C0D7 /* Pretendard-Black.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,11 +764,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */,
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A890870F2B4F836C00767225 /* StoreInformationViewController.swift in Sources */,
 				A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */,
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
-				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A89087042B4E7F3500767225 /* FilterButton.swift in Sources */,
 				59F478B12B59BB00002FEF9E /* ImageRepositoryError.swift in Sources */,
 				59C306C92B501B9D00862625 /* RegularOpeningHours.swift in Sources */,
@@ -718,6 +785,7 @@
 				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
 				59C306CD2B5035B100862625 /* StoreAPI.swift in Sources */,
 				A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */,
+				A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */,
 				5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
@@ -758,9 +826,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				59F478BD2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift in Sources */,
+				598CC4DB2B5D344C0043D064 /* MockSuccessStoreRepository.swift in Sources */,
 				59F478C12B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift in Sources */,
 				5977BE8D2B5966F900725C90 /* StoreRepositoryImplTests.swift in Sources */,
+				598CC4D82B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift in Sources */,
 				59F478BB2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift in Sources */,
+				598CC4DD2B5D44940043D064 /* MockFailStoreRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -914,10 +985,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7CQAR4CYZX;
+				DEVELOPMENT_TEAM = MMM58CZBQF;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCS/Resource/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "나인가";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 기반으로 가게 정보를 제공하기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -929,7 +1001,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KoreaCertifiedStore.KCS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.nainga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -948,10 +1020,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7CQAR4CYZX;
+				DEVELOPMENT_TEAM = MMM58CZBQF;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCS/Resource/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "나인가";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 기반으로 가게 정보를 제공하기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -963,7 +1036,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KoreaCertifiedStore.KCS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.nainga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -985,7 +1058,7 @@
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = KoreaCertifiedStore.KCSUnitTest;
@@ -1010,7 +1083,7 @@
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = KoreaCertifiedStore.KCSUnitTest;

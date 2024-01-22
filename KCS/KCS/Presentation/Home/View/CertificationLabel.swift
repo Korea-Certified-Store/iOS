@@ -14,7 +14,7 @@ final class CertificationLabel: UIView {
     private lazy var certificationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 9)
+        label.font = UIFont.pretendard(size: 9, weight: .medium)
         label.textColor = UIColor.certificationLabelText
         label.text = certificationType.description
         

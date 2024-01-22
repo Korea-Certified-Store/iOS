@@ -9,3 +9,4 @@ excluded:
     - KCS/Application
 
 line_length: 140
+file_length: 600

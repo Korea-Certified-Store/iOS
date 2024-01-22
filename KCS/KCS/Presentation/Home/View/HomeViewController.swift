@@ -175,6 +175,8 @@ final class HomeViewController: UIViewController {
     
     private var storeInformationViewController: StoreInformationViewController?
     
+    private let dismissObserver = PublishRelay<Void>()
+    
     private let viewModel: HomeViewModel
     
     init(viewModel: HomeViewModel) {
@@ -210,14 +212,13 @@ private extension HomeViewController {
                         self.setMarker(marker: Marker(certificationType: filteredStore.type, position: location), tag: UInt($0.id))
                     }
                 }
-                markerCancel()
+                storeInformationViewController?.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
         
         viewModel.getStoreInformationOutput
             .bind { [weak self] store in
                 guard let self = self else { return }
-                markerClicked()
                 presentStoreView()
                 storeInformationViewController?.setUIContents(store: store)
             }
@@ -262,36 +263,38 @@ private extension HomeViewController {
     
     func markerTouchHandler(marker: Marker) {
         marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            guard let self = self else { return true }
-            markerCancel()
-            if clickedMarker != marker {
-                clickedMarker?.isSelected = false
+            if let clickedMarker = self?.clickedMarker {
+                if clickedMarker == marker { return true }
+                if clickedMarker.isSelected {
+                    self?.storeInformationViewController?.dismiss(animated: true) { [weak self] in
+                        self?.markerSelected(marker: marker)
+                    }
+                } else {
+                    self?.markerSelected(marker: marker)
+                }
+            } else {
+                self?.markerSelected(marker: marker)
             }
-            marker.isSelected.toggle()
-            if marker.isSelected {
-                viewModel.action(input: .markerTapped(tag: marker.tag))
-            }
-            clickedMarker = marker
             
             return true
         }
     }
     
-    func markerClicked() {
-        locationBottomConstraint.constant = -240
-        refreshBottomConstraint.constant = -240
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
+    func markerSelected(marker: Marker) {
+        marker.isSelected.toggle()
+        if marker.isSelected {
+            viewModel.action(input: .markerTapped(tag: marker.tag))
         }
+        clickedMarker = marker
     }
     
-    func markerCancel() {
-        locationBottomConstraint.constant = -16
-        refreshBottomConstraint.constant = -17
+    func markerClicked(height: CGFloat) {
+        mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        locationBottomConstraint.constant = -height
+        refreshBottomConstraint.constant = -height
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-        storeInformationViewController?.dismiss(animated: true)
     }
     
     func presentStoreView() {
@@ -299,19 +302,32 @@ private extension HomeViewController {
             getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
             fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
         )
-        storeInformationViewController = StoreInformationViewController(viewModel: storeViewModel)
+        let contentHeightObserver = PublishRelay<CGFloat>()
+        storeInformationViewController = StoreInformationViewController(
+            viewModel: storeViewModel,
+            contentHeightObserver: contentHeightObserver,
+            dismissObserver: dismissObserver
+        )
         storeInformationViewController?.transitioningDelegate = self
-       
+        
         if let viewController = storeInformationViewController {
-            if let sheet = viewController.sheetPresentationController {
-                let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
-                let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
-                    return 224
+            contentHeightObserver
+                .bind { [weak self] contentHeight in
+                    guard let self = self else { return }
+                    let bottomSafeArea: CGFloat = 34
+                    let height = contentHeight - bottomSafeArea
+                    if let sheet = viewController.sheetPresentationController {
+                        let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
+                        let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
+                            return height
+                        }
+                        sheet.detents = [detent]
+                        sheet.largestUndimmedDetentIdentifier = detentIdentifier
+                        sheet.preferredCornerRadius = 15
+                    }
+                    markerClicked(height: contentHeight - bottomSafeArea + 16)
                 }
-                sheet.detents = [detent]
-                sheet.largestUndimmedDetentIdentifier = detentIdentifier
-                sheet.preferredCornerRadius = 15
-            }
+                .disposed(by: disposeBag)
             present(viewController, animated: true)
         }
     }
@@ -438,8 +454,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
 extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        clickedMarker?.isSelected = false
-        markerCancel()
+        storeInformationViewController?.dismiss(animated: true)
     }
     
 }
@@ -447,12 +462,18 @@ extension HomeViewController: NMFMapViewTouchDelegate {
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        clickedMarker?.isSelected = false
-        locationBottomConstraint.constant = -16
-        refreshBottomConstraint.constant = -17
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
+        dismissObserver
+            .bind { [weak self] in
+                guard let self = self else { return }
+                clickedMarker?.isSelected = false
+                mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                locationBottomConstraint.constant = -16
+                refreshBottomConstraint.constant = -17
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
+                }
+            }
+            .disposed(by: disposeBag)
         
         return nil
     }

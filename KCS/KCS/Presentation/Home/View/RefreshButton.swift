@@ -25,12 +25,12 @@ private extension RefreshButton {
     
     func setUI() {
         var titleAttribute = AttributedString("현 지도에서 검색")
-        titleAttribute.font = .systemFont(ofSize: 10)
+        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
         
         var config = UIButton.Configuration.filled()
         config.attributedTitle = titleAttribute
         config.baseBackgroundColor = .white
-        config.baseForegroundColor = .label
+        config.baseForegroundColor = .black
         config.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)
         config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 10)
         config.imagePlacement = .leading
