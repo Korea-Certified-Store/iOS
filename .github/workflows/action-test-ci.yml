@@ -24,7 +24,7 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode_15.1.app/Contents/Developer
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Copy secrets to github action
         env:
@@ -41,11 +41,8 @@ jobs:
         run: |
           pod install --repo-update --clean-install --project-directory=KCS
 
-      - name: Build and test
-        run: |
-          set -o pipefail && xcodebuild \
-            -workspace KCS/KCS.xcworkspace \
-            -scheme KCS \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest' \
-            test | xcpretty
+      - name: Build Package
+      run: swift build -v
+
+      - name: Run tests
+        run: swift test 
