@@ -35,11 +35,17 @@ jobs:
         # secrets 값 복사
         run: |
           echo $ENV >> $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
+      
+      - name: Install Brews
+        run: brew bundle
 
-
+      - name: Install Gems
+        if: steps.cache_gems.outputs.cache-hit != 'true'
+        run: bundle install --jobs 4 --retry 3
 
       - name: Install Pods Release
-        run: bundle exec pod install --repo-update --project-directory=KCS
+        if: steps.cache_pods.outputs.cache-hit != 'true'
+        run: bundle exec pod install --repo-update
 
       - name: Run tests
         run: bundle exec fastlane test
