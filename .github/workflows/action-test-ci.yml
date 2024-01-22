@@ -36,10 +36,11 @@ jobs:
         run: |
           echo $ENV >> $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
 
-    
+      - name: Install Gems
+        run: bundle install --jobs 4 --retry 3 --project-directory=KCS
 
       - name: Install Pods Release
-        run: bundle exec pod install --repo-update
+        run: bundle exec pod install --repo-update --project-directory=KCS
 
       - name: Run tests
         run: bundle exec fastlane test
