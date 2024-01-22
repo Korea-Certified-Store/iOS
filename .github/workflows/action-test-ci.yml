@@ -41,19 +41,11 @@ jobs:
         run: |
           pod install --repo-update --clean-install --project-directory=KCS
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
-      
-      - name: Install Fastlane
-        run: gem install fastlane -NV
-
-      - name: Run Tests
+      - name: Build and test
         run: |
-          echo "Running Unit Tests"
-          fastlane scan --scheme "Debug" --clean
-          echo "Tests Complete"
-        env:
-          TERM: xterm-256color
-      
+          set -o pipefail && xcodebuild \
+            -workspace KCS/KCS.xcworkspace \
+            -scheme KCS \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest' \
+            test | xcpretty
