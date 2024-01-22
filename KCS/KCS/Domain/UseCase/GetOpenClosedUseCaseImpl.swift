@@ -151,10 +151,8 @@ private extension GetOpenClosedUseCaseImpl {
     func catchHourError(businessHour: BusinessHour, openClose: OpenClose) -> Int? {
         do {
             return try toSecond(businessHour: businessHour, openClose: openClose)
-        } catch OpeningHourError.wrongHour {
-            print(OpeningHourError.wrongHour.description)
-        } catch OpeningHourError.wrongMinute {
-            print(OpeningHourError.wrongMinute.description)
+        } catch let error as OpeningHourError {
+            print(error.description)
         } catch {
             print(error)
         }
