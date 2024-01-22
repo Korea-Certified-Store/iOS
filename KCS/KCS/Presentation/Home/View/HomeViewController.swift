@@ -468,6 +468,7 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
                 guard let self = self else { return }
                 if bool {
                     clickedMarker?.isSelected = false
+                    mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                     locationBottomConstraint.constant = -16
                     refreshBottomConstraint.constant = -17
                     UIView.animate(withDuration: 0.3) {
