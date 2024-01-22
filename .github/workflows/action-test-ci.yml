@@ -46,4 +46,4 @@ jobs:
 
       - name: Test
         run: |          
-          xcodebuild test-without-building -scheme "KCS" -destination "platform=iOS Simulator,name=iPhone 14,OS=17.2"
+          xcodebuild test-without-building -workspace KCS/KCS.xcworkspace -scheme "KCS/KCSUnitTest" -destination "platform=iOS Simulator,name=iPhone 14,OS=17.2"
