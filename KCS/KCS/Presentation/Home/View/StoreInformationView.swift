@@ -28,7 +28,6 @@ final class StoreInformationView: UIView {
         self.summaryInformationHeightObserver = summaryInformationHeightObserver
         super.init(frame: .zero)
         
-//        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addUIComponents()
         configureConstraints()
     }

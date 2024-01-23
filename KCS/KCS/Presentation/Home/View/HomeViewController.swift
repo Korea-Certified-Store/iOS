@@ -340,14 +340,6 @@ private extension HomeViewController {
         if height > 230 && height < 620 {
             storeInformationHeightConstraint.constant = height
         }
-        if recognizer.state == .ended {
-            if storeInformationHeightConstraint.constant > 420 {
-                setBottomConstraints(constraint: storeInformationHeightConstraint.constant - 441)
-                setHeightConstraint(height: 600)
-            } else {
-                setHeightConstraint(height: storeInformationOriginalHeight)
-            }
-        }
         if recognizer.state == .changed {
             if storeInformationHeightConstraint.constant > 420 {
                 // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
@@ -356,7 +348,14 @@ private extension HomeViewController {
                 setBottomConstraints(constraint: -16)
             }
         }
-        
+        if recognizer.state == .ended {
+            if storeInformationHeightConstraint.constant > 420 {
+                setBottomConstraints(constraint: 600 - 441)
+                setHeightConstraint(height: 600)
+            } else {
+                setHeightConstraint(height: storeInformationOriginalHeight)
+            }
+        }
     }
     
 }
