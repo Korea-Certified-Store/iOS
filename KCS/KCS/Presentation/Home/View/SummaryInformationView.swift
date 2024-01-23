@@ -209,16 +209,23 @@ extension SummaryInformationView {
                 certificationStackView.addArrangedSubview($0)
             }
         if let phoneNum = store.phoneNumber {
+            storeCallButton.isEnabled = true
             storeCallButton.rx.tap
                 .bind { [weak self] _ in
                     self?.callButtonTapped(phoneNum: phoneNum)
                 }
                 .disposed(by: disposeBag)
+        } else {
+            storeCallButton.isEnabled = false
         }
-        viewModel.action(input: .setInformationView(
-            openingHour: store.openingHour,
-            url: store.localPhotos.first)
-        )
+        if let url = store.localPhotos.first {
+            viewModel.action(input: .setInformationView(
+                openingHour: store.openingHour,
+                url: store.localPhotos.first)
+            )
+        } else {
+            storeImageView.image = UIImage.basicStore
+        }
         if storeTitle.numberOfVisibleLines == 1 {
             summaryInformationHeightObserver.accept(230)
         } else {
