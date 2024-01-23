@@ -287,13 +287,9 @@ private extension HomeViewController {
                 if clickedMarker == marker { return true }
                 if clickedMarker.isSelected {
                     self?.storeInformationViewDismiss()
-                    self?.markerSelected(marker: marker)
-                } else {
-                    self?.markerSelected(marker: marker)
                 }
-            } else {
-                self?.markerSelected(marker: marker)
             }
+            self?.markerSelected(marker: marker)
             
             return true
         }
@@ -340,21 +336,24 @@ private extension HomeViewController {
         if height > 230 && height < 620 {
             storeInformationHeightConstraint.constant = height
         }
-        if recognizer.state == .changed {
+        
+        switch recognizer.state {
+        case .changed:
             if storeInformationHeightConstraint.constant > 420 {
                 // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
                 setBottomConstraints(constraint: storeInformationHeightConstraint.constant - 441)
             } else {
                 setBottomConstraints(constraint: -16)
             }
-        }
-        if recognizer.state == .ended {
+        case .ended:
             if storeInformationHeightConstraint.constant > 420 {
                 setBottomConstraints(constraint: 600 - 441)
                 setHeightConstraint(height: 600)
             } else {
                 setHeightConstraint(height: storeInformationOriginalHeight)
             }
+        default:
+            return
         }
     }
     
