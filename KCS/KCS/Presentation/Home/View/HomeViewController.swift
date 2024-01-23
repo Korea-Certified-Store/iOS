@@ -173,7 +173,7 @@ final class HomeViewController: UIViewController {
     
     private var activatedFilter: [CertificationType] = []
     
-    private var storeInformationViewController: StoreInformationViewController?
+    private var storeInformationViewController: SummaryInformationView?
     
     private let dismissObserver = PublishRelay<Void>()
     
@@ -303,7 +303,7 @@ private extension HomeViewController {
             fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
         )
         let contentHeightObserver = PublishRelay<CGFloat>()
-        storeInformationViewController = StoreInformationViewController(
+        storeInformationViewController = SummaryInformationView(
             viewModel: storeViewModel,
             contentHeightObserver: contentHeightObserver,
             dismissObserver: dismissObserver

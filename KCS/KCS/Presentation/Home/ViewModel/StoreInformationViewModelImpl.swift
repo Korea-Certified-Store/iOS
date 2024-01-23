@@ -8,7 +8,7 @@
 import RxSwift
 import RxRelay
 
-final class StoreInformationViewModelImpl: StoreInformationViewModel {
+final class StoreInformationViewModelImpl: SummaryInformationViewModel {
     
     private let disposeBag = DisposeBag()
     
