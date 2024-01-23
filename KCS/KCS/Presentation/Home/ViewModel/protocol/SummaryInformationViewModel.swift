@@ -1,5 +1,5 @@
 //
-//  StoreInformationViewModel.swift
+//  SummaryInformationViewModel.swift
 //  KCS
 //
 //  Created by 김영현 on 1/18/24.
@@ -8,7 +8,7 @@
 import RxSwift
 import RxRelay
 
-protocol StoreInformationViewModel: StoreInformationViewModelInput, StoreInformationViewModelOutput {
+protocol SummaryInformationViewModel: StoreInformationViewModelInput, StoreInformationViewModelOutput {
     
     var getOpenClosedUseCase: GetOpenClosedUseCase { get }
     var fetchImageUseCase: FetchImageUseCase { get }

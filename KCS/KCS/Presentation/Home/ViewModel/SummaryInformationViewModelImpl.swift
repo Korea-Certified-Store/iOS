@@ -1,5 +1,5 @@
 //
-//  StoreInformationViewModelImpl.swift
+//  SummaryInformationViewModelImpl.swift
 //  KCS
 //
 //  Created by 김영현 on 1/18/24.
@@ -8,7 +8,7 @@
 import RxSwift
 import RxRelay
 
-final class StoreInformationViewModelImpl: StoreInformationViewModel {
+final class SummaryInformationViewModelImpl: SummaryInformationViewModel {
     
     private let disposeBag = DisposeBag()
     
@@ -35,7 +35,7 @@ final class StoreInformationViewModelImpl: StoreInformationViewModel {
     
 }
 
-private extension StoreInformationViewModelImpl {
+private extension SummaryInformationViewModelImpl {
     
     func setOpenClosed(
         openingHour: [RegularOpeningHours]
