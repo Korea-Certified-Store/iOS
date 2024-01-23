@@ -92,10 +92,12 @@ final class SummaryInformationView: UIView {
     }()
     
     private let viewModel: SummaryInformationViewModel
+    private let summaryInformationHeightObserver: PublishRelay<CGFloat>
     
-    init(viewModel: SummaryInformationViewModel) {
+    init(viewModel: SummaryInformationViewModel, summaryInformationHeightObserver: PublishRelay<CGFloat>) {
         self.viewModel = viewModel
-        super.init()
+        self.summaryInformationHeightObserver = summaryInformationHeightObserver
+        super.init(frame: .zero)
         
         setBackgroundColor()
         addUIComponents()
@@ -143,9 +145,9 @@ private extension SummaryInformationView {
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            storeTitle.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
-            storeTitle.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            storeTitle.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -156)
+            storeTitle.topAnchor.constraint(equalTo: topAnchor, constant: 27),
+            storeTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            storeTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -156)
         ])
         
         NSLayoutConstraint.activate([
@@ -170,7 +172,6 @@ private extension SummaryInformationView {
         
         NSLayoutConstraint.activate([
             storeCallButton.topAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor, constant: 21),
-            storeCallButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             storeCallButton.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor),
             storeCallButton.widthAnchor.constraint(equalToConstant: 69),
             storeCallButton.heightAnchor.constraint(equalToConstant: 40)
@@ -217,6 +218,11 @@ extension SummaryInformationView {
             openingHour: store.openingHour,
             url: store.localPhotos.first)
         )
+        if storeTitle.numberOfVisibleLines == 1 {
+            summaryInformationHeightObserver.accept(230)
+        } else {
+            summaryInformationHeightObserver.accept(253)
+        }
     }
     
 }

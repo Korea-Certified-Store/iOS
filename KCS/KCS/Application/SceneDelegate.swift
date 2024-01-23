@@ -24,7 +24,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
             getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
         )
-        window?.rootViewController = HomeViewController(viewModel: viewModel)
+        let summaryInformationViewModel = SummaryInformationViewModelImpl(
+            getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
+            fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
+        )
+        window?.rootViewController = HomeViewController(viewModel: viewModel, summaryInformationViewModel: summaryInformationViewModel)
         window?.makeKeyAndVisible()
     }
 

@@ -101,15 +101,6 @@ final class HomeViewController: UIViewController {
         
         return map
     }()
-        
-    private lazy var locationBottomConstraint = locationButton.bottomAnchor.constraint(
-        equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
-        constant: -16
-    )
-    private lazy var refreshBottomConstraint = refreshButton.bottomAnchor.constraint(
-        equalTo: mapView.safeAreaLayoutGuide.bottomAnchor,
-        constant: -17
-    )
     
     private let requestLocationServiceAlert: UIAlertController = {
         let alertController = UIAlertController(
@@ -171,16 +162,36 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    private lazy var storeInformationView: StoreInformationView = {
+        let view = StoreInformationView(
+            summaryViewModel: summaryInformationViewModel,
+            summaryInformationHeightObserver: summaryInformationHeightObserver
+        )
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     private var activatedFilter: [CertificationType] = []
-    
-    private var storeInformationViewController: SummaryInformationView?
-    
-    private let dismissObserver = PublishRelay<Void>()
-    
     private let viewModel: HomeViewModel
+    private let summaryInformationViewModel: SummaryInformationViewModel
+    private lazy var storeInformationHeightConstraint = storeInformationView.heightAnchor.constraint(equalToConstant: 0)
+    private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
+        equalTo: storeInformationView.topAnchor,
+        constant: -37
+    )
+    private lazy var refreshButtonBottomConstraint = refreshButton.bottomAnchor.constraint(
+        equalTo: storeInformationView.topAnchor,
+        constant: -37
+    )
+    private let summaryInformationHeightObserver = PublishRelay<CGFloat>()
     
-    init(viewModel: HomeViewModel) {
+    init(
+        viewModel: HomeViewModel,
+        summaryInformationViewModel: SummaryInformationViewModel
+    ) {
         self.viewModel = viewModel
+        self.summaryInformationViewModel = summaryInformationViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -212,17 +223,26 @@ private extension HomeViewController {
                         self.setMarker(marker: Marker(certificationType: filteredStore.type, position: location), tag: UInt($0.id))
                     }
                 }
-                storeInformationViewController?.dismiss(animated: true)
+                storeInformationViewDismiss()
             }
             .disposed(by: disposeBag)
         
         viewModel.getStoreInformationOutput
             .bind { [weak self] store in
                 guard let self = self else { return }
-                presentStoreView()
-                storeInformationViewController?.setUIContents(store: store)
+                storeInformationView.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
+        
+        summaryInformationHeightObserver.bind { [weak self] height in
+            self?.storeInformationHeightConstraint.constant = height
+            self?.locationButtonBottomConstraint.constant = -16
+            self?.refreshButtonBottomConstraint.constant = -16
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.view.layoutIfNeeded()
+            }
+        }
+        .disposed(by: disposeBag)
     }
     
     func bindFilterButton(button: FilterButton, type: CertificationType) {
@@ -266,9 +286,8 @@ private extension HomeViewController {
             if let clickedMarker = self?.clickedMarker {
                 if clickedMarker == marker { return true }
                 if clickedMarker.isSelected {
-                    self?.storeInformationViewController?.dismiss(animated: true) { [weak self] in
-                        self?.markerSelected(marker: marker)
-                    }
+                    self?.storeInformationViewDismiss()
+                    self?.markerSelected(marker: marker)
                 } else {
                     self?.markerSelected(marker: marker)
                 }
@@ -288,47 +307,14 @@ private extension HomeViewController {
         clickedMarker = marker
     }
     
-    func markerClicked(height: CGFloat) {
-        mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-        locationBottomConstraint.constant = -height
-        refreshBottomConstraint.constant = -height
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func presentStoreView() {
-        let storeViewModel = StoreInformationViewModelImpl(
-            getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-            fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
-        )
-        let contentHeightObserver = PublishRelay<CGFloat>()
-        storeInformationViewController = SummaryInformationView(
-            viewModel: storeViewModel,
-            contentHeightObserver: contentHeightObserver,
-            dismissObserver: dismissObserver
-        )
-        storeInformationViewController?.transitioningDelegate = self
-        
-        if let viewController = storeInformationViewController {
-            contentHeightObserver
-                .bind { [weak self] contentHeight in
-                    guard let self = self else { return }
-                    let bottomSafeArea: CGFloat = 34
-                    let height = contentHeight - bottomSafeArea
-                    if let sheet = viewController.sheetPresentationController {
-                        let detentIdentifier = UISheetPresentationController.Detent.Identifier("detent")
-                        let detent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
-                            return height
-                        }
-                        sheet.detents = [detent]
-                        sheet.largestUndimmedDetentIdentifier = detentIdentifier
-                        sheet.preferredCornerRadius = 15
-                    }
-                    markerClicked(height: contentHeight - bottomSafeArea + 16)
-                }
-                .disposed(by: disposeBag)
-            present(viewController, animated: true)
+    func storeInformationViewDismiss() {
+        clickedMarker?.isSelected = false
+        clickedMarker = nil
+        storeInformationHeightConstraint.constant = 0
+        locationButtonBottomConstraint.constant = -37
+        refreshButtonBottomConstraint.constant = -37
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.view.layoutIfNeeded()
         }
     }
     
@@ -366,6 +352,7 @@ private extension HomeViewController {
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
         mapView.addSubview(refreshButton)
+        mapView.addSubview(storeInformationView)
     }
     
     func configureConstraints() {
@@ -380,7 +367,7 @@ private extension HomeViewController {
             locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             locationButton.widthAnchor.constraint(equalToConstant: 48),
             locationButton.heightAnchor.constraint(equalToConstant: 48),
-            locationBottomConstraint
+            locationButtonBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
@@ -390,7 +377,14 @@ private extension HomeViewController {
         
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
-            refreshBottomConstraint
+            refreshButtonBottomConstraint
+        ])
+        
+        NSLayoutConstraint.activate([
+            storeInformationView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
+            storeInformationView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
+            storeInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 0),
+            storeInformationHeightConstraint
         ])
     }
     
@@ -454,28 +448,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
 extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        storeInformationViewController?.dismiss(animated: true)
-    }
-    
-}
-
-extension HomeViewController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        dismissObserver
-            .bind { [weak self] in
-                guard let self = self else { return }
-                clickedMarker?.isSelected = false
-                mapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                locationBottomConstraint.constant = -16
-                refreshBottomConstraint.constant = -17
-                UIView.animate(withDuration: 0.3) {
-                    self.view.layoutIfNeeded()
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        return nil
+        storeInformationViewDismiss()
     }
     
 }
