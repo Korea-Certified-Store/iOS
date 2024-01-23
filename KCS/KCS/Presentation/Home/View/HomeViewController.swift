@@ -168,6 +168,7 @@ final class HomeViewController: UIViewController {
             summaryInformationHeightObserver: summaryInformationHeightObserver
         )
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.addGestureRecognizer(panGesture)
         
         return view
     }()
@@ -185,6 +186,8 @@ final class HomeViewController: UIViewController {
         constant: -37
     )
     private let summaryInformationHeightObserver = PublishRelay<CGFloat>()
+    private lazy var panGesture = UIPanGestureRecognizer(target: self, action: #selector(customViewDrag))
+    private var storeInformationOriginalHeight: CGFloat = 0
     
     init(
         viewModel: HomeViewModel,
@@ -235,12 +238,10 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
         
         summaryInformationHeightObserver.bind { [weak self] height in
-            self?.storeInformationHeightConstraint.constant = height
+            self?.storeInformationOriginalHeight = height
             self?.locationButtonBottomConstraint.constant = -16
             self?.refreshButtonBottomConstraint.constant = -16
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.view.layoutIfNeeded()
-            }
+            self?.setNewConstraints(storeInformationHeight: height)
         }
         .disposed(by: disposeBag)
     }
@@ -310,12 +311,50 @@ private extension HomeViewController {
     func storeInformationViewDismiss() {
         clickedMarker?.isSelected = false
         clickedMarker = nil
-        storeInformationHeightConstraint.constant = 0
         locationButtonBottomConstraint.constant = -37
         refreshButtonBottomConstraint.constant = -37
+        setNewConstraints(storeInformationHeight: 0)
+    }
+    
+    func setNewConstraints(storeInformationHeight: CGFloat) {
+        storeInformationHeightConstraint.constant = storeInformationHeight
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.view.layoutIfNeeded()
         }
+    }
+    
+}
+
+@objc
+private extension HomeViewController {
+    
+    func customViewDrag(_ recognizer: UIPanGestureRecognizer) {
+        let transition = recognizer.translation(in: storeInformationView)
+        let height = storeInformationHeightConstraint.constant - transition.y
+        
+        recognizer.setTranslation(.zero, in: storeInformationView)
+        
+        if height > 230 && height < 620 {
+            storeInformationHeightConstraint.constant = height
+        }
+        if recognizer.state == .ended {
+            if storeInformationHeightConstraint.constant > 420 {
+                setNewConstraints(storeInformationHeight: 600)
+            } else {
+                setNewConstraints(storeInformationHeight: storeInformationOriginalHeight)
+            }
+        }
+        if recognizer.state == .changed {
+            if storeInformationHeightConstraint.constant > 420 {
+                // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
+                locationButtonBottomConstraint.constant = storeInformationHeightConstraint.constant - 441
+                refreshButtonBottomConstraint.constant = storeInformationHeightConstraint.constant - 441
+            } else {
+                locationButtonBottomConstraint.constant = -16
+                refreshButtonBottomConstraint.constant = -16
+            }
+        }
+        
     }
     
 }

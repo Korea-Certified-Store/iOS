@@ -28,6 +28,7 @@ final class StoreInformationView: UIView {
         self.summaryInformationHeightObserver = summaryInformationHeightObserver
         super.init(frame: .zero)
         
+//        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addUIComponents()
         configureConstraints()
     }
@@ -64,29 +65,3 @@ private extension StoreInformationView {
     }
     
 }
-
-//@objc
-//extension StoreInformationView {
-//    
-//    func customViewDrag(_ recognizer: UIPanGestureRecognizer) {
-//        let transition = recognizer.translation(in: summaryView)
-//        let height = summaryView.bounds.height - transition.y
-//        
-//        recognizer.setTranslation(.zero, in: summaryView)
-//        
-//        if height > 230 && height < 620 {
-//            heightConstraint.constant = height
-//        }
-//        if recognizer.state == .ended {
-//            if heightConstraint.constant > 400 {
-//                heightConstraint.constant = 600
-//            } else {
-//                heightConstraint.constant = 250
-//            }
-//            UIView.animate(withDuration: 0.3) { [weak self] in
-//                self?.view.layoutIfNeeded()
-//            }
-//        }
-//    }
-//    
-//}

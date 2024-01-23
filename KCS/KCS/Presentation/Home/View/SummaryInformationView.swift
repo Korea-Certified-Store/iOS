@@ -100,6 +100,7 @@ final class SummaryInformationView: UIView {
         super.init(frame: .zero)
         
         setBackgroundColor()
+        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addUIComponents()
         configureConstraints()
         bind()
