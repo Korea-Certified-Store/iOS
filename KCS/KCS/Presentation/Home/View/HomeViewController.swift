@@ -239,9 +239,8 @@ private extension HomeViewController {
         
         summaryInformationHeightObserver.bind { [weak self] height in
             self?.storeInformationOriginalHeight = height
-            self?.locationButtonBottomConstraint.constant = -16
-            self?.refreshButtonBottomConstraint.constant = -16
-            self?.setNewConstraints(storeInformationHeight: height)
+            self?.setBottomConstraints(constraint: -16)
+            self?.setHeightConstraint(height: height)
         }
         .disposed(by: disposeBag)
     }
@@ -311,13 +310,17 @@ private extension HomeViewController {
     func storeInformationViewDismiss() {
         clickedMarker?.isSelected = false
         clickedMarker = nil
-        locationButtonBottomConstraint.constant = -37
-        refreshButtonBottomConstraint.constant = -37
-        setNewConstraints(storeInformationHeight: 0)
+        setBottomConstraints(constraint: -37)
+        setHeightConstraint(height: 0)
     }
     
-    func setNewConstraints(storeInformationHeight: CGFloat) {
-        storeInformationHeightConstraint.constant = storeInformationHeight
+    func setBottomConstraints(constraint: CGFloat) {
+        locationButtonBottomConstraint.constant = constraint
+        refreshButtonBottomConstraint.constant = constraint
+    }
+    
+    func setHeightConstraint(height: CGFloat) {
+        storeInformationHeightConstraint.constant = height
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.view.layoutIfNeeded()
         }
@@ -339,19 +342,18 @@ private extension HomeViewController {
         }
         if recognizer.state == .ended {
             if storeInformationHeightConstraint.constant > 420 {
-                setNewConstraints(storeInformationHeight: 600)
+                setBottomConstraints(constraint: storeInformationHeightConstraint.constant - 441)
+                setHeightConstraint(height: 600)
             } else {
-                setNewConstraints(storeInformationHeight: storeInformationOriginalHeight)
+                setHeightConstraint(height: storeInformationOriginalHeight)
             }
         }
         if recognizer.state == .changed {
             if storeInformationHeightConstraint.constant > 420 {
                 // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
-                locationButtonBottomConstraint.constant = storeInformationHeightConstraint.constant - 441
-                refreshButtonBottomConstraint.constant = storeInformationHeightConstraint.constant - 441
+                setBottomConstraints(constraint: storeInformationHeightConstraint.constant - 441)
             } else {
-                locationButtonBottomConstraint.constant = -16
-                refreshButtonBottomConstraint.constant = -16
+                setBottomConstraints(constraint: -16)
             }
         }
         
