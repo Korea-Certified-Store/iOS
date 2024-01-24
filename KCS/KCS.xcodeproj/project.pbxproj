@@ -13,6 +13,9 @@
 		591A88812B384E600059E40F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A88802B384E600059E40F /* HomeViewController.swift */; };
 		591A88862B384E610059E40F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 591A88852B384E610059E40F /* Assets.xcassets */; };
 		591A88892B384E610059E40F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591A88872B384E610059E40F /* LaunchScreen.storyboard */; };
+		592262242B61203000CA5A11 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592262232B61203000CA5A11 /* DetailView.swift */; };
+		592262262B61232F00CA5A11 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592262252B61232F00CA5A11 /* DetailViewModel.swift */; };
+		592262282B6124C400CA5A11 /* DetailViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592262272B6124C400CA5A11 /* DetailViewModelImpl.swift */; };
 		5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE572B5524D500725C90 /* RefreshButton.swift */; };
 		5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE5B2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift */; };
 		5977BE5E2B5535C700725C90 /* FetchRefreshStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE5D2B5535C700725C90 /* FetchRefreshStoresUseCase.swift */; };
@@ -107,6 +110,9 @@
 		591A88852B384E610059E40F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		591A88882B384E610059E40F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		591A888A2B384E610059E40F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		592262232B61203000CA5A11 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		592262252B61232F00CA5A11 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		592262272B6124C400CA5A11 /* DetailViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModelImpl.swift; sourceTree = "<group>"; };
 		5977BE572B5524D500725C90 /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
 		5977BE5B2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRefreshStoresUseCaseImpl.swift; sourceTree = "<group>"; };
 		5977BE5D2B5535C700725C90 /* FetchRefreshStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRefreshStoresUseCase.swift; sourceTree = "<group>"; };
@@ -271,6 +277,7 @@
 				5977BE652B553BA800725C90 /* HomeViewModelImpl.swift */,
 				5977BE672B553C8300725C90 /* HomeDependency.swift */,
 				A8ACB7E12B594F7400540BD1 /* SummaryInformationViewModelImpl.swift */,
+				592262272B6124C400CA5A11 /* DetailViewModelImpl.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -365,6 +372,7 @@
 				A802D1F52B5277620091FDE7 /* CertificationLabel.swift */,
 				5977BE572B5524D500725C90 /* RefreshButton.swift */,
 				A81EFBD32B6019FD00D0C0D7 /* StoreInformationView.swift */,
+				592262232B61203000CA5A11 /* DetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -519,6 +527,7 @@
 			children = (
 				5977BE602B55374000725C90 /* HomeViewModel.swift */,
 				A8ACB7DE2B594F4B00540BD1 /* SummaryInformationViewModel.swift */,
+				592262252B61232F00CA5A11 /* DetailViewModel.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -774,6 +783,8 @@
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
 				A89087042B4E7F3500767225 /* FilterButton.swift in Sources */,
 				59F478B12B59BB00002FEF9E /* ImageRepositoryError.swift in Sources */,
+				592262282B6124C400CA5A11 /* DetailViewModelImpl.swift in Sources */,
+				592262262B61232F00CA5A11 /* DetailViewModel.swift in Sources */,
 				59C306C92B501B9D00862625 /* RegularOpeningHours.swift in Sources */,
 				59F478B52B59BE0B002FEF9E /* FetchImageUseCase.swift in Sources */,
 				59C306BF2B50109100862625 /* Location.swift in Sources */,
@@ -793,6 +804,7 @@
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				A81EFBD42B6019FD00D0C0D7 /* StoreInformationView.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
+				592262242B61203000CA5A11 /* DetailView.swift in Sources */,
 				A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */,
 				A8ACB7E22B594F7400540BD1 /* SummaryInformationViewModelImpl.swift in Sources */,

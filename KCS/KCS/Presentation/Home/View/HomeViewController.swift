@@ -170,6 +170,7 @@ final class HomeViewController: UIViewController {
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         
+        // TODO: 로직 뷰모델로 이동
         view.rx.panGesture()
             .when(.changed)
             .subscribe(onNext: { [weak self] recognizer in
