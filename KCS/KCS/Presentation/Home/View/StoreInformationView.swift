@@ -42,6 +42,7 @@ final class StoreInformationView: UIView {
         self.detailViewModel = detailViewModel
         super.init(frame: .zero)
         
+        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         setBackgroundColor()
         addUIComponents()
         configureConstraints()
