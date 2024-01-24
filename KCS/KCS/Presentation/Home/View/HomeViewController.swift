@@ -10,6 +10,7 @@ import NMapsMap
 import CoreLocation
 import RxSwift
 import RxCocoa
+import RxGesture
 
 final class HomeViewController: UIViewController {
     
@@ -168,8 +169,51 @@ final class HomeViewController: UIViewController {
             summaryInformationHeightObserver: summaryInformationHeightObserver
         )
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.addGestureRecognizer(panGesture)
         
+        view.rx.panGesture()
+            .when(.changed)
+            .subscribe(onNext: { [weak self] recognizer in
+                guard let self = self else { return }
+                let transition = recognizer.translation(in: storeInformationView)
+                let height = storeInformationHeightConstraint.constant - transition.y
+                
+                recognizer.setTranslation(.zero, in: storeInformationView)
+                
+                if height > 230 && height < 620 {
+                    storeInformationHeightConstraint.constant = height
+                }
+                
+                if storeInformationHeightConstraint.constant > 420 {
+                    // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
+                    setBottomConstraints(constraint: storeInformationHeightConstraint.constant - 441)
+                } else {
+                    setBottomConstraints(constraint: -16)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        view.rx.panGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] recognizer in
+                guard let self = self else { return }
+                if recognizer.velocity(in: view).y < -1000 {
+                    setBottomConstraints(constraint: 600 - 441)
+                    setHeightConstraint(height: 600)
+                } else if recognizer.velocity(in: view).y > 1000 {
+                    setBottomConstraints(constraint: -16)
+                    setHeightConstraint(height: storeInformationOriginalHeight)
+                }
+                
+                if storeInformationHeightConstraint.constant > 420 {
+                    setBottomConstraints(constraint: 600 - 441)
+                    setHeightConstraint(height: 600)
+                } else {
+                    setBottomConstraints(constraint: -16)
+                    setHeightConstraint(height: storeInformationOriginalHeight)
+                }
+            })
+            .disposed(by: disposeBag)
+
         return view
     }()
     
@@ -186,7 +230,6 @@ final class HomeViewController: UIViewController {
         constant: -37
     )
     private let summaryInformationHeightObserver = PublishRelay<CGFloat>()
-    private lazy var panGesture = UIPanGestureRecognizer(target: self, action: #selector(customViewDrag))
     private var storeInformationOriginalHeight: CGFloat = 0
     
     init(
@@ -313,47 +356,15 @@ private extension HomeViewController {
     func setBottomConstraints(constraint: CGFloat) {
         locationButtonBottomConstraint.constant = constraint
         refreshButtonBottomConstraint.constant = constraint
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
     }
     
     func setHeightConstraint(height: CGFloat) {
         storeInformationHeightConstraint.constant = height
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.view.layoutIfNeeded()
-        }
-    }
-    
-}
-
-@objc
-private extension HomeViewController {
-    
-    func customViewDrag(_ recognizer: UIPanGestureRecognizer) {
-        let transition = recognizer.translation(in: storeInformationView)
-        let height = storeInformationHeightConstraint.constant - transition.y
-        
-        recognizer.setTranslation(.zero, in: storeInformationView)
-        
-        if height > 230 && height < 620 {
-            storeInformationHeightConstraint.constant = height
-        }
-        
-        switch recognizer.state {
-        case .changed:
-            if storeInformationHeightConstraint.constant > 420 {
-                // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
-                setBottomConstraints(constraint: storeInformationHeightConstraint.constant - 441)
-            } else {
-                setBottomConstraints(constraint: -16)
-            }
-        case .ended:
-            if storeInformationHeightConstraint.constant > 420 {
-                setBottomConstraints(constraint: 600 - 441)
-                setHeightConstraint(height: 600)
-            } else {
-                setHeightConstraint(height: storeInformationOriginalHeight)
-            }
-        default:
-            return
         }
     }
     
