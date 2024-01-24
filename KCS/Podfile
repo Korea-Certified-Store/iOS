@@ -10,6 +10,7 @@ target 'KCS' do
    
   pod 'RxSwift', '6.6.0'
   pod 'RxCocoa', '6.6.0'
+  pod 'RxGesture'
   pod 'Alamofire'
   pod 'SwiftLint'
   pod 'NMapsMap'

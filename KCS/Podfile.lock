@@ -8,6 +8,9 @@ PODS:
   - RxCocoa (6.6.0):
     - RxRelay (= 6.6.0)
     - RxSwift (= 6.6.0)
+  - RxGesture (4.0.4):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
   - RxRelay (6.6.0):
     - RxSwift (= 6.6.0)
   - RxSwift (6.6.0)
@@ -20,6 +23,7 @@ DEPENDENCIES:
   - NMapsMap
   - RxBlocking
   - RxCocoa (= 6.6.0)
+  - RxGesture
   - RxSwift (= 6.6.0)
   - RxTest
   - SwiftLint
@@ -31,6 +35,7 @@ SPEC REPOS:
     - NMapsMap
     - RxBlocking
     - RxCocoa
+    - RxGesture
     - RxRelay
     - RxSwift
     - RxTest
@@ -42,11 +47,12 @@ SPEC CHECKSUMS:
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   RxBlocking: fbd1f8501443024f686e556f36dac79b0d5f4d7c
   RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
+  RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
   RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   RxTest: a23f26bb53a5e146a0a69db4f0fa0b69001ce7f4
   SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
 
-PODFILE CHECKSUM: 0f88675320ac9cb6ad8c84bdece01c7160cd9d79
+PODFILE CHECKSUM: 529859231e49f63fa881147a916b977cb8f574df
 
 COCOAPODS: 1.14.3
