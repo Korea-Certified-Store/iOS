@@ -187,8 +187,10 @@ final class HomeViewController: UIViewController {
                 
                 if storeInformationHeightConstraint.constant > 420 {
                     // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
+                    storeInformationView.changeToDetail()
                     setBottomConstraints(constraint: storeInformationHeightConstraint.constant - 441)
                 } else {
+                    storeInformationView.changeToSummary()
                     setBottomConstraints(constraint: -16)
                 }
             })
@@ -201,17 +203,21 @@ final class HomeViewController: UIViewController {
                 if recognizer.velocity(in: view).y < -1000 {
                     setBottomConstraints(constraint: 600 - 441)
                     setHeightConstraint(height: 600)
+                    storeInformationView.changeToDetail()
                 } else if recognizer.velocity(in: view).y > 1000 {
                     setBottomConstraints(constraint: -16)
                     setHeightConstraint(height: storeInformationOriginalHeight)
+                    storeInformationView.changeToSummary()
                 }
                 
                 if storeInformationHeightConstraint.constant > 420 {
                     setBottomConstraints(constraint: 600 - 441)
                     setHeightConstraint(height: 600)
+                    storeInformationView.changeToDetail()
                 } else {
                     setBottomConstraints(constraint: -16)
                     setHeightConstraint(height: storeInformationOriginalHeight)
+                    storeInformationView.changeToSummary()
                 }
             })
             .disposed(by: disposeBag)
@@ -289,6 +295,7 @@ private extension HomeViewController {
             self?.storeInformationOriginalHeight = height
             self?.setBottomConstraints(constraint: -16)
             self?.setHeightConstraint(height: height)
+            self?.storeInformationView.changeToSummary()
         }
         .disposed(by: disposeBag)
     
@@ -357,6 +364,7 @@ private extension HomeViewController {
         clickedMarker = nil
         setBottomConstraints(constraint: -37)
         setHeightConstraint(height: 0)
+        storeInformationView.dismissAll()
     }
     
     func setBottomConstraints(constraint: CGFloat) {

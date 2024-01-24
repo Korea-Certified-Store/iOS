@@ -42,8 +42,10 @@ final class StoreInformationView: UIView {
         self.detailViewModel = detailViewModel
         super.init(frame: .zero)
         
+        setBackgroundColor()
         addUIComponents()
         configureConstraints()
+        changeToSummary()
     }
     
     required init?(coder: NSCoder) {
@@ -60,18 +62,39 @@ extension StoreInformationView {
     }
     
     func changeToSummary() {
-        summaryView.isHidden = false
-        summaryView.isHidden = true
+        summaryView.isUserInteractionEnabled = true
+        detailView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.summaryView.alpha = 1
+            self?.detailView.alpha = 0
+        }
     }
     
     func changeToDetail() {
-        summaryView.isHidden = true
-        summaryView.isHidden = false
+        summaryView.isUserInteractionEnabled = false
+        detailView.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.summaryView.alpha = 0
+            self?.detailView.alpha = 1
+        }
+    }
+    
+    func dismissAll() {
+        summaryView.isUserInteractionEnabled = false
+        detailView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.summaryView.alpha = 0
+            self?.detailView.alpha = 0
+        }
     }
     
 }
 
 private extension StoreInformationView {
+    
+    func setBackgroundColor() {
+        backgroundColor = .white
+    }
     
     func addUIComponents() {
         addSubview(summaryView)
