@@ -108,6 +108,7 @@ final class DetailView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }
 
 private extension DetailView {
@@ -117,10 +118,12 @@ private extension DetailView {
     }
     
 }
+
 private extension DetailView {
     
     func setBackgroundColor() {
-        backgroundColor = .white
+        //        backgroundColor = .white
+        backgroundColor = .systemYellow
     }
     
     func addUIComponents() {
@@ -175,9 +178,6 @@ private extension DetailView {
         ])
     }
     
-    func setUIContents(store: Store) {
-    }
-    
     func removeStackView() {
         let subviews = certificationStackView.arrangedSubviews
         certificationStackView.arrangedSubviews.forEach {
@@ -187,9 +187,17 @@ private extension DetailView {
     }
     
     func callTapped() {
-        if let number = phoneNumber.text , let url = URL(string: "tel://" + "\(number.filter { $0.isNumber })") {
+        if let number = phoneNumber.text, let url = URL(string: "tel://" + "\(number.filter { $0.isNumber })") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
+    
+}
+
+extension DetailView {
+    
+    func setUIContents(store: Store) {
+        
     }
     
 }

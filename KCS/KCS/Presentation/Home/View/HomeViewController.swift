@@ -166,7 +166,8 @@ final class HomeViewController: UIViewController {
     private lazy var storeInformationView: StoreInformationView = {
         let view = StoreInformationView(
             summaryViewModel: summaryInformationViewModel,
-            summaryInformationHeightObserver: summaryInformationHeightObserver
+            summaryInformationHeightObserver: summaryInformationHeightObserver,
+            detailViewModel: detailViewModel
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -214,13 +215,14 @@ final class HomeViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
-
+        
         return view
     }()
     
     private var activatedFilter: [CertificationType] = []
     private let viewModel: HomeViewModel
     private let summaryInformationViewModel: SummaryInformationViewModel
+    private let detailViewModel: DetailViewModel
     private lazy var storeInformationHeightConstraint = storeInformationView.heightAnchor.constraint(equalToConstant: 0)
     private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
         equalTo: storeInformationView.topAnchor,
@@ -235,10 +237,12 @@ final class HomeViewController: UIViewController {
     
     init(
         viewModel: HomeViewModel,
-        summaryInformationViewModel: SummaryInformationViewModel
+        summaryInformationViewModel: SummaryInformationViewModel,
+        detailViewModel: DetailViewModel
     ) {
         self.viewModel = viewModel
         self.summaryInformationViewModel = summaryInformationViewModel
+        self.detailViewModel = detailViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -287,6 +291,7 @@ private extension HomeViewController {
             self?.setHeightConstraint(height: height)
         }
         .disposed(by: disposeBag)
+    
     }
     
     func bindFilterButton(button: FilterButton, type: CertificationType) {
@@ -305,7 +310,7 @@ private extension HomeViewController {
             .bind(to: button.rx.isSelected)
             .disposed(by: disposeBag)
     }
-    
+
     func setMarker(marker: Marker, tag: UInt) {
         marker.tag = tag
         marker.mapView = mapView.mapView
@@ -320,7 +325,7 @@ private extension HomeViewController {
         
         return activatedFilter
     }
-    
+
 }
 
 private extension HomeViewController {

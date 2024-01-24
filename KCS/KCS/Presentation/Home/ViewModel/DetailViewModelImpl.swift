@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DetailViewModelImpl: DetailViewModel {
+final class DetailViewModelImpl: DetailViewModel {
     
     func action(input: DetailViewModelInputCase) {
         

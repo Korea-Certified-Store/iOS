@@ -23,9 +23,23 @@ final class StoreInformationView: UIView {
     private let summaryViewModel: SummaryInformationViewModel
     private let summaryInformationHeightObserver: PublishRelay<CGFloat>
     
-    init(summaryViewModel: SummaryInformationViewModel, summaryInformationHeightObserver: PublishRelay<CGFloat>) {
+    private lazy var detailView: DetailView = {
+        let view = DetailView(viewModel: detailViewModel)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let detailViewModel: DetailViewModel
+    
+    init(
+        summaryViewModel: SummaryInformationViewModel,
+        summaryInformationHeightObserver: PublishRelay<CGFloat>,
+        detailViewModel: DetailViewModel
+    ) {
         self.summaryViewModel = summaryViewModel
         self.summaryInformationHeightObserver = summaryInformationHeightObserver
+        self.detailViewModel = detailViewModel
         super.init(frame: .zero)
         
         addUIComponents()
@@ -42,6 +56,17 @@ extension StoreInformationView {
     
     func setUIContents(store: Store) {
         summaryView.setUIContents(store: store)
+        detailView.setUIContents(store: store)
+    }
+    
+    func changeToSummary() {
+        summaryView.isHidden = false
+        summaryView.isHidden = true
+    }
+    
+    func changeToDetail() {
+        summaryView.isHidden = true
+        summaryView.isHidden = false
     }
     
 }
@@ -50,6 +75,7 @@ private extension StoreInformationView {
     
     func addUIComponents() {
         addSubview(summaryView)
+        addSubview(detailView)
     }
     
     func configureConstraints() {
@@ -59,6 +85,13 @@ private extension StoreInformationView {
             summaryView.bottomAnchor.constraint(equalTo: bottomAnchor),
             summaryView.leadingAnchor.constraint(equalTo: leadingAnchor),
             summaryView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            detailView.topAnchor.constraint(equalTo: topAnchor),
+            detailView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            detailView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            detailView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
         
     }
