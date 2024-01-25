@@ -221,7 +221,7 @@ extension SummaryInformationView {
         if let url = store.localPhotos.first {
             viewModel.action(input: .setInformationView(
                 openingHour: store.openingHour,
-                url: store.localPhotos.first)
+                url: url)
             )
         } else {
             storeImageView.image = UIImage.basicStore

@@ -246,7 +246,7 @@ final class HomeViewController: UIViewController {
         
         view.rx.tapGesture()
             .when(.ended)
-            .subscribe(onNext: {[weak self] recognizer in
+            .subscribe(onNext: {[weak self] _ in
                 guard let self = self else { return }
                 if storeInformationHeightConstraint.constant == storeInformationOriginalHeight {
                     setStoreInformationConstraints(
