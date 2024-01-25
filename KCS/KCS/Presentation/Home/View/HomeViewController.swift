@@ -166,10 +166,12 @@ final class HomeViewController: UIViewController {
     private lazy var storeInformationView: StoreInformationView = {
         let view = StoreInformationView(
             summaryViewModel: summaryInformationViewModel,
-            summaryInformationHeightObserver: summaryInformationHeightObserver
+            summaryInformationHeightObserver: summaryInformationHeightObserver,
+            detailViewModel: detailViewModel
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         
+        // TODO: 로직 뷰모델로 이동
         view.rx.panGesture()
             .when(.changed)
             .subscribe(onNext: { [weak self] recognizer in
@@ -180,15 +182,27 @@ final class HomeViewController: UIViewController {
                 recognizer.setTranslation(.zero, in: storeInformationView)
                 
                 if height > 230 && height < 620 {
-                    storeInformationHeightConstraint.constant = height
+                    setStoreInformationConstraints(
+                        heightConstraint: height,
+                        bottomConstraint: locationButtonBottomConstraint.constant
+                    )
                 }
                 
                 if storeInformationHeightConstraint.constant > 420 {
                     // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
-                    setBottomConstraints(constraint: storeInformationHeightConstraint.constant - 441)
+                    storeInformationView.changeToDetail()
+                    setStoreInformationConstraints(
+                        heightConstraint: storeInformationHeightConstraint.constant,
+                        bottomConstraint: storeInformationHeightConstraint.constant - 441
+                    )
                 } else {
-                    setBottomConstraints(constraint: -16)
+                    storeInformationView.changeToSummary()
+                    setStoreInformationConstraints(
+                        heightConstraint: storeInformationHeightConstraint.constant,
+                        bottomConstraint: -16
+                    )
                 }
+                
             })
             .disposed(by: disposeBag)
         
@@ -197,29 +211,61 @@ final class HomeViewController: UIViewController {
             .subscribe(onNext: { [weak self] recognizer in
                 guard let self = self else { return }
                 if recognizer.velocity(in: view).y < -1000 {
-                    setBottomConstraints(constraint: 600 - 441)
-                    setHeightConstraint(height: 600)
+                    setStoreInformationConstraints(
+                        heightConstraint: 600,
+                        bottomConstraint: 600 - 441,
+                        animated: true
+                    )
+                    storeInformationView.changeToDetail()
                 } else if recognizer.velocity(in: view).y > 1000 {
-                    setBottomConstraints(constraint: -16)
-                    setHeightConstraint(height: storeInformationOriginalHeight)
+                    setStoreInformationConstraints(
+                        heightConstraint: storeInformationOriginalHeight,
+                        bottomConstraint: -16,
+                        animated: true
+                    )
+                    storeInformationView.changeToSummary()
                 }
                 
                 if storeInformationHeightConstraint.constant > 420 {
-                    setBottomConstraints(constraint: 600 - 441)
-                    setHeightConstraint(height: 600)
+                    setStoreInformationConstraints(
+                        heightConstraint: 600,
+                        bottomConstraint: 600 - 441,
+                        animated: true
+                    )
+                    storeInformationView.changeToDetail()
                 } else {
-                    setBottomConstraints(constraint: -16)
-                    setHeightConstraint(height: storeInformationOriginalHeight)
+                    setStoreInformationConstraints(
+                        heightConstraint: storeInformationOriginalHeight,
+                        bottomConstraint: -16,
+                        animated: true
+                    )
+                    storeInformationView.changeToSummary()
                 }
             })
             .disposed(by: disposeBag)
-
+        
+        view.rx.tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                if storeInformationHeightConstraint.constant == storeInformationOriginalHeight {
+                    setStoreInformationConstraints(
+                        heightConstraint: 600,
+                        bottomConstraint: 600 - 441,
+                        animated: true
+                    )
+                    storeInformationView.changeToDetail()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         return view
     }()
     
     private var activatedFilter: [CertificationType] = []
     private let viewModel: HomeViewModel
     private let summaryInformationViewModel: SummaryInformationViewModel
+    private let detailViewModel: DetailViewModel
     private lazy var storeInformationHeightConstraint = storeInformationView.heightAnchor.constraint(equalToConstant: 0)
     private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
         equalTo: storeInformationView.topAnchor,
@@ -234,10 +280,12 @@ final class HomeViewController: UIViewController {
     
     init(
         viewModel: HomeViewModel,
-        summaryInformationViewModel: SummaryInformationViewModel
+        summaryInformationViewModel: SummaryInformationViewModel,
+        detailViewModel: DetailViewModel
     ) {
         self.viewModel = viewModel
         self.summaryInformationViewModel = summaryInformationViewModel
+        self.detailViewModel = detailViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -282,10 +330,15 @@ private extension HomeViewController {
         
         summaryInformationHeightObserver.bind { [weak self] height in
             self?.storeInformationOriginalHeight = height
-            self?.setBottomConstraints(constraint: -16)
-            self?.setHeightConstraint(height: height)
+            self?.setStoreInformationConstraints(
+                heightConstraint: height,
+                bottomConstraint: -16,
+                animated: true
+            )
+            self?.storeInformationView.changeToSummary()
         }
         .disposed(by: disposeBag)
+    
     }
     
     func bindFilterButton(button: FilterButton, type: CertificationType) {
@@ -304,7 +357,7 @@ private extension HomeViewController {
             .bind(to: button.rx.isSelected)
             .disposed(by: disposeBag)
     }
-    
+
     func setMarker(marker: Marker, tag: UInt) {
         marker.tag = tag
         marker.mapView = mapView.mapView
@@ -319,7 +372,7 @@ private extension HomeViewController {
         
         return activatedFilter
     }
-    
+
 }
 
 private extension HomeViewController {
@@ -349,22 +402,22 @@ private extension HomeViewController {
     func storeInformationViewDismiss() {
         clickedMarker?.isSelected = false
         clickedMarker = nil
-        setBottomConstraints(constraint: -37)
-        setHeightConstraint(height: 0)
+        setStoreInformationConstraints(
+            heightConstraint: 0,
+            bottomConstraint: -37,
+            animated: true
+        )
+        storeInformationView.dismissAll()
     }
     
-    func setBottomConstraints(constraint: CGFloat) {
-        locationButtonBottomConstraint.constant = constraint
-        refreshButtonBottomConstraint.constant = constraint
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
-    func setHeightConstraint(height: CGFloat) {
-        storeInformationHeightConstraint.constant = height
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.view.layoutIfNeeded()
+    func setStoreInformationConstraints(heightConstraint: CGFloat, bottomConstraint: CGFloat, animated: Bool = false) {
+        locationButtonBottomConstraint.constant = bottomConstraint
+        refreshButtonBottomConstraint.constant = bottomConstraint
+        storeInformationHeightConstraint.constant = heightConstraint
+        if animated {
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.view.layoutIfNeeded()
+            }
         }
     }
     

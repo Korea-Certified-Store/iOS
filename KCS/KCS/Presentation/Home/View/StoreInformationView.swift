@@ -23,13 +23,30 @@ final class StoreInformationView: UIView {
     private let summaryViewModel: SummaryInformationViewModel
     private let summaryInformationHeightObserver: PublishRelay<CGFloat>
     
-    init(summaryViewModel: SummaryInformationViewModel, summaryInformationHeightObserver: PublishRelay<CGFloat>) {
+    private lazy var detailView: DetailView = {
+        let view = DetailView(viewModel: detailViewModel)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let detailViewModel: DetailViewModel
+    
+    init(
+        summaryViewModel: SummaryInformationViewModel,
+        summaryInformationHeightObserver: PublishRelay<CGFloat>,
+        detailViewModel: DetailViewModel
+    ) {
         self.summaryViewModel = summaryViewModel
         self.summaryInformationHeightObserver = summaryInformationHeightObserver
+        self.detailViewModel = detailViewModel
         super.init(frame: .zero)
         
+        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        setBackgroundColor()
         addUIComponents()
         configureConstraints()
+        dismissAll()
     }
     
     required init?(coder: NSCoder) {
@@ -42,14 +59,47 @@ extension StoreInformationView {
     
     func setUIContents(store: Store) {
         summaryView.setUIContents(store: store)
+        detailView.setUIContents(store: store)
+    }
+    
+    func changeToSummary() {
+        summaryView.isUserInteractionEnabled = true
+        detailView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.summaryView.alpha = 1
+            self?.detailView.alpha = 0
+        }
+    }
+    
+    func changeToDetail() {
+        summaryView.isUserInteractionEnabled = false
+        detailView.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.summaryView.alpha = 0
+            self?.detailView.alpha = 1
+        }
+    }
+    
+    func dismissAll() {
+        summaryView.isUserInteractionEnabled = false
+        detailView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.summaryView.alpha = 0
+            self?.detailView.alpha = 0
+        }
     }
     
 }
 
 private extension StoreInformationView {
     
+    func setBackgroundColor() {
+        backgroundColor = .white
+    }
+    
     func addUIComponents() {
         addSubview(summaryView)
+        addSubview(detailView)
     }
     
     func configureConstraints() {
@@ -59,6 +109,13 @@ private extension StoreInformationView {
             summaryView.bottomAnchor.constraint(equalTo: bottomAnchor),
             summaryView.leadingAnchor.constraint(equalTo: leadingAnchor),
             summaryView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            detailView.topAnchor.constraint(equalTo: topAnchor),
+            detailView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            detailView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            detailView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
         
     }

@@ -1,15 +1,15 @@
 //
-//  SummaryInformationView.swift
+//  DetailView.swift
 //  KCS
 //
-//  Created by 김영현 on 1/11/24.
+//  Created by 조성민 on 1/24/24.
 //
 
 import UIKit
 import RxSwift
-import RxCocoa
 
-final class SummaryInformationView: UIView {
+// TODO: UI 요소 전체를 디자인에 맞게 수정해야 합니다.
+final class DetailView: UIView {
     
     private let disposeBag = DisposeBag()
     
@@ -23,6 +23,15 @@ final class SummaryInformationView: UIView {
         return label
     }()
     
+    private lazy var category: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.pretendard(size: 13, weight: .regular)
+        label.textColor = UIColor.kcsGray
+        
+        return label
+    }()
+    
     private lazy var certificationStackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -31,15 +40,6 @@ final class SummaryInformationView: UIView {
         stack.distribution = .fillProportionally
         
         return stack
-    }()
-    
-    private lazy var category: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.pretendard(size: 13, weight: .regular)
-        label.textColor = UIColor.kcsGray
-        
-        return label
     }()
     
     private lazy var storeOpenClosed: UILabel = {
@@ -70,16 +70,18 @@ final class SummaryInformationView: UIView {
         return imageView
     }()
     
-    private let storeCallButton: UIButton = {
-        var config = UIButton.Configuration.gray()
-        config.image = SystemImage.phone
-        config.cornerStyle = .capsule
+    private let address: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.configuration = config
+        return label
+    }()
+    
+    private let phoneNumber: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         
-        return button
+        return label
     }()
     
     private let dismissIndicatorView: UIView = {
@@ -91,12 +93,10 @@ final class SummaryInformationView: UIView {
         return view
     }()
     
-    private let viewModel: SummaryInformationViewModel
-    private let summaryInformationHeightObserver: PublishRelay<CGFloat>
+    private let viewModel: DetailViewModel
     
-    init(viewModel: SummaryInformationViewModel, summaryInformationHeightObserver: PublishRelay<CGFloat>) {
+    init(viewModel: DetailViewModel) {
         self.viewModel = viewModel
-        self.summaryInformationHeightObserver = summaryInformationHeightObserver
         super.init(frame: .zero)
         
         setBackgroundColor()
@@ -109,28 +109,21 @@ final class SummaryInformationView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }
 
-private extension SummaryInformationView {
+private extension DetailView {
     
     func bind() {
-        viewModel.thumbnailImageOutput
-            .subscribe(onNext: { [weak self] data in
-                self?.storeImageView.image = UIImage(data: data)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.openClosedOutput
-            .bind { [weak self] openClosedContent in
-                self?.storeOpenClosed.text = openClosedContent.openClosedType.rawValue
-                self?.openingHour.text = openClosedContent.openingHour
-            }
-            .disposed(by: disposeBag)
         
     }
     
+}
+
+private extension DetailView {
+    
     func setBackgroundColor() {
-        backgroundColor = .white
+        backgroundColor = .systemYellow
     }
     
     func addUIComponents() {
@@ -140,7 +133,6 @@ private extension SummaryInformationView {
         addSubview(storeOpenClosed)
         addSubview(openingHour)
         addSubview(storeImageView)
-        addSubview(storeCallButton)
         addSubview(dismissIndicatorView)
     }
     
@@ -172,13 +164,6 @@ private extension SummaryInformationView {
         ])
         
         NSLayoutConstraint.activate([
-            storeCallButton.topAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor, constant: 21),
-            storeCallButton.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor),
-            storeCallButton.widthAnchor.constraint(equalToConstant: 69),
-            storeCallButton.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        
-        NSLayoutConstraint.activate([
             storeImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
             storeImageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             storeImageView.widthAnchor.constraint(equalToConstant: 132),
@@ -193,50 +178,6 @@ private extension SummaryInformationView {
         ])
     }
     
-}
-
-extension SummaryInformationView {
-    
-    func setUIContents(store: Store) {
-        storeTitle.text = store.title
-        category.text = store.category
-        removeStackView()
-        store.certificationTypes
-            .map({
-                CertificationLabel(certificationType: $0)
-            })
-            .forEach {
-                certificationStackView.addArrangedSubview($0)
-            }
-        if let phoneNum = store.phoneNumber {
-            storeCallButton.isEnabled = true
-            storeCallButton.rx.tap
-                .bind { [weak self] _ in
-                    self?.callButtonTapped(phoneNum: phoneNum)
-                }
-                .disposed(by: disposeBag)
-        } else {
-            storeCallButton.isEnabled = false
-        }
-        if let url = store.localPhotos.first {
-            viewModel.action(input: .setInformationView(
-                openingHour: store.openingHour,
-                url: url)
-            )
-        } else {
-            storeImageView.image = UIImage.basicStore
-        }
-        if storeTitle.numberOfVisibleLines == 1 {
-            summaryInformationHeightObserver.accept(230)
-        } else {
-            summaryInformationHeightObserver.accept(253)
-        }
-    }
-    
-}
-
-private extension SummaryInformationView {
-    
     func removeStackView() {
         let subviews = certificationStackView.arrangedSubviews
         certificationStackView.arrangedSubviews.forEach {
@@ -245,10 +186,18 @@ private extension SummaryInformationView {
         subviews.forEach { $0.removeFromSuperview() }
     }
     
-    func callButtonTapped(phoneNum: String) {
-        if let url = URL(string: "tel://" + "\(phoneNum.filter { $0.isNumber })") {
+    func callTapped() {
+        if let number = phoneNumber.text, let url = URL(string: "tel://" + "\(number.filter { $0.isNumber })") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
+    
+}
+
+extension DetailView {
+    
+    func setUIContents(store: Store) {
+        
     }
     
 }
