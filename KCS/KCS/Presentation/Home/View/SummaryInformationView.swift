@@ -37,7 +37,7 @@ final class SummaryInformationView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
-        label.textColor = UIColor.kcsGray
+        label.textColor = UIColor.grayLabel
         
         return label
     }()
@@ -55,7 +55,7 @@ final class SummaryInformationView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
-        label.textColor = UIColor.kcsGray
+        label.textColor = UIColor.grayLabel
         
         return label
     }()
@@ -128,6 +128,9 @@ private extension SummaryInformationView {
             .disposed(by: disposeBag)
         
     }
+}
+
+private extension SummaryInformationView {
     
     func setBackgroundColor() {
         backgroundColor = .white
@@ -193,6 +196,20 @@ private extension SummaryInformationView {
         ])
     }
     
+    func removeStackView() {
+        let subviews = certificationStackView.arrangedSubviews
+        certificationStackView.arrangedSubviews.forEach {
+            certificationStackView.removeArrangedSubview($0)
+        }
+        subviews.forEach { $0.removeFromSuperview() }
+    }
+    
+    func callButtonTapped(phoneNum: String) {
+        if let url = URL(string: "tel://" + "\(phoneNum.filter { $0.isNumber })") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
 }
 
 extension SummaryInformationView {
@@ -203,7 +220,7 @@ extension SummaryInformationView {
         removeStackView()
         store.certificationTypes
             .map({
-                CertificationLabel(certificationType: $0)
+                CertificationLabel(certificationType: $0, fontSize: 9)
             })
             .forEach {
                 certificationStackView.addArrangedSubview($0)
@@ -230,24 +247,6 @@ extension SummaryInformationView {
             summaryInformationHeightObserver.accept(230)
         } else {
             summaryInformationHeightObserver.accept(253)
-        }
-    }
-    
-}
-
-private extension SummaryInformationView {
-    
-    func removeStackView() {
-        let subviews = certificationStackView.arrangedSubviews
-        certificationStackView.arrangedSubviews.forEach {
-            certificationStackView.removeArrangedSubview($0)
-        }
-        subviews.forEach { $0.removeFromSuperview() }
-    }
-    
-    func callButtonTapped(phoneNum: String) {
-        if let url = URL(string: "tel://" + "\(phoneNum.filter { $0.isNumber })") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     

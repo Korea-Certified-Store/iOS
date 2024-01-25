@@ -5,17 +5,22 @@
 //  Created by 조성민 on 1/24/24.
 //
 
-import Foundation
+import RxSwift
+import RxRelay
 
-// TODO: 디자인과 기능 스펙이 정해지면 수정해야 합니다.
 protocol DetailViewModel: DetailViewModelInput, DetailViewModelOutput {
     
-    init()
+    var getOpenClosedUseCase: GetOpenClosedUseCase { get }
+    var fetchImageUseCase: FetchImageUseCase { get }
     
 }
 
 enum DetailViewModelInputCase {
     
+    case setInformationView(
+        openingHour: [RegularOpeningHours],
+        url: String?
+    )
 }
 
 protocol DetailViewModelInput {
@@ -25,5 +30,6 @@ protocol DetailViewModelInput {
 }
 
 protocol DetailViewModelOutput {
-    
+    var openClosedOutput: PublishRelay<OpenClosedInformation> { get }
+    var thumbnailImageOutput: PublishRelay<Data> { get }
 }
