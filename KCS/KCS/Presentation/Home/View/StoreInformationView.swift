@@ -46,7 +46,7 @@ final class StoreInformationView: UIView {
         setBackgroundColor()
         addUIComponents()
         configureConstraints()
-        changeToSummary()
+        dismissAll()
     }
     
     required init?(coder: NSCoder) {

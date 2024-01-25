@@ -222,6 +222,18 @@ final class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        view.rx.tapGesture()
+            .when(.ended)
+            .subscribe(onNext: {[weak self] recognizer in
+                guard let self = self else { return }
+                if storeInformationHeightConstraint.constant == storeInformationOriginalHeight {
+                    setBottomConstraints(constraint: 600 - 441)
+                    setHeightConstraint(height: 600)
+                    storeInformationView.changeToDetail()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         return view
     }()
     
