@@ -43,7 +43,11 @@ final class OpeningHoursCellView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = openingHour.breakTime
-        label.font = UIFont.pretendard(size: 12, weight: .regular)
+        if isToday {
+            label.font = UIFont.pretendard(size: 12, weight: .medium)
+        } else {
+            label.font = UIFont.pretendard(size: 12, weight: .regular)
+        }
         
         return label
     }()

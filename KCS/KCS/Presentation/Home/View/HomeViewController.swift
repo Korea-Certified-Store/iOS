@@ -163,6 +163,15 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    private let dimView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.isUserInteractionEnabled = false
+        
+        return view
+    }()
+    
     private lazy var storeInformationView: StoreInformationView = {
         let view = StoreInformationView(
             summaryViewModel: summaryInformationViewModel,
@@ -191,12 +200,14 @@ final class HomeViewController: UIViewController {
                 if storeInformationHeightConstraint.constant > 420 {
                     // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
                     storeInformationView.changeToDetail()
+                    dimmedView()
                     setStoreInformationConstraints(
                         heightConstraint: storeInformationHeightConstraint.constant,
                         bottomConstraint: storeInformationHeightConstraint.constant - 441
                     )
                 } else {
                     storeInformationView.changeToSummary()
+                    unDimmedView()
                     setStoreInformationConstraints(
                         heightConstraint: storeInformationHeightConstraint.constant,
                         bottomConstraint: -16
@@ -217,6 +228,7 @@ final class HomeViewController: UIViewController {
                         animated: true
                     )
                     storeInformationView.changeToDetail()
+                    dimmedView()
                 } else if recognizer.velocity(in: view).y > 1000 {
                     setStoreInformationConstraints(
                         heightConstraint: storeInformationOriginalHeight,
@@ -224,6 +236,7 @@ final class HomeViewController: UIViewController {
                         animated: true
                     )
                     storeInformationView.changeToSummary()
+                    unDimmedView()
                 }
                 
                 if storeInformationHeightConstraint.constant > 420 {
@@ -233,6 +246,7 @@ final class HomeViewController: UIViewController {
                         animated: true
                     )
                     storeInformationView.changeToDetail()
+                    dimmedView()
                 } else {
                     setStoreInformationConstraints(
                         heightConstraint: storeInformationOriginalHeight,
@@ -240,6 +254,7 @@ final class HomeViewController: UIViewController {
                         animated: true
                     )
                     storeInformationView.changeToSummary()
+                    unDimmedView()
                 }
             })
             .disposed(by: disposeBag)
@@ -255,6 +270,7 @@ final class HomeViewController: UIViewController {
                         animated: true
                     )
                     storeInformationView.changeToDetail()
+                    dimmedView()
                 }
             })
             .disposed(by: disposeBag)
@@ -336,6 +352,7 @@ private extension HomeViewController {
                 animated: true
             )
             self?.storeInformationView.changeToSummary()
+            self?.unDimmedView()
         }
         .disposed(by: disposeBag)
     
@@ -421,6 +438,24 @@ private extension HomeViewController {
         }
     }
     
+    func dimmedView() {
+        goodPriceFilterButton.isUserInteractionEnabled = false
+        exemplaryFilterButton.isUserInteractionEnabled = false
+        safeFilterButton.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.dimView.backgroundColor = .black
+            self?.dimView.alpha = 0.4
+        }
+    }
+    
+    func unDimmedView() {
+        goodPriceFilterButton.isUserInteractionEnabled = true
+        exemplaryFilterButton.isUserInteractionEnabled = true
+        safeFilterButton.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.dimView.backgroundColor = .clear
+        }
+    }
 }
 
 private extension HomeViewController {
@@ -455,6 +490,7 @@ private extension HomeViewController {
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
         mapView.addSubview(refreshButton)
+        mapView.addSubview(dimView)
         mapView.addSubview(storeInformationView)
     }
     
@@ -464,6 +500,13 @@ private extension HomeViewController {
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             mapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        ])
+        
+        NSLayoutConstraint.activate([
+            dimView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
+            dimView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
+            dimView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 0),
+            dimView.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 0)
         ])
         
         NSLayoutConstraint.activate([
@@ -552,6 +595,7 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
+        unDimmedView()
     }
     
 }
