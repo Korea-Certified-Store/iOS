@@ -166,19 +166,11 @@ private extension DetailView {
         
         viewModel.openClosedOutput
             .subscribe(onNext: { [weak self] openClosedInformation in
-                self?.removeOpeningHourStackView()
+                guard let self = self else { return }
+                removeStackView(stackView: openingHoursStackView)
                 let openClosedContent = openClosedInformation.openClosedContent
-                if openClosedContent.openClosedType == .none {
-                    self?.storeOpenClosed.text = "영업시간 정보 없음"
-                    self?.storeOpenClosed.textColor = .black
-                    self?.openingHour.text = openClosedContent.openClosedType.rawValue
-                    self?.addressConstraint.constant = -174
-                } else {
-                    self?.storeOpenClosed.text = openClosedContent.openClosedType.rawValue
-                    self?.storeOpenClosed.textColor = UIColor.goodPrice
-                    self?.openingHour.text = openClosedContent.openingHour
-                    self?.addressConstraint.constant = -16
-                    
+                setOpeningHourText(openClosedContent: openClosedContent)
+                if openClosedContent.openClosedType != .none {
                     let today = Date().weekDay
                     let detailOpeningHour = openClosedInformation.detailOpeningHour
                     for idx in today..<today + 7 {
@@ -198,7 +190,7 @@ private extension DetailView {
                                     openingHour: openingHour
                                 )
                             }
-                            self?.openingHoursStackView.addArrangedSubview(cell)
+                            openingHoursStackView.addArrangedSubview(cell)
                         }
                     }
                 }
@@ -316,25 +308,25 @@ private extension DetailView {
         ])
     }
     
-    func removeOpeningHourStackView() {
-        let subviews = openingHoursStackView.arrangedSubviews
-        openingHoursStackView.arrangedSubviews.forEach {
-            openingHoursStackView.removeArrangedSubview($0)
+    func removeStackView(stackView: UIStackView) {
+        let subviews = stackView.arrangedSubviews
+        stackView.arrangedSubviews.forEach {
+            stackView.removeArrangedSubview($0)
         }
         subviews.forEach { $0.removeFromSuperview() }
     }
     
-    func removeCertificationStackView() {
-        let subviews = certificationStackView.arrangedSubviews
-        certificationStackView.arrangedSubviews.forEach {
-            certificationStackView.removeArrangedSubview($0)
-        }
-        subviews.forEach { $0.removeFromSuperview() }
-    }
-    
-    func callTapped() {
-        if let number = phoneNumber.text, let url = URL(string: "tel://" + "\(number.filter { $0.isNumber })") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    func setOpeningHourText(openClosedContent: OpenClosedContent) {
+        if openClosedContent.openClosedType == .none {
+            storeOpenClosed.text = "영업시간 정보 없음"
+            storeOpenClosed.textColor = .black
+            openingHour.text = openClosedContent.openClosedType.rawValue
+            addressConstraint.constant = -174
+        } else {
+            storeOpenClosed.text = openClosedContent.openClosedType.rawValue
+            storeOpenClosed.textColor = UIColor.goodPrice
+            openingHour.text = openClosedContent.openingHour
+            addressConstraint.constant = -16
         }
     }
     
@@ -346,7 +338,7 @@ extension DetailView {
         storeTitle.text = store.title
         category.text = store.category
         address.text = store.address
-        removeCertificationStackView()
+        removeStackView(stackView: certificationStackView)
         store.certificationTypes
             .map({
                 CertificationLabel(certificationType: $0, fontSize: 11)
