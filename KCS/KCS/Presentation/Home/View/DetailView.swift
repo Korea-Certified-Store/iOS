@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 
+// TODO: UI 요소 전체를 디자인에 맞게 수정해야 합니다.
 final class DetailView: UIView {
     
     private let disposeBag = DisposeBag()
