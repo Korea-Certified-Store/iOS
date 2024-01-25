@@ -123,7 +123,6 @@ private extension DetailView {
 private extension DetailView {
     
     func setBackgroundColor() {
-        //        backgroundColor = .white
         backgroundColor = .systemYellow
     }
     
