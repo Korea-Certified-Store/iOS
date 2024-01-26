@@ -71,6 +71,7 @@ final class DetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
+        label.textColor = .black
         
         return label
     }()
@@ -106,6 +107,7 @@ final class DetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
+        label.textColor = .black
         
         return label
     }()
@@ -121,6 +123,7 @@ final class DetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
+        label.textColor = .black
         label.numberOfLines = 0
         
         return label
@@ -171,8 +174,9 @@ private extension DetailView {
                 let openClosedContent = openClosedInformation.openClosedContent
                 setOpeningHourText(openClosedContent: openClosedContent)
                 
-                var detailOpeningHour = openClosedInformation.detailOpeningHour
-                let today = detailOpeningHour.removeFirst()
+                var detailOpeningHours = openClosedInformation.detailOpeningHour
+                if detailOpeningHours.isEmpty { return }
+                let today = detailOpeningHours.removeFirst()
                 openingHoursStackView.addArrangedSubview(
                     OpeningHoursCellView(
                         weekday: today.weekDay,
@@ -180,7 +184,7 @@ private extension DetailView {
                         isToday: true
                     )
                 )
-                openClosedInformation.detailOpeningHour.forEach { [weak self] detailOpeningHour in
+                detailOpeningHours.forEach { [weak self] detailOpeningHour in
                     self?.openingHoursStackView.addArrangedSubview(
                         OpeningHoursCellView(
                             weekday: detailOpeningHour.weekDay,
