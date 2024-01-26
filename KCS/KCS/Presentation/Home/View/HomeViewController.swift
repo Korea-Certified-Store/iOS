@@ -280,7 +280,7 @@ final class HomeViewController: UIViewController {
     
     private var activatedFilter: [CertificationType] = []
     private let viewModel: HomeViewModel
-    private let summaryInformationViewModel: SummaryInformationViewModel
+    private let summaryInformationViewModel: SummaryViewModel
     private let detailViewModel: DetailViewModel
     private lazy var storeInformationHeightConstraint = storeInformationView.heightAnchor.constraint(equalToConstant: 0)
     private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
@@ -296,7 +296,7 @@ final class HomeViewController: UIViewController {
     
     init(
         viewModel: HomeViewModel,
-        summaryInformationViewModel: SummaryInformationViewModel,
+        summaryInformationViewModel: SummaryViewModel,
         detailViewModel: DetailViewModel
     ) {
         self.viewModel = viewModel
