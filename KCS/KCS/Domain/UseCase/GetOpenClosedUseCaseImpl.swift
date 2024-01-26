@@ -32,7 +32,7 @@ private extension GetOpenClosedUseCaseImpl {
             }
         }()
         
-        return OpenClosedContent(openClosedType: nowOpenClosedType, openingHour: openingHourString)
+        return OpenClosedContent(openClosedType: nowOpenClosedType, nextOpeningHour: openingHourString)
     }
 }
 

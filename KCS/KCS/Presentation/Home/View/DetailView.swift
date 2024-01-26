@@ -171,27 +171,22 @@ private extension DetailView {
                 let openClosedContent = openClosedInformation.openClosedContent
                 setOpeningHourText(openClosedContent: openClosedContent)
                 if openClosedContent.openClosedType != .none {
-                    let today = Date().weekDay
-                    let detailOpeningHour = openClosedInformation.detailOpeningHour
-                    for idx in today..<today + 7 {
-                        let weekDayIndex = idx % 7 == 0 ? 7 : idx % 7
-                        if let weekday = Day.allCases.filter({ $0.index == weekDayIndex }).first,
-                           let openingHour = detailOpeningHour[weekday] {
-                            var cell: OpeningHoursCellView
-                            if weekDayIndex == today {
-                                cell = OpeningHoursCellView(
-                                    weekday: weekday,
-                                    openingHour: openingHour,
-                                    isToday: true
-                                )
-                            } else {
-                                cell = OpeningHoursCellView(
-                                    weekday: weekday,
-                                    openingHour: openingHour
-                                )
-                            }
-                            openingHoursStackView.addArrangedSubview(cell)
+                    openClosedInformation.detailOpeningHour.forEach { [weak self] detailOpeningHour in
+                        let todayWeekDay = Date().weekDay
+                        var cell: OpeningHoursCellView
+                        if detailOpeningHour.weekDay.index == todayWeekDay {
+                            cell = OpeningHoursCellView(
+                                weekday: detailOpeningHour.weekDay,
+                                openingHour: detailOpeningHour.openingHour,
+                                isToday: true
+                            )
+                        } else {
+                            cell = OpeningHoursCellView(
+                                weekday: detailOpeningHour.weekDay,
+                                openingHour: detailOpeningHour.openingHour
+                            )
                         }
+                        self?.openingHoursStackView.addArrangedSubview(cell)
                     }
                 }
             })
@@ -325,7 +320,7 @@ private extension DetailView {
         } else {
             storeOpenClosed.text = openClosedContent.openClosedType.rawValue
             storeOpenClosed.textColor = UIColor.goodPrice
-            openingHour.text = openClosedContent.openingHour
+            openingHour.text = openClosedContent.nextOpeningHour
             addressConstraint.constant = -16
         }
     }

@@ -123,7 +123,7 @@ private extension SummaryInformationView {
         viewModel.openClosedOutput
             .bind { [weak self] openClosedContent in
                 self?.storeOpenClosed.text = openClosedContent.openClosedType.rawValue
-                self?.openingHour.text = openClosedContent.openingHour
+                self?.openingHour.text = openClosedContent.nextOpeningHour
             }
             .disposed(by: disposeBag)
         

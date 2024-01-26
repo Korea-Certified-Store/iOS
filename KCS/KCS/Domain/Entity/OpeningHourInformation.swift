@@ -1,5 +1,5 @@
 //
-//  OpenClosedInformation.swift
+//  OpeningHourInformation.swift
 //  KCS
 //
 //  Created by 김영현 on 1/20/24.
@@ -7,17 +7,24 @@
 
 import Foundation
 
-struct OpenClosedInformation {
+struct OpeningHourInformation {
     
     let openClosedContent: OpenClosedContent
-    let detailOpeningHour: [Day: OpeningHour]
+    let detailOpeningHour: [DetailOpeningHour]
     
 }
 
 struct OpenClosedContent {
     
     let openClosedType: OpenClosedType
-    let openingHour: String
+    let nextOpeningHour: String
+    
+}
+
+struct DetailOpeningHour {
+    
+    let weekDay: Day
+    let openingHour: OpeningHour
     
 }
 

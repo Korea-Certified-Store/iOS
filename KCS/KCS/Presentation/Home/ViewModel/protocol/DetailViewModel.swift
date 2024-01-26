@@ -30,6 +30,6 @@ protocol DetailViewModelInput {
 }
 
 protocol DetailViewModelOutput {
-    var openClosedOutput: PublishRelay<OpenClosedInformation> { get }
+    var openClosedOutput: PublishRelay<OpeningHourInformation> { get }
     var thumbnailImageOutput: PublishRelay<Data> { get }
 }

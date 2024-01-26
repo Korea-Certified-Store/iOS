@@ -15,7 +15,7 @@ final class DetailViewModelImpl: DetailViewModel {
     let getOpenClosedUseCase: GetOpenClosedUseCase
     let fetchImageUseCase: FetchImageUseCase
     
-    var openClosedOutput = PublishRelay<OpenClosedInformation>()
+    var openClosedOutput = PublishRelay<OpeningHourInformation>()
     var thumbnailImageOutput = PublishRelay<Data>()
     
     init(getOpenClosedUseCase: GetOpenClosedUseCase, fetchImageUseCase: FetchImageUseCase) {
@@ -41,7 +41,7 @@ private extension DetailViewModelImpl {
         openingHour: [RegularOpeningHours]
     ) {
         openClosedOutput.accept(
-            OpenClosedInformation(
+            OpeningHourInformation(
                 openClosedContent: getOpenClosedUseCase.execute(openingHours: openingHour),
                 detailOpeningHour: detailOpeningHour(openingHours: openingHour)
             )
@@ -65,41 +65,81 @@ private extension DetailViewModelImpl {
 
 private extension DetailViewModelImpl {
     
-    func detailOpeningHour(openingHours: [RegularOpeningHours]) -> [Day: OpeningHour] {
-        if openingHours.isEmpty { return [:] }
-        var openingHourDictionary: [Day: OpeningHour] = [:]
+    func detailOpeningHour(openingHours: [RegularOpeningHours]) -> [DetailOpeningHour] {
+        if openingHours.isEmpty { return [] }
+        var detailOpeningHourArray: [DetailOpeningHour] = []
         
-        Day.allCases.forEach { day in
-            let openingHours = openingHours.filter { $0.open.day == day }
-            if openingHours.isEmpty {
-                openingHourDictionary[day] = OpeningHour(openingHour: OpenClosedType.dayOff.rawValue, breakTime: nil)
-            }
-            if openingHours.count == 1 {
-                if let openingHour = openingHours.first {
-                    openingHourDictionary[day] = OpeningHour(
-                        openingHour: openingHourToString(open: openingHour.open, close: openingHour.close),
-                        breakTime: nil
+        let today = Date().weekDay
+        for idx in today..<today + 7 {
+            let weekDayIndex = idx % 7 == 0 ? 7 : idx % 7
+            if let weekday = Day.allCases.filter({ $0.index == weekDayIndex }).first {
+                let openingHours = openingHours.filter { $0.open.day == weekday }
+                if openingHours.isEmpty {
+                    detailOpeningHourArray.append(
+                        DetailOpeningHour(
+                            weekDay: weekday,
+                            openingHour: OpeningHour(
+                                openingHour: OpenClosedType.dayOff.rawValue,
+                                breakTime: nil
+                            )
+                        )
                     )
                 }
-            } else {
-                if let firstOpeningHour = openingHours.first,
-                   let lastOpeningHour = openingHours.last {
-                    if firstOpeningHour.open == lastOpeningHour.close {
-                        openingHourDictionary[day] = OpeningHour(
-                            openingHour: openingHourToString(open: lastOpeningHour.open, close: firstOpeningHour.close),
-                            breakTime: nil
+                
+                if openingHours.count == 1 {
+                    if let openingHour = openingHours.first {
+                        detailOpeningHourArray.append(
+                            DetailOpeningHour(
+                                weekDay: weekday,
+                                openingHour: OpeningHour(
+                                    openingHour: openingHourToString(
+                                        open: openingHour.open,
+                                        close: openingHour.close
+                                    ),
+                                    breakTime: nil)
+                            )
                         )
-                    } else {
-                        openingHourDictionary[day] = OpeningHour(
-                            openingHour: openingHourToString(open: firstOpeningHour.open, close: lastOpeningHour.close),
-                            breakTime: openingHourToString(open: firstOpeningHour.close, close: lastOpeningHour.open, isBreakTime: true)
-                        )
+                    }
+                } else {
+                    if let firstOpeningHour = openingHours.first,
+                       let lastOpeningHour = openingHours.last {
+                        if firstOpeningHour.open == lastOpeningHour.close {
+                            detailOpeningHourArray.append(
+                                DetailOpeningHour(
+                                    weekDay: weekday,
+                                    openingHour: OpeningHour(
+                                        openingHour: openingHourToString(
+                                            open: lastOpeningHour.open,
+                                            close: firstOpeningHour.close
+                                        ),
+                                        breakTime: nil
+                                    )
+                                )
+                            )
+                        } else {
+                            detailOpeningHourArray.append(
+                                DetailOpeningHour(
+                                    weekDay: weekday,
+                                    openingHour: OpeningHour(
+                                        openingHour: openingHourToString(
+                                            open: firstOpeningHour.open,
+                                            close: lastOpeningHour.close
+                                        ),
+                                        breakTime: openingHourToString(
+                                            open: firstOpeningHour.close,
+                                            close: lastOpeningHour.open,
+                                            isBreakTime: true
+                                        )
+                                    )
+                                )
+                            )
+                        }
                     }
                 }
             }
         }
         
-        return openingHourDictionary
+        return detailOpeningHourArray
     }
     
     func openingHourToString(open: BusinessHour, close: BusinessHour, isBreakTime: Bool = false) -> String {
