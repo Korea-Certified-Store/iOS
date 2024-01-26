@@ -74,6 +74,7 @@ final class SummaryInformationView: UIView {
         var config = UIButton.Configuration.gray()
         config.image = SystemImage.phone
         config.cornerStyle = .capsule
+        config.baseForegroundColor = .primary3
         
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +82,8 @@ final class SummaryInformationView: UIView {
         
         return button
     }()
+    
+    private var callDisposable: Disposable?
     
     private let dismissIndicatorView: UIView = {
         let view = UIView()
@@ -128,6 +131,7 @@ private extension SummaryInformationView {
             .disposed(by: disposeBag)
         
     }
+    
 }
 
 private extension SummaryInformationView {
@@ -216,7 +220,14 @@ extension SummaryInformationView {
     
     func setUIContents(store: Store) {
         storeTitle.text = store.title
+        if storeTitle.numberOfVisibleLines == 1 {
+            summaryInformationHeightObserver.accept(230)
+        } else {
+            summaryInformationHeightObserver.accept(253)
+        }
+        
         category.text = store.category
+        
         removeStackView()
         store.certificationTypes
             .map({
@@ -225,16 +236,19 @@ extension SummaryInformationView {
             .forEach {
                 certificationStackView.addArrangedSubview($0)
             }
+        
+        callDisposable?.dispose()
         if let phoneNum = store.phoneNumber {
-            storeCallButton.isEnabled = true
-            storeCallButton.rx.tap
+            storeCallButton.isHidden = false
+            
+            callDisposable = storeCallButton.rx.tap
                 .bind { [weak self] _ in
                     self?.callButtonTapped(phoneNum: phoneNum)
                 }
-                .disposed(by: disposeBag)
         } else {
-            storeCallButton.isEnabled = false
+            storeCallButton.isHidden = true
         }
+        
         if let url = store.localPhotos.first {
             viewModel.action(input: .setInformationView(
                 openingHour: store.openingHour,
@@ -243,11 +257,7 @@ extension SummaryInformationView {
         } else {
             storeImageView.image = UIImage.basicStore
         }
-        if storeTitle.numberOfVisibleLines == 1 {
-            summaryInformationHeightObserver.accept(230)
-        } else {
-            summaryInformationHeightObserver.accept(253)
-        }
+        
     }
     
 }
