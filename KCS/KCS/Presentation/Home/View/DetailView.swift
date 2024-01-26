@@ -349,11 +349,9 @@ extension DetailView {
         } else {
             phoneNumber.text = "전화번호 정보 없음"
         }
+        viewModel.action(input: .setOpeningHour(openingHour: store.openingHour))
         if let url = store.localPhotos.first {
-            viewModel.action(input: .setInformationView(
-                openingHour: store.openingHour,
-                url: url)
-            )
+            viewModel.action(input: .setImageView(url: url))
         } else {
             storeImageView.image = UIImage.basicStore
         }

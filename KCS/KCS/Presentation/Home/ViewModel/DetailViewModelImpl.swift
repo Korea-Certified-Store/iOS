@@ -25,11 +25,12 @@ final class DetailViewModelImpl: DetailViewModel {
     
     func action(input: DetailViewModelInputCase) {
         switch input {
-        case .setInformationView(let openingHour, let url):
-            setOpenClosed(openingHour: openingHour)
+        case .setImageView(let url):
             if let url = url {
                 fetchThumbnailImage(url: url)
             }
+        case .setOpeningHour(let openingHour):
+            setOpenClosed(openingHour: openingHour)
         }
     }
     

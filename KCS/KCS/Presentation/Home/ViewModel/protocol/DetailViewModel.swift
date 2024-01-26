@@ -17,10 +17,9 @@ protocol DetailViewModel: DetailViewModelInput, DetailViewModelOutput {
 
 enum DetailViewModelInputCase {
     
-    case setInformationView(
-        openingHour: [RegularOpeningHours],
-        url: String?
-    )
+    case setImageView(url: String?)
+    
+    case setOpeningHour(openingHour: [RegularOpeningHours])
 }
 
 protocol DetailViewModelInput {
