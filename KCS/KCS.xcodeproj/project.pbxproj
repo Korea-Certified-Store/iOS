@@ -59,7 +59,7 @@
 		59F478C12B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478C02B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift */; };
 		8FE699E5DAEEDFE5A53D5E82 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */; };
 		A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802D1F52B5277620091FDE7 /* CertificationLabel.swift */; };
-		A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */; };
+		A81EFBB32B5BC57800D0C0D7 /* OpeningHourInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB22B5BC57800D0C0D7 /* OpeningHourInformation.swift */; };
 		A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */; };
 		A81EFBC02B5D597400D0C0D7 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBB72B5D597400D0C0D7 /* Pretendard-Medium.ttf */; };
 		A81EFBC12B5D597400D0C0D7 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBB82B5D597400D0C0D7 /* Pretendard-Black.ttf */; };
@@ -86,6 +86,8 @@
 		A8ACB7ED2B59647400540BD1 /* OpeningHourError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */; };
 		A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */; };
 		A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */; };
+		A8AE4B192B62903100632355 /* OpeningHourViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B182B62903100632355 /* OpeningHourViewModel.swift */; };
+		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
 		F242B43374CDD61CC6F6A4D5 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FF39E6207057AD78DB44730 /* Pods_KCSUnitTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -159,7 +161,7 @@
 		5FF0FF2386EEB69182D6EA4C /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 		9EA5C8EA72EA9E937C11400A /* Pods-KCS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.debug.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.debug.xcconfig"; sourceTree = "<group>"; };
 		A802D1F52B5277620091FDE7 /* CertificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationLabel.swift; sourceTree = "<group>"; };
-		A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClosedContent.swift; sourceTree = "<group>"; };
+		A81EFBB22B5BC57800D0C0D7 /* OpeningHourInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHourInformation.swift; sourceTree = "<group>"; };
 		A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		A81EFBB72B5D597400D0C0D7 /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
 		A81EFBB82B5D597400D0C0D7 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
@@ -186,6 +188,8 @@
 		A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHourError.swift; sourceTree = "<group>"; };
 		A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCase.swift; sourceTree = "<group>"; };
+		A8AE4B182B62903100632355 /* OpeningHourViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHourViewModel.swift; sourceTree = "<group>"; };
+		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
 		AA9EF30352C847A7C6DEC110 /* Pods-KCS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.release.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.release.xcconfig"; sourceTree = "<group>"; };
 		E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -278,6 +282,7 @@
 				5977BE672B553C8300725C90 /* HomeDependency.swift */,
 				A8ACB7E12B594F7400540BD1 /* SummaryInformationViewModelImpl.swift */,
 				592262272B6124C400CA5A11 /* DetailViewModelImpl.swift */,
+				A8AE4B182B62903100632355 /* OpeningHourViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -366,13 +371,14 @@
 			isa = PBXGroup;
 			children = (
 				591A88802B384E600059E40F /* HomeViewController.swift */,
+				A81EFBD32B6019FD00D0C0D7 /* StoreInformationView.swift */,
 				A890870E2B4F836C00767225 /* SummaryInformationView.swift */,
+				592262232B61203000CA5A11 /* DetailView.swift */,
 				59C306A32B4D7EBA00862625 /* Marker.swift */,
 				A89087032B4E7F3500767225 /* FilterButton.swift */,
-				A802D1F52B5277620091FDE7 /* CertificationLabel.swift */,
 				5977BE572B5524D500725C90 /* RefreshButton.swift */,
-				A81EFBD32B6019FD00D0C0D7 /* StoreInformationView.swift */,
-				592262232B61203000CA5A11 /* DetailView.swift */,
+				A802D1F52B5277620091FDE7 /* CertificationLabel.swift */,
+				A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -404,9 +410,9 @@
 				59C306C82B501B9D00862625 /* RegularOpeningHours.swift */,
 				59C306A52B4D966C00862625 /* CertificationType.swift */,
 				A8ACB7DC2B58E3DE00540BD1 /* OpenClosedType.swift */,
+				A81EFBB22B5BC57800D0C0D7 /* OpeningHourInformation.swift */,
 				5977BE732B57FA7A00725C90 /* FilteredStores.swift */,
 				59F478BE2B5BEA08002FEF9E /* RequestLocation.swift */,
-				A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -781,6 +787,7 @@
 				A890870F2B4F836C00767225 /* SummaryInformationView.swift in Sources */,
 				A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */,
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
+				A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */,
 				A89087042B4E7F3500767225 /* FilterButton.swift in Sources */,
 				59F478B12B59BB00002FEF9E /* ImageRepositoryError.swift in Sources */,
 				592262282B6124C400CA5A11 /* DetailViewModelImpl.swift in Sources */,
@@ -805,7 +812,7 @@
 				A81EFBD42B6019FD00D0C0D7 /* StoreInformationView.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
 				592262242B61203000CA5A11 /* DetailView.swift in Sources */,
-				A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */,
+				A81EFBB32B5BC57800D0C0D7 /* OpeningHourInformation.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */,
 				A8ACB7E22B594F7400540BD1 /* SummaryInformationViewModelImpl.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
@@ -815,6 +822,7 @@
 				59C306CB2B50357900862625 /* Router.swift in Sources */,
 				A8ACB7E82B595A2100540BD1 /* GetOpenClosedUseCase.swift in Sources */,
 				59C306B62B50027300862625 /* Store.swift in Sources */,
+				A8AE4B192B62903100632355 /* OpeningHourViewModel.swift in Sources */,
 				59C306B42B50015500862625 /* APIResponse.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
 				5977BE942B59738800725C90 /* FetchStoresUseCase.swift in Sources */,
