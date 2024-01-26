@@ -556,7 +556,14 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         if reason == NMFMapChangedByDeveloper {
             mapView.positionMode = .direction
-            locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
+            switch locationManager.authorizationStatus {
+            case .denied, .restricted, .notDetermined:
+                locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+            case .authorizedWhenInUse:
+                locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
+            default:
+                break
+            }
             
             let northWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
             let southWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
