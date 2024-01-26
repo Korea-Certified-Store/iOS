@@ -519,7 +519,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             case .authorizedWhenInUse:
                 locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
             default:
-                return
+                break
             }
             
             let northWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
