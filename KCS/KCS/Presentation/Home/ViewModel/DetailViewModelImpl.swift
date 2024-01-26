@@ -35,6 +35,7 @@ final class DetailViewModelImpl: DetailViewModel {
 private extension DetailViewModelImpl {
     
     func setUIContents(store: Store) {
+        fetchThumbnailImage(localPhotos: store.localPhotos)
         setUIContentsOutput.accept(
             DetailViewContents(
                 storeTitle: store.title,
