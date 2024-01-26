@@ -17,8 +17,7 @@ protocol DetailViewModel: DetailViewModelInput, DetailViewModelOutput {
 
 enum DetailViewModelInputCase {
     
-    case setImageView(url: String?)
-    case setOpeningHour(openingHour: [RegularOpeningHours])
+    case setUIContents(store: Store)
     
 }
 
@@ -29,6 +28,8 @@ protocol DetailViewModelInput {
 }
 
 protocol DetailViewModelOutput {
-    var openClosedOutput: PublishRelay<OpeningHourInformation> { get }
+    
+    var setUIContentsOutput: PublishRelay<DetailViewContents> { get }
     var thumbnailImageOutput: PublishRelay<Data> { get }
+    
 }

@@ -168,14 +168,23 @@ private extension DetailView {
             })
             .disposed(by: disposeBag)
         
-        viewModel.openClosedOutput
-            .subscribe(onNext: { [weak self] openClosedInformation in
+        viewModel.setUIContentsOutput
+            .bind { [weak self] detailViewContents in
                 guard let self = self else { return }
-                removeStackView(stackView: openingHoursStackView)
-                let openClosedContent = openClosedInformation.openClosedContent
-                setOpeningHourText(openClosedContent: openClosedContent)
+                storeTitle.text = detailViewContents.storeTitle
+                category.text = detailViewContents.category
+                detailViewContents.certificationTypes
+                    .map({
+                        CertificationLabel(certificationType: $0, fontSize: 11)
+                    })
+                    .forEach { [weak self] in
+                        self?.certificationStackView.addArrangedSubview($0)
+                    }
+                address.text = detailViewContents.address
+                phoneNumber.text = detailViewContents.phoneNumber
+                setOpeningHourText(openClosedContent: detailViewContents.openClosedContent)
                 
-                var detailOpeningHours = openClosedInformation.detailOpeningHour
+                var detailOpeningHours = detailViewContents.detailOpeningHour
                 if detailOpeningHours.isEmpty { return }
                 let today = detailOpeningHours.removeFirst()
                 openingHoursStackView.addArrangedSubview(
@@ -193,7 +202,7 @@ private extension DetailView {
                         )
                     )
                 }
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -336,28 +345,19 @@ private extension DetailView {
 extension DetailView {
     
     func setUIContents(store: Store) {
-        storeTitle.text = store.title
-        category.text = store.category
-        address.text = store.address
-        removeStackView(stackView: certificationStackView)
-        store.certificationTypes
-            .map({
-                CertificationLabel(certificationType: $0, fontSize: 11)
-            })
-            .forEach {
-                certificationStackView.addArrangedSubview($0)
-            }
-        if let phoneNum = store.phoneNumber {
-            phoneNumber.text = phoneNum
-        } else {
-            phoneNumber.text = "전화번호 정보 없음"
-        }
-        viewModel.action(input: .setOpeningHour(openingHour: store.openingHour))
-        if let url = store.localPhotos.first {
-            viewModel.action(input: .setImageView(url: url))
-        } else {
-            storeImageView.image = UIImage.basicStore
-        }
+        resetUIContents()
+        viewModel.action(input: .setUIContents(store: store))
     }
     
+    func resetUIContents() {
+        storeTitle.text = nil
+        category.text = nil
+        address.text = nil
+        phoneNumber.text = nil
+        storeOpenClosed.text = nil
+        openingHour.text = nil
+        storeImageView.image = UIImage.basicStore
+        removeStackView(stackView: certificationStackView)
+        removeStackView(stackView: openingHoursStackView)
+    }
 }
