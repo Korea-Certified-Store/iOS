@@ -163,11 +163,26 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
-    private let dimView: UIView = {
+    private lazy var dimView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
-        view.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = true
+        view.alpha = 0.4
+        
+        view.rx.tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                setStoreInformationConstraints(
+                    heightConstraint: storeInformationOriginalHeight,
+                    bottomConstraint: -16,
+                    animated: true
+                )
+                storeInformationView.changeToSummary()
+                unDimmedView()
+            })
+            .disposed(by: disposeBag)
         
         return view
     }()
@@ -316,6 +331,7 @@ final class HomeViewController: UIViewController {
         configureConstraints()
         checkUserCurrentLocationAuthorization()
         bind()
+        unDimmedView()
     }
     
 }
@@ -439,19 +455,14 @@ private extension HomeViewController {
     }
     
     func dimmedView() {
-        goodPriceFilterButton.isUserInteractionEnabled = false
-        exemplaryFilterButton.isUserInteractionEnabled = false
-        safeFilterButton.isUserInteractionEnabled = false
+        dimView.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.dimView.backgroundColor = .black
-            self?.dimView.alpha = 0.4
         }
     }
     
     func unDimmedView() {
-        goodPriceFilterButton.isUserInteractionEnabled = true
-        exemplaryFilterButton.isUserInteractionEnabled = true
-        safeFilterButton.isUserInteractionEnabled = true
+        dimView.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.dimView.backgroundColor = .clear
         }
