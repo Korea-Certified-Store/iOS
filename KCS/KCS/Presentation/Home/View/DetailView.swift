@@ -140,6 +140,7 @@ final class DetailView: UIView {
     
     private let viewModel: DetailViewModel
     private lazy var addressConstraint = address.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+    private lazy var phoneNumberConstraint = phoneNumber.topAnchor.constraint(equalTo: openingHoursStackView.bottomAnchor, constant: 20)
     
     init(viewModel: DetailViewModel) {
         self.viewModel = viewModel
@@ -281,12 +282,12 @@ private extension DetailView {
         ])
         
         NSLayoutConstraint.activate([
-            phoneNumber.topAnchor.constraint(equalTo: openingHoursStackView.bottomAnchor, constant: 20),
-            phoneNumber.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 11)
+            phoneNumber.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 11),
+            phoneNumberConstraint
         ])
         
         NSLayoutConstraint.activate([
-            addressIcon.centerYAnchor.constraint(equalTo: address.centerYAnchor),
+            addressIcon.topAnchor.constraint(equalTo: address.topAnchor),
             addressIcon.leadingAnchor.constraint(equalTo: clockIcon.leadingAnchor),
             addressIcon.heightAnchor.constraint(equalToConstant: 16),
             addressIcon.widthAnchor.constraint(equalToConstant: 11)
@@ -320,11 +321,13 @@ private extension DetailView {
             storeOpenClosed.textColor = .black
             openingHour.text = openClosedContent.openClosedType.rawValue
             addressConstraint.constant = -174
+            phoneNumberConstraint.constant = 20 - 11
         } else {
             storeOpenClosed.text = openClosedContent.openClosedType.rawValue
             storeOpenClosed.textColor = UIColor.goodPrice
             openingHour.text = openClosedContent.nextOpeningHour
             addressConstraint.constant = -16
+            phoneNumberConstraint.constant = 20
         }
     }
     
