@@ -8,14 +8,14 @@
 import RxSwift
 import RxRelay
 
-protocol SummaryViewModel: SummaryInformationViewModelInput, SummaryInformationViewModelOutput {
+protocol SummaryViewModel: SummaryViewModelInput, SummaryViewModelOutput {
     
     var getOpenClosedUseCase: GetOpenClosedUseCase { get }
     var fetchImageUseCase: FetchImageUseCase { get }
     
 }
 
-enum SummaryInformationViewInputCase {
+enum SummaryViewInputCase {
     
     case setUIContents(
         store: Store
@@ -23,15 +23,16 @@ enum SummaryInformationViewInputCase {
     
 }
 
-protocol SummaryInformationViewModelInput {
+protocol SummaryViewModelInput {
     
-    func action(input: SummaryInformationViewInputCase)
+    func action(input: SummaryViewInputCase)
     
 }
 
-protocol SummaryInformationViewModelOutput {
+protocol SummaryViewModelOutput {
     
     var setUIContentsOutput: PublishRelay<SummaryViewContents> { get }
     var thumbnailImageOutput: PublishRelay<Data> { get }
+    var callButtonOutput: PublishRelay<String> { get }
     
 }
