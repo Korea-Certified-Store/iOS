@@ -170,24 +170,23 @@ private extension DetailView {
                 removeStackView(stackView: openingHoursStackView)
                 let openClosedContent = openClosedInformation.openClosedContent
                 setOpeningHourText(openClosedContent: openClosedContent)
-                if openClosedContent.openClosedType != .none {
-                    openClosedInformation.detailOpeningHour.forEach { [weak self] detailOpeningHour in
-                        let todayWeekDay = Date().weekDay
-                        var cell: OpeningHoursCellView
-                        if detailOpeningHour.weekDay.index == todayWeekDay {
-                            cell = OpeningHoursCellView(
-                                weekday: detailOpeningHour.weekDay,
-                                openingHour: detailOpeningHour.openingHour,
-                                isToday: true
-                            )
-                        } else {
-                            cell = OpeningHoursCellView(
-                                weekday: detailOpeningHour.weekDay,
-                                openingHour: detailOpeningHour.openingHour
-                            )
-                        }
-                        self?.openingHoursStackView.addArrangedSubview(cell)
-                    }
+                
+                var detailOpeningHour = openClosedInformation.detailOpeningHour
+                let today = detailOpeningHour.removeFirst()
+                openingHoursStackView.addArrangedSubview(
+                    OpeningHoursCellView(
+                        weekday: today.weekDay,
+                        openingHour: today.openingHour,
+                        isToday: true
+                    )
+                )
+                openClosedInformation.detailOpeningHour.forEach { [weak self] detailOpeningHour in
+                    self?.openingHoursStackView.addArrangedSubview(
+                        OpeningHoursCellView(
+                            weekday: detailOpeningHour.weekDay,
+                            openingHour: detailOpeningHour.openingHour
+                        )
+                    )
                 }
             })
             .disposed(by: disposeBag)
