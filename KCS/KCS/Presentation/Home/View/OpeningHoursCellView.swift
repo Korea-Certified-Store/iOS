@@ -17,6 +17,7 @@ final class OpeningHoursCellView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = weekday.description
+        label.textColor = .black
         if isToday {
             label.font = UIFont.pretendard(size: 13, weight: .medium)
         } else {
@@ -30,6 +31,7 @@ final class OpeningHoursCellView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = openingHour.openingHour
+        label.textColor = .black
         if isToday {
             label.font = UIFont.pretendard(size: 12, weight: .medium)
         } else {
@@ -43,6 +45,7 @@ final class OpeningHoursCellView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = openingHour.breakTime
+        label.textColor = .black
         if isToday {
             label.font = UIFont.pretendard(size: 12, weight: .medium)
         } else {
