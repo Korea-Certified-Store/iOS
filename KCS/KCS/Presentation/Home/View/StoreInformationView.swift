@@ -20,7 +20,7 @@ final class StoreInformationView: UIView {
         return view
     }()
     
-    private let summaryViewModel: SummaryInformationViewModel
+    private let summaryViewModel: SummaryViewModel
     private let summaryInformationHeightObserver: PublishRelay<CGFloat>
     
     private lazy var detailView: DetailView = {
@@ -33,7 +33,7 @@ final class StoreInformationView: UIView {
     private let detailViewModel: DetailViewModel
     
     init(
-        summaryViewModel: SummaryInformationViewModel,
+        summaryViewModel: SummaryViewModel,
         summaryInformationHeightObserver: PublishRelay<CGFloat>,
         detailViewModel: DetailViewModel
     ) {

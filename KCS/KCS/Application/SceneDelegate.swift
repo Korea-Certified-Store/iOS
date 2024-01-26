@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
             getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
         )
-        let summaryInformationViewModel = SummaryInformationViewModelImpl(
+        let summaryInformationViewModel = SummaryViewModelImpl(
             getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
             fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
         )

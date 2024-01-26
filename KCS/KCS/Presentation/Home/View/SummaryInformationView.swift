@@ -94,10 +94,10 @@ final class SummaryInformationView: UIView {
         return view
     }()
     
-    private let viewModel: SummaryInformationViewModel
+    private let viewModel: SummaryViewModel
     private let summaryInformationHeightObserver: PublishRelay<CGFloat>
     
-    init(viewModel: SummaryInformationViewModel, summaryInformationHeightObserver: PublishRelay<CGFloat>) {
+    init(viewModel: SummaryViewModel, summaryInformationHeightObserver: PublishRelay<CGFloat>) {
         self.viewModel = viewModel
         self.summaryInformationHeightObserver = summaryInformationHeightObserver
         super.init(frame: .zero)
@@ -117,19 +117,44 @@ final class SummaryInformationView: UIView {
 private extension SummaryInformationView {
     
     func bind() {
+        viewModel.setUIContentsOutput
+            .bind { [weak self] contents in
+                guard let self = self else { return }
+                storeTitle.text = contents.storeTitle
+                if storeTitle.numberOfVisibleLines == 1 {
+                    summaryInformationHeightObserver.accept(230)
+                } else {
+                    summaryInformationHeightObserver.accept(253)
+                }
+                storeOpenClosed.text = contents.openClosedContent.openClosedType.rawValue
+                openingHour.text = contents.openClosedContent.nextOpeningHour
+                category.text = contents.category
+                contents.certificationTypes
+                    .map({
+                        CertificationLabel(certificationType: $0, fontSize: 9)
+                    })
+                    .forEach { [weak self] in
+                        self?.certificationStackView.addArrangedSubview($0)
+                    }
+            }
+            .disposed(by: disposeBag)
+        
         viewModel.thumbnailImageOutput
             .subscribe(onNext: { [weak self] data in
                 self?.storeImageView.image = UIImage(data: data)
             })
             .disposed(by: disposeBag)
         
-        viewModel.openClosedOutput
-            .bind { [weak self] openClosedContent in
-                self?.storeOpenClosed.text = openClosedContent.openClosedType.rawValue
-                self?.openingHour.text = openClosedContent.nextOpeningHour
+        viewModel.callButtonOutput
+            .bind { [weak self] phoneNumber in
+                guard let self = self else { return }
+                storeCallButton.isHidden = false
+                callDisposable = storeCallButton.rx.tap
+                    .bind { [weak self] _ in
+                        self?.callButtonTapped(phoneNum: phoneNumber)
+                    }
             }
             .disposed(by: disposeBag)
-        
     }
     
 }
@@ -219,45 +244,19 @@ private extension SummaryInformationView {
 extension SummaryInformationView {
     
     func setUIContents(store: Store) {
-        storeTitle.text = store.title
-        if storeTitle.numberOfVisibleLines == 1 {
-            summaryInformationHeightObserver.accept(230)
-        } else {
-            summaryInformationHeightObserver.accept(253)
-        }
-        
-        category.text = store.category
-        
+        resetUIContents()
+        viewModel.action(input: .setUIContents(store: store))
+    }
+    
+    func resetUIContents() {
+        storeTitle.text = nil
+        category.text = nil
+        storeOpenClosed.text = nil
+        openingHour.text = nil
         removeStackView()
-        store.certificationTypes
-            .map({
-                CertificationLabel(certificationType: $0, fontSize: 9)
-            })
-            .forEach {
-                certificationStackView.addArrangedSubview($0)
-            }
-        
         callDisposable?.dispose()
-        if let phoneNum = store.phoneNumber {
-            storeCallButton.isHidden = false
-            
-            callDisposable = storeCallButton.rx.tap
-                .bind { [weak self] _ in
-                    self?.callButtonTapped(phoneNum: phoneNum)
-                }
-        } else {
-            storeCallButton.isHidden = true
-        }
-        
-        if let url = store.localPhotos.first {
-            viewModel.action(input: .setInformationView(
-                openingHour: store.openingHour,
-                url: url)
-            )
-        } else {
-            storeImageView.image = UIImage.basicStore
-        }
-        
+        storeCallButton.isHidden = true
+        storeImageView.image = .basicStore
     }
     
 }
