@@ -168,6 +168,7 @@ final class HomeViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         view.isUserInteractionEnabled = true
+        view.alpha = 0.4
         
         view.rx.tapGesture()
             .when(.ended)
@@ -454,21 +455,14 @@ private extension HomeViewController {
     }
     
     func dimmedView() {
-//        goodPriceFilterButton.isUserInteractionEnabled = false
-//        exemplaryFilterButton.isUserInteractionEnabled = false
-//        safeFilterButton.isUserInteractionEnabled = false
         dimView.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.dimView.backgroundColor = .black
-            self?.dimView.alpha = 0.4
         }
     }
     
     func unDimmedView() {
         dimView.isUserInteractionEnabled = false
-//        goodPriceFilterButton.isUserInteractionEnabled = true
-//        exemplaryFilterButton.isUserInteractionEnabled = true
-//        safeFilterButton.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.dimView.backgroundColor = .clear
         }
