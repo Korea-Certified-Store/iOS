@@ -59,8 +59,10 @@ final class HomeViewModelImpl: HomeViewModel {
                 storeInformationViewPanGestureEnded(height: height)
             case .storeInformationViewSwipe(let velocity):
                 storeInformationViewSwipe(velocity: velocity)
-//            case .storeInformationViewTapGestureEnded(let height):
-//                storeInformationViewTapGestureEnded(height: height)
+            case .storeInformationViewTapGestureEnded:
+                storeInformationViewTapGestureEnded()
+            case .changeState(let state):
+                changeState(state: state)
             }
         } catch {
             print(error.localizedDescription)
@@ -159,6 +161,7 @@ private extension HomeViewModelImpl {
                 )
             )
             summaryToDetailOutput.accept(())
+            dependency.state = .detail
         } else if height > 230 && height <= 420 {
             storeInformationViewHeightOutput.accept(
                 StoreInformationViewConstraints(
@@ -167,6 +170,7 @@ private extension HomeViewModelImpl {
                 )
             )
             detailToSummaryOutput.accept(())
+            dependency.state = .summary
         }
     }
     
@@ -180,6 +184,7 @@ private extension HomeViewModelImpl {
                 )
             )
             summaryToDetailOutput.accept(())
+            dependency.state = .detail
         } else {
             storeInformationViewHeightOutput.accept(
                 StoreInformationViewConstraints(
@@ -189,6 +194,7 @@ private extension HomeViewModelImpl {
                 )
             )
             detailToSummaryOutput.accept(())
+            dependency.state = .summary
         }
     }
     
@@ -202,6 +208,7 @@ private extension HomeViewModelImpl {
                 )
             )
             summaryToDetailOutput.accept(())
+            dependency.state = .detail
         } else if velocity > 1000 {
             storeInformationViewHeightOutput.accept(
                 StoreInformationViewConstraints(
@@ -211,6 +218,25 @@ private extension HomeViewModelImpl {
                 )
             )
             detailToSummaryOutput.accept(())
+            dependency.state = .summary
         }
+    }
+    
+    func storeInformationViewTapGestureEnded() {
+        if dependency.state == .summary {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: 616,
+                    bottomConstraint: 616 - 441,
+                    animated: true
+                )
+            )
+            summaryToDetailOutput.accept(())
+            dependency.state = .detail
+        }
+    }
+    
+    func changeState(state: HomeViewState) {
+        dependency.state = state
     }
 }

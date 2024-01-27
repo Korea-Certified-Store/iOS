@@ -185,7 +185,6 @@ final class HomeViewController: UIViewController {
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        // TODO: 로직 뷰모델로 이동
         view.rx.panGesture()
             .when(.changed)
             .bind { [weak self] recognizer in
@@ -211,21 +210,13 @@ final class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-//        view.rx.tapGesture()
-//            .when(.ended)
-//            .bind { [weak self] _ in
-//                guard let self = self else { return }
-//                if storeInformationHeightConstraint.constant == storeInformationOriginalHeight {
-//                    setStoreInformationConstraints(
-//                        heightConstraint: 600,
-//                        bottomConstraint: 600 - 441,
-//                        animated: true
-//                    )
-//                    storeInformationView.changeToDetail()
-//                    dimmedView()
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        view.rx.tapGesture()
+            .when(.ended)
+            .bind { [weak self] _ in
+                guard let self = self else { return }
+                viewModel.action(input: .storeInformationViewTapGestureEnded)
+            }
+            .disposed(by: disposeBag)
         
         return view
     }()
@@ -337,6 +328,7 @@ private extension HomeViewController {
             )
             self?.storeInformationView.changeToSummary()
             self?.unDimmedView()
+            self?.viewModel.action(input: .changeState(state: .summary))
         }
         .disposed(by: disposeBag)
     
@@ -409,6 +401,7 @@ private extension HomeViewController {
             animated: true
         )
         storeInformationView.dismissAll()
+        viewModel.action(input: .changeState(state: .normal))
     }
     
     func setStoreInformationConstraints(heightConstraint: CGFloat, bottomConstraint: CGFloat, animated: Bool = false) {
