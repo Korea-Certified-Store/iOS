@@ -16,13 +16,14 @@ final class HomeViewModelImpl: HomeViewModel {
     let fetchStoresUseCase: FetchStoresUseCase
     let getStoreInformationUseCase: GetStoreInformationUseCase
     
-    private let disposeBag = DisposeBag()
-    
     var getStoreInformationOutput = PublishRelay<Store>()
     var refreshOutput = PublishRelay<[FilteredStores]>()
-    var locationButtonOutput = PublishRelay<LocationButton>()
+    var locationButtonOutput = PublishRelay<NMFMyPositionMode>()
+    var storeInformationViewHeightOutput = PublishRelay<StoreInformationViewConstraints>()
+    var summaryToDetailOutput = PublishRelay<Void>()
+    var detailToSummaryOutput = PublishRelay<Void>()
     
-    let dependency: HomeDependency
+    var dependency: HomeDependency
     
     init(
         dependency: HomeDependency,
@@ -50,6 +51,16 @@ final class HomeViewModelImpl: HomeViewModel {
                 try markerTapped(tag: tag)
             case .locationButtonTapped(let positionMode):
                 setLocationButtonImage(positionMode: positionMode)
+            case .setStoreInformationOriginalHeight(let height):
+                setStoreInformationOriginalHeight(height: height)
+            case .storeInformationViewPanGestureChanged(let height):
+                storeInformationViewPanGestureChanged(height: height)
+            case .storeInformationViewPanGestureEnded(let height):
+                storeInformationViewPanGestureEnded(height: height)
+            case .storeInformationViewSwipe(let velocity):
+                storeInformationViewSwipe(velocity: velocity)
+//            case .storeInformationViewTapGestureEnded(let height):
+//                storeInformationViewTapGestureEnded(height: height)
             }
         } catch {
             print(error.localizedDescription)
@@ -75,7 +86,7 @@ private extension HomeViewModelImpl {
                 print(error.localizedDescription)
             }
         )
-        .disposed(by: disposeBag)
+        .disposed(by: dependency.disposeBag)
     }
     
     func fetchFilteredStores(filters: [CertificationType]) {
@@ -126,22 +137,80 @@ private extension HomeViewModelImpl {
     func setLocationButtonImage(positionMode: NMFMyPositionMode) {
         switch positionMode {
         case .direction:
-            locationButtonOutput.accept(
-                LocationButton(
-                    imageName: "LocationButtonCompass",
-                    positionMode: .compass
-                )
-            )
+            locationButtonOutput.accept(.compass)
         case .compass, .normal:
-            locationButtonOutput.accept(
-                LocationButton(
-                    imageName: "LocationButtonNormal",
-                    positionMode: .direction
-                )
-            )
+            locationButtonOutput.accept(.direction)
         default:
             break
         }
     }
     
+    func setStoreInformationOriginalHeight(height: CGFloat) {
+        dependency.storeInformationOriginalHeight = height
+    }
+    
+    func storeInformationViewPanGestureChanged(height: CGFloat) {
+        if height > 420 && height < 630 {
+            // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: height,
+                    bottomConstraint: height - 441
+                )
+            )
+            summaryToDetailOutput.accept(())
+        } else if height > 230 && height <= 420 {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: height,
+                    bottomConstraint: -16
+                )
+            )
+            detailToSummaryOutput.accept(())
+        }
+    }
+    
+    func storeInformationViewPanGestureEnded(height: CGFloat) {
+        if height > 420 {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: 616,
+                    bottomConstraint: 616 - 441,
+                    animated: true
+                )
+            )
+            summaryToDetailOutput.accept(())
+        } else {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: dependency.storeInformationOriginalHeight,
+                    bottomConstraint: -16,
+                    animated: true
+                )
+            )
+            detailToSummaryOutput.accept(())
+        }
+    }
+    
+    func storeInformationViewSwipe(velocity: Double) {
+        if velocity < -1000 {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: 616,
+                    bottomConstraint: 616 - 441,
+                    animated: true
+                )
+            )
+            summaryToDetailOutput.accept(())
+        } else if velocity > 1000 {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: dependency.storeInformationOriginalHeight,
+                    bottomConstraint: -16,
+                    animated: true
+                )
+            )
+            detailToSummaryOutput.accept(())
+        }
+    }
 }

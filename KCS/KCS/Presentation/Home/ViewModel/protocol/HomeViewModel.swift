@@ -36,6 +36,11 @@ enum HomeViewModelInputCase {
     )
     case markerTapped(tag: UInt)
     case locationButtonTapped(positionMode: NMFMyPositionMode)
+    case setStoreInformationOriginalHeight(height: CGFloat)
+    case storeInformationViewPanGestureChanged(height: CGFloat)
+    case storeInformationViewPanGestureEnded(height: CGFloat)
+    case storeInformationViewSwipe(velocity: Double)
+//    case storeInformationViewTapGestureEnded(height: CGFloat)
     
 }
 
@@ -49,6 +54,9 @@ protocol HomeViewModelOutput {
     
     var getStoreInformationOutput: PublishRelay<Store> { get }
     var refreshOutput: PublishRelay<[FilteredStores]> { get }
-    var locationButtonOutput: PublishRelay<LocationButton> { get }
+    var locationButtonOutput: PublishRelay<NMFMyPositionMode> { get }
+    var storeInformationViewHeightOutput: PublishRelay<StoreInformationViewConstraints> { get }
+    var summaryToDetailOutput: PublishRelay<Void> { get }
+    var detailToSummaryOutput: PublishRelay<Void> { get }
     
 }

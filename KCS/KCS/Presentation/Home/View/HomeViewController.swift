@@ -160,19 +160,19 @@ final class HomeViewController: UIViewController {
         view.isUserInteractionEnabled = true
         view.alpha = 0.4
         
-        view.rx.tapGesture()
-            .when(.ended)
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                setStoreInformationConstraints(
-                    heightConstraint: storeInformationOriginalHeight,
-                    bottomConstraint: -16,
-                    animated: true
-                )
-                storeInformationView.changeToSummary()
-                unDimmedView()
-            })
-            .disposed(by: disposeBag)
+//        view.rx.tapGesture()
+//            .when(.ended)
+//            .subscribe(onNext: { [weak self] _ in
+//                guard let self = self else { return }
+//                setStoreInformationConstraints(
+//                    heightConstraint: storeInformationOriginalHeight,
+//                    bottomConstraint: -16,
+//                    animated: true
+//                )
+//                storeInformationView.changeToSummary()
+//                unDimmedView()
+//            })
+//            .disposed(by: disposeBag)
         
         return view
     }()
@@ -185,100 +185,47 @@ final class HomeViewController: UIViewController {
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        // TODO: - 로직 뷰모델로 이동
+        // TODO: 로직 뷰모델로 이동
         view.rx.panGesture()
             .when(.changed)
-            .subscribe(onNext: { [weak self] recognizer in
+            .bind { [weak self] recognizer in
                 guard let self = self else { return }
                 let transition = recognizer.translation(in: storeInformationView)
-                let height = storeInformationHeightConstraint.constant - transition.y
-                
                 recognizer.setTranslation(.zero, in: storeInformationView)
                 
-                if height > 230 && height < 620 {
-                    setStoreInformationConstraints(
-                        heightConstraint: height,
-                        bottomConstraint: locationButtonBottomConstraint.constant
+                viewModel.action(
+                    input: .storeInformationViewPanGestureChanged(
+                        height: storeInformationHeightConstraint.constant - transition.y
                     )
-                }
-                
-                if storeInformationHeightConstraint.constant > 420 {
-                    // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
-                    storeInformationView.changeToDetail()
-                    dimmedView()
-                    setStoreInformationConstraints(
-                        heightConstraint: storeInformationHeightConstraint.constant,
-                        bottomConstraint: storeInformationHeightConstraint.constant - 441
-                    )
-                } else {
-                    storeInformationView.changeToSummary()
-                    unDimmedView()
-                    setStoreInformationConstraints(
-                        heightConstraint: storeInformationHeightConstraint.constant,
-                        bottomConstraint: -16
-                    )
-                }
-                
-            })
+                )
+            }
             .disposed(by: disposeBag)
         
         view.rx.panGesture()
             .when(.ended)
-            .subscribe(onNext: { [weak self] recognizer in
+            .bind { [weak self] recognizer in
                 guard let self = self else { return }
-                if recognizer.velocity(in: view).y < -1000 {
-                    setStoreInformationConstraints(
-                        heightConstraint: 600,
-                        bottomConstraint: 600 - 441,
-                        animated: true
-                    )
-                    storeInformationView.changeToDetail()
-                    dimmedView()
-                } else if recognizer.velocity(in: view).y > 1000 {
-                    setStoreInformationConstraints(
-                        heightConstraint: storeInformationOriginalHeight,
-                        bottomConstraint: -16,
-                        animated: true
-                    )
-                    storeInformationView.changeToSummary()
-                    unDimmedView()
-                }
+                viewModel.action(input: .storeInformationViewSwipe(velocity: recognizer.velocity(in: view).y))
                 
-                if storeInformationHeightConstraint.constant > 420 {
-                    setStoreInformationConstraints(
-                        heightConstraint: 600,
-                        bottomConstraint: 600 - 441,
-                        animated: true
-                    )
-                    storeInformationView.changeToDetail()
-                    dimmedView()
-                } else {
-                    setStoreInformationConstraints(
-                        heightConstraint: storeInformationOriginalHeight,
-                        bottomConstraint: -16,
-                        animated: true
-                    )
-                    storeInformationView.changeToSummary()
-                    unDimmedView()
-                }
-            })
+                viewModel.action(input: .storeInformationViewPanGestureEnded(height: storeInformationHeightConstraint.constant))
+            }
             .disposed(by: disposeBag)
         
-        view.rx.tapGesture()
-            .when(.ended)
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                if storeInformationHeightConstraint.constant == storeInformationOriginalHeight {
-                    setStoreInformationConstraints(
-                        heightConstraint: 600,
-                        bottomConstraint: 600 - 441,
-                        animated: true
-                    )
-                    storeInformationView.changeToDetail()
-                    dimmedView()
-                }
-            })
-            .disposed(by: disposeBag)
+//        view.rx.tapGesture()
+//            .when(.ended)
+//            .bind { [weak self] _ in
+//                guard let self = self else { return }
+//                if storeInformationHeightConstraint.constant == storeInformationOriginalHeight {
+//                    setStoreInformationConstraints(
+//                        heightConstraint: 600,
+//                        bottomConstraint: 600 - 441,
+//                        animated: true
+//                    )
+//                    storeInformationView.changeToDetail()
+//                    dimmedView()
+//                }
+//            }
+//            .disposed(by: disposeBag)
         
         return view
     }()
@@ -297,7 +244,6 @@ final class HomeViewController: UIViewController {
         constant: -37
     )
     private let summaryInformationHeightObserver = PublishRelay<CGFloat>()
-    private var storeInformationOriginalHeight: CGFloat = 0
     
     init(
         viewModel: HomeViewModel,
@@ -334,9 +280,9 @@ private extension HomeViewController {
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
                 filteredStores.forEach { filteredStore in
-                    filteredStore.stores.forEach {
+                    filteredStore.stores.forEach { [weak self] in
                         let location = $0.location.toMapLocation()
-                        self.setMarker(marker: Marker(certificationType: filteredStore.type, position: location), tag: UInt($0.id))
+                        self?.setMarker(marker: Marker(certificationType: filteredStore.type, position: location), tag: UInt($0.id))
                     }
                 }
                 storeInformationViewDismiss()
@@ -345,20 +291,45 @@ private extension HomeViewController {
         
         viewModel.getStoreInformationOutput
             .bind { [weak self] store in
-                guard let self = self else { return }
-                storeInformationView.setUIContents(store: store)
+                self?.storeInformationView.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
         
         viewModel.locationButtonOutput
-            .bind { [weak self] locationButton in
-                self?.locationButton.setImage(UIImage(named: locationButton.imageName), for: .normal)
-                self?.mapView.mapView.positionMode = locationButton.positionMode
+            .bind { [weak self] positionMode in
+                guard let imageName = positionMode.getImageName() else { return }
+                self?.locationButton.setImage(UIImage(named: imageName), for: .normal)
+                self?.mapView.mapView.positionMode = positionMode
             }
             .disposed(by: disposeBag)
         
+        viewModel.storeInformationViewHeightOutput
+            .bind { [weak self] constraints in
+                self?.setStoreInformationConstraints(
+                    heightConstraint: constraints.heightConstraint,
+                    bottomConstraint: constraints.bottomConstraint,
+                    animated: constraints.animated
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.detailToSummaryOutput
+            .bind { [weak self] _ in
+                self?.storeInformationView.changeToSummary()
+                self?.unDimmedView()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.summaryToDetailOutput
+            .bind { [weak self] _ in
+                self?.storeInformationView.changeToDetail()
+                self?.dimmedView()
+            }
+            .disposed(by: disposeBag)
+        
+        // MARK: 추후 수정 필요
         summaryInformationHeightObserver.bind { [weak self] height in
-            self?.storeInformationOriginalHeight = height
+            self?.viewModel.action(input: .setStoreInformationOriginalHeight(height: height))
             self?.setStoreInformationConstraints(
                 heightConstraint: height,
                 bottomConstraint: -16,

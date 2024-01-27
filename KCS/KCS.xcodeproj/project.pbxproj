@@ -77,8 +77,9 @@
 		A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* SystemImage.swift */; };
 		A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870C2B4EF91600767225 /* UIView+SetLayer.swift */; };
 		A890870F2B4F836C00767225 /* SummaryInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870E2B4F836C00767225 /* SummaryInformationView.swift */; };
-		A8A7E05D2B64AF1300D015E5 /* LocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A7E05C2B64AF1200D015E5 /* LocationButton.swift */; };
 		A8A7E05B2B642EC900D015E5 /* DetailViewContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A7E05A2B642EC900D015E5 /* DetailViewContents.swift */; };
+		A8A7E05D2B64AF1300D015E5 /* StoreInformationViewConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A7E05C2B64AF1200D015E5 /* StoreInformationViewConstraints.swift */; };
+		A8A7E0602B64E62200D015E5 /* NMFMyPosition+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A7E05F2B64E62200D015E5 /* NMFMyPosition+.swift */; };
 		A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7D72B57BE7D00540BD1 /* StoreRepositoryError.swift */; };
 		A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7DA2B58B51A00540BD1 /* Date+.swift */; };
 		A8ACB7DD2B58E3DE00540BD1 /* OpenClosedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7DC2B58E3DE00540BD1 /* OpenClosedType.swift */; };
@@ -182,8 +183,9 @@
 		A89087092B4EF00B00767225 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		A890870C2B4EF91600767225 /* UIView+SetLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SetLayer.swift"; sourceTree = "<group>"; };
 		A890870E2B4F836C00767225 /* SummaryInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryInformationView.swift; sourceTree = "<group>"; };
-		A8A7E05C2B64AF1200D015E5 /* LocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationButton.swift; sourceTree = "<group>"; };
 		A8A7E05A2B642EC900D015E5 /* DetailViewContents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewContents.swift; sourceTree = "<group>"; };
+		A8A7E05C2B64AF1200D015E5 /* StoreInformationViewConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInformationViewConstraints.swift; sourceTree = "<group>"; };
+		A8A7E05F2B64E62200D015E5 /* NMFMyPosition+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMFMyPosition+.swift"; sourceTree = "<group>"; };
 		A8ACB7D72B57BE7D00540BD1 /* StoreRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepositoryError.swift; sourceTree = "<group>"; };
 		A8ACB7DA2B58B51A00540BD1 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		A8ACB7DC2B58E3DE00540BD1 /* OpenClosedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClosedType.swift; sourceTree = "<group>"; };
@@ -419,7 +421,7 @@
 				A81EFBB22B5BC57800D0C0D7 /* OpeningHourInformation.swift */,
 				5977BE732B57FA7A00725C90 /* FilteredStores.swift */,
 				59F478BE2B5BEA08002FEF9E /* RequestLocation.swift */,
-				A8A7E05C2B64AF1200D015E5 /* LocationButton.swift */,
+				A8A7E05C2B64AF1200D015E5 /* StoreInformationViewConstraints.swift */,
 				596DDC4C2B6416AB00A4BBC4 /* SummaryViewContents.swift */,
 				A8A7E05A2B642EC900D015E5 /* DetailViewContents.swift */,
 			);
@@ -505,6 +507,7 @@
 				A890870C2B4EF91600767225 /* UIView+SetLayer.swift */,
 				A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */,
 				A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */,
+				A8A7E05F2B64E62200D015E5 /* NMFMyPosition+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -810,9 +813,10 @@
 				59F478B32B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift in Sources */,
 				A8ACB7ED2B59647400540BD1 /* OpeningHourError.swift in Sources */,
 				5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */,
-				A8A7E05D2B64AF1300D015E5 /* LocationButton.swift in Sources */,
+				A8A7E05D2B64AF1300D015E5 /* StoreInformationViewConstraints.swift in Sources */,
 				5977BE5E2B5535C700725C90 /* FetchRefreshStoresUseCase.swift in Sources */,
 				59C306B02B4FFE4400862625 /* StoreResponse.swift in Sources */,
+				A8A7E0602B64E62200D015E5 /* NMFMyPosition+.swift in Sources */,
 				A8ACB7EA2B595A3E00540BD1 /* GetOpenClosedUseCaseImpl.swift in Sources */,
 				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
 				59C306CD2B5035B100862625 /* StoreAPI.swift in Sources */,

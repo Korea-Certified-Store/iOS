@@ -5,8 +5,11 @@
 //  Created by 조성민 on 1/15/24.
 //
 
-import Foundation
+import RxSwift
 
 struct HomeDependency {
+    
+    let disposeBag = DisposeBag()
+    var storeInformationOriginalHeight: CGFloat = 0
     
 }
