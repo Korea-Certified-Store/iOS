@@ -67,7 +67,11 @@ final class HomeViewController: UIViewController {
             .bind { [weak self] _ in
                 guard let self = self else { return }
                 checkLocationService()
-                viewModel.action(input: .locationButtonTapped(positionMode: mapView.mapView.positionMode))
+                viewModel.action(
+                    input: .locationButtonTapped(
+                        positionMode: mapView.mapView.positionMode
+                    )
+                )
             }
             .disposed(by: self.disposeBag)
         button.setImage(UIImage.locationButtonNone, for: .normal)
@@ -163,7 +167,9 @@ final class HomeViewController: UIViewController {
         view.rx.tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.action(input: .dimViewTapGestureEnded)
+                self?.viewModel.action(
+                    input: .dimViewTapGestureEnded
+                )
             })
             .disposed(by: disposeBag)
         
@@ -197,9 +203,16 @@ final class HomeViewController: UIViewController {
             .when(.ended)
             .bind { [weak self] recognizer in
                 guard let self = self else { return }
-                viewModel.action(input: .storeInformationViewSwipe(velocity: recognizer.velocity(in: view).y))
-                
-                viewModel.action(input: .storeInformationViewPanGestureEnded(height: storeInformationHeightConstraint.constant))
+                viewModel.action(
+                    input: .storeInformationViewSwipe(
+                        velocity: recognizer.velocity(in: view).y
+                    )
+                )
+                viewModel.action(
+                    input: .storeInformationViewPanGestureEnded(
+                        height: storeInformationHeightConstraint.constant
+                    )
+                )
             }
             .disposed(by: disposeBag)
         
@@ -207,7 +220,9 @@ final class HomeViewController: UIViewController {
             .when(.ended)
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                viewModel.action(input: .storeInformationViewTapGestureEnded)
+                viewModel.action(
+                    input: .storeInformationViewTapGestureEnded
+                )
             }
             .disposed(by: disposeBag)
         
@@ -301,7 +316,9 @@ private extension HomeViewController {
             .bind { [weak self] _ in
                 self?.storeInformationView.changeToSummary()
                 self?.unDimmedView()
-                self?.viewModel.action(input: .changeState(state: .summary))
+                self?.viewModel.action(
+                    input: .changeState(state: .summary)
+                )
             }
             .disposed(by: disposeBag)
         
@@ -309,13 +326,17 @@ private extension HomeViewController {
             .bind { [weak self] _ in
                 self?.storeInformationView.changeToDetail()
                 self?.dimmedView()
-                self?.viewModel.action(input: .changeState(state: .detail))
+                self?.viewModel.action(
+                    input: .changeState(state: .detail)
+                )
             }
             .disposed(by: disposeBag)
         
         // MARK: 추후 수정 필요
         summaryInformationHeightObserver.bind { [weak self] height in
-            self?.viewModel.action(input: .setStoreInformationOriginalHeight(height: height))
+            self?.viewModel.action(
+                input: .setStoreInformationOriginalHeight(height: height)
+            )
             self?.setStoreInformationConstraints(
                 heightConstraint: height,
                 bottomConstraint: -16,
@@ -323,7 +344,9 @@ private extension HomeViewController {
             )
             self?.storeInformationView.changeToSummary()
             self?.unDimmedView()
-            self?.viewModel.action(input: .changeState(state: .summary))
+            self?.viewModel.action(
+                input: .changeState(state: .summary)
+            )
         }
         .disposed(by: disposeBag)
     
@@ -339,7 +362,9 @@ private extension HomeViewController {
                 } else {
                     activatedFilter.append(type)
                 }
-                viewModel.action(input: .fetchFilteredStores(filters: getActivatedTypes()))
+                viewModel.action(
+                    input: .fetchFilteredStores(filters: getActivatedTypes())
+                )
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -382,7 +407,9 @@ private extension HomeViewController {
     func markerSelected(marker: Marker) {
         marker.isSelected.toggle()
         if marker.isSelected {
-            viewModel.action(input: .markerTapped(tag: marker.tag))
+            viewModel.action(
+                input: .markerTapped(tag: marker.tag)
+            )
         }
         clickedMarker = marker
     }
@@ -396,7 +423,9 @@ private extension HomeViewController {
             animated: true
         )
         storeInformationView.dismissAll()
-        viewModel.action(input: .changeState(state: .normal))
+        viewModel.action(
+            input: .changeState(state: .normal)
+        )
     }
     
     func setStoreInformationConstraints(heightConstraint: CGFloat, bottomConstraint: CGFloat, animated: Bool = false) {

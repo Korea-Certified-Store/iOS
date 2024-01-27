@@ -60,7 +60,7 @@
 		59F478C12B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478C02B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift */; };
 		8FE699E5DAEEDFE5A53D5E82 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11E3144529848C9A0FC6F77 /* Pods_KCS.framework */; };
 		A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802D1F52B5277620091FDE7 /* CertificationLabel.swift */; };
-		A81EFBB32B5BC57800D0C0D7 /* OpeningHourInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB22B5BC57800D0C0D7 /* OpeningHourInformation.swift */; };
+		A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */; };
 		A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */; };
 		A81EFBC02B5D597400D0C0D7 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBB72B5D597400D0C0D7 /* Pretendard-Medium.ttf */; };
 		A81EFBC12B5D597400D0C0D7 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBB82B5D597400D0C0D7 /* Pretendard-Black.ttf */; };
@@ -166,7 +166,7 @@
 		5FF0FF2386EEB69182D6EA4C /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 		9EA5C8EA72EA9E937C11400A /* Pods-KCS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.debug.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.debug.xcconfig"; sourceTree = "<group>"; };
 		A802D1F52B5277620091FDE7 /* CertificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationLabel.swift; sourceTree = "<group>"; };
-		A81EFBB22B5BC57800D0C0D7 /* OpeningHourInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHourInformation.swift; sourceTree = "<group>"; };
+		A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClosedContent.swift; sourceTree = "<group>"; };
 		A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		A81EFBB72B5D597400D0C0D7 /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
 		A81EFBB82B5D597400D0C0D7 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
@@ -418,7 +418,7 @@
 				59C306C82B501B9D00862625 /* RegularOpeningHours.swift */,
 				59C306A52B4D966C00862625 /* CertificationType.swift */,
 				A8ACB7DC2B58E3DE00540BD1 /* OpenClosedType.swift */,
-				A81EFBB22B5BC57800D0C0D7 /* OpeningHourInformation.swift */,
+				A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */,
 				5977BE732B57FA7A00725C90 /* FilteredStores.swift */,
 				59F478BE2B5BEA08002FEF9E /* RequestLocation.swift */,
 				A8A7E05C2B64AF1200D015E5 /* StoreInformationViewConstraints.swift */,
@@ -827,7 +827,7 @@
 				A81EFBD42B6019FD00D0C0D7 /* StoreInformationView.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
 				592262242B61203000CA5A11 /* DetailView.swift in Sources */,
-				A81EFBB32B5BC57800D0C0D7 /* OpeningHourInformation.swift in Sources */,
+				A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */,
 				A8ACB7E22B594F7400540BD1 /* SummaryViewModelImpl.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
