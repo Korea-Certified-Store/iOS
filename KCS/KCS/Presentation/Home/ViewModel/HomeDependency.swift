@@ -20,5 +20,6 @@ struct HomeDependency {
     let disposeBag = DisposeBag()
     var state: HomeViewState = .normal
     var storeInformationOriginalHeight: CGFloat = 0
+    var activatedFilter: [CertificationType] = []
     
 }

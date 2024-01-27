@@ -27,13 +27,8 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
 
 enum HomeViewModelInputCase {
     
-    case refresh(
-        requestLocation: RequestLocation,
-        filters: [CertificationType]
-    )
-    case fetchFilteredStores(
-        filters: [CertificationType]
-    )
+    case refresh(requestLocation: RequestLocation)
+    case filterButtonTapped(activatedFilter: CertificationType)
     case markerTapped(tag: UInt)
     case locationButtonTapped(positionMode: NMFMyPositionMode)
     case setStoreInformationOriginalHeight(height: CGFloat)

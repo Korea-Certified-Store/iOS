@@ -40,13 +40,10 @@ final class HomeViewModelImpl: HomeViewModel {
     func action(input: HomeViewModelInputCase) {
         do {
             switch input {
-            case .refresh(let requestLocation, let filters):
-                refresh(
-                    requestLocation: requestLocation,
-                    filters: filters
-                )
-            case .fetchFilteredStores(let filters):
-                fetchFilteredStores(filters: filters)
+            case .refresh(let requestLocation):
+                refresh(requestLocation: requestLocation)
+            case .filterButtonTapped(let filter):
+                filterButtonTapped(filter: filter)
             case .markerTapped(let tag):
                 try markerTapped(tag: tag)
             case .locationButtonTapped(let positionMode):
@@ -76,15 +73,15 @@ final class HomeViewModelImpl: HomeViewModel {
 private extension HomeViewModelImpl {
     
     func refresh(
-        requestLocation: RequestLocation,
-        filters: [CertificationType] = [.goodPrice, .exemplary, .safe]
+        requestLocation: RequestLocation
     ) {
         fetchRefreshStoresUseCase.execute(
             requestLocation: requestLocation
         )
         .subscribe(
             onNext: { [weak self] stores in
-                self?.applyFilters(stores: stores, filters: filters)
+                guard let self = self else { return }
+                applyFilters(stores: stores, filters: getActivatedTypes())
             },
             onError: { error in
                 print(error.localizedDescription)
@@ -93,8 +90,21 @@ private extension HomeViewModelImpl {
         .disposed(by: dependency.disposeBag)
     }
     
-    func fetchFilteredStores(filters: [CertificationType]) {
-        applyFilters(stores: fetchStoresUseCase.execute(), filters: filters)
+    func filterButtonTapped(filter: CertificationType) {
+        if let lastIndex = dependency.activatedFilter.lastIndex(of: filter) {
+            dependency.activatedFilter.remove(at: lastIndex)
+        } else {
+            dependency.activatedFilter.append(filter)
+        }
+        applyFilters(stores: fetchStoresUseCase.execute(), filters: getActivatedTypes())
+    }
+    
+    func getActivatedTypes() -> [CertificationType] {
+        if dependency.activatedFilter.isEmpty {
+            return [.safe, .exemplary, .goodPrice]
+        }
+        
+        return dependency.activatedFilter
     }
     
     func applyFilters(stores: [Store], filters: [CertificationType]) {

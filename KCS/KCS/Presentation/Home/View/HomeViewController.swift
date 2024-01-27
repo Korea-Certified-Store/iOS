@@ -147,8 +147,7 @@ final class HomeViewController: UIViewController {
                                 longitude: northEastPoint.lng,
                                 latitude: northEastPoint.lat
                             )
-                        ),
-                        filters: getActivatedTypes()
+                        )
                     )
                 )
                 refreshButton.isHidden = true
@@ -230,7 +229,6 @@ final class HomeViewController: UIViewController {
         return view
     }()
     
-    private var activatedFilter: [CertificationType] = []
     private let viewModel: HomeViewModel
     private let summaryInformationViewModel: SummaryViewModel
     private let detailViewModel: DetailViewModel
@@ -357,14 +355,8 @@ private extension HomeViewController {
         button.rx.tap
             .scan(false) { [weak self] (lastState, _) in
                 guard let self = self else { return lastState }
-                if lastState {
-                    guard let lastIndex = activatedFilter.lastIndex(of: type) else { return lastState }
-                    activatedFilter.remove(at: lastIndex)
-                } else {
-                    activatedFilter.append(type)
-                }
                 viewModel.action(
-                    input: .fetchFilteredStores(filters: getActivatedTypes())
+                    input: .filterButtonTapped(activatedFilter: type)
                 )
                 return !lastState
             }
@@ -377,14 +369,6 @@ private extension HomeViewController {
         marker.mapView = mapView.mapView
         markerTouchHandler(marker: marker)
         markers.append(marker)
-    }
-    
-    func getActivatedTypes() -> [CertificationType] {
-        if activatedFilter.isEmpty {
-            return [.safe, .exemplary, .goodPrice]
-        }
-        
-        return activatedFilter
     }
 
 }
@@ -586,8 +570,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
                             longitude: northEastPoint.lng,
                             latitude: northEastPoint.lat
                         )
-                    ),
-                    filters: getActivatedTypes()
+                    )
                 )
             )
             refreshButton.isHidden = true
