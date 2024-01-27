@@ -15,7 +15,7 @@ final class DetailViewModelImpl: DetailViewModel {
     let getOpenClosedUseCase: GetOpenClosedUseCase
     let fetchImageUseCase: FetchImageUseCase
     
-    var openClosedOutput = PublishRelay<OpeningHourInformation>()
+    var setUIContentsOutput = PublishRelay<DetailViewContents>()
     var thumbnailImageOutput = PublishRelay<Data>()
     
     init(getOpenClosedUseCase: GetOpenClosedUseCase, fetchImageUseCase: FetchImageUseCase) {
@@ -25,11 +25,8 @@ final class DetailViewModelImpl: DetailViewModel {
     
     func action(input: DetailViewModelInputCase) {
         switch input {
-        case .setInformationView(let openingHour, let url):
-            setOpenClosed(openingHour: openingHour)
-            if let url = url {
-                fetchThumbnailImage(url: url)
-            }
+        case .setUIContents(let store):
+            setUIContents(store: store)
         }
     }
     
@@ -37,18 +34,23 @@ final class DetailViewModelImpl: DetailViewModel {
 
 private extension DetailViewModelImpl {
     
-    func setOpenClosed(
-        openingHour: [RegularOpeningHours]
-    ) {
-        openClosedOutput.accept(
-            OpeningHourInformation(
-                openClosedContent: getOpenClosedUseCase.execute(openingHours: openingHour),
-                detailOpeningHour: detailOpeningHour(openingHours: openingHour)
+    func setUIContents(store: Store) {
+        fetchThumbnailImage(localPhotos: store.localPhotos)
+        setUIContentsOutput.accept(
+            DetailViewContents(
+                storeTitle: store.title,
+                category: store.category,
+                certificationTypes: store.certificationTypes,
+                address: store.address,
+                phoneNumber: store.phoneNumber ?? "전화번호 정보 없음",
+                openClosedContent: getOpenClosedUseCase.execute(openingHours: store.openingHour),
+                detailOpeningHour: detailOpeningHour(openingHours: store.openingHour)
             )
         )
     }
     
-    func fetchThumbnailImage(url: String) {
+    func fetchThumbnailImage(localPhotos: [String]) {
+        guard let url = localPhotos.first else { return }
         fetchImageUseCase.execute(url: url)
             .subscribe(
                 onNext: { [weak self] imageData in

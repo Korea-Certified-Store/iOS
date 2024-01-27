@@ -71,6 +71,7 @@ final class DetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
+        label.textColor = .black
         
         return label
     }()
@@ -106,6 +107,7 @@ final class DetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
+        label.textColor = .black
         
         return label
     }()
@@ -121,6 +123,7 @@ final class DetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
+        label.textColor = .black
         label.numberOfLines = 0
         
         return label
@@ -137,6 +140,7 @@ final class DetailView: UIView {
     
     private let viewModel: DetailViewModel
     private lazy var addressConstraint = address.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+    private lazy var phoneNumberConstraint = phoneNumber.topAnchor.constraint(equalTo: openingHoursStackView.bottomAnchor, constant: 20)
     
     init(viewModel: DetailViewModel) {
         self.viewModel = viewModel
@@ -164,15 +168,25 @@ private extension DetailView {
             })
             .disposed(by: disposeBag)
         
-        viewModel.openClosedOutput
-            .subscribe(onNext: { [weak self] openClosedInformation in
+        viewModel.setUIContentsOutput
+            .bind { [weak self] detailViewContents in
                 guard let self = self else { return }
-                removeStackView(stackView: openingHoursStackView)
-                let openClosedContent = openClosedInformation.openClosedContent
-                setOpeningHourText(openClosedContent: openClosedContent)
+                storeTitle.text = detailViewContents.storeTitle
+                category.text = detailViewContents.category
+                detailViewContents.certificationTypes
+                    .map({
+                        CertificationLabel(certificationType: $0, fontSize: 11)
+                    })
+                    .forEach { [weak self] in
+                        self?.certificationStackView.addArrangedSubview($0)
+                    }
+                address.text = detailViewContents.address
+                phoneNumber.text = detailViewContents.phoneNumber
+                setOpeningHourText(openClosedContent: detailViewContents.openClosedContent)
                 
-                var detailOpeningHour = openClosedInformation.detailOpeningHour
-                let today = detailOpeningHour.removeFirst()
+                var detailOpeningHours = detailViewContents.detailOpeningHour
+                if detailOpeningHours.isEmpty { return }
+                let today = detailOpeningHours.removeFirst()
                 openingHoursStackView.addArrangedSubview(
                     OpeningHoursCellView(
                         weekday: today.weekDay,
@@ -180,7 +194,7 @@ private extension DetailView {
                         isToday: true
                     )
                 )
-                openClosedInformation.detailOpeningHour.forEach { [weak self] detailOpeningHour in
+                detailOpeningHours.forEach { [weak self] detailOpeningHour in
                     self?.openingHoursStackView.addArrangedSubview(
                         OpeningHoursCellView(
                             weekday: detailOpeningHour.weekDay,
@@ -188,7 +202,7 @@ private extension DetailView {
                         )
                     )
                 }
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -277,12 +291,12 @@ private extension DetailView {
         ])
         
         NSLayoutConstraint.activate([
-            phoneNumber.topAnchor.constraint(equalTo: openingHoursStackView.bottomAnchor, constant: 20),
-            phoneNumber.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 11)
+            phoneNumber.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 11),
+            phoneNumberConstraint
         ])
         
         NSLayoutConstraint.activate([
-            addressIcon.centerYAnchor.constraint(equalTo: address.centerYAnchor),
+            addressIcon.topAnchor.constraint(equalTo: address.topAnchor),
             addressIcon.leadingAnchor.constraint(equalTo: clockIcon.leadingAnchor),
             addressIcon.heightAnchor.constraint(equalToConstant: 16),
             addressIcon.widthAnchor.constraint(equalToConstant: 11)
@@ -316,11 +330,13 @@ private extension DetailView {
             storeOpenClosed.textColor = .black
             openingHour.text = openClosedContent.openClosedType.rawValue
             addressConstraint.constant = -174
+            phoneNumberConstraint.constant = 20 - 11
         } else {
             storeOpenClosed.text = openClosedContent.openClosedType.rawValue
             storeOpenClosed.textColor = UIColor.goodPrice
             openingHour.text = openClosedContent.nextOpeningHour
             addressConstraint.constant = -16
+            phoneNumberConstraint.constant = 20
         }
     }
     
@@ -329,30 +345,19 @@ private extension DetailView {
 extension DetailView {
     
     func setUIContents(store: Store) {
-        storeTitle.text = store.title
-        category.text = store.category
-        address.text = store.address
-        removeStackView(stackView: certificationStackView)
-        store.certificationTypes
-            .map({
-                CertificationLabel(certificationType: $0, fontSize: 11)
-            })
-            .forEach {
-                certificationStackView.addArrangedSubview($0)
-            }
-        if let phoneNum = store.phoneNumber {
-            phoneNumber.text = phoneNum
-        } else {
-            phoneNumber.text = "전화번호 정보 없음"
-        }
-        if let url = store.localPhotos.first {
-            viewModel.action(input: .setInformationView(
-                openingHour: store.openingHour,
-                url: url)
-            )
-        } else {
-            storeImageView.image = UIImage.basicStore
-        }
+        resetUIContents()
+        viewModel.action(input: .setUIContents(store: store))
     }
     
+    func resetUIContents() {
+        storeTitle.text = nil
+        category.text = nil
+        address.text = nil
+        phoneNumber.text = nil
+        storeOpenClosed.text = nil
+        openingHour.text = nil
+        storeImageView.image = UIImage.basicStore
+        removeStackView(stackView: certificationStackView)
+        removeStackView(stackView: openingHoursStackView)
+    }
 }
