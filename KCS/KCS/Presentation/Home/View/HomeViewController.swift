@@ -90,7 +90,8 @@ final class HomeViewController: UIViewController {
         map.showScaleBar = false
         map.showIndoorLevelPicker = false
         map.showLocationButton = false
-        map.mapView.logoAlign = .rightBottom
+        map.mapView.logoAlign = .rightTop
+        map.mapView.logoMargin = UIEdgeInsets(top: 28, left: 0, bottom: 0, right: 0)
         map.mapView.touchDelegate = self
         map.mapView.addCameraDelegate(delegate: self)
         
