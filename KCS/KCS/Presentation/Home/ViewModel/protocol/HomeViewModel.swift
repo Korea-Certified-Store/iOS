@@ -6,6 +6,7 @@
 //
 
 import RxCocoa
+import NMapsMap
 
 protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
@@ -33,9 +34,8 @@ enum HomeViewModelInputCase {
     case fetchFilteredStores(
         filters: [CertificationType]
     )
-    case markerTapped(
-        tag: UInt
-    )
+    case markerTapped(tag: UInt)
+    case locationButtonTapped(positionMode: NMFMyPositionMode)
     
 }
 
@@ -49,5 +49,6 @@ protocol HomeViewModelOutput {
     
     var getStoreInformationOutput: PublishRelay<Store> { get }
     var refreshOutput: PublishRelay<[FilteredStores]> { get }
+    var locationButtonOutput: PublishRelay<LocationButton> { get }
     
 }

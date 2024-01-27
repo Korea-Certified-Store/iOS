@@ -66,18 +66,8 @@ final class HomeViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                
                 checkLocationService()
-                switch mapView.mapView.positionMode {
-                case .direction:
-                    button.setImage(UIImage.locationButtonCompass, for: .normal)
-                    mapView.mapView.positionMode = .compass
-                case .compass, .normal:
-                    button.setImage(UIImage.locationButtonNormal, for: .normal)
-                    mapView.mapView.positionMode = .direction
-                default:
-                    break
-                }
+                viewModel.action(input: .locationButtonTapped(positionMode: mapView.mapView.positionMode))
             }
             .disposed(by: self.disposeBag)
         button.setImage(UIImage.locationButtonNone, for: .normal)
@@ -180,7 +170,7 @@ final class HomeViewController: UIViewController {
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        // TODO: 로직 뷰모델로 이동
+        // TODO: - 로직 뷰모델로 이동
         view.rx.panGesture()
             .when(.changed)
             .subscribe(onNext: { [weak self] recognizer in
@@ -341,6 +331,13 @@ private extension HomeViewController {
             .bind { [weak self] store in
                 guard let self = self else { return }
                 storeInformationView.setUIContents(store: store)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.locationButtonOutput
+            .bind { [weak self] locationButton in
+                self?.locationButton.setImage(UIImage(named: locationButton.imageName), for: .normal)
+                self?.mapView.mapView.positionMode = locationButton.positionMode
             }
             .disposed(by: disposeBag)
         
@@ -556,6 +553,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         if reason == NMFMapChangedByDeveloper {
             mapView.positionMode = .direction
+            
             switch locationManager.authorizationStatus {
             case .denied, .restricted, .notDetermined:
                 locationButton.setImage(UIImage.locationButtonNone, for: .normal)

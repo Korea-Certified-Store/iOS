@@ -7,6 +7,8 @@
 
 import RxRelay
 import RxSwift
+import CoreLocation
+import NMapsMap
 
 final class HomeViewModelImpl: HomeViewModel {
     
@@ -18,6 +20,7 @@ final class HomeViewModelImpl: HomeViewModel {
     
     var getStoreInformationOutput = PublishRelay<Store>()
     var refreshOutput = PublishRelay<[FilteredStores]>()
+    var locationButtonOutput = PublishRelay<LocationButton>()
     
     let dependency: HomeDependency
     
@@ -45,6 +48,8 @@ final class HomeViewModelImpl: HomeViewModel {
                 fetchFilteredStores(filters: filters)
             case .markerTapped(let tag):
                 try markerTapped(tag: tag)
+            case .locationButtonTapped(let positionMode):
+                setLocationButtonImage(positionMode: positionMode)
             }
         } catch {
             print(error.localizedDescription)
@@ -116,6 +121,27 @@ private extension HomeViewModelImpl {
         getStoreInformationOutput.accept(
             try getStoreInformationUseCase.execute(tag: tag)
         )
+    }
+    
+    func setLocationButtonImage(positionMode: NMFMyPositionMode) {
+        switch positionMode {
+        case .direction:
+            locationButtonOutput.accept(
+                LocationButton(
+                    imageName: "LocationButtonCompass",
+                    positionMode: .compass
+                )
+            )
+        case .compass, .normal:
+            locationButtonOutput.accept(
+                LocationButton(
+                    imageName: "LocationButtonNormal",
+                    positionMode: .direction
+                )
+            )
+        default:
+            break
+        }
     }
     
 }
