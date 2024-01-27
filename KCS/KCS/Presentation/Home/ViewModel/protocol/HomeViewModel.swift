@@ -41,6 +41,7 @@ enum HomeViewModelInputCase {
     case storeInformationViewPanGestureEnded(height: CGFloat)
     case storeInformationViewSwipe(velocity: Double)
     case storeInformationViewTapGestureEnded
+    case dimViewTapGestureEnded
     case changeState(state: HomeViewState)
     
 }

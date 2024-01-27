@@ -61,6 +61,8 @@ final class HomeViewModelImpl: HomeViewModel {
                 storeInformationViewSwipe(velocity: velocity)
             case .storeInformationViewTapGestureEnded:
                 storeInformationViewTapGestureEnded()
+            case .dimViewTapGestureEnded:
+                dimViewTapGestureEnded()
             case .changeState(let state):
                 changeState(state: state)
             }
@@ -161,7 +163,6 @@ private extension HomeViewModelImpl {
                 )
             )
             summaryToDetailOutput.accept(())
-            dependency.state = .detail
         } else if height > 230 && height <= 420 {
             storeInformationViewHeightOutput.accept(
                 StoreInformationViewConstraints(
@@ -170,7 +171,6 @@ private extension HomeViewModelImpl {
                 )
             )
             detailToSummaryOutput.accept(())
-            dependency.state = .summary
         }
     }
     
@@ -184,7 +184,6 @@ private extension HomeViewModelImpl {
                 )
             )
             summaryToDetailOutput.accept(())
-            dependency.state = .detail
         } else {
             storeInformationViewHeightOutput.accept(
                 StoreInformationViewConstraints(
@@ -194,7 +193,6 @@ private extension HomeViewModelImpl {
                 )
             )
             detailToSummaryOutput.accept(())
-            dependency.state = .summary
         }
     }
     
@@ -208,7 +206,6 @@ private extension HomeViewModelImpl {
                 )
             )
             summaryToDetailOutput.accept(())
-            dependency.state = .detail
         } else if velocity > 1000 {
             storeInformationViewHeightOutput.accept(
                 StoreInformationViewConstraints(
@@ -218,7 +215,6 @@ private extension HomeViewModelImpl {
                 )
             )
             detailToSummaryOutput.accept(())
-            dependency.state = .summary
         }
     }
     
@@ -232,8 +228,18 @@ private extension HomeViewModelImpl {
                 )
             )
             summaryToDetailOutput.accept(())
-            dependency.state = .detail
         }
+    }
+    
+    func dimViewTapGestureEnded() {
+        storeInformationViewHeightOutput.accept(
+            StoreInformationViewConstraints(
+                heightConstraint: dependency.storeInformationOriginalHeight,
+                bottomConstraint: -16,
+                animated: true
+            )
+        )
+        detailToSummaryOutput.accept(())
     }
     
     func changeState(state: HomeViewState) {

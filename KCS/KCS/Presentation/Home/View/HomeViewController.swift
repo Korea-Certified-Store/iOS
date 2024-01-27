@@ -160,19 +160,12 @@ final class HomeViewController: UIViewController {
         view.isUserInteractionEnabled = true
         view.alpha = 0.4
         
-//        view.rx.tapGesture()
-//            .when(.ended)
-//            .subscribe(onNext: { [weak self] _ in
-//                guard let self = self else { return }
-//                setStoreInformationConstraints(
-//                    heightConstraint: storeInformationOriginalHeight,
-//                    bottomConstraint: -16,
-//                    animated: true
-//                )
-//                storeInformationView.changeToSummary()
-//                unDimmedView()
-//            })
-//            .disposed(by: disposeBag)
+        view.rx.tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.action(input: .dimViewTapGestureEnded)
+            })
+            .disposed(by: disposeBag)
         
         return view
     }()
@@ -308,6 +301,7 @@ private extension HomeViewController {
             .bind { [weak self] _ in
                 self?.storeInformationView.changeToSummary()
                 self?.unDimmedView()
+                self?.viewModel.action(input: .changeState(state: .summary))
             }
             .disposed(by: disposeBag)
         
@@ -315,6 +309,7 @@ private extension HomeViewController {
             .bind { [weak self] _ in
                 self?.storeInformationView.changeToDetail()
                 self?.dimmedView()
+                self?.viewModel.action(input: .changeState(state: .detail))
             }
             .disposed(by: disposeBag)
         
