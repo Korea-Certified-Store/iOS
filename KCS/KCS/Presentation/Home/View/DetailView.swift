@@ -232,6 +232,11 @@ private extension DetailView {
     }
     
     func configureConstraints() {
+        upperDevideConstraints()
+        lowerDevideConstraints()
+    }
+    
+    func upperDevideConstraints() {
         NSLayoutConstraint.activate([
             storeTitle.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             storeTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
@@ -254,6 +259,15 @@ private extension DetailView {
             divideView.heightAnchor.constraint(equalToConstant: 6)
         ])
         
+        NSLayoutConstraint.activate([
+            dismissIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            dismissIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
+            dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
+        ])
+    }
+    
+    func lowerDevideConstraints() {
         NSLayoutConstraint.activate([
             storeImageView.topAnchor.constraint(equalTo: divideView.bottomAnchor, constant: 16),
             storeImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -306,13 +320,6 @@ private extension DetailView {
             address.topAnchor.constraint(equalTo: phoneNumber.bottomAnchor, constant: 20),
             address.leadingAnchor.constraint(equalTo: addressIcon.trailingAnchor, constant: 13),
             addressConstraint
-        ])
-        
-        NSLayoutConstraint.activate([
-            dismissIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            dismissIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
-            dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
         ])
     }
     
