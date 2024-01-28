@@ -165,7 +165,7 @@ private extension HomeViewModelImpl {
             setMarkerOutput.accept(
                 MarkerContents(
                     tag: store.id,
-                    location: store.location.toMapLocation(),
+                    location: store.location,
                     deselectImageName: "MarkerGoodPriceNormal",
                     selectImageName: "MarkerGoodPriceSelected"
                 )
@@ -174,7 +174,7 @@ private extension HomeViewModelImpl {
             setMarkerOutput.accept(
                 MarkerContents(
                     tag: store.id,
-                    location: store.location.toMapLocation(),
+                    location: store.location,
                     deselectImageName: "MarkerExemplaryNormal",
                     selectImageName: "MarkerExemplarySelected"
                 )
@@ -183,7 +183,7 @@ private extension HomeViewModelImpl {
             setMarkerOutput.accept(
                 MarkerContents(
                     tag: store.id,
-                    location: store.location.toMapLocation(),
+                    location: store.location,
                     deselectImageName: "MarkerSafeNormal",
                     selectImageName: "MarkerSafeSelected"
                 )
@@ -211,11 +211,10 @@ private extension HomeViewModelImpl {
     
     func storeInformationViewPanGestureChanged(height: CGFloat) {
         if height > 420 && height < 630 {
-            // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
             storeInformationViewHeightOutput.accept(
                 StoreInformationViewConstraints(
                     heightConstraint: height,
-                    bottomConstraint: height - 441
+                    bottomConstraint: height - (420 + 21)
                 )
             )
             summaryToDetailOutput.accept(())

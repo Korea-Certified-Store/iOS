@@ -311,7 +311,7 @@ private extension HomeViewController {
             .bind { [weak self] content in
                 guard let selectImage = UIImage(named: content.selectImageName),
                 let deselectImage = UIImage(named: content.deselectImageName) else { return }
-                let marker = Marker(position: content.location, selectImage: selectImage, deselectImage: deselectImage)
+                let marker = Marker(position: content.location.toMapLocation(), selectImage: selectImage, deselectImage: deselectImage)
                 marker.tag = UInt(content.tag)
                 marker.mapView = self?.mapView.mapView
                 self?.markerTouchHandler(marker: marker)

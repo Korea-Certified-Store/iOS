@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import NMapsMap
 
 struct MarkerContents {
     
     let tag: Int
-    let location: NMGLatLng
+    let location: Location
     let deselectImageName: String
     let selectImageName: String
     
