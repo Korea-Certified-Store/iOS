@@ -117,19 +117,28 @@ final class HomeViewController: UIViewController {
         return alertController
     }()
     
+    private let animationObservable = PublishRelay<Void>()
+    
     private lazy var refreshButton: RefreshButton = {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         button.rx.tap
-            .bind { [weak self] _ in
-                guard let self = self else { return }
+            .observe(on: MainScheduler())
+            .map { [weak self] _ -> RequestLocation? in
+                guard let self = self else { return nil }
+                // TODO: 애니메이션 블럭
+                animationObservable.accept(())
+                return makeRequestLocation(projection: mapView.mapView.projection)
+            }
+            .observe(on: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
+            .bind { [weak self] requestLocation in
+                guard let self = self, let location = requestLocation else { return }
                 viewModel.action(
                     input: .refresh(
-                        requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
+                        requestLocation: location
                     )
                 )
-                refreshButton.isHidden = true
             }
             .disposed(by: self.disposeBag)
         
@@ -250,7 +259,6 @@ final class HomeViewController: UIViewController {
                 status: locationManager.authorizationStatus
             )
         )
-        
     }
     
 }
@@ -295,6 +303,8 @@ private extension HomeViewController {
                 marker.mapView = self?.mapView.mapView
                 self?.markerTouchHandler(marker: marker)
                 self?.markers.append(marker)
+                // TODO: 애니메이션 종료 및 isHidden = true
+                self?.refreshButton.layer.removeAllAnimations()
             }
             .disposed(by: disposeBag)
     }
@@ -592,7 +602,9 @@ extension HomeViewController: NMFMapViewCameraDelegate {
                     requestLocation: makeRequestLocation(projection: mapView.projection)
                 )
             )
-            refreshButton.isHidden = true
+//            refreshButton.isHidden = true
+            // TODO: 로딩 애니메이션 시작
+            animationObservable.accept(())
         }
     }
     
