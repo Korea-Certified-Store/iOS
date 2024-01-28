@@ -7,6 +7,8 @@
 
 import RxRelay
 import RxSwift
+import CoreLocation
+import NMapsMap
 
 final class HomeViewModelImpl: HomeViewModel {
     
@@ -14,12 +16,19 @@ final class HomeViewModelImpl: HomeViewModel {
     let fetchStoresUseCase: FetchStoresUseCase
     let getStoreInformationUseCase: GetStoreInformationUseCase
     
-    private let disposeBag = DisposeBag()
-    
     var getStoreInformationOutput = PublishRelay<Store>()
     var refreshOutput = PublishRelay<[FilteredStores]>()
+    var locationButtonOutput = PublishRelay<NMFMyPositionMode>()
+    var locationButtonImageNameOutput = PublishRelay<String>()
+    var storeInformationViewHeightOutput = PublishRelay<StoreInformationViewConstraints>()
+    var summaryToDetailOutput = PublishRelay<Void>()
+    var detailToSummaryOutput = PublishRelay<Void>()
+    var setMarkerOutput = PublishRelay<MarkerContents>()
+    var locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
+    var locationStatusNotDeterminedOutput = PublishRelay<Void>()
+    var locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
     
-    let dependency: HomeDependency
+    var dependency: HomeDependency
     
     init(
         dependency: HomeDependency,
@@ -36,15 +45,34 @@ final class HomeViewModelImpl: HomeViewModel {
     func action(input: HomeViewModelInputCase) {
         do {
             switch input {
-            case .refresh(let requestLocation, let filters):
-                refresh(
-                    requestLocation: requestLocation,
-                    filters: filters
-                )
-            case .fetchFilteredStores(let filters):
-                fetchFilteredStores(filters: filters)
+            case .refresh(let requestLocation):
+                refresh(requestLocation: requestLocation)
+            case .filterButtonTapped(let filter):
+                filterButtonTapped(filter: filter)
             case .markerTapped(let tag):
                 try markerTapped(tag: tag)
+            case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
+                locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
+            case .setStoreInformationOriginalHeight(let height):
+                setStoreInformationOriginalHeight(height: height)
+            case .storeInformationViewPanGestureChanged(let height):
+                storeInformationViewPanGestureChanged(height: height)
+            case .storeInformationViewPanGestureEnded(let height):
+                storeInformationViewPanGestureEnded(height: height)
+            case .storeInformationViewSwipe(let velocity):
+                storeInformationViewSwipe(velocity: velocity)
+            case .storeInformationViewTapGestureEnded:
+                storeInformationViewTapGestureEnded()
+            case .dimViewTapGestureEnded:
+                dimViewTapGestureEnded()
+            case .changeState(let state):
+                changeState(state: state)
+            case .setMarker(let store, let certificationType):
+                setMarker(store: store, certificationType: certificationType)
+            case .checkLocationAuthorization(let status):
+                checkLocationAuthorization(status: status)
+            case .checkLocationAuthorizationWhenCameraDidChange(let status):
+                checkLocationAuthorizationWhenCameraDidChange(status: status)
             }
         } catch {
             print(error.localizedDescription)
@@ -56,25 +84,38 @@ final class HomeViewModelImpl: HomeViewModel {
 private extension HomeViewModelImpl {
     
     func refresh(
-        requestLocation: RequestLocation,
-        filters: [CertificationType] = [.goodPrice, .exemplary, .safe]
+        requestLocation: RequestLocation
     ) {
         fetchRefreshStoresUseCase.execute(
             requestLocation: requestLocation
         )
         .subscribe(
             onNext: { [weak self] stores in
-                self?.applyFilters(stores: stores, filters: filters)
+                guard let self = self else { return }
+                applyFilters(stores: stores, filters: getActivatedTypes())
             },
             onError: { error in
                 print(error.localizedDescription)
             }
         )
-        .disposed(by: disposeBag)
+        .disposed(by: dependency.disposeBag)
     }
     
-    func fetchFilteredStores(filters: [CertificationType]) {
-        applyFilters(stores: fetchStoresUseCase.execute(), filters: filters)
+    func filterButtonTapped(filter: CertificationType) {
+        if let lastIndex = dependency.activatedFilter.lastIndex(of: filter) {
+            dependency.activatedFilter.remove(at: lastIndex)
+        } else {
+            dependency.activatedFilter.append(filter)
+        }
+        applyFilters(stores: fetchStoresUseCase.execute(), filters: getActivatedTypes())
+    }
+    
+    func getActivatedTypes() -> [CertificationType] {
+        if dependency.activatedFilter.isEmpty {
+            return [.safe, .exemplary, .goodPrice]
+        }
+        
+        return dependency.activatedFilter
     }
     
     func applyFilters(stores: [Store], filters: [CertificationType]) {
@@ -116,6 +157,170 @@ private extension HomeViewModelImpl {
         getStoreInformationOutput.accept(
             try getStoreInformationUseCase.execute(tag: tag)
         )
+    }
+    
+    func setMarker(store: Store, certificationType: CertificationType) {
+        switch certificationType {
+        case .goodPrice:
+            setMarkerOutput.accept(
+                MarkerContents(
+                    tag: store.id,
+                    location: store.location,
+                    deselectImageName: "MarkerGoodPriceNormal",
+                    selectImageName: "MarkerGoodPriceSelected"
+                )
+            )
+        case .exemplary:
+            setMarkerOutput.accept(
+                MarkerContents(
+                    tag: store.id,
+                    location: store.location,
+                    deselectImageName: "MarkerExemplaryNormal",
+                    selectImageName: "MarkerExemplarySelected"
+                )
+            )
+        case .safe:
+            setMarkerOutput.accept(
+                MarkerContents(
+                    tag: store.id,
+                    location: store.location,
+                    deselectImageName: "MarkerSafeNormal",
+                    selectImageName: "MarkerSafeSelected"
+                )
+            )
+        }
+    }
+    
+    func locationButtonTapped(locationAuthorizationStatus: CLAuthorizationStatus, positionMode: NMFMyPositionMode) {
+        if locationAuthorizationStatus == .denied {
+            locationAuthorizationStatusDeniedOutput.accept(())
+        }
+        switch positionMode {
+        case .direction:
+            locationButtonOutput.accept(.compass)
+        case .compass, .normal:
+            locationButtonOutput.accept(.direction)
+        default:
+            break
+        }
+    }
+    
+    func setStoreInformationOriginalHeight(height: CGFloat) {
+        dependency.storeInformationOriginalHeight = height
+    }
+    
+    func storeInformationViewPanGestureChanged(height: CGFloat) {
+        if height > 420 && height < 630 {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: height,
+                    bottomConstraint: height - (420 + 21)
+                )
+            )
+            summaryToDetailOutput.accept(())
+        } else if height > 230 && height <= 420 {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: height,
+                    bottomConstraint: -16
+                )
+            )
+            detailToSummaryOutput.accept(())
+        }
+    }
+    
+    func storeInformationViewPanGestureEnded(height: CGFloat) {
+        if height > 420 {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: 616,
+                    bottomConstraint: 616 - 441,
+                    animated: true
+                )
+            )
+            summaryToDetailOutput.accept(())
+        } else {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: dependency.storeInformationOriginalHeight,
+                    bottomConstraint: -16,
+                    animated: true
+                )
+            )
+            detailToSummaryOutput.accept(())
+        }
+    }
+    
+    func storeInformationViewSwipe(velocity: Double) {
+        if velocity < -1000 {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: 616,
+                    bottomConstraint: 616 - 441,
+                    animated: true
+                )
+            )
+            summaryToDetailOutput.accept(())
+        } else if velocity > 1000 {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: dependency.storeInformationOriginalHeight,
+                    bottomConstraint: -16,
+                    animated: true
+                )
+            )
+            detailToSummaryOutput.accept(())
+        }
+    }
+    
+    func storeInformationViewTapGestureEnded() {
+        if dependency.state == .summary {
+            storeInformationViewHeightOutput.accept(
+                StoreInformationViewConstraints(
+                    heightConstraint: 616,
+                    bottomConstraint: 616 - 441,
+                    animated: true
+                )
+            )
+            summaryToDetailOutput.accept(())
+        }
+    }
+    
+    func dimViewTapGestureEnded() {
+        storeInformationViewHeightOutput.accept(
+            StoreInformationViewConstraints(
+                heightConstraint: dependency.storeInformationOriginalHeight,
+                bottomConstraint: -16,
+                animated: true
+            )
+        )
+        detailToSummaryOutput.accept(())
+    }
+    
+    func changeState(state: HomeViewState) {
+        dependency.state = state
+    }
+    
+    func checkLocationAuthorization(status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            locationStatusNotDeterminedOutput.accept(())
+        case .authorizedWhenInUse:
+            locationStatusAuthorizedWhenInUse.accept(())
+        default:
+            break
+        }
+    }
+    
+    func checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus) {
+        switch status {
+        case .denied, .restricted, .notDetermined:
+            locationButtonImageNameOutput.accept("LocationButtonNone")
+        case .authorizedWhenInUse:
+            locationButtonImageNameOutput.accept("LocationButtonNormal")
+        default:
+            break
+        }
     }
     
 }
