@@ -38,6 +38,7 @@ enum HomeViewModelInputCase {
     case storeInformationViewTapGestureEnded
     case dimViewTapGestureEnded
     case changeState(state: HomeViewState)
+    case setMarker(store: Store, certificationType: CertificationType)
     
 }
 
@@ -55,5 +56,6 @@ protocol HomeViewModelOutput {
     var storeInformationViewHeightOutput: PublishRelay<StoreInformationViewConstraints> { get }
     var summaryToDetailOutput: PublishRelay<Void> { get }
     var detailToSummaryOutput: PublishRelay<Void> { get }
+    var setMarkerOutput: PublishRelay<MarkerContents> { get }
     
 }

@@ -11,51 +11,48 @@ import RxSwift
 
 final class Marker: NMFMarker {
     
-    var isSelected: Bool = false {
-        didSet {
-            setUI(type: certificationType)
-        }
-    }
     private lazy var unselectedGlobalZIndex: Int = self.globalZIndex
-    private let certificationType: CertificationType
+    private let selectImage: UIImage
+    private let deselectImage: UIImage
 
-    init(certificationType: CertificationType, position: NMGLatLng? = nil) {
-        self.certificationType = certificationType
+    init(position: NMGLatLng? = nil, selectImage: UIImage, deselectImage: UIImage) {
+        self.selectImage = selectImage
+        self.deselectImage = deselectImage
         super.init()
         if let position = position {
             self.position = position
         }
-        setUI(type: certificationType)
+//        setUI(type: certificationType)
     }
     
 }
 
 private extension Marker {
     
-    func setUI(type: CertificationType) {
-        var icon = NMFOverlayImage()
-        if isSelected {
-            switch type {
-            case .goodPrice:
-                icon = NMFOverlayImage(image: UIImage.markerGoodPriceSelected)
-            case .exemplary:
-                icon = NMFOverlayImage(image: UIImage.markerExemplarySelected)
-            case .safe:
-                icon = NMFOverlayImage(image: UIImage.markerSafeSelected)
-            }
-            self.globalZIndex = 250000
-        } else {
-            switch type {
-            case .goodPrice:
-                icon = NMFOverlayImage(image: UIImage.markerGoodPriceNormal)
-            case .exemplary:
-                icon = NMFOverlayImage(image: UIImage.markerExemplaryNormal)
-            case .safe:
-                icon = NMFOverlayImage(image: UIImage.markerSafeNormal)
-            }
-            self.globalZIndex = unselectedGlobalZIndex
-        }
-        self.iconImage = icon
-    }
+//    func setUI(type: CertificationType) {
+//        var icon = NMFOverlayImage()
+//        if isSelected {
+//            switch type {
+//            case .goodPrice:
+//                icon = NMFOverlayImage(image: UIImage.markerGoodPriceSelected)
+//            case .exemplary:
+//                icon = NMFOverlayImage(image: UIImage.markerExemplarySelected)
+//            case .safe:
+//                icon = NMFOverlayImage(image: UIImage.markerSafeSelected)
+//            }
+//            self.globalZIndex = 250000
+//        } else {
+//            switch type {
+//            case .goodPrice:
+//                icon = NMFOverlayImage(image: UIImage.markerGoodPriceNormal)
+//            case .exemplary:
+//                icon = NMFOverlayImage(image: UIImage.markerExemplaryNormal)
+//            case .safe:
+//                icon = NMFOverlayImage(image: UIImage.markerSafeNormal)
+//            }
+//            self.globalZIndex = unselectedGlobalZIndex
+//        }
+//        self.iconImage = icon
+//    }
 
 }

@@ -22,6 +22,7 @@ final class HomeViewModelImpl: HomeViewModel {
     var storeInformationViewHeightOutput = PublishRelay<StoreInformationViewConstraints>()
     var summaryToDetailOutput = PublishRelay<Void>()
     var detailToSummaryOutput = PublishRelay<Void>()
+    var setMarkerOutput = PublishRelay<MarkerContents>()
     
     var dependency: HomeDependency
     
@@ -62,6 +63,8 @@ final class HomeViewModelImpl: HomeViewModel {
                 dimViewTapGestureEnded()
             case .changeState(let state):
                 changeState(state: state)
+            case .setMarker(let store, let certificationType):
+                setMarker(store: store, certificationType: certificationType)
             }
         } catch {
             print(error.localizedDescription)
@@ -146,6 +149,38 @@ private extension HomeViewModelImpl {
         getStoreInformationOutput.accept(
             try getStoreInformationUseCase.execute(tag: tag)
         )
+    }
+    
+    func setMarker(store: Store, certificationType: CertificationType) {
+        switch certificationType {
+        case .goodPrice:
+            setMarkerOutput.accept(
+                MarkerContents(
+                    tag: store.id,
+                    location: store.location.toMapLocation(),
+                    deselectImageName: "MarkerGoodPriceNormal",
+                    selectImageName: "MarkerGoodPriceSelected"
+                )
+            )
+        case .exemplary:
+            setMarkerOutput.accept(
+                MarkerContents(
+                    tag: store.id,
+                    location: store.location.toMapLocation(),
+                    deselectImageName: "MarkerExemplaryNormal",
+                    selectImageName: "MarkerExemplarySelected"
+                )
+            )
+        case .safe:
+            setMarkerOutput.accept(
+                MarkerContents(
+                    tag: store.id,
+                    location: store.location.toMapLocation(),
+                    deselectImageName: "MarkerSafeNormal",
+                    selectImageName: "MarkerSafeSelected"
+                )
+            )
+        }
     }
     
     func setLocationButtonImage(positionMode: NMFMyPositionMode) {

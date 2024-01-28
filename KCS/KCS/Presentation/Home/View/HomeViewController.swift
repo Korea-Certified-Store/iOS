@@ -278,12 +278,28 @@ private extension HomeViewController {
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
                 filteredStores.forEach { filteredStore in
-                    filteredStore.stores.forEach { [weak self] in
-                        let location = $0.location.toMapLocation()
-                        self?.setMarker(marker: Marker(certificationType: filteredStore.type, position: location), tag: UInt($0.id))
+                    filteredStore.stores.forEach { [weak self] store in
+                        self?.viewModel.action(
+                            input: .setMarker(
+                                store: store,
+                                certificationType: filteredStore.type
+                            )
+                        )
                     }
                 }
                 storeInformationViewDismiss()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.setMarkerOutput
+            .bind { [weak self] content in
+                guard let selectImage = UIImage(named: content.selectImageName),
+                let deselectImage = UIImage(named: content.deselectImageName) else { return }
+                let marker = Marker(position: content.location, selectImage: selectImage, deselectImage: deselectImage)
+                marker.tag = UInt(content.tag)
+                marker.mapView = self?.mapView.mapView
+                self?.markerTouchHandler(marker: marker)
+                self?.markers.append(marker)
             }
             .disposed(by: disposeBag)
         
@@ -364,12 +380,12 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
     }
 
-    func setMarker(marker: Marker, tag: UInt) {
-        marker.tag = tag
-        marker.mapView = mapView.mapView
-        markerTouchHandler(marker: marker)
-        markers.append(marker)
-    }
+//    func setMarker(marker: Marker, tag: UInt) {
+//        marker.tag = tag
+//        marker.mapView = mapView.mapView
+//        markerTouchHandler(marker: marker)
+//        markers.append(marker)
+//    }
 
 }
 
@@ -377,30 +393,21 @@ private extension HomeViewController {
     
     func markerTouchHandler(marker: Marker) {
         marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+            
             if let clickedMarker = self?.clickedMarker {
                 if clickedMarker == marker { return true }
-                if clickedMarker.isSelected {
-                    self?.storeInformationViewDismiss()
-                }
+                self?.storeInformationViewDismiss()
             }
-            self?.markerSelected(marker: marker)
+            self?.viewModel.action(
+                input: .markerTapped(tag: marker.tag)
+            )
+            self?.clickedMarker = marker
             
             return true
         }
     }
     
-    func markerSelected(marker: Marker) {
-        marker.isSelected.toggle()
-        if marker.isSelected {
-            viewModel.action(
-                input: .markerTapped(tag: marker.tag)
-            )
-        }
-        clickedMarker = marker
-    }
-    
     func storeInformationViewDismiss() {
-        clickedMarker?.isSelected = false
         clickedMarker = nil
         setStoreInformationConstraints(
             heightConstraint: 0,
