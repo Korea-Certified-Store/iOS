@@ -30,7 +30,7 @@ enum HomeViewModelInputCase {
     case refresh(requestLocation: RequestLocation)
     case filterButtonTapped(activatedFilter: CertificationType)
     case markerTapped(tag: UInt)
-    case locationButtonTapped(positionMode: NMFMyPositionMode)
+    case locationButtonTapped(locationAuthorizationStatus: CLAuthorizationStatus, positionMode: NMFMyPositionMode)
     case setStoreInformationOriginalHeight(height: CGFloat)
     case storeInformationViewPanGestureChanged(height: CGFloat)
     case storeInformationViewPanGestureEnded(height: CGFloat)
@@ -39,6 +39,7 @@ enum HomeViewModelInputCase {
     case dimViewTapGestureEnded
     case changeState(state: HomeViewState)
     case setMarker(store: Store, certificationType: CertificationType)
+    case checkLocationAuthorization(status: CLAuthorizationStatus)
     
 }
 
@@ -57,5 +58,8 @@ protocol HomeViewModelOutput {
     var summaryToDetailOutput: PublishRelay<Void> { get }
     var detailToSummaryOutput: PublishRelay<Void> { get }
     var setMarkerOutput: PublishRelay<MarkerContents> { get }
+    var locationAuthorizationStatusDeniedOutput: PublishRelay<Void> { get }
+    var locationStatusNotDeterminedOutput: PublishRelay<Void> { get }
+    var locationStatusAuthorizedWhenInUse: PublishRelay<Void> { get }
     
 }

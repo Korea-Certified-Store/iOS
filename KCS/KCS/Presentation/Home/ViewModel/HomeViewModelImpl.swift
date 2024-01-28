@@ -23,6 +23,9 @@ final class HomeViewModelImpl: HomeViewModel {
     var summaryToDetailOutput = PublishRelay<Void>()
     var detailToSummaryOutput = PublishRelay<Void>()
     var setMarkerOutput = PublishRelay<MarkerContents>()
+    var locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
+    var locationStatusNotDeterminedOutput = PublishRelay<Void>()
+    var locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
     
     var dependency: HomeDependency
     
@@ -47,8 +50,8 @@ final class HomeViewModelImpl: HomeViewModel {
                 filterButtonTapped(filter: filter)
             case .markerTapped(let tag):
                 try markerTapped(tag: tag)
-            case .locationButtonTapped(let positionMode):
-                setLocationButtonImage(positionMode: positionMode)
+            case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
+                locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
             case .setStoreInformationOriginalHeight(let height):
                 setStoreInformationOriginalHeight(height: height)
             case .storeInformationViewPanGestureChanged(let height):
@@ -65,6 +68,8 @@ final class HomeViewModelImpl: HomeViewModel {
                 changeState(state: state)
             case .setMarker(let store, let certificationType):
                 setMarker(store: store, certificationType: certificationType)
+            case .checkLocationAuthorization(let status):
+                checkLocationAuthorization(status: status)
             }
         } catch {
             print(error.localizedDescription)
@@ -183,7 +188,10 @@ private extension HomeViewModelImpl {
         }
     }
     
-    func setLocationButtonImage(positionMode: NMFMyPositionMode) {
+    func locationButtonTapped(locationAuthorizationStatus: CLAuthorizationStatus, positionMode: NMFMyPositionMode) {
+        if locationAuthorizationStatus == .denied {
+            locationAuthorizationStatusDeniedOutput.accept(())
+        }
         switch positionMode {
         case .direction:
             locationButtonOutput.accept(.compass)
@@ -290,4 +298,16 @@ private extension HomeViewModelImpl {
     func changeState(state: HomeViewState) {
         dependency.state = state
     }
+    
+    func checkLocationAuthorization(status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            locationStatusNotDeterminedOutput.accept(())
+        case .authorizedWhenInUse:
+            locationStatusAuthorizedWhenInUse.accept(())
+        default:
+            break
+        }
+    }
+    
 }
