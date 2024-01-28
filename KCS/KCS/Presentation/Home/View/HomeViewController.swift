@@ -66,9 +66,9 @@ final class HomeViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                checkLocationService()
                 viewModel.action(
                     input: .locationButtonTapped(
+                        locationAuthorizationStatus: locationManager.authorizationStatus,
                         positionMode: mapView.mapView.positionMode
                     )
                 )
@@ -263,9 +263,15 @@ final class HomeViewController: UIViewController {
         
         addUIComponents()
         configureConstraints()
-        checkUserCurrentLocationAuthorization()
         bind()
         unDimmedView()
+        
+        viewModel.action(
+            input: .checkLocationAuthorization(
+                status: locationManager.authorizationStatus
+            )
+        )
+        
     }
     
 }
@@ -273,6 +279,14 @@ final class HomeViewController: UIViewController {
 private extension HomeViewController {
     
     func bind() {
+        bindRefresh()
+        bindSetMarker()
+        bindLocationButton()
+        bindLocationAuthorization()
+        bindStoreInformationView()
+    }
+    
+    func bindRefresh() {
         viewModel.refreshOutput
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
@@ -290,7 +304,9 @@ private extension HomeViewController {
                 storeInformationViewDismiss()
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindSetMarker() {
         viewModel.setMarkerOutput
             .bind { [weak self] content in
                 guard let selectImage = UIImage(named: content.selectImageName),
@@ -302,18 +318,22 @@ private extension HomeViewController {
                 self?.markers.append(marker)
             }
             .disposed(by: disposeBag)
-        
-        viewModel.getStoreInformationOutput
-            .bind { [weak self] store in
-                self?.storeInformationView.setUIContents(store: store)
-            }
-            .disposed(by: disposeBag)
-        
+    }
+    
+    func bindLocationButton() {
         viewModel.locationButtonOutput
             .bind { [weak self] positionMode in
                 guard let imageName = positionMode.getImageName() else { return }
                 self?.locationButton.setImage(UIImage(named: imageName), for: .normal)
                 self?.mapView.mapView.positionMode = positionMode
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindStoreInformationView() {
+        viewModel.getStoreInformationOutput
+            .bind { [weak self] store in
+                self?.storeInformationView.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
         
@@ -364,7 +384,36 @@ private extension HomeViewController {
             )
         }
         .disposed(by: disposeBag)
+    }
     
+    func bindLocationAuthorization() {
+        viewModel.locationAuthorizationStatusDeniedOutput
+            .bind { [weak self] _ in
+                guard let self = self else { return }
+                present(requestLocationServiceAlert, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.locationStatusNotDeterminedOutput
+            .bind { [weak self] _ in
+                self?.locationManager.requestWhenInUseAuthorization()
+                self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.locationStatusAuthorizedWhenInUse
+            .bind { [weak self] _ in
+                guard let location = self?.locationManager.location else { return }
+                let cameraUpdate = NMFCameraUpdate(
+                    scrollTo: NMGLatLng(
+                        lat: location.coordinate.latitude,
+                        lng: location.coordinate.longitude
+                    )
+                )
+                cameraUpdate.animation = .none
+                self?.mapView.mapView.moveCamera(cameraUpdate)
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindFilterButton(button: FilterButton, type: CertificationType) {
@@ -445,31 +494,6 @@ private extension HomeViewController {
 
 private extension HomeViewController {
     
-    func checkUserCurrentLocationAuthorization() {
-        switch locationManager.authorizationStatus {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-            locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-        case .authorizedWhenInUse:
-            guard let location = locationManager.location else { return }
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
-            cameraUpdate.animation = .none
-            mapView.mapView.moveCamera(cameraUpdate)
-        default:
-            break
-        }
-    }
-    
-    func checkLocationService() {
-        if locationManager.authorizationStatus == .denied {
-            present(requestLocationServiceAlert, animated: true)
-        }
-    }
-    
-}
-
-private extension HomeViewController {
-    
     func addUIComponents() {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
@@ -524,7 +548,11 @@ private extension HomeViewController {
 extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkUserCurrentLocationAuthorization()
+        viewModel.action(
+            input: .checkLocationAuthorization(
+                status: locationManager.authorizationStatus
+            )
+        )
     }
     
 }
