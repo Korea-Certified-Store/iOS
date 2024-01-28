@@ -124,30 +124,9 @@ final class HomeViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                let northWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-                let southWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
-                let southEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-                let northEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
                 viewModel.action(
                     input: .refresh(
-                        requestLocation: RequestLocation(
-                            northWest: Location(
-                                longitude: northWestPoint.lng,
-                                latitude: northWestPoint.lat
-                            ),
-                            southWest: Location(
-                                longitude: southWestPoint.lng,
-                                latitude: southWestPoint.lat
-                            ),
-                            southEast: Location(
-                                longitude: southEastPoint.lng,
-                                latitude: southEastPoint.lat
-                            ),
-                            northEast: Location(
-                                longitude: northEastPoint.lng,
-                                latitude: northEastPoint.lat
-                            )
-                        )
+                        requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
                     )
                 )
                 refreshButton.isHidden = true
@@ -496,6 +475,33 @@ private extension HomeViewController {
             self?.dimView.backgroundColor = .clear
         }
     }
+    
+    func makeRequestLocation(projection: NMFProjection) -> RequestLocation {
+        let northWestPoint = projection.latlng(from: CGPoint(x: 0, y: 0))
+        let southWestPoint = projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
+        let southEastPoint = projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+        let northEastPoint = projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+        
+        return RequestLocation(
+            northWest: Location(
+                longitude: northWestPoint.lng,
+                latitude: northWestPoint.lat
+            ),
+            southWest: Location(
+                longitude: southWestPoint.lng,
+                latitude: southWestPoint.lat
+            ),
+            southEast: Location(
+                longitude: southEastPoint.lng,
+                latitude: southEastPoint.lat
+            ),
+            northEast: Location(
+                longitude: northEastPoint.lng,
+                latitude: northEastPoint.lat
+            )
+        )
+    }
+    
 }
 
 private extension HomeViewController {
@@ -581,31 +587,9 @@ extension HomeViewController: NMFMapViewCameraDelegate {
                         status: locationManager.authorizationStatus
                     )
             )
-            
-            let northWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-            let southWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
-            let southEastPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-            let northEastPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
             viewModel.action(
                 input: .refresh(
-                    requestLocation: RequestLocation(
-                        northWest: Location(
-                            longitude: northWestPoint.lng,
-                            latitude: northWestPoint.lat
-                        ),
-                        southWest: Location(
-                            longitude: southWestPoint.lng,
-                            latitude: southWestPoint.lat
-                        ),
-                        southEast: Location(
-                            longitude: southEastPoint.lng,
-                            latitude: southEastPoint.lat
-                        ),
-                        northEast: Location(
-                            longitude: northEastPoint.lng,
-                            latitude: northEastPoint.lat
-                        )
-                    )
+                    requestLocation: makeRequestLocation(projection: mapView.projection)
                 )
             )
             refreshButton.isHidden = true
