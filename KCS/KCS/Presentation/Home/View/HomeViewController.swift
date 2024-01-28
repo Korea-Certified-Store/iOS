@@ -328,6 +328,12 @@ private extension HomeViewController {
                 self?.mapView.mapView.positionMode = positionMode
             }
             .disposed(by: disposeBag)
+        
+        viewModel.locationButtonImageNameOutput
+            .bind { [weak self] imageName in
+                self?.locationButton.setImage(UIImage(named: imageName), for: .normal)
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindStoreInformationView() {
@@ -570,14 +576,11 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         if reason == NMFMapChangedByDeveloper {
             mapView.positionMode = .direction
             
-            switch locationManager.authorizationStatus {
-            case .denied, .restricted, .notDetermined:
-                locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-            case .authorizedWhenInUse:
-                locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
-            default:
-                break
-            }
+            viewModel.action(input: 
+                    .checkLocationAuthorizationWhenCameraDidChange(
+                        status: locationManager.authorizationStatus
+                    )
+            )
             
             let northWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
             let southWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))

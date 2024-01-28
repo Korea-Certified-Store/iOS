@@ -13,9 +13,9 @@ extension NMFMyPositionMode {
     func getImageName() -> String? {
         switch self {
         case .direction:
-            return "LocationButtonCompass"
-        case .compass, .normal:
             return "LocationButtonNormal"
+        case .compass, .normal:
+            return "LocationButtonCompass"
         default:
             return nil
         }

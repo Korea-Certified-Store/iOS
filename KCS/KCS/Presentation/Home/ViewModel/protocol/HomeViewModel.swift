@@ -40,6 +40,7 @@ enum HomeViewModelInputCase {
     case changeState(state: HomeViewState)
     case setMarker(store: Store, certificationType: CertificationType)
     case checkLocationAuthorization(status: CLAuthorizationStatus)
+    case checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus)
     
 }
 
@@ -54,6 +55,7 @@ protocol HomeViewModelOutput {
     var getStoreInformationOutput: PublishRelay<Store> { get }
     var refreshOutput: PublishRelay<[FilteredStores]> { get }
     var locationButtonOutput: PublishRelay<NMFMyPositionMode> { get }
+    var locationButtonImageNameOutput: PublishRelay<String> { get }
     var storeInformationViewHeightOutput: PublishRelay<StoreInformationViewConstraints> { get }
     var summaryToDetailOutput: PublishRelay<Void> { get }
     var detailToSummaryOutput: PublishRelay<Void> { get }
