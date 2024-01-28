@@ -12,47 +12,31 @@ import RxSwift
 final class Marker: NMFMarker {
     
     private lazy var unselectedGlobalZIndex: Int = self.globalZIndex
-    private let selectImage: UIImage
-    private let deselectImage: UIImage
+    private let selectImage: NMFOverlayImage
+    private let deselectImage: NMFOverlayImage
 
     init(position: NMGLatLng? = nil, selectImage: UIImage, deselectImage: UIImage) {
-        self.selectImage = selectImage
-        self.deselectImage = deselectImage
+        self.selectImage = NMFOverlayImage(image: selectImage)
+        self.deselectImage = NMFOverlayImage(image: deselectImage)
         super.init()
         if let position = position {
             self.position = position
         }
-//        setUI(type: certificationType)
+        self.iconImage = self.deselectImage
     }
     
 }
 
-private extension Marker {
+extension Marker {
     
-//    func setUI(type: CertificationType) {
-//        var icon = NMFOverlayImage()
-//        if isSelected {
-//            switch type {
-//            case .goodPrice:
-//                icon = NMFOverlayImage(image: UIImage.markerGoodPriceSelected)
-//            case .exemplary:
-//                icon = NMFOverlayImage(image: UIImage.markerExemplarySelected)
-//            case .safe:
-//                icon = NMFOverlayImage(image: UIImage.markerSafeSelected)
-//            }
-//            self.globalZIndex = 250000
-//        } else {
-//            switch type {
-//            case .goodPrice:
-//                icon = NMFOverlayImage(image: UIImage.markerGoodPriceNormal)
-//            case .exemplary:
-//                icon = NMFOverlayImage(image: UIImage.markerExemplaryNormal)
-//            case .safe:
-//                icon = NMFOverlayImage(image: UIImage.markerSafeNormal)
-//            }
-//            self.globalZIndex = unselectedGlobalZIndex
-//        }
-//        self.iconImage = icon
-//    }
+    func select() {
+        self.iconImage = selectImage
+        self.globalZIndex = 250000
+    }
+    
+    func deselect() {
+        self.iconImage = deselectImage
+        self.globalZIndex = unselectedGlobalZIndex
+    }
 
 }

@@ -380,13 +380,6 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
     }
 
-//    func setMarker(marker: Marker, tag: UInt) {
-//        marker.tag = tag
-//        marker.mapView = mapView.mapView
-//        markerTouchHandler(marker: marker)
-//        markers.append(marker)
-//    }
-
 }
 
 private extension HomeViewController {
@@ -396,11 +389,14 @@ private extension HomeViewController {
             
             if let clickedMarker = self?.clickedMarker {
                 if clickedMarker == marker { return true }
+                clickedMarker.deselect()
                 self?.storeInformationViewDismiss()
             }
+            
             self?.viewModel.action(
                 input: .markerTapped(tag: marker.tag)
             )
+            marker.select()
             self?.clickedMarker = marker
             
             return true
@@ -408,6 +404,7 @@ private extension HomeViewController {
     }
     
     func storeInformationViewDismiss() {
+        clickedMarker?.deselect()
         clickedMarker = nil
         setStoreInformationConstraints(
             heightConstraint: 0,
