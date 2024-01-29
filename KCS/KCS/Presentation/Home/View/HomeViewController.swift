@@ -117,18 +117,15 @@ final class HomeViewController: UIViewController {
         return alertController
     }()
     
-    private let animationObservable = PublishRelay<Void>()
-    
     private lazy var refreshButton: RefreshButton = {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.isHidden = true
         button.rx.tap
             .observe(on: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
-                // TODO: 애니메이션 블럭
-                animationObservable.accept(())
+                button.animationFire()
+                
                 return makeRequestLocation(projection: mapView.mapView.projection)
             }
             .observe(on: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
@@ -149,7 +146,7 @@ final class HomeViewController: UIViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
-        view.isUserInteractionEnabled = true
+        view.isUserInteractionEnabled = false
         view.alpha = 0.4
         
         view.rx.tapGesture()
@@ -252,7 +249,6 @@ final class HomeViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         bind()
-        unDimmedView()
         
         viewModel.action(
             input: .checkLocationAuthorization(
@@ -288,6 +284,7 @@ private extension HomeViewController {
                         )
                     }
                 }
+                refreshButton.animationInvalidate()
                 storeInformationViewDismiss()
             }
             .disposed(by: disposeBag)
@@ -297,14 +294,12 @@ private extension HomeViewController {
         viewModel.setMarkerOutput
             .bind { [weak self] content in
                 guard let selectImage = UIImage(named: content.selectImageName),
-                let deselectImage = UIImage(named: content.deselectImageName) else { return }
+                      let deselectImage = UIImage(named: content.deselectImageName) else { return }
                 let marker = Marker(position: content.location.toMapLocation(), selectImage: selectImage, deselectImage: deselectImage)
                 marker.tag = UInt(content.tag)
                 marker.mapView = self?.mapView.mapView
                 self?.markerTouchHandler(marker: marker)
                 self?.markers.append(marker)
-                // TODO: 애니메이션 종료 및 isHidden = true
-                self?.refreshButton.layer.removeAllAnimations()
             }
             .disposed(by: disposeBag)
     }
@@ -373,7 +368,6 @@ private extension HomeViewController {
                 animated: true
             )
             self?.storeInformationView.changeToSummary()
-            self?.unDimmedView()
             self?.viewModel.action(
                 input: .changeState(state: .summary)
             )
@@ -423,7 +417,7 @@ private extension HomeViewController {
             .bind(to: button.rx.isSelected)
             .disposed(by: disposeBag)
     }
-
+    
 }
 
 private extension HomeViewController {
@@ -459,6 +453,7 @@ private extension HomeViewController {
         viewModel.action(
             input: .changeState(state: .normal)
         )
+        unDimmedView()
     }
     
     func setStoreInformationConstraints(heightConstraint: CGFloat, bottomConstraint: CGFloat, animated: Bool = false) {
@@ -554,6 +549,8 @@ private extension HomeViewController {
         
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            refreshButton.widthAnchor.constraint(equalToConstant: 110),
+            refreshButton.heightAnchor.constraint(equalToConstant: 35),
             refreshButtonBottomConstraint
         ])
         
@@ -592,19 +589,17 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         if reason == NMFMapChangedByDeveloper {
             mapView.positionMode = .direction
             
-            viewModel.action(input: 
+            viewModel.action(input:
                     .checkLocationAuthorizationWhenCameraDidChange(
                         status: locationManager.authorizationStatus
                     )
             )
+            refreshButton.animationFire()
             viewModel.action(
                 input: .refresh(
                     requestLocation: makeRequestLocation(projection: mapView.projection)
                 )
             )
-//            refreshButton.isHidden = true
-            // TODO: 로딩 애니메이션 시작
-            animationObservable.accept(())
         }
     }
     
@@ -614,7 +609,6 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
-        unDimmedView()
     }
     
 }
