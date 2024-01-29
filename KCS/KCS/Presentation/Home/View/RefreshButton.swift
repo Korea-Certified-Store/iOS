@@ -23,7 +23,7 @@ final class RefreshButton: UIButton {
     
     func animationFire() {
         isUserInteractionEnabled = false
-        var runCount = 0
+        var imageIndex = 0
         var config = configuration
         config?.attributedTitle = nil
         animationTimer?.invalidate()
@@ -36,10 +36,10 @@ final class RefreshButton: UIButton {
                 UIImage.refreshAnimation4,
                 UIImage.refreshAnimation5
             ]
-            config?.image = images[runCount]
+            config?.image = images[imageIndex]
             self.configuration = config
             
-            runCount = (runCount + 1) % 5
+            imageIndex = (imageIndex + 1) % 5
         }
     }
     
