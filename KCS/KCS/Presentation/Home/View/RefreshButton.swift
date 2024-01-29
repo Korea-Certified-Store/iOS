@@ -9,6 +9,8 @@ import UIKit
 
 final class RefreshButton: UIButton {
 
+    private var animationTimer: Timer?
+    
     init() {
         super.init(frame: .zero)
         setUI()
@@ -17,6 +19,39 @@ final class RefreshButton: UIButton {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func animationFire() {
+        isUserInteractionEnabled = false
+        var runCount = 0
+        var config = configuration
+        config?.attributedTitle = nil
+        animationTimer?.invalidate()
+        animationTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            let images = [
+                UIImage.refreshAnimation1,
+                UIImage.refreshAnimation2,
+                UIImage.refreshAnimation3,
+                UIImage.refreshAnimation4,
+                UIImage.refreshAnimation5
+            ]
+            config?.image = images[runCount]
+            self.configuration = config
+            
+            runCount = (runCount + 1) % 5
+        }
+    }
+    
+    func animationInvalidate() {
+        isUserInteractionEnabled = true
+        isHidden = true
+        animationTimer?.invalidate()
+        
+        var titleAttribute = AttributedString("현 지도에서 검색")
+        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
+        configuration?.attributedTitle = titleAttribute
+        configuration?.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)
     }
     
 }
