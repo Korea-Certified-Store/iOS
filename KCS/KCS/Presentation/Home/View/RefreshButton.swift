@@ -11,6 +11,13 @@ final class RefreshButton: UIButton {
 
     private var animationTimer: Timer?
     
+    private let originalTitle: AttributedString = {
+        var titleAttribute = AttributedString("현 지도에서 검색")
+        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
+        
+        return titleAttribute
+    }()
+    
     init() {
         super.init(frame: .zero)
         setUI()
@@ -48,9 +55,7 @@ final class RefreshButton: UIButton {
         isHidden = true
         animationTimer?.invalidate()
         
-        var titleAttribute = AttributedString("현 지도에서 검색")
-        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
-        configuration?.attributedTitle = titleAttribute
+        configuration?.attributedTitle = originalTitle
         configuration?.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)
     }
     
@@ -59,11 +64,8 @@ final class RefreshButton: UIButton {
 private extension RefreshButton {
     
     func setUI() {
-        var titleAttribute = AttributedString("현 지도에서 검색")
-        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
-        
         var config = UIButton.Configuration.filled()
-        config.attributedTitle = titleAttribute
+        config.attributedTitle = originalTitle
         config.baseBackgroundColor = .white
         config.baseForegroundColor = .black
         config.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)
