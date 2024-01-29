@@ -121,7 +121,6 @@ final class HomeViewController: UIViewController {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
-            .observe(on: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
                 button.animationFire()
