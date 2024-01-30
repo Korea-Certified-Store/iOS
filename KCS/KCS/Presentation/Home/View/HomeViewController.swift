@@ -530,10 +530,11 @@ private extension HomeViewController {
     func presentErrorAlert(error: ErrorAlertMessage) {
         let alertController = UIAlertController(title: nil, message: error.errorDescription, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "확인", style: .default))
-        
-        present(alertController, animated: true)
+        if !(presentedViewController is UIAlertController) {
+            present(alertController, animated: true)
+        }
     }
-    
+        
 }
 
 private extension HomeViewController {

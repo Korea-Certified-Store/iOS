@@ -11,8 +11,8 @@ enum ErrorAlertMessage: LocalizedError {
     
     case server
     case data
-    
-    var errorDescription: String {
+     
+    var errorDescription: String? {
         switch self {
         case .server:
             return "서버와의 통신이 원활하지 않습니다"
