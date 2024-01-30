@@ -17,7 +17,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let getStoreInformationUseCase: GetStoreInformationUseCase
     
     let getStoreInformationOutput = PublishRelay<Store>()
-    let refreshOutput = PublishRelay<[FilteredStores]>()
+    let refreshOutput = PublishRelay<Void>()
     let locationButtonOutput = PublishRelay<NMFMyPositionMode>()
     let locationButtonImageNameOutput = PublishRelay<String>()
     let storeInformationViewHeightOutput = PublishRelay<StoreInformationViewConstraints>()
@@ -28,6 +28,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
     let locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
+    let applyFiltersOutput = PublishRelay<[FilteredStores]>()
     
     var dependency: HomeDependency
     
@@ -90,6 +91,7 @@ private extension HomeViewModelImpl {
             onNext: { [weak self] stores in
                 guard let self = self else { return }
                 applyFilters(stores: stores, filters: getActivatedTypes())
+                refreshOutput.accept(())
             },
             onError: { [weak self] error in
                 if error is StoreRepositoryError {
@@ -151,7 +153,7 @@ private extension HomeViewModelImpl {
                 }
             }
         }
-        refreshOutput.accept([goodPriceStores, exemplaryStores, safeStores])
+        applyFiltersOutput.accept([goodPriceStores, exemplaryStores, safeStores])
     }
     
     func markerTapped(tag: UInt) {

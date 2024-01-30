@@ -262,6 +262,7 @@ private extension HomeViewController {
     
     func bind() {
         bindRefresh()
+        bindApplyFilters()
         bindSetMarker()
         bindLocationButton()
         bindLocationAuthorization()
@@ -271,6 +272,15 @@ private extension HomeViewController {
     
     func bindRefresh() {
         viewModel.refreshOutput
+            .bind { [weak self] _ in
+                self?.refreshButton.animationInvalidate()
+                self?.storeInformationViewDismiss()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindApplyFilters() {
+        viewModel.applyFiltersOutput
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
@@ -284,8 +294,6 @@ private extension HomeViewController {
                         )
                     }
                 }
-                refreshButton.animationInvalidate()
-                storeInformationViewDismiss()
             }
             .disposed(by: disposeBag)
     }
