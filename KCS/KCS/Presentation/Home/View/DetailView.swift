@@ -16,7 +16,7 @@ final class DetailView: UIView {
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.pretendard(size: 24, weight: .bold)
+        label.font = UIFont.pretendard(size: 22, weight: .bold)
         label.textColor = UIColor.primary2
         label.numberOfLines = 2
         
@@ -175,7 +175,7 @@ private extension DetailView {
                 category.text = detailViewContents.category
                 detailViewContents.certificationTypes
                     .map({
-                        CertificationLabel(certificationType: $0, fontSize: 11)
+                        CertificationLabel(certificationType: $0)
                     })
                     .forEach { [weak self] in
                         self?.certificationStackView.addArrangedSubview($0)
@@ -241,16 +241,17 @@ private extension DetailView {
     func storeRepresentConstraints() {
         NSLayoutConstraint.activate([
             storeTitle.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            storeTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+            storeTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            storeTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
         
         NSLayoutConstraint.activate([
-            category.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 8),
+            category.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 4),
             category.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            certificationStackView.topAnchor.constraint(equalTo: category.bottomAnchor, constant: 11),
+            certificationStackView.topAnchor.constraint(equalTo: category.bottomAnchor, constant: 9),
             certificationStackView.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         

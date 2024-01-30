@@ -11,7 +11,7 @@ import RxSwift
 
 final class Marker: NMFMarker {
     
-    private lazy var unselectedGlobalZIndex: Int = self.globalZIndex
+    private var unselectedGlobalZIndex: Int?
     private let selectImage: NMFOverlayImage
     private let deselectImage: NMFOverlayImage
 
@@ -19,6 +19,7 @@ final class Marker: NMFMarker {
         self.selectImage = NMFOverlayImage(image: selectImage)
         self.deselectImage = NMFOverlayImage(image: deselectImage)
         super.init()
+        self.unselectedGlobalZIndex = globalZIndex
         if let position = position {
             self.position = position
         }
@@ -36,7 +37,8 @@ extension Marker {
     
     func deselect() {
         self.iconImage = deselectImage
-        self.globalZIndex = unselectedGlobalZIndex
+        guard let zIndex = unselectedGlobalZIndex else { return }
+        self.globalZIndex = zIndex
     }
 
 }
