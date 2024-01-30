@@ -36,20 +36,25 @@ final class SummaryViewModelImpl: SummaryViewModel {
 private extension SummaryViewModelImpl {
     
     func setUIContents(store: Store) {
-        let openClosedContent = getOpenClosedUseCase.execute(openingHours: store.openingHour)
-        fetchThumbnailImage(localPhotos: store.localPhotos)
-        if let phoneNumber = store.phoneNumber {
-            callButtonOutput.accept(phoneNumber)
-        }
-        
-        setUIContentsOutput.accept(
-            SummaryViewContents(
-                storeTitle: store.title,
-                category: store.category,
-                certificationTypes: store.certificationTypes,
-                openClosedContent: openClosedContent
+        do {
+            let openClosedContent = try getOpenClosedUseCase.execute(openingHours: store.openingHour)
+            
+            fetchThumbnailImage(localPhotos: store.localPhotos)
+            if let phoneNumber = store.phoneNumber {
+                callButtonOutput.accept(phoneNumber)
+            }
+            
+            setUIContentsOutput.accept(
+                SummaryViewContents(
+                    storeTitle: store.title,
+                    category: store.category,
+                    certificationTypes: store.certificationTypes,
+                    openClosedContent: openClosedContent
+                )
             )
-        )
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     func fetchThumbnailImage(localPhotos: [String]) {

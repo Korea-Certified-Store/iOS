@@ -36,17 +36,21 @@ private extension DetailViewModelImpl {
     
     func setUIContents(store: Store) {
         fetchThumbnailImage(localPhotos: store.localPhotos)
-        setUIContentsOutput.accept(
-            DetailViewContents(
-                storeTitle: store.title,
-                category: store.category,
-                certificationTypes: store.certificationTypes,
-                address: store.address,
-                phoneNumber: store.phoneNumber ?? "전화번호 정보 없음",
-                openClosedContent: getOpenClosedUseCase.execute(openingHours: store.openingHour),
-                detailOpeningHour: detailOpeningHour(openingHours: store.openingHour)
+        do {
+            setUIContentsOutput.accept(
+                DetailViewContents(
+                    storeTitle: store.title,
+                    category: store.category,
+                    certificationTypes: store.certificationTypes,
+                    address: store.address,
+                    phoneNumber: store.phoneNumber ?? "전화번호 정보 없음",
+                    openClosedContent: try getOpenClosedUseCase.execute(openingHours: store.openingHour),
+                    detailOpeningHour: detailOpeningHour(openingHours: store.openingHour)
+                )
             )
-        )
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     func fetchThumbnailImage(localPhotos: [String]) {

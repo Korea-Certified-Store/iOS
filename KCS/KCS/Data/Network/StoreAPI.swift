@@ -16,36 +16,31 @@ enum StoreAPI {
 }
 
 extension StoreAPI: Router, URLRequestConvertible {
-
-    public var baseURL: String {
+    
+    var baseURL: String? {
         switch self {
         case .getStores:
-            do {
-                return try getURL(type: .develop)
-            } catch {
-                print(error.localizedDescription)
-                return ""
-            }
+            return getURL(type: .develop)
         case .getImage(let url):
             return url
         }
     }
     
-    public var path: String {
+    var path: String {
         switch self {
         case .getStores, .getImage:
             return ""
         }
     }
     
-    public var method: HTTPMethod {
+    var method: HTTPMethod {
         switch self {
         case .getStores, .getImage:
             return .get
         }
     }
     
-    public var headers: [String: String] {
+    var headers: [String: String] {
         switch self {
         case .getStores:
             return [
@@ -56,13 +51,13 @@ extension StoreAPI: Router, URLRequestConvertible {
         }
     }
     
-    public var parameters: [String: Any]? {
+    var parameters: [String: Any]? {
         do {
             switch self {
             case let .getStores(location):
                 return try location.asDictionary()
             case .getImage:
-                return nil
+                return [:]
             }
         } catch let error {
             print(error.localizedDescription)
@@ -72,7 +67,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     
     /// 파라미터로 보내야할 것이 있다면, URLEncoding.default
     /// 바디에 담아서 보내야할 것이 있다면, JSONEncoding.default
-    public var encoding: ParameterEncoding? {
+    var encoding: ParameterEncoding? {
         switch self {
         case .getStores:
             return URLEncoding.default
@@ -81,8 +76,9 @@ extension StoreAPI: Router, URLRequestConvertible {
         }
     }
     
-    public func asURLRequest() throws -> URLRequest {
-        guard let url = URL(string: baseURL + path) else {
+    func asURLRequest() throws -> URLRequest {
+        guard let base = baseURL,
+              let url = URL(string: base + path) else {
             throw NetworkError.wrongURL
         }
         var request = URLRequest(url: url)
@@ -108,13 +104,13 @@ private extension StoreAPI {
         
     }
     
-    func getURL(type: URLType) throws -> String {
+    func getURL(type: URLType) -> String? {
         switch type {
         case .develop:
-            guard let url = Bundle.main.object(forInfoDictionaryKey: "DEV_SERVER_URL") as? String else { throw NetworkError.wrongURL }
+            guard let url = Bundle.main.object(forInfoDictionaryKey: "DEV_SERVER_URL") as? String else { return nil }
             return url
         case .product:
-            guard let url = Bundle.main.object(forInfoDictionaryKey: "PROD_SERVER_URL") as? String else { throw NetworkError.wrongURL }
+            guard let url = Bundle.main.object(forInfoDictionaryKey: "PROD_SERVER_URL") as? String else { return nil }
             return url
         }
     }
