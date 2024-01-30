@@ -59,7 +59,7 @@ extension StoreAPI: Router, URLRequestConvertible {
             case .getImage:
                 return [:]
             }
-        } catch let error {
+        } catch {
             print(error.localizedDescription)
             return nil
         }
@@ -87,7 +87,11 @@ extension StoreAPI: Router, URLRequestConvertible {
         request.headers = HTTPHeaders(headers)
         
         if let encoding = encoding {
-            return try encoding.encode(request, with: parameters)
+            if let parameters = parameters {
+                return try encoding.encode(request, with: parameters)
+            } else {
+                throw NetworkError.wrongParameters
+            }
         }
         
         return request

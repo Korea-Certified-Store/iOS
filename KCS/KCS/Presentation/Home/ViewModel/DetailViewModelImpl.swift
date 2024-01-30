@@ -48,7 +48,7 @@ private extension DetailViewModelImpl {
                     detailOpeningHour: detailOpeningHour(openingHours: store.openingHour)
                 )
             )
-        } catch let error {
+        } catch {
             print(error.localizedDescription)
         }
     }

@@ -52,7 +52,7 @@ private extension SummaryViewModelImpl {
                     openClosedContent: openClosedContent
                 )
             )
-        } catch let error {
+        } catch {
             print(error.localizedDescription)
         }
     }

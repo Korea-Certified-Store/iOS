@@ -40,7 +40,7 @@ final class StoreRepositoryImpl: StoreRepository {
                     case .failure(let error):
                         throw error
                     }
-                } catch let error {
+                } catch {
                     observer.onError(error)
                 }
             }
