@@ -27,7 +27,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
     let locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
-    let errorAlertOutput = PublishRelay<String>()
+    let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     
     var dependency: HomeDependency
     
@@ -50,11 +50,7 @@ final class HomeViewModelImpl: HomeViewModel {
         case .filterButtonTapped(let filter):
             filterButtonTapped(filter: filter)
         case .markerTapped(let tag):
-            do {
-                try markerTapped(tag: 10)
-            } catch {
-                errorAlertOutput.accept("알 수 없는 오류가 발생했습니다.")
-            }
+            markerTapped(tag: tag)
         case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
             locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
         case .setStoreInformationOriginalHeight(let height):
@@ -95,8 +91,12 @@ private extension HomeViewModelImpl {
                 guard let self = self else { return }
                 applyFilters(stores: stores, filters: getActivatedTypes())
             },
-            onError: { error in
-                print(error.localizedDescription)
+            onError: { [weak self] error in
+                if error is StoreRepositoryError {
+                    self?.errorAlertOutput.accept(.data)
+                } else {
+                    self?.errorAlertOutput.accept(.server)
+                }
             }
         )
         .disposed(by: dependency.disposeBag)
@@ -154,10 +154,14 @@ private extension HomeViewModelImpl {
         refreshOutput.accept([goodPriceStores, exemplaryStores, safeStores])
     }
     
-    func markerTapped(tag: UInt) throws {
-        getStoreInformationOutput.accept(
-            try getStoreInformationUseCase.execute(tag: tag)
-        )
+    func markerTapped(tag: UInt) {
+        do {
+            getStoreInformationOutput.accept(
+                try getStoreInformationUseCase.execute(tag: tag)
+            )
+        } catch {
+            errorAlertOutput.accept(.data)
+        }
     }
     
     func setMarker(store: Store, certificationType: CertificationType) {

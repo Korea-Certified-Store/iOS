@@ -420,11 +420,20 @@ private extension HomeViewController {
     
     func bindErrorAlert() {
         viewModel.errorAlertOutput
-            .bind { [weak self] message in
-                let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "확인", style: .default))
-
-                self?.present(alertController, animated: true)
+            .bind { [weak self] error in
+                self?.presentErrorAlert(error: error)
+            }
+            .disposed(by: disposeBag)
+        
+        summaryInformationViewModel.errorAlertOutput
+            .bind { [weak self] error in
+                self?.presentErrorAlert(error: error)
+            }
+            .disposed(by: disposeBag)
+        
+        detailViewModel.errorAlertOutput
+            .bind { [weak self] error in
+                self?.presentErrorAlert(error: error)
             }
             .disposed(by: disposeBag)
     }
@@ -516,6 +525,13 @@ private extension HomeViewController {
                 latitude: northEastPoint.lat
             )
         )
+    }
+    
+    func presentErrorAlert(error: ErrorAlertMessage) {
+        let alertController = UIAlertController(title: nil, message: error.errorDescription, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "확인", style: .default))
+        
+        present(alertController, animated: true)
     }
     
 }

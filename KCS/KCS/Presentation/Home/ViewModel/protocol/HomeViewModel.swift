@@ -63,6 +63,6 @@ protocol HomeViewModelOutput {
     var locationAuthorizationStatusDeniedOutput: PublishRelay<Void> { get }
     var locationStatusNotDeterminedOutput: PublishRelay<Void> { get }
     var locationStatusAuthorizedWhenInUse: PublishRelay<Void> { get }
-    var errorAlertOutput: PublishRelay<String> { get }
+    var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
     
 }

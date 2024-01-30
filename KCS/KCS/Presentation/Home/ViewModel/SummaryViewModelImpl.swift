@@ -15,9 +15,10 @@ final class SummaryViewModelImpl: SummaryViewModel {
     let getOpenClosedUseCase: GetOpenClosedUseCase
     let fetchImageUseCase: FetchImageUseCase
     
-    var setUIContentsOutput = PublishRelay<SummaryViewContents>()
-    var thumbnailImageOutput = PublishRelay<Data>()
-    var callButtonOutput = PublishRelay<String>()
+    let setUIContentsOutput = PublishRelay<SummaryViewContents>()
+    let thumbnailImageOutput = PublishRelay<Data>()
+    let callButtonOutput = PublishRelay<String>()
+    let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     
     init(getOpenClosedUseCase: GetOpenClosedUseCase, fetchImageUseCase: FetchImageUseCase) {
         self.getOpenClosedUseCase = getOpenClosedUseCase
@@ -53,7 +54,7 @@ private extension SummaryViewModelImpl {
                 )
             )
         } catch {
-            print(error.localizedDescription)
+            errorAlertOutput.accept(.data)
         }
     }
     
@@ -64,8 +65,8 @@ private extension SummaryViewModelImpl {
                 onNext: { [weak self] imageData in
                     self?.thumbnailImageOutput.accept(imageData)
                 },
-                onError: { error in
-                    print(error.localizedDescription)
+                onError: { [weak self] _ in
+                    self?.errorAlertOutput.accept(.server)
                 }
             )
             .disposed(by: disposeBag)

@@ -15,8 +15,9 @@ final class DetailViewModelImpl: DetailViewModel {
     let getOpenClosedUseCase: GetOpenClosedUseCase
     let fetchImageUseCase: FetchImageUseCase
     
-    var setUIContentsOutput = PublishRelay<DetailViewContents>()
-    var thumbnailImageOutput = PublishRelay<Data>()
+    let setUIContentsOutput = PublishRelay<DetailViewContents>()
+    let thumbnailImageOutput = PublishRelay<Data>()
+    let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     
     init(getOpenClosedUseCase: GetOpenClosedUseCase, fetchImageUseCase: FetchImageUseCase) {
         self.getOpenClosedUseCase = getOpenClosedUseCase
@@ -49,7 +50,7 @@ private extension DetailViewModelImpl {
                 )
             )
         } catch {
-            print(error.localizedDescription)
+            errorAlertOutput.accept(.data)
         }
     }
     
@@ -60,8 +61,8 @@ private extension DetailViewModelImpl {
                 onNext: { [weak self] imageData in
                     self?.thumbnailImageOutput.accept(imageData)
                 },
-                onError: { error in
-                    print(error.localizedDescription)
+                onError: { [weak self] _ in
+                    self?.errorAlertOutput.accept(.server)
                 }
             )
             .disposed(by: disposeBag)
