@@ -31,5 +31,6 @@ protocol DetailViewModelOutput {
     
     var setUIContentsOutput: PublishRelay<DetailViewContents> { get }
     var thumbnailImageOutput: PublishRelay<Data> { get }
+    var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
     
 }

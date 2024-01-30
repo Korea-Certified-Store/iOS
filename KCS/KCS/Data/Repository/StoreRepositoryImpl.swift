@@ -31,16 +31,19 @@ final class StoreRepositoryImpl: StoreRepository {
                 neLat: requestLocation.northEast.latitude
             )))
             .responseDecodable(of: StoreResponse.self) { [weak self] response in
-                switch response.result {
-                case .success(let result):
-                    let resultStores = result.data.map { $0.toEntity() }
-                    self?.stores = resultStores
-                    observer.onNext(resultStores)
-                case .failure(let error):
+                do {
+                    switch response.result {
+                    case .success(let result):
+                        let resultStores = try result.data.map { try $0.toEntity() }
+                        self?.stores = resultStores
+                        observer.onNext(resultStores)
+                    case .failure(let error):
+                        throw error
+                    }
+                } catch {
                     observer.onError(error)
                 }
             }
-            
             return Disposables.create()
         }
     }
