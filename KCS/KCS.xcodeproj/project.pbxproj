@@ -91,7 +91,6 @@
 		A8ACB7ED2B59647400540BD1 /* OpeningHourError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */; };
 		A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */; };
 		A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */; };
-		A8AE4B192B62903100632355 /* OpeningHourViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B182B62903100632355 /* OpeningHourViewModel.swift */; };
 		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
 		AE60727C9A543E3D0F3A0279 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */; };
 		BBE1483137890D1D37D0E308 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3902FBE673069073F47D82 /* Pods_KCS.framework */; };
@@ -201,7 +200,6 @@
 		A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHourError.swift; sourceTree = "<group>"; };
 		A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCase.swift; sourceTree = "<group>"; };
-		A8AE4B182B62903100632355 /* OpeningHourViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHourViewModel.swift; sourceTree = "<group>"; };
 		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
 		D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -294,7 +292,6 @@
 				5977BE672B553C8300725C90 /* HomeDependency.swift */,
 				A8ACB7E12B594F7400540BD1 /* SummaryViewModelImpl.swift */,
 				592262272B6124C400CA5A11 /* DetailViewModelImpl.swift */,
-				A8AE4B182B62903100632355 /* OpeningHourViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -844,7 +841,6 @@
 				59C306CB2B50357900862625 /* Router.swift in Sources */,
 				A8ACB7E82B595A2100540BD1 /* GetOpenClosedUseCase.swift in Sources */,
 				59C306B62B50027300862625 /* Store.swift in Sources */,
-				A8AE4B192B62903100632355 /* OpeningHourViewModel.swift in Sources */,
 				59C306B42B50015500862625 /* APIResponse.swift in Sources */,
 				A8A7E0622B652F0D00D015E5 /* MarkerContents.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
