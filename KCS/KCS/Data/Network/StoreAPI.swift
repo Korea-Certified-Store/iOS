@@ -60,7 +60,6 @@ extension StoreAPI: Router, URLRequestConvertible {
                 return [:]
             }
         } catch {
-            print(error.localizedDescription)
             return nil
         }
     }

@@ -16,17 +16,18 @@ final class HomeViewModelImpl: HomeViewModel {
     let fetchStoresUseCase: FetchStoresUseCase
     let getStoreInformationUseCase: GetStoreInformationUseCase
     
-    var getStoreInformationOutput = PublishRelay<Store>()
-    var refreshOutput = PublishRelay<[FilteredStores]>()
-    var locationButtonOutput = PublishRelay<NMFMyPositionMode>()
-    var locationButtonImageNameOutput = PublishRelay<String>()
-    var storeInformationViewHeightOutput = PublishRelay<StoreInformationViewConstraints>()
-    var summaryToDetailOutput = PublishRelay<Void>()
-    var detailToSummaryOutput = PublishRelay<Void>()
-    var setMarkerOutput = PublishRelay<MarkerContents>()
-    var locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
-    var locationStatusNotDeterminedOutput = PublishRelay<Void>()
-    var locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
+    let getStoreInformationOutput = PublishRelay<Store>()
+    let refreshOutput = PublishRelay<[FilteredStores]>()
+    let locationButtonOutput = PublishRelay<NMFMyPositionMode>()
+    let locationButtonImageNameOutput = PublishRelay<String>()
+    let storeInformationViewHeightOutput = PublishRelay<StoreInformationViewConstraints>()
+    let summaryToDetailOutput = PublishRelay<Void>()
+    let detailToSummaryOutput = PublishRelay<Void>()
+    let setMarkerOutput = PublishRelay<MarkerContents>()
+    let locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
+    let locationStatusNotDeterminedOutput = PublishRelay<Void>()
+    let locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
+    let errorAlertOutput = PublishRelay<String>()
     
     var dependency: HomeDependency
     
@@ -43,39 +44,39 @@ final class HomeViewModelImpl: HomeViewModel {
     }
     
     func action(input: HomeViewModelInputCase) {
-        do {
-            switch input {
-            case .refresh(let requestLocation):
-                refresh(requestLocation: requestLocation)
-            case .filterButtonTapped(let filter):
-                filterButtonTapped(filter: filter)
-            case .markerTapped(let tag):
-                try markerTapped(tag: tag)
-            case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
-                locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
-            case .setStoreInformationOriginalHeight(let height):
-                setStoreInformationOriginalHeight(height: height)
-            case .storeInformationViewPanGestureChanged(let height):
-                storeInformationViewPanGestureChanged(height: height)
-            case .storeInformationViewPanGestureEnded(let height):
-                storeInformationViewPanGestureEnded(height: height)
-            case .storeInformationViewSwipe(let velocity):
-                storeInformationViewSwipe(velocity: velocity)
-            case .storeInformationViewTapGestureEnded:
-                storeInformationViewTapGestureEnded()
-            case .dimViewTapGestureEnded:
-                dimViewTapGestureEnded()
-            case .changeState(let state):
-                changeState(state: state)
-            case .setMarker(let store, let certificationType):
-                setMarker(store: store, certificationType: certificationType)
-            case .checkLocationAuthorization(let status):
-                checkLocationAuthorization(status: status)
-            case .checkLocationAuthorizationWhenCameraDidChange(let status):
-                checkLocationAuthorizationWhenCameraDidChange(status: status)
+        switch input {
+        case .refresh(let requestLocation):
+            refresh(requestLocation: requestLocation)
+        case .filterButtonTapped(let filter):
+            filterButtonTapped(filter: filter)
+        case .markerTapped(let tag):
+            do {
+                try markerTapped(tag: 10)
+            } catch {
+                errorAlertOutput.accept("알 수 없는 오류가 발생했습니다.")
             }
-        } catch {
-            print(error.localizedDescription)
+        case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
+            locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
+        case .setStoreInformationOriginalHeight(let height):
+            setStoreInformationOriginalHeight(height: height)
+        case .storeInformationViewPanGestureChanged(let height):
+            storeInformationViewPanGestureChanged(height: height)
+        case .storeInformationViewPanGestureEnded(let height):
+            storeInformationViewPanGestureEnded(height: height)
+        case .storeInformationViewSwipe(let velocity):
+            storeInformationViewSwipe(velocity: velocity)
+        case .storeInformationViewTapGestureEnded:
+            storeInformationViewTapGestureEnded()
+        case .dimViewTapGestureEnded:
+            dimViewTapGestureEnded()
+        case .changeState(let state):
+            changeState(state: state)
+        case .setMarker(let store, let certificationType):
+            setMarker(store: store, certificationType: certificationType)
+        case .checkLocationAuthorization(let status):
+            checkLocationAuthorization(status: status)
+        case .checkLocationAuthorizationWhenCameraDidChange(let status):
+            checkLocationAuthorizationWhenCameraDidChange(status: status)
         }
     }
     

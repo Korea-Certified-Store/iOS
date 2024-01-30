@@ -266,6 +266,7 @@ private extension HomeViewController {
         bindLocationButton()
         bindLocationAuthorization()
         bindStoreInformationView()
+        bindErrorAlert()
     }
     
     func bindRefresh() {
@@ -414,6 +415,17 @@ private extension HomeViewController {
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindErrorAlert() {
+        viewModel.errorAlertOutput
+            .bind { [weak self] message in
+                let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "확인", style: .default))
+
+                self?.present(alertController, animated: true)
+            }
             .disposed(by: disposeBag)
     }
     
