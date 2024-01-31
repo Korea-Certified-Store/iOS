@@ -13,6 +13,7 @@ final class StoreListViewController: UIViewController {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = 109
+        tableView.register(StoreTableViewCell.self, forCellReuseIdentifier: StoreTableViewCell.identifier)
         
         return tableView
     }()
@@ -43,7 +44,7 @@ final class StoreListViewController: UIViewController {
         bind()
     }
     
-    func updateList(stores: [Store]) { // 축적해서 와야 함
+    func updateList(stores: [Store]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Store>()
         snapshot.appendSections([.store])
         snapshot.appendItems(stores, toSection: Section.store)

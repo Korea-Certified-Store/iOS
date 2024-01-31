@@ -287,7 +287,7 @@ private extension HomeViewController {
         viewModel.applyFiltersOutput
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
-//                self.markers.forEach { $0.mapView = nil }
+                self.markers.forEach { $0.mapView = nil }
                 var stores: [Store] = []
                 filteredStores.forEach { filteredStore in
                     filteredStore.stores.forEach { [weak self] store in
@@ -425,7 +425,8 @@ private extension HomeViewController {
             .scan(false) { [weak self] (lastState, _) in
                 guard let self = self else { return lastState }
                 viewModel.action(
-                    input: .filterButtonTapped(activatedFilter: type)
+                    input: .filterButtonTapped(activatedFilter: type, fetchCount: 1)
+                    // TODO: fetchCount Dependency에서 처리
                 )
                 return !lastState
             }
