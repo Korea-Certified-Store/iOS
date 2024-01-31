@@ -34,6 +34,7 @@
 		598CC4D82B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */; };
 		598CC4DB2B5D344C0043D064 /* MockSuccessStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */; };
 		598CC4DD2B5D44940043D064 /* MockFailStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */; };
+		59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886252B6A3A02005750EF /* StoreListViewController.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -140,6 +141,7 @@
 		598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRefreshStoresUseCaseImplTests.swift; sourceTree = "<group>"; };
 		598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSuccessStoreRepository.swift; sourceTree = "<group>"; };
 		598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFailStoreRepository.swift; sourceTree = "<group>"; };
+		59B886252B6A3A02005750EF /* StoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewController.swift; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
 		59C306A82B4FF9AF00862625 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 		5986DCDF2B3892EB005AE43B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				59B886242B6A39E9005750EF /* StoreList */,
 				A890870B2B4EF8F900767225 /* Extension */,
 				5986DCEA2B392996005AE43B /* Home */,
 			);
@@ -402,6 +405,14 @@
 				598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */,
 			);
 			path = MockRepository;
+			sourceTree = "<group>";
+		};
+		59B886242B6A39E9005750EF /* StoreList */ = {
+			isa = PBXGroup;
+			children = (
+				59B886252B6A3A02005750EF /* StoreListViewController.swift */,
+			);
+			path = StoreList;
 			sourceTree = "<group>";
 		};
 		59C306A72B4FF98600862625 /* Repository */ = {
@@ -828,6 +839,7 @@
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A890870F2B4F836C00767225 /* SummaryInformationView.swift in Sources */,
 				A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */,
+				59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */,
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
 				595EE2A52B693DE700CC01CE /* ErrorAlertMessage.swift in Sources */,
 				A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */,
