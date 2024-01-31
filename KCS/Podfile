@@ -14,6 +14,8 @@ target 'KCS' do
   pod 'Alamofire'
   pod 'SwiftLint'
   pod 'NMapsMap'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
 
 post_install do |installer|
     installer.pods_project.targets.each do |target|
