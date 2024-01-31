@@ -35,6 +35,8 @@
 		598CC4DB2B5D344C0043D064 /* MockSuccessStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */; };
 		598CC4DD2B5D44940043D064 /* MockFailStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */; };
 		59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886252B6A3A02005750EF /* StoreListViewController.swift */; };
+		59B886292B6A3F1E005750EF /* StoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */; };
+		59B8862B2B6A3F7F005750EF /* UITableViewCell+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -142,6 +144,8 @@
 		598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSuccessStoreRepository.swift; sourceTree = "<group>"; };
 		598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFailStoreRepository.swift; sourceTree = "<group>"; };
 		59B886252B6A3A02005750EF /* StoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewController.swift; sourceTree = "<group>"; };
+		59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTableViewCell.swift; sourceTree = "<group>"; };
+		59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Identifier.swift"; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
 		59C306A82B4FF9AF00862625 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
@@ -358,9 +362,9 @@
 		5986DCDF2B3892EB005AE43B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				59B886242B6A39E9005750EF /* StoreList */,
 				A890870B2B4EF8F900767225 /* Extension */,
 				5986DCEA2B392996005AE43B /* Home */,
+				59B886242B6A39E9005750EF /* StoreList */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -410,9 +414,18 @@
 		59B886242B6A39E9005750EF /* StoreList */ = {
 			isa = PBXGroup;
 			children = (
-				59B886252B6A3A02005750EF /* StoreListViewController.swift */,
+				59B886272B6A3AF0005750EF /* View */,
 			);
 			path = StoreList;
+			sourceTree = "<group>";
+		};
+		59B886272B6A3AF0005750EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				59B886252B6A3A02005750EF /* StoreListViewController.swift */,
+				59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		59C306A72B4FF98600862625 /* Repository */ = {
@@ -525,6 +538,7 @@
 				A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */,
 				A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */,
 				A8A7E05F2B64E62200D015E5 /* NMFMyPosition+.swift */,
+				59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -867,8 +881,10 @@
 				A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */,
 				5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
+				59B8862B2B6A3F7F005750EF /* UITableViewCell+Identifier.swift in Sources */,
 				A81EFBD42B6019FD00D0C0D7 /* StoreInformationView.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
+				59B886292B6A3F1E005750EF /* StoreTableViewCell.swift in Sources */,
 				592262242B61203000CA5A11 /* DetailView.swift in Sources */,
 				A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */,
