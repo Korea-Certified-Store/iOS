@@ -5,14 +5,18 @@
 //  Created by 조성민 on 1/31/24.
 //
 
-import Foundation
+import RxRelay
 
 final class StoreListViewModelImpl: StoreListViewModel {
     
+    let refreshOutput = PublishRelay<[Store]>()
+    
     func action(input: StoreListViewModelInputCase) {
-        switch input {
-            
-        }
+        
     }
+    
+}
+
+private extension StoreListViewModelImpl {
     
 }

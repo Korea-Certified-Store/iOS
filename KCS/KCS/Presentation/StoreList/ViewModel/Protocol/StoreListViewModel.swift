@@ -5,7 +5,7 @@
 //  Created by 조성민 on 1/31/24.
 //
 
-import Foundation
+import RxRelay
 
 protocol StoreListViewModel: StoreListViewModelInput, StoreListViewModelOutput {
     
