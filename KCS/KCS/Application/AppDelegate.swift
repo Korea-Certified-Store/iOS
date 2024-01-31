@@ -7,15 +7,16 @@
 
 import UIKit
 import NMapsMap
+import Firebase
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         if let id = Bundle.main.object(forInfoDictionaryKey: "NMAP_CLIENT_ID") as? String {
             NMFAuthManager.shared().clientId = id
         }
+        FirebaseApp.configure()
         
         return true
     }
