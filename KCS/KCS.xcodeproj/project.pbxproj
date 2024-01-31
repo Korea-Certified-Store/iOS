@@ -37,6 +37,8 @@
 		59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886252B6A3A02005750EF /* StoreListViewController.swift */; };
 		59B886292B6A3F1E005750EF /* StoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */; };
 		59B8862B2B6A3F7F005750EF /* UITableViewCell+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */; };
+		59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886452B6A5CDC005750EF /* StoreListViewModel.swift */; };
+		59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -146,6 +148,8 @@
 		59B886252B6A3A02005750EF /* StoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewController.swift; sourceTree = "<group>"; };
 		59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTableViewCell.swift; sourceTree = "<group>"; };
 		59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Identifier.swift"; sourceTree = "<group>"; };
+		59B886452B6A5CDC005750EF /* StoreListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewModel.swift; sourceTree = "<group>"; };
+		59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewModelImpl.swift; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
 		59C306A82B4FF9AF00862625 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
@@ -414,6 +418,7 @@
 		59B886242B6A39E9005750EF /* StoreList */ = {
 			isa = PBXGroup;
 			children = (
+				59B886432B6A5CB6005750EF /* ViewModel */,
 				59B886272B6A3AF0005750EF /* View */,
 			);
 			path = StoreList;
@@ -426,6 +431,23 @@
 				59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		59B886432B6A5CB6005750EF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				59B886442B6A5CB6005750EF /* Protocol */,
+				59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		59B886442B6A5CB6005750EF /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				59B886452B6A5CDC005750EF /* StoreListViewModel.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		59C306A72B4FF98600862625 /* Repository */ = {
@@ -849,6 +871,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */,
 				A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */,
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A890870F2B4F836C00767225 /* SummaryInformationView.swift in Sources */,
@@ -882,6 +905,7 @@
 				5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				59B8862B2B6A3F7F005750EF /* UITableViewCell+Identifier.swift in Sources */,
+				59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */,
 				A81EFBD42B6019FD00D0C0D7 /* StoreInformationView.swift in Sources */,
 				5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */,
 				59B886292B6A3F1E005750EF /* StoreTableViewCell.swift in Sources */,
