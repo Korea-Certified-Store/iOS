@@ -34,8 +34,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             detailViewModel: DetailViewModelImpl(
                 getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
                 fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
-            ), 
-            storeListViewController: StoreListViewController()
+            ),
+            storeListViewController: StoreListViewController(
+                viewModel: StoreListViewModelImpl(
+                    fetchImageUseCase: FetchImageUseCaseImpl(
+                        repository: ImageRepositoryImpl(cache: ImageCache())
+                    )
+                )
+            )
         )
         window?.makeKeyAndVisible()
     }

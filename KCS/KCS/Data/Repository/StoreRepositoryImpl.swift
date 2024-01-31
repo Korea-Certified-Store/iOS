@@ -16,6 +16,7 @@ final class StoreRepositoryImpl: StoreRepository {
         self.stores = stores
     }
     
+    // TODO: 현재 1차원 배열로 오는 로직으로 적용되어 있기 때문에, 2차원 배열 로직으로 변환해야 한다.
     func fetchRefreshStores(
         requestLocation: RequestLocation
     ) -> Observable<[Store]> {
@@ -33,10 +34,10 @@ final class StoreRepositoryImpl: StoreRepository {
             .responseDecodable(of: StoreResponse.self) { [weak self] response in
                 do {
                     switch response.result {
-                    case .success(let result): // 현재는 1차원 배열로 온다
+                    case .success(let result):
                         let resultStores = try result.data.map { try $0.toEntity() }
-                        self?.stores = [resultStores] // 2차원 배열로 올 경우 stores를 전체로 초기화 해야함
-                        observer.onNext(resultStores) // 그 후에 5개중 첫 인덱스의 stores를 보내줘야 함
+                        self?.stores = [resultStores]
+                        observer.onNext(resultStores)
                     case .failure(let error):
                         throw error
                     }

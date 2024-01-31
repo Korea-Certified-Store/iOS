@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RxSwift
 
 final class StoreListViewController: UIViewController {
+    
+    private let disposeBag = DisposeBag()
     
     private let storeTableView: UITableView = {
         let tableView = UITableView()
@@ -23,25 +26,26 @@ final class StoreListViewController: UIViewController {
         case store
     }
     
-    private let cellViewModel: StoreTableViewCellViewModel
-    
-    private lazy var dataSource: UITableViewDiffableDataSource<Section, Store> = {
-        return UITableViewDiffableDataSource<Section, Store>(tableView: storeTableView) { (tableView, indexPath, store) in
+    private lazy var dataSource: UITableViewDiffableDataSource<Section, StoreTableViewCellContents> = {
+        return UITableViewDiffableDataSource<Section, StoreTableViewCellContents>(
+            tableView: storeTableView
+        ) { (tableView, indexPath, storeContents) in
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: StoreTableViewCell.identifier,
                 for: indexPath
             ) as? StoreTableViewCell else {
                 return StoreTableViewCell()
             }
-            cell.bind(viewModel: self.cellViewModel)
-            cell.setUIContents(store: store)
+            cell.setUIContents(storeContents: storeContents)
             
             return cell
         }
     }()
     
-    init(cellViewModel: StoreTableViewCellViewModel) {
-        self.cellViewModel = cellViewModel
+    private let viewModel: StoreListViewModel
+    
+    init(viewModel: StoreListViewModel) {
+        self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -59,10 +63,7 @@ final class StoreListViewController: UIViewController {
     }
     
     func updateList(stores: [Store]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Store>()
-        snapshot.appendSections([.store])
-        snapshot.appendItems(stores, toSection: Section.store)
-        dataSource.apply(snapshot)
+        viewModel.action(input: .updateList(stores: stores))
     }
     
 }
@@ -83,7 +84,15 @@ private extension StoreListViewController {
     }
     
     func bind() {
-        
+        viewModel.updateListOutput
+            .bind { [weak self] contentsArray in
+                guard let self = self else { return }
+                var snapshot = NSDiffableDataSourceSnapshot<Section, StoreTableViewCellContents>()
+                snapshot.appendSections([.store])
+                snapshot.appendItems(contentsArray, toSection: Section.store)
+                dataSource.apply(snapshot)
+            }
+            .disposed(by: disposeBag)
     }
     
 }

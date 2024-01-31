@@ -40,8 +40,7 @@
 		59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886452B6A5CDC005750EF /* StoreListViewModel.swift */; };
 		59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */; };
 		59B8864A2B6A9CCB005750EF /* UIStackView+clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886492B6A9CCB005750EF /* UIStackView+clear.swift */; };
-		59B8864C2B6AAB41005750EF /* StoreTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8864B2B6AAB41005750EF /* StoreTableViewCellViewModel.swift */; };
-		59B8864E2B6AAB6D005750EF /* StoreTableViewCellViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8864D2B6AAB6D005750EF /* StoreTableViewCellViewModelImpl.swift */; };
+		59B886502B6AB9F7005750EF /* StoreTableViewCellContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8864F2B6AB9F7005750EF /* StoreTableViewCellContents.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -154,8 +153,7 @@
 		59B886452B6A5CDC005750EF /* StoreListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewModel.swift; sourceTree = "<group>"; };
 		59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewModelImpl.swift; sourceTree = "<group>"; };
 		59B886492B6A9CCB005750EF /* UIStackView+clear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+clear.swift"; sourceTree = "<group>"; };
-		59B8864B2B6AAB41005750EF /* StoreTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTableViewCellViewModel.swift; sourceTree = "<group>"; };
-		59B8864D2B6AAB6D005750EF /* StoreTableViewCellViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTableViewCellViewModelImpl.swift; sourceTree = "<group>"; };
+		59B8864F2B6AB9F7005750EF /* StoreTableViewCellContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTableViewCellContents.swift; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
 		59C306A82B4FF9AF00862625 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
@@ -444,7 +442,6 @@
 			children = (
 				59B886442B6A5CB6005750EF /* Protocol */,
 				59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */,
-				59B8864D2B6AAB6D005750EF /* StoreTableViewCellViewModelImpl.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -453,7 +450,6 @@
 			isa = PBXGroup;
 			children = (
 				59B886452B6A5CDC005750EF /* StoreListViewModel.swift */,
-				59B8864B2B6AAB41005750EF /* StoreTableViewCellViewModel.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -484,6 +480,7 @@
 				A8A7E05A2B642EC900D015E5 /* DetailViewContents.swift */,
 				A8A7E0612B652F0D00D015E5 /* MarkerContents.swift */,
 				595EE2A42B693DE700CC01CE /* ErrorAlertMessage.swift */,
+				59B8864F2B6AB9F7005750EF /* StoreTableViewCellContents.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -928,14 +925,13 @@
 				59B8864A2B6A9CCB005750EF /* UIStackView+clear.swift in Sources */,
 				59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */,
 				59C306CB2B50357900862625 /* Router.swift in Sources */,
-				59B8864C2B6AAB41005750EF /* StoreTableViewCellViewModel.swift in Sources */,
 				A8ACB7E82B595A2100540BD1 /* GetOpenClosedUseCase.swift in Sources */,
 				59C306B62B50027300862625 /* Store.swift in Sources */,
 				59C306B42B50015500862625 /* APIResponse.swift in Sources */,
 				A8A7E0622B652F0D00D015E5 /* MarkerContents.swift in Sources */,
-				59B8864E2B6AAB6D005750EF /* StoreTableViewCellViewModelImpl.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
 				5977BE942B59738800725C90 /* FetchStoresUseCase.swift in Sources */,
+				59B886502B6AB9F7005750EF /* StoreTableViewCellContents.swift in Sources */,
 				59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */,
 				596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */,
 				59C306B22B50001F00862625 /* StoreRepositoryImpl.swift in Sources */,

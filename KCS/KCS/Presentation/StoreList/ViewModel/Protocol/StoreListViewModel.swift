@@ -9,6 +9,8 @@ import RxRelay
 
 protocol StoreListViewModel: StoreListViewModelInput, StoreListViewModelOutput {
     
+    var fetchImageUseCase: FetchImageUseCase { get }
+    
 }
 
 protocol StoreListViewModelInput {
@@ -19,8 +21,12 @@ protocol StoreListViewModelInput {
 
 enum StoreListViewModelInputCase {
     
+    case updateList(stores: [Store])
+    
 }
 
 protocol StoreListViewModelOutput {
+    
+    var updateListOutput: BehaviorRelay<[StoreTableViewCellContents]> { get }
     
 }

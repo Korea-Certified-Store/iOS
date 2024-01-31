@@ -6,10 +6,9 @@
 //
 
 import UIKit
+import RxSwift
 
 final class StoreTableViewCell: UITableViewCell {
-
-    private var viewModel: StoreTableViewCellViewModel?
     
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
@@ -69,12 +68,20 @@ final class StoreTableViewCell: UITableViewCell {
         storeImageView.image = .basicStore
     }
     
-    func setUIContents(store: Store) {
-        
-    }
-    
-    func bind(viewModel: StoreTableViewCellViewModel) {
-        self.viewModel = viewModel
+    func setUIContents(storeContents: StoreTableViewCellContents) {
+        storeTitle.text = storeContents.storeTitle
+        category.text = storeContents.category
+        storeContents.certificationTypes.map({
+            CertificationLabel(certificationType: $0)
+        })
+        .forEach { [weak self] in
+            self?.certificationStackView.addArrangedSubview($0)
+        }
+        guard let thumbnailImageData = storeContents.thumbnailImageData,
+              let thumbnailImage = UIImage(data: thumbnailImageData) else {
+            return
+        }
+        storeImageView.image = thumbnailImage
     }
     
 }
