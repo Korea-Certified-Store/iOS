@@ -13,6 +13,6 @@ protocol FetchStoresUseCase {
     
     init(repository: StoreRepository)
     
-    func execute() -> [Store]
+    func execute(fetchCount: Int) -> [Store]
 
 }

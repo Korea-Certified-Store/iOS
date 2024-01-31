@@ -43,6 +43,13 @@ final class StoreListViewController: UIViewController {
         bind()
     }
     
+    func updateList(stores: [Store]) { // 축적해서 와야 함
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Store>()
+        snapshot.appendSections([.store])
+        snapshot.appendItems(stores, toSection: Section.store)
+        dataSource.apply(snapshot)
+    }
+    
 }
 
 private extension StoreListViewController {

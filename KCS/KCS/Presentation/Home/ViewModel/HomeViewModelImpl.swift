@@ -110,7 +110,7 @@ private extension HomeViewModelImpl {
         } else {
             dependency.activatedFilter.append(filter)
         }
-        applyFilters(stores: fetchStoresUseCase.execute(), filters: getActivatedTypes())
+        applyFilters(stores: fetchStoresUseCase.execute(fetchCount: 1), filters: getActivatedTypes())
     }
     
     func getActivatedTypes() -> [CertificationType] {

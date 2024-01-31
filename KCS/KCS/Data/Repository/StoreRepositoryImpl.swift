@@ -10,9 +10,9 @@ import Alamofire
 
 final class StoreRepositoryImpl: StoreRepository {
     
-    private var stores: [Store]
+    private var stores: [[Store]]
     
-    init(stores: [Store] = []) {
+    init(stores: [[Store]] = []) {
         self.stores = stores
     }
     
@@ -33,10 +33,10 @@ final class StoreRepositoryImpl: StoreRepository {
             .responseDecodable(of: StoreResponse.self) { [weak self] response in
                 do {
                     switch response.result {
-                    case .success(let result):
+                    case .success(let result): // 현재는 1차원 배열로 온다
                         let resultStores = try result.data.map { try $0.toEntity() }
-                        self?.stores = resultStores
-                        observer.onNext(resultStores)
+                        self?.stores = [resultStores] // 2차원 배열로 올 경우 stores를 전체로 초기화 해야함
+                        observer.onNext(resultStores) // 그 후에 5개중 첫 인덱스의 stores를 보내줘야 함
                     case .failure(let error):
                         throw error
                     }
@@ -48,14 +48,18 @@ final class StoreRepositoryImpl: StoreRepository {
         }
     }
     
-    func fetchStores() -> [Store] {
-        return stores
+    func fetchStores(count: Int) -> [Store] {
+        var fetchResult: [Store] = []
+        for index in 0..<count {
+            fetchResult.append(contentsOf: stores[index])
+        }
+        return fetchResult
     }
     
     func getStoreInformation(
         tag: UInt
     ) throws -> Store {
-        guard let store = stores.first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
+        guard let store = stores.flatMap({ $0 }).first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
         return store
     }
     
