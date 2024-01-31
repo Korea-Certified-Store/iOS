@@ -14,6 +14,7 @@ final class StoreListViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = 109
         tableView.register(StoreTableViewCell.self, forCellReuseIdentifier: StoreTableViewCell.identifier)
+        tableView.backgroundColor = .white
         
         return tableView
     }()
@@ -21,6 +22,8 @@ final class StoreListViewController: UIViewController {
     enum Section {
         case store
     }
+    
+    private let cellViewModel: StoreTableViewCellViewModel
     
     private lazy var dataSource: UITableViewDiffableDataSource<Section, Store> = {
         return UITableViewDiffableDataSource<Section, Store>(tableView: storeTableView) { (tableView, indexPath, store) in
@@ -30,11 +33,22 @@ final class StoreListViewController: UIViewController {
             ) as? StoreTableViewCell else {
                 return StoreTableViewCell()
             }
+            cell.bind(viewModel: self.cellViewModel)
             cell.setUIContents(store: store)
             
             return cell
         }
     }()
+    
+    init(cellViewModel: StoreTableViewCellViewModel) {
+        self.cellViewModel = cellViewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

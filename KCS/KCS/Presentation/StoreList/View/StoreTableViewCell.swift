@@ -9,6 +9,8 @@ import UIKit
 
 final class StoreTableViewCell: UITableViewCell {
 
+    private var viewModel: StoreTableViewCellViewModel?
+    
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -50,6 +52,7 @@ final class StoreTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .white
         
         addUIContents()
         configureConstraints()
@@ -68,6 +71,10 @@ final class StoreTableViewCell: UITableViewCell {
     
     func setUIContents(store: Store) {
         
+    }
+    
+    func bind(viewModel: StoreTableViewCellViewModel) {
+        self.viewModel = viewModel
     }
     
 }
