@@ -17,7 +17,7 @@ final class DetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 22, weight: .bold)
-        label.textColor = UIColor.primary2
+        label.textColor = UIColor.primary1
         label.numberOfLines = 2
         
         return label
