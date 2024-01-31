@@ -330,14 +330,6 @@ private extension DetailView {
         ])
     }
     
-    func removeStackView(stackView: UIStackView) {
-        let subviews = stackView.arrangedSubviews
-        stackView.arrangedSubviews.forEach {
-            stackView.removeArrangedSubview($0)
-        }
-        subviews.forEach { $0.removeFromSuperview() }
-    }
-    
     func setOpeningHourText(openClosedContent: OpenClosedContent) {
         if openClosedContent.openClosedType == .none {
             storeOpenClosed.text = "영업시간 정보 없음"
@@ -371,7 +363,7 @@ extension DetailView {
         storeOpenClosed.text = nil
         openingHour.text = nil
         storeImageView.image = UIImage.basicStore
-        removeStackView(stackView: certificationStackView)
-        removeStackView(stackView: openingHoursStackView)
+        certificationStackView.clear()
+        openingHoursStackView.clear()
     }
 }

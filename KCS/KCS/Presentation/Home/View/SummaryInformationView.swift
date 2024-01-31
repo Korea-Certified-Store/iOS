@@ -225,14 +225,6 @@ private extension SummaryInformationView {
         ])
     }
     
-    func removeStackView() {
-        let subviews = certificationStackView.arrangedSubviews
-        certificationStackView.arrangedSubviews.forEach {
-            certificationStackView.removeArrangedSubview($0)
-        }
-        subviews.forEach { $0.removeFromSuperview() }
-    }
-    
     func callButtonTapped(phoneNum: String) {
         if let url = URL(string: "tel://" + "\(phoneNum.filter { $0.isNumber })") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -253,7 +245,7 @@ extension SummaryInformationView {
         category.text = nil
         storeOpenClosed.text = nil
         openingHour.text = nil
-        removeStackView()
+        certificationStackView.clear()
         callDisposable?.dispose()
         storeCallButton.isHidden = true
         storeImageView.image = .basicStore

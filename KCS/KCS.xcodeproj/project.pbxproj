@@ -39,6 +39,7 @@
 		59B8862B2B6A3F7F005750EF /* UITableViewCell+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */; };
 		59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886452B6A5CDC005750EF /* StoreListViewModel.swift */; };
 		59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */; };
+		59B8864A2B6A9CCB005750EF /* UIStackView+clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886492B6A9CCB005750EF /* UIStackView+clear.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
@@ -150,6 +151,7 @@
 		59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Identifier.swift"; sourceTree = "<group>"; };
 		59B886452B6A5CDC005750EF /* StoreListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewModel.swift; sourceTree = "<group>"; };
 		59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewModelImpl.swift; sourceTree = "<group>"; };
+		59B886492B6A9CCB005750EF /* UIStackView+clear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+clear.swift"; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
 		59C306A82B4FF9AF00862625 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 				A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */,
 				A8A7E05F2B64E62200D015E5 /* NMFMyPosition+.swift */,
 				59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */,
+				59B886492B6A9CCB005750EF /* UIStackView+clear.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -916,6 +919,7 @@
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */,
+				59B8864A2B6A9CCB005750EF /* UIStackView+clear.swift in Sources */,
 				59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */,
 				59C306CB2B50357900862625 /* Router.swift in Sources */,
 				A8ACB7E82B595A2100540BD1 /* GetOpenClosedUseCase.swift in Sources */,
