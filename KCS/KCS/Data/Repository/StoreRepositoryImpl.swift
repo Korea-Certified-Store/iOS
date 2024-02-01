@@ -10,12 +10,13 @@ import Alamofire
 
 final class StoreRepositoryImpl: StoreRepository {
     
-    private var stores: [Store]
+    private var stores: [[Store]]
     
-    init(stores: [Store] = []) {
+    init(stores: [[Store]] = []) {
         self.stores = stores
     }
     
+    // TODO: 현재 1차원 배열로 오는 로직으로 적용되어 있기 때문에, 2차원 배열 로직으로 변환해야 한다.
     func fetchRefreshStores(
         requestLocation: RequestLocation
     ) -> Observable<[Store]> {
@@ -35,7 +36,7 @@ final class StoreRepositoryImpl: StoreRepository {
                     switch response.result {
                     case .success(let result):
                         let resultStores = try result.data.map { try $0.toEntity() }
-                        self?.stores = resultStores
+                        self?.stores = [resultStores]
                         observer.onNext(resultStores)
                     case .failure(let error):
                         throw error
@@ -48,14 +49,18 @@ final class StoreRepositoryImpl: StoreRepository {
         }
     }
     
-    func fetchStores() -> [Store] {
-        return stores
+    func fetchStores(count: Int) -> [Store] {
+        var fetchResult: [Store] = []
+        for index in 0..<count {
+            fetchResult.append(contentsOf: stores[index])
+        }
+        return fetchResult
     }
     
     func getStoreInformation(
         tag: UInt
     ) throws -> Store {
-        guard let store = stores.first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
+        guard let store = stores.flatMap({ $0 }).first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
         return store
     }
     

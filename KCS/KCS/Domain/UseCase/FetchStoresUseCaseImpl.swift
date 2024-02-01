@@ -11,8 +11,8 @@ struct FetchStoresUseCaseImpl: FetchStoresUseCase {
     
     let repository: StoreRepository
     
-    func execute() -> [Store] {
-        return repository.fetchStores()
+    func execute(fetchCount: Int) -> [Store] {
+        return repository.fetchStores(count: fetchCount)
     }
 
 }

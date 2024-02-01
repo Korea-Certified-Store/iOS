@@ -213,6 +213,8 @@ final class HomeViewController: UIViewController {
         return view
     }()
     
+    private let storeListViewController: StoreListViewController
+    
     private let viewModel: HomeViewModel
     private let summaryInformationViewModel: SummaryViewModel
     private let detailViewModel: DetailViewModel
@@ -230,11 +232,13 @@ final class HomeViewController: UIViewController {
     init(
         viewModel: HomeViewModel,
         summaryInformationViewModel: SummaryViewModel,
-        detailViewModel: DetailViewModel
+        detailViewModel: DetailViewModel,
+        storeListViewController: StoreListViewController
     ) {
         self.viewModel = viewModel
         self.summaryInformationViewModel = summaryInformationViewModel
         self.detailViewModel = detailViewModel
+        self.storeListViewController = storeListViewController
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -284,6 +288,7 @@ private extension HomeViewController {
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
+                var stores: [Store] = []
                 filteredStores.forEach { filteredStore in
                     filteredStore.stores.forEach { [weak self] store in
                         self?.viewModel.action(
@@ -292,8 +297,10 @@ private extension HomeViewController {
                                 certificationType: filteredStore.type
                             )
                         )
+                        stores.append(store)
                     }
                 }
+                storeListViewController.updateList(stores: stores)
             }
             .disposed(by: disposeBag)
     }
@@ -418,7 +425,8 @@ private extension HomeViewController {
             .scan(false) { [weak self] (lastState, _) in
                 guard let self = self else { return lastState }
                 viewModel.action(
-                    input: .filterButtonTapped(activatedFilter: type)
+                    input: .filterButtonTapped(activatedFilter: type, fetchCount: 1)
+                    // TODO: fetchCount Dependency에서 처리
                 )
                 return !lastState
             }

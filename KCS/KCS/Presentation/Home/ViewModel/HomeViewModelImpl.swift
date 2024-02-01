@@ -48,8 +48,8 @@ final class HomeViewModelImpl: HomeViewModel {
         switch input {
         case .refresh(let requestLocation):
             refresh(requestLocation: requestLocation)
-        case .filterButtonTapped(let filter):
-            filterButtonTapped(filter: filter)
+        case .filterButtonTapped(let filter, let fetchCount):
+            filterButtonTapped(filter: filter, fetchCount: fetchCount)
         case .markerTapped(let tag):
             markerTapped(tag: tag)
         case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
@@ -104,13 +104,13 @@ private extension HomeViewModelImpl {
         .disposed(by: dependency.disposeBag)
     }
     
-    func filterButtonTapped(filter: CertificationType) {
+    func filterButtonTapped(filter: CertificationType, fetchCount: Int) {
         if let lastIndex = dependency.activatedFilter.lastIndex(of: filter) {
             dependency.activatedFilter.remove(at: lastIndex)
         } else {
             dependency.activatedFilter.append(filter)
         }
-        applyFilters(stores: fetchStoresUseCase.execute(), filters: getActivatedTypes())
+        applyFilters(stores: fetchStoresUseCase.execute(fetchCount: fetchCount), filters: getActivatedTypes())
     }
     
     func getActivatedTypes() -> [CertificationType] {

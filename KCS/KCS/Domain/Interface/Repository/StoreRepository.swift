@@ -13,7 +13,7 @@ protocol StoreRepository {
         requestLocation: RequestLocation
     ) -> Observable<[Store]>
     
-    func fetchStores() -> [Store]
+    func fetchStores(count: Int) -> [Store]
     
     func getStoreInformation(
         tag: UInt
