@@ -37,9 +37,7 @@ private extension StoreListViewModelImpl {
                   let url = store.localPhotos.first else { return Observable<Data?>.just(nil) }
             
             return fetchImageUseCase.execute(url: url)
-                .flatMap { data in
-                    Observable<Data?>.just(data)
-                }
+                .flatMap { Observable<Data?>.just($0) }
         }))
         .bind { [weak self] imageDataArray in
             var storeContentsArray: [StoreTableViewCellContents] = []
