@@ -66,6 +66,7 @@ final class SummaryView: UIView {
         imageView.setLayerCorner(cornerRadius: 6)
         imageView.clipsToBounds = true
         imageView.image = UIImage.basicStore
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }()
