@@ -45,6 +45,7 @@ final class StoreTableViewCell: UITableViewCell {
         imageView.setLayerCorner(cornerRadius: 4)
         imageView.clipsToBounds = true
         imageView.image = UIImage.basicStore
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }()
