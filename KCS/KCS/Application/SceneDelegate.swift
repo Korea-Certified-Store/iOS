@@ -24,13 +24,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
             getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
         )
-        let summaryInformationViewModel = SummaryViewModelImpl(
+        let summaryViewModel = SummaryViewModelImpl(
             getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
             fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
         )
         window?.rootViewController = HomeViewController(
             viewModel: viewModel,
-            summaryInformationViewModel: summaryInformationViewModel,
+            summaryViewModel: summaryViewModel,
             detailViewModel: DetailViewModelImpl(
                 getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
                 fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())

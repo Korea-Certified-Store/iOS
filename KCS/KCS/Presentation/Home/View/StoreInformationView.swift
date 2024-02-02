@@ -10,10 +10,10 @@ import RxRelay
 
 final class StoreInformationView: UIView {
     
-    private lazy var summaryView: SummaryInformationView = {
-        let view = SummaryInformationView(
+    private lazy var summaryView: SummaryView = {
+        let view = SummaryView(
             viewModel: summaryViewModel,
-            summaryInformationHeightObserver: summaryInformationHeightObserver
+            summaryViewHeightObserver: summaryViewHeightObserver
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -21,7 +21,7 @@ final class StoreInformationView: UIView {
     }()
     
     private let summaryViewModel: SummaryViewModel
-    private let summaryInformationHeightObserver: PublishRelay<CGFloat>
+    private let summaryViewHeightObserver: PublishRelay<CGFloat>
     
     private lazy var detailView: DetailView = {
         let view = DetailView(viewModel: detailViewModel)
@@ -34,11 +34,11 @@ final class StoreInformationView: UIView {
     
     init(
         summaryViewModel: SummaryViewModel,
-        summaryInformationHeightObserver: PublishRelay<CGFloat>,
+        summaryViewHeightObserver: PublishRelay<CGFloat>,
         detailViewModel: DetailViewModel
     ) {
         self.summaryViewModel = summaryViewModel
-        self.summaryInformationHeightObserver = summaryInformationHeightObserver
+        self.summaryViewHeightObserver = summaryViewHeightObserver
         self.detailViewModel = detailViewModel
         super.init(frame: .zero)
         

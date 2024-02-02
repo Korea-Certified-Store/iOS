@@ -1,5 +1,5 @@
 //
-//  SummaryInformationView.swift
+//  SummaryView.swift
 //  KCS
 //
 //  Created by 김영현 on 1/11/24.
@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SummaryInformationView: UIView {
+final class SummaryView: UIView {
     
     private let disposeBag = DisposeBag()
     
@@ -95,11 +95,11 @@ final class SummaryInformationView: UIView {
     }()
     
     private let viewModel: SummaryViewModel
-    private let summaryInformationHeightObserver: PublishRelay<CGFloat>
+    private let summaryViewHeightObserver: PublishRelay<CGFloat>
     
-    init(viewModel: SummaryViewModel, summaryInformationHeightObserver: PublishRelay<CGFloat>) {
+    init(viewModel: SummaryViewModel, summaryViewHeightObserver: PublishRelay<CGFloat>) {
         self.viewModel = viewModel
-        self.summaryInformationHeightObserver = summaryInformationHeightObserver
+        self.summaryViewHeightObserver = summaryViewHeightObserver
         super.init(frame: .zero)
         
         setBackgroundColor()
@@ -114,7 +114,7 @@ final class SummaryInformationView: UIView {
     }
 }
 
-private extension SummaryInformationView {
+private extension SummaryView {
     
     func bind() {
         viewModel.setUIContentsOutput
@@ -122,9 +122,9 @@ private extension SummaryInformationView {
                 guard let self = self else { return }
                 storeTitle.text = contents.storeTitle
                 if storeTitle.numberOfVisibleLines == 1 {
-                    summaryInformationHeightObserver.accept(230)
+                    summaryViewHeightObserver.accept(230)
                 } else {
-                    summaryInformationHeightObserver.accept(253)
+                    summaryViewHeightObserver.accept(253)
                 }
                 storeOpenClosed.text = contents.openClosedContent.openClosedType.rawValue
                 openingHour.text = contents.openClosedContent.nextOpeningHour
@@ -159,7 +159,7 @@ private extension SummaryInformationView {
     
 }
 
-private extension SummaryInformationView {
+private extension SummaryView {
     
     func setBackgroundColor() {
         backgroundColor = .white
@@ -233,7 +233,7 @@ private extension SummaryInformationView {
     
 }
 
-extension SummaryInformationView {
+extension SummaryView {
     
     func setUIContents(store: Store) {
         resetUIContents()
