@@ -278,7 +278,6 @@ private extension HomeViewController {
         viewModel.refreshOutput
             .bind { [weak self] _ in
                 self?.refreshButton.animationInvalidate()
-                self?.storeInformationViewDismiss()
             }
             .disposed(by: disposeBag)
     }
@@ -300,6 +299,7 @@ private extension HomeViewController {
                         stores.append(store)
                     }
                 }
+                storeInformationViewDismiss()
                 storeListViewController.updateList(stores: stores)
             }
             .disposed(by: disposeBag)
