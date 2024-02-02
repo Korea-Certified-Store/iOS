@@ -162,8 +162,8 @@ final class HomeViewController: UIViewController {
     
     private lazy var storeInformationView: StoreInformationView = {
         let view = StoreInformationView(
-            summaryViewModel: summaryInformationViewModel,
-            summaryInformationHeightObserver: summaryInformationHeightObserver,
+            summaryViewModel: summaryViewModel,
+            summaryViewHeightObserver: summaryViewHeightObserver,
             detailViewModel: detailViewModel
         )
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -216,7 +216,7 @@ final class HomeViewController: UIViewController {
     private let storeListViewController: StoreListViewController
     
     private let viewModel: HomeViewModel
-    private let summaryInformationViewModel: SummaryViewModel
+    private let summaryViewModel: SummaryViewModel
     private let detailViewModel: DetailViewModel
     private lazy var storeInformationHeightConstraint = storeInformationView.heightAnchor.constraint(equalToConstant: 0)
     private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
@@ -227,16 +227,16 @@ final class HomeViewController: UIViewController {
         equalTo: storeInformationView.topAnchor,
         constant: -37
     )
-    private let summaryInformationHeightObserver = PublishRelay<CGFloat>()
+    private let summaryViewHeightObserver = PublishRelay<CGFloat>()
     
     init(
         viewModel: HomeViewModel,
-        summaryInformationViewModel: SummaryViewModel,
+        summaryViewModel: SummaryViewModel,
         detailViewModel: DetailViewModel,
         storeListViewController: StoreListViewController
     ) {
         self.viewModel = viewModel
-        self.summaryInformationViewModel = summaryInformationViewModel
+        self.summaryViewModel = summaryViewModel
         self.detailViewModel = detailViewModel
         self.storeListViewController = storeListViewController
         super.init(nibName: nil, bundle: nil)
@@ -373,7 +373,7 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
         
         // MARK: 추후 수정 필요
-        summaryInformationHeightObserver.bind { [weak self] height in
+        summaryViewHeightObserver.bind { [weak self] height in
             self?.viewModel.action(
                 input: .setStoreInformationOriginalHeight(height: height)
             )
@@ -441,7 +441,7 @@ private extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        summaryInformationViewModel.errorAlertOutput
+        summaryViewModel.errorAlertOutput
             .bind { [weak self] error in
                 self?.presentErrorAlert(error: error)
             }
