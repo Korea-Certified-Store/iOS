@@ -9,6 +9,15 @@ import UIKit
 
 final class RefreshButton: UIButton {
 
+    private var animationTimer: Timer?
+    
+    private let originalTitle: AttributedString = {
+        var titleAttribute = AttributedString("현 지도에서 검색")
+        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
+        
+        return titleAttribute
+    }()
+    
     init() {
         super.init(frame: .zero)
         setUI()
@@ -19,16 +28,44 @@ final class RefreshButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func animationFire() {
+        isUserInteractionEnabled = false
+        var imageIndex = 0
+        var config = configuration
+        config?.attributedTitle = nil
+        animationTimer?.invalidate()
+        animationTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            let images = [
+                UIImage.refreshAnimation1,
+                UIImage.refreshAnimation2,
+                UIImage.refreshAnimation3,
+                UIImage.refreshAnimation4,
+                UIImage.refreshAnimation5
+            ]
+            config?.image = images[imageIndex]
+            self.configuration = config
+            
+            imageIndex = (imageIndex + 1) % 5
+        }
+    }
+    
+    func animationInvalidate() {
+        isUserInteractionEnabled = true
+        isHidden = true
+        animationTimer?.invalidate()
+        
+        configuration?.attributedTitle = originalTitle
+        configuration?.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)
+    }
+    
 }
 
 private extension RefreshButton {
     
     func setUI() {
-        var titleAttribute = AttributedString("현 지도에서 검색")
-        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
-        
         var config = UIButton.Configuration.filled()
-        config.attributedTitle = titleAttribute
+        config.attributedTitle = originalTitle
         config.baseBackgroundColor = .white
         config.baseForegroundColor = .black
         config.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)

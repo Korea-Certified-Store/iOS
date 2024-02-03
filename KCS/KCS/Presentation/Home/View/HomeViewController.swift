@@ -66,18 +66,12 @@ final class HomeViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                
-                checkLocationService()
-                switch mapView.mapView.positionMode {
-                case .direction:
-                    button.setImage(UIImage.locationButtonCompass, for: .normal)
-                    mapView.mapView.positionMode = .compass
-                case .compass, .normal:
-                    button.setImage(UIImage.locationButtonNormal, for: .normal)
-                    mapView.mapView.positionMode = .direction
-                default:
-                    break
-                }
+                viewModel.action(
+                    input: .locationButtonTapped(
+                        locationAuthorizationStatus: locationManager.authorizationStatus,
+                        positionMode: mapView.mapView.positionMode
+                    )
+                )
             }
             .disposed(by: self.disposeBag)
         button.setImage(UIImage.locationButtonNone, for: .normal)
@@ -96,7 +90,8 @@ final class HomeViewController: UIViewController {
         map.showScaleBar = false
         map.showIndoorLevelPicker = false
         map.showLocationButton = false
-        map.mapView.logoAlign = .rightBottom
+        map.mapView.logoAlign = .rightTop
+        map.mapView.logoMargin = UIEdgeInsets(top: 28, left: 0, bottom: 0, right: 0)
         map.mapView.touchDelegate = self
         map.mapView.addCameraDelegate(delegate: self)
         
@@ -125,38 +120,21 @@ final class HomeViewController: UIViewController {
     private lazy var refreshButton: RefreshButton = {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.isHidden = true
         button.rx.tap
-            .bind { [weak self] _ in
-                guard let self = self else { return }
-                let northWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-                let southWestPoint = mapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
-                let southEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-                let northEastPoint = mapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+            .map { [weak self] _ -> RequestLocation? in
+                guard let self = self else { return nil }
+                button.animationFire()
+                
+                return makeRequestLocation(projection: mapView.mapView.projection)
+            }
+            .observe(on: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
+            .bind { [weak self] requestLocation in
+                guard let self = self, let location = requestLocation else { return }
                 viewModel.action(
                     input: .refresh(
-                        requestLocation: RequestLocation(
-                            northWest: Location(
-                                longitude: northWestPoint.lng,
-                                latitude: northWestPoint.lat
-                            ),
-                            southWest: Location(
-                                longitude: southWestPoint.lng,
-                                latitude: southWestPoint.lat
-                            ),
-                            southEast: Location(
-                                longitude: southEastPoint.lng,
-                                latitude: southEastPoint.lat
-                            ),
-                            northEast: Location(
-                                longitude: northEastPoint.lng,
-                                latitude: northEastPoint.lat
-                            )
-                        ),
-                        filters: getActivatedTypes()
+                        requestLocation: location
                     )
                 )
-                refreshButton.isHidden = true
             }
             .disposed(by: self.disposeBag)
         
@@ -167,20 +145,15 @@ final class HomeViewController: UIViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
-        view.isUserInteractionEnabled = true
+        view.isUserInteractionEnabled = false
         view.alpha = 0.4
         
         view.rx.tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                setStoreInformationConstraints(
-                    heightConstraint: storeInformationOriginalHeight,
-                    bottomConstraint: -16,
-                    animated: true
+                self?.viewModel.action(
+                    input: .dimViewTapGestureEnded
                 )
-                storeInformationView.changeToSummary()
-                unDimmedView()
             })
             .disposed(by: disposeBag)
         
@@ -195,105 +168,51 @@ final class HomeViewController: UIViewController {
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        // TODO: 로직 뷰모델로 이동
         view.rx.panGesture()
             .when(.changed)
-            .subscribe(onNext: { [weak self] recognizer in
+            .bind { [weak self] recognizer in
                 guard let self = self else { return }
                 let transition = recognizer.translation(in: storeInformationView)
-                let height = storeInformationHeightConstraint.constant - transition.y
-                
                 recognizer.setTranslation(.zero, in: storeInformationView)
                 
-                if height > 230 && height < 620 {
-                    setStoreInformationConstraints(
-                        heightConstraint: height,
-                        bottomConstraint: locationButtonBottomConstraint.constant
+                viewModel.action(
+                    input: .storeInformationViewPanGestureChanged(
+                        height: storeInformationHeightConstraint.constant - transition.y
                     )
-                }
-                
-                if storeInformationHeightConstraint.constant > 420 {
-                    // TODO: 441은 420에서 bottomSafeArea 길이인 21만큼 더해준 값이다.
-                    storeInformationView.changeToDetail()
-                    dimmedView()
-                    setStoreInformationConstraints(
-                        heightConstraint: storeInformationHeightConstraint.constant,
-                        bottomConstraint: storeInformationHeightConstraint.constant - 441
-                    )
-                } else {
-                    storeInformationView.changeToSummary()
-                    unDimmedView()
-                    setStoreInformationConstraints(
-                        heightConstraint: storeInformationHeightConstraint.constant,
-                        bottomConstraint: -16
-                    )
-                }
-                
-            })
+                )
+            }
             .disposed(by: disposeBag)
         
         view.rx.panGesture()
             .when(.ended)
-            .subscribe(onNext: { [weak self] recognizer in
+            .bind { [weak self] recognizer in
                 guard let self = self else { return }
-                if recognizer.velocity(in: view).y < -1000 {
-                    setStoreInformationConstraints(
-                        heightConstraint: 600,
-                        bottomConstraint: 600 - 441,
-                        animated: true
+                viewModel.action(
+                    input: .storeInformationViewSwipe(
+                        velocity: recognizer.velocity(in: view).y
                     )
-                    storeInformationView.changeToDetail()
-                    dimmedView()
-                } else if recognizer.velocity(in: view).y > 1000 {
-                    setStoreInformationConstraints(
-                        heightConstraint: storeInformationOriginalHeight,
-                        bottomConstraint: -16,
-                        animated: true
+                )
+                viewModel.action(
+                    input: .storeInformationViewPanGestureEnded(
+                        height: storeInformationHeightConstraint.constant
                     )
-                    storeInformationView.changeToSummary()
-                    unDimmedView()
-                }
-                
-                if storeInformationHeightConstraint.constant > 420 {
-                    setStoreInformationConstraints(
-                        heightConstraint: 600,
-                        bottomConstraint: 600 - 441,
-                        animated: true
-                    )
-                    storeInformationView.changeToDetail()
-                    dimmedView()
-                } else {
-                    setStoreInformationConstraints(
-                        heightConstraint: storeInformationOriginalHeight,
-                        bottomConstraint: -16,
-                        animated: true
-                    )
-                    storeInformationView.changeToSummary()
-                    unDimmedView()
-                }
-            })
+                )
+            }
             .disposed(by: disposeBag)
         
         view.rx.tapGesture()
             .when(.ended)
-            .subscribe(onNext: { [weak self] _ in
+            .bind { [weak self] _ in
                 guard let self = self else { return }
-                if storeInformationHeightConstraint.constant == storeInformationOriginalHeight {
-                    setStoreInformationConstraints(
-                        heightConstraint: 600,
-                        bottomConstraint: 600 - 441,
-                        animated: true
-                    )
-                    storeInformationView.changeToDetail()
-                    dimmedView()
-                }
-            })
+                viewModel.action(
+                    input: .storeInformationViewTapGestureEnded
+                )
+            }
             .disposed(by: disposeBag)
         
         return view
     }()
     
-    private var activatedFilter: [CertificationType] = []
     private let viewModel: HomeViewModel
     private let summaryInformationViewModel: SummaryViewModel
     private let detailViewModel: DetailViewModel
@@ -307,7 +226,6 @@ final class HomeViewController: UIViewController {
         constant: -37
     )
     private let summaryInformationHeightObserver = PublishRelay<CGFloat>()
-    private var storeInformationOriginalHeight: CGFloat = 0
     
     init(
         viewModel: HomeViewModel,
@@ -329,9 +247,13 @@ final class HomeViewController: UIViewController {
         
         addUIComponents()
         configureConstraints()
-        checkUserCurrentLocationAuthorization()
         bind()
-        unDimmedView()
+        
+        viewModel.action(
+            input: .checkLocationAuthorization(
+                status: locationManager.authorizationStatus
+            )
+        )
     }
     
 }
@@ -339,101 +261,216 @@ final class HomeViewController: UIViewController {
 private extension HomeViewController {
     
     func bind() {
+        bindRefresh()
+        bindApplyFilters()
+        bindSetMarker()
+        bindLocationButton()
+        bindLocationAuthorization()
+        bindStoreInformationView()
+        bindErrorAlert()
+    }
+    
+    func bindRefresh() {
         viewModel.refreshOutput
+            .bind { [weak self] _ in
+                self?.refreshButton.animationInvalidate()
+                self?.storeInformationViewDismiss()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindApplyFilters() {
+        viewModel.applyFiltersOutput
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
                 filteredStores.forEach { filteredStore in
-                    filteredStore.stores.forEach {
-                        let location = $0.location.toMapLocation()
-                        self.setMarker(marker: Marker(certificationType: filteredStore.type, position: location), tag: UInt($0.id))
+                    filteredStore.stores.forEach { [weak self] store in
+                        self?.viewModel.action(
+                            input: .setMarker(
+                                store: store,
+                                certificationType: filteredStore.type
+                            )
+                        )
                     }
                 }
-                storeInformationViewDismiss()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindSetMarker() {
+        viewModel.setMarkerOutput
+            .bind { [weak self] content in
+                guard let selectImage = UIImage(named: content.selectImageName),
+                      let deselectImage = UIImage(named: content.deselectImageName) else { return }
+                let marker = Marker(position: content.location.toMapLocation(), selectImage: selectImage, deselectImage: deselectImage)
+                marker.tag = UInt(content.tag)
+                marker.mapView = self?.mapView.mapView
+                self?.markerTouchHandler(marker: marker)
+                self?.markers.append(marker)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindLocationButton() {
+        viewModel.locationButtonOutput
+            .bind { [weak self] positionMode in
+                guard let imageName = positionMode.getImageName() else { return }
+                self?.locationButton.setImage(UIImage(named: imageName), for: .normal)
+                self?.mapView.mapView.positionMode = positionMode
             }
             .disposed(by: disposeBag)
         
+        viewModel.locationButtonImageNameOutput
+            .bind { [weak self] imageName in
+                self?.locationButton.setImage(UIImage(named: imageName), for: .normal)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindStoreInformationView() {
         viewModel.getStoreInformationOutput
             .bind { [weak self] store in
-                guard let self = self else { return }
-                storeInformationView.setUIContents(store: store)
+                self?.storeInformationView.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
         
+        viewModel.storeInformationViewHeightOutput
+            .bind { [weak self] constraints in
+                self?.setStoreInformationConstraints(
+                    heightConstraint: constraints.heightConstraint,
+                    bottomConstraint: constraints.bottomConstraint,
+                    animated: constraints.animated
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.detailToSummaryOutput
+            .bind { [weak self] _ in
+                self?.storeInformationView.changeToSummary()
+                self?.unDimmedView()
+                self?.viewModel.action(
+                    input: .changeState(state: .summary)
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.summaryToDetailOutput
+            .bind { [weak self] _ in
+                self?.storeInformationView.changeToDetail()
+                self?.dimmedView()
+                self?.viewModel.action(
+                    input: .changeState(state: .detail)
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        // MARK: 추후 수정 필요
         summaryInformationHeightObserver.bind { [weak self] height in
-            self?.storeInformationOriginalHeight = height
+            self?.viewModel.action(
+                input: .setStoreInformationOriginalHeight(height: height)
+            )
             self?.setStoreInformationConstraints(
                 heightConstraint: height,
                 bottomConstraint: -16,
                 animated: true
             )
             self?.storeInformationView.changeToSummary()
-            self?.unDimmedView()
+            self?.viewModel.action(
+                input: .changeState(state: .summary)
+            )
         }
         .disposed(by: disposeBag)
+    }
     
+    func bindLocationAuthorization() {
+        viewModel.locationAuthorizationStatusDeniedOutput
+            .bind { [weak self] _ in
+                guard let self = self else { return }
+                present(requestLocationServiceAlert, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.locationStatusNotDeterminedOutput
+            .bind { [weak self] _ in
+                self?.locationManager.requestWhenInUseAuthorization()
+                self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.locationStatusAuthorizedWhenInUse
+            .bind { [weak self] _ in
+                guard let location = self?.locationManager.location else { return }
+                let cameraUpdate = NMFCameraUpdate(
+                    scrollTo: NMGLatLng(
+                        lat: location.coordinate.latitude,
+                        lng: location.coordinate.longitude
+                    )
+                )
+                cameraUpdate.animation = .none
+                self?.mapView.mapView.moveCamera(cameraUpdate)
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindFilterButton(button: FilterButton, type: CertificationType) {
         button.rx.tap
             .scan(false) { [weak self] (lastState, _) in
                 guard let self = self else { return lastState }
-                if lastState {
-                    guard let lastIndex = activatedFilter.lastIndex(of: type) else { return lastState }
-                    activatedFilter.remove(at: lastIndex)
-                } else {
-                    activatedFilter.append(type)
-                }
-                viewModel.action(input: .fetchFilteredStores(filters: getActivatedTypes()))
+                viewModel.action(
+                    input: .filterButtonTapped(activatedFilter: type)
+                )
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
             .disposed(by: disposeBag)
     }
-
-    func setMarker(marker: Marker, tag: UInt) {
-        marker.tag = tag
-        marker.mapView = mapView.mapView
-        markerTouchHandler(marker: marker)
-        markers.append(marker)
+    
+    func bindErrorAlert() {
+        viewModel.errorAlertOutput
+            .bind { [weak self] error in
+                self?.presentErrorAlert(error: error)
+            }
+            .disposed(by: disposeBag)
+        
+        summaryInformationViewModel.errorAlertOutput
+            .bind { [weak self] error in
+                self?.presentErrorAlert(error: error)
+            }
+            .disposed(by: disposeBag)
+        
+        detailViewModel.errorAlertOutput
+            .bind { [weak self] error in
+                self?.presentErrorAlert(error: error)
+            }
+            .disposed(by: disposeBag)
     }
     
-    func getActivatedTypes() -> [CertificationType] {
-        if activatedFilter.isEmpty {
-            return [.safe, .exemplary, .goodPrice]
-        }
-        
-        return activatedFilter
-    }
-
 }
 
 private extension HomeViewController {
     
     func markerTouchHandler(marker: Marker) {
         marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+            
             if let clickedMarker = self?.clickedMarker {
                 if clickedMarker == marker { return true }
-                if clickedMarker.isSelected {
-                    self?.storeInformationViewDismiss()
-                }
+                clickedMarker.deselect()
+                self?.storeInformationViewDismiss()
             }
-            self?.markerSelected(marker: marker)
+            
+            self?.viewModel.action(
+                input: .markerTapped(tag: marker.tag)
+            )
+            marker.select()
+            self?.clickedMarker = marker
             
             return true
         }
     }
     
-    func markerSelected(marker: Marker) {
-        marker.isSelected.toggle()
-        if marker.isSelected {
-            viewModel.action(input: .markerTapped(tag: marker.tag))
-        }
-        clickedMarker = marker
-    }
-    
     func storeInformationViewDismiss() {
-        clickedMarker?.isSelected = false
+        clickedMarker?.deselect()
         clickedMarker = nil
         setStoreInformationConstraints(
             heightConstraint: 0,
@@ -441,6 +478,10 @@ private extension HomeViewController {
             animated: true
         )
         storeInformationView.dismissAll()
+        viewModel.action(
+            input: .changeState(state: .normal)
+        )
+        unDimmedView()
     }
     
     func setStoreInformationConstraints(heightConstraint: CGFloat, bottomConstraint: CGFloat, animated: Bool = false) {
@@ -467,31 +508,41 @@ private extension HomeViewController {
             self?.dimView.backgroundColor = .clear
         }
     }
-}
-
-private extension HomeViewController {
     
-    func checkUserCurrentLocationAuthorization() {
-        switch locationManager.authorizationStatus {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-            locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-        case .authorizedWhenInUse:
-            guard let location = locationManager.location else { return }
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
-            cameraUpdate.animation = .none
-            mapView.mapView.moveCamera(cameraUpdate)
-        default:
-            break
-        }
+    func makeRequestLocation(projection: NMFProjection) -> RequestLocation {
+        let northWestPoint = projection.latlng(from: CGPoint(x: 0, y: 0))
+        let southWestPoint = projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
+        let southEastPoint = projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+        let northEastPoint = projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+        
+        return RequestLocation(
+            northWest: Location(
+                longitude: northWestPoint.lng,
+                latitude: northWestPoint.lat
+            ),
+            southWest: Location(
+                longitude: southWestPoint.lng,
+                latitude: southWestPoint.lat
+            ),
+            southEast: Location(
+                longitude: southEastPoint.lng,
+                latitude: southEastPoint.lat
+            ),
+            northEast: Location(
+                longitude: northEastPoint.lng,
+                latitude: northEastPoint.lat
+            )
+        )
     }
     
-    func checkLocationService() {
-        if locationManager.authorizationStatus == .denied {
-            present(requestLocationServiceAlert, animated: true)
+    func presentErrorAlert(error: ErrorAlertMessage) {
+        let alertController = UIAlertController(title: nil, message: error.errorDescription, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "확인", style: .default))
+        if !(presentedViewController is UIAlertController) {
+            present(alertController, animated: true)
         }
     }
-    
+        
 }
 
 private extension HomeViewController {
@@ -534,6 +585,8 @@ private extension HomeViewController {
         
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            refreshButton.widthAnchor.constraint(equalToConstant: 110),
+            refreshButton.heightAnchor.constraint(equalToConstant: 35),
             refreshButtonBottomConstraint
         ])
         
@@ -550,7 +603,11 @@ private extension HomeViewController {
 extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkUserCurrentLocationAuthorization()
+        viewModel.action(
+            input: .checkLocationAuthorization(
+                status: locationManager.authorizationStatus
+            )
+        )
     }
     
 }
@@ -567,43 +624,18 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         if reason == NMFMapChangedByDeveloper {
             mapView.positionMode = .direction
-            switch locationManager.authorizationStatus {
-            case .denied, .restricted, .notDetermined:
-                locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-            case .authorizedWhenInUse:
-                locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
-            default:
-                break
-            }
             
-            let northWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-            let southWestPoint = mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
-            let southEastPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-            let northEastPoint = mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+            viewModel.action(input:
+                    .checkLocationAuthorizationWhenCameraDidChange(
+                        status: locationManager.authorizationStatus
+                    )
+            )
+            refreshButton.animationFire()
             viewModel.action(
                 input: .refresh(
-                    requestLocation: RequestLocation(
-                        northWest: Location(
-                            longitude: northWestPoint.lng,
-                            latitude: northWestPoint.lat
-                        ),
-                        southWest: Location(
-                            longitude: southWestPoint.lng,
-                            latitude: southWestPoint.lat
-                        ),
-                        southEast: Location(
-                            longitude: southEastPoint.lng,
-                            latitude: southEastPoint.lat
-                        ),
-                        northEast: Location(
-                            longitude: northEastPoint.lng,
-                            latitude: northEastPoint.lat
-                        )
-                    ),
-                    filters: getActivatedTypes()
+                    requestLocation: makeRequestLocation(projection: mapView.projection)
                 )
             )
-            refreshButton.isHidden = true
         }
     }
     
@@ -613,7 +645,6 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
-        unDimmedView()
     }
     
 }

@@ -11,24 +11,24 @@ struct GetOpenClosedUseCaseImpl: GetOpenClosedUseCase {
     
     func execute(
         openingHours: [RegularOpeningHours]
-    ) -> OpenClosedContent {
-        return getOpenClosedContent(openingHour: openingHours)
+    ) throws -> OpenClosedContent {
+        return try getOpenClosedContent(openingHour: openingHours)
     }
     
 }
 
 private extension GetOpenClosedUseCaseImpl {
     
-    func getOpenClosedContent(openingHour: [RegularOpeningHours]) -> OpenClosedContent {
-        let nowOpenClosedType = getOpenClosedType(openingHour: openingHour)
-        lazy var openingHourString: String = {
+    func getOpenClosedContent(openingHour: [RegularOpeningHours]) throws -> OpenClosedContent {
+        let nowOpenClosedType = try getOpenClosedType(openingHour: openingHour)
+        let openingHourString: String = try {
             switch nowOpenClosedType {
             case .none, .dayOff:
                 return OpenClosedType.none.rawValue
             case .breakTime, .closed:
-                return getOpenClosedString(openingHour: openingHour, openClosedType: .open)
+                return try getOpenClosedString(openingHour: openingHour, openClosedType: .open)
             case .open:
-                return getOpenClosedString(openingHour: openingHour, openClosedType: .close)
+                return try getOpenClosedString(openingHour: openingHour, openClosedType: .close)
             }
         }()
         
@@ -38,11 +38,11 @@ private extension GetOpenClosedUseCaseImpl {
 
 private extension GetOpenClosedUseCaseImpl {
     
-    func getOpenClosedType(openingHour: [RegularOpeningHours]) -> OpenClosedType {
+    func getOpenClosedType(openingHour: [RegularOpeningHours]) throws -> OpenClosedType {
         if openingHour.isEmpty {
             return OpenClosedType.none
         }
-        let openCloseTime = getOpenClosedTimeArray(openingHours: openingHour)
+        let openCloseTime = try getOpenClosedTimeArray(openingHours: openingHour)
         if openCloseTime.isEmpty {
             return OpenClosedType.dayOff
         }
@@ -66,8 +66,8 @@ private extension GetOpenClosedUseCaseImpl {
         return OpenClosedType.dayOff
     }
     
-    func getOpenClosedString(openingHour: [RegularOpeningHours], openClosedType: OpenClose) -> String {
-        let openCloseTime = getOpenClosedTimeArray(openingHours: openingHour)
+    func getOpenClosedString(openingHour: [RegularOpeningHours], openClosedType: OpenClose) throws -> String {
+        let openCloseTime = try getOpenClosedTimeArray(openingHours: openingHour)
         var nextTime = openCloseTime.filter({ $0 > Date().toSecond() })
         switch openClosedType {
         case .open:
@@ -92,7 +92,7 @@ private extension GetOpenClosedUseCaseImpl {
         }
     }
     
-    func getOpenClosedTimeArray(openingHours: [RegularOpeningHours]) -> [Int] {
+    func getOpenClosedTimeArray(openingHours: [RegularOpeningHours]) throws -> [Int] {
         var openCloseTime: [Int] = []
         let todayOpenHours = filteredOpeningHours(openingHours: openingHours, day: 0)
         if todayOpenHours.isEmpty {
@@ -101,9 +101,9 @@ private extension GetOpenClosedUseCaseImpl {
         let yesterdayOpenHours = filteredOpeningHours(openingHours: openingHours, day: -1)
         let tomorrowOpenHours = filteredOpeningHours(openingHours: openingHours, day: 1)
         
-        openCloseTime.append(contentsOf: appendYesterdayClosedHour(openingHours: yesterdayOpenHours))
-        openCloseTime.append(contentsOf: appendTodayOpenClosedHour(openingHours: todayOpenHours))
-        openCloseTime.append(contentsOf: appendTomorrowOpenHour(openingHours: tomorrowOpenHours))
+        openCloseTime.append(contentsOf: try appendYesterdayClosedHour(openingHours: yesterdayOpenHours))
+        openCloseTime.append(contentsOf: try appendTodayOpenClosedHour(openingHours: todayOpenHours))
+        openCloseTime.append(contentsOf: try appendTomorrowOpenHour(openingHours: tomorrowOpenHours))
         
         return openCloseTime
     }
@@ -115,49 +115,34 @@ private extension GetOpenClosedUseCaseImpl {
         }
     }
     
-    func appendYesterdayClosedHour(openingHours: [RegularOpeningHours]) -> [Int] {
+    func appendYesterdayClosedHour(openingHours: [RegularOpeningHours]) throws -> [Int] {
         if let businessHour = openingHours.last?.close {
-            if let time = catchHourError(businessHour: businessHour, openClose: .close) {
-                return [time - 86400]
-            }
+            return [try catchHourError(businessHour: businessHour, openClose: .close) - 86400]
         }
         
         return [.zero]
     }
     
-    func appendTodayOpenClosedHour(openingHours: [RegularOpeningHours]) -> [Int] {
+    func appendTodayOpenClosedHour(openingHours: [RegularOpeningHours]) throws -> [Int] {
         var openCloseTime: [Int] = []
-        openingHours.forEach { businessHour in
-            if let openHour = catchHourError(businessHour: businessHour.open, openClose: .open),
-               let closeHour = catchHourError(businessHour: businessHour.close, openClose: .close) {
-                openCloseTime.append(openHour)
-                openCloseTime.append(closeHour)
-            }
+        try openingHours.forEach { businessHour in
+            openCloseTime.append(try catchHourError(businessHour: businessHour.open, openClose: .open))
+            openCloseTime.append(try catchHourError(businessHour: businessHour.close, openClose: .close))
         }
         
         return openCloseTime
     }
     
-    func appendTomorrowOpenHour(openingHours: [RegularOpeningHours]) -> [Int] {
+    func appendTomorrowOpenHour(openingHours: [RegularOpeningHours]) throws -> [Int] {
         if let businessHour = openingHours.first?.open {
-            if let time = catchHourError(businessHour: businessHour, openClose: .open) {
-                return [time + 86400]
-            }
+            return [try catchHourError(businessHour: businessHour, openClose: .open) + 86400]
         }
         
         return [86400 * 2]
     }
     
-    func catchHourError(businessHour: BusinessHour, openClose: OpenClose) -> Int? {
-        do {
-            return try toSecond(businessHour: businessHour, openClose: openClose)
-        } catch let error as OpeningHourError {
-            print(error.description)
-        } catch {
-            print(error)
-        }
-        
-        return nil
+    func catchHourError(businessHour: BusinessHour, openClose: OpenClose) throws -> Int {
+        return try toSecond(businessHour: businessHour, openClose: openClose)
     }
     
     func toSecond(businessHour: BusinessHour, openClose: OpenClose) throws -> Int {

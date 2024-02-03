@@ -34,5 +34,6 @@ protocol SummaryViewModelOutput {
     var setUIContentsOutput: PublishRelay<SummaryViewContents> { get }
     var thumbnailImageOutput: PublishRelay<Data> { get }
     var callButtonOutput: PublishRelay<String> { get }
+    var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
     
 }

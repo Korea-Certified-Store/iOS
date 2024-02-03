@@ -16,7 +16,7 @@ final class DetailView: UIView {
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.pretendard(size: 24, weight: .bold)
+        label.font = UIFont.pretendard(size: 22, weight: .bold)
         label.textColor = UIColor.primary2
         label.numberOfLines = 2
         
@@ -175,7 +175,7 @@ private extension DetailView {
                 category.text = detailViewContents.category
                 detailViewContents.certificationTypes
                     .map({
-                        CertificationLabel(certificationType: $0, fontSize: 11)
+                        CertificationLabel(certificationType: $0)
                     })
                     .forEach { [weak self] in
                         self?.certificationStackView.addArrangedSubview($0)
@@ -232,18 +232,26 @@ private extension DetailView {
     }
     
     func configureConstraints() {
+        storeRepresentConstraints()
+        openingHourConstraints()
+        phoneConstraints()
+        addressConstraints()
+    }
+    
+    func storeRepresentConstraints() {
         NSLayoutConstraint.activate([
             storeTitle.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            storeTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+            storeTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            storeTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
         
         NSLayoutConstraint.activate([
-            category.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 8),
+            category.topAnchor.constraint(equalTo: storeTitle.bottomAnchor, constant: 4),
             category.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            certificationStackView.topAnchor.constraint(equalTo: category.bottomAnchor, constant: 11),
+            certificationStackView.topAnchor.constraint(equalTo: category.bottomAnchor, constant: 9),
             certificationStackView.leadingAnchor.constraint(equalTo: storeTitle.leadingAnchor)
         ])
         
@@ -255,12 +263,21 @@ private extension DetailView {
         ])
         
         NSLayoutConstraint.activate([
+            dismissIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            dismissIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
+            dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
+        ])
+        
+        NSLayoutConstraint.activate([
             storeImageView.topAnchor.constraint(equalTo: divideView.bottomAnchor, constant: 16),
             storeImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             storeImageView.widthAnchor.constraint(equalToConstant: 150),
             storeImageView.heightAnchor.constraint(equalToConstant: 150)
         ])
-        
+    }
+    
+    func openingHourConstraints() {
         NSLayoutConstraint.activate([
             clockIcon.centerYAnchor.constraint(equalTo: storeOpenClosed.centerYAnchor),
             clockIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -282,7 +299,9 @@ private extension DetailView {
             openingHoursStackView.topAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor, constant: 8),
             openingHoursStackView.leadingAnchor.constraint(equalTo: storeOpenClosed.leadingAnchor)
         ])
-        
+    }
+    
+    func phoneConstraints() {
         NSLayoutConstraint.activate([
             phoneIcon.centerYAnchor.constraint(equalTo: phoneNumber.centerYAnchor),
             phoneIcon.leadingAnchor.constraint(equalTo: clockIcon.leadingAnchor),
@@ -294,7 +313,9 @@ private extension DetailView {
             phoneNumber.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 11),
             phoneNumberConstraint
         ])
-        
+    }
+    
+    func addressConstraints() {
         NSLayoutConstraint.activate([
             addressIcon.topAnchor.constraint(equalTo: address.topAnchor),
             addressIcon.leadingAnchor.constraint(equalTo: clockIcon.leadingAnchor),
@@ -306,13 +327,6 @@ private extension DetailView {
             address.topAnchor.constraint(equalTo: phoneNumber.bottomAnchor, constant: 20),
             address.leadingAnchor.constraint(equalTo: addressIcon.trailingAnchor, constant: 13),
             addressConstraint
-        ])
-        
-        NSLayoutConstraint.activate([
-            dismissIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            dismissIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
-            dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
         ])
     }
     

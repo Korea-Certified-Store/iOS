@@ -9,4 +9,7 @@ excluded:
     - KCS/Application
 
 line_length: 140
-file_length: 600
+file_length: 650
+cyclomatic_complexity: 20
+identifier_name:
+    max_length: 50

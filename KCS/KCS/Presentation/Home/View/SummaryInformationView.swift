@@ -131,7 +131,7 @@ private extension SummaryInformationView {
                 category.text = contents.category
                 contents.certificationTypes
                     .map({
-                        CertificationLabel(certificationType: $0, fontSize: 9)
+                        CertificationLabel(certificationType: $0)
                     })
                     .forEach { [weak self] in
                         self?.certificationStackView.addArrangedSubview($0)
