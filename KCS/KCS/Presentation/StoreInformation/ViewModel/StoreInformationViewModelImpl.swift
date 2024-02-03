@@ -86,7 +86,6 @@ private extension StoreInformationViewModelImpl {
     
 }
 
-
 private extension StoreInformationViewModelImpl {
     
     func detailOpeningHour(openingHours: [RegularOpeningHours]) -> [DetailOpeningHour] {

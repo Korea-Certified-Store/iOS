@@ -128,15 +128,6 @@ final class DetailView: UIView {
         return label
     }()
     
-    private let dismissIndicatorView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.swipeBar
-        view.layer.cornerRadius = 2
-        
-        return view
-    }()
-    
     private lazy var addressConstraint = address.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
     private lazy var phoneNumberConstraint = phoneNumber.topAnchor.constraint(equalTo: openingHoursStackView.bottomAnchor, constant: 20)
     
@@ -144,7 +135,6 @@ final class DetailView: UIView {
         super.init(frame: .zero)
         
         setBackgroundColor()
-        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addUIComponents()
         configureConstraints()
     }
@@ -175,7 +165,6 @@ private extension DetailView {
         addSubview(phoneNumber)
         addSubview(addressIcon)
         addSubview(address)
-        addSubview(dismissIndicatorView)
     }
     
     func configureConstraints() {
@@ -207,13 +196,6 @@ private extension DetailView {
             divideView.leadingAnchor.constraint(equalTo: leadingAnchor),
             divideView.trailingAnchor.constraint(equalTo: trailingAnchor),
             divideView.heightAnchor.constraint(equalToConstant: 6)
-        ])
-        
-        NSLayoutConstraint.activate([
-            dismissIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            dismissIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
-            dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
         ])
         
         NSLayoutConstraint.activate([

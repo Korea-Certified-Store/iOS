@@ -40,13 +40,13 @@ final class StoreInformationViewController: UIViewController {
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        dismissAll()
+        
+        isModalInPresentation = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         setBackgroundColor()
         addUIComponents()
         configureConstraints()
