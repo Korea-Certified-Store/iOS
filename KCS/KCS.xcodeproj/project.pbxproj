@@ -307,8 +307,6 @@
 				A8ACB7E02B594F5F00540BD1 /* protocol */,
 				5977BE652B553BA800725C90 /* HomeViewModelImpl.swift */,
 				5977BE672B553C8300725C90 /* HomeDependency.swift */,
-				A8ACB7E12B594F7400540BD1 /* SummaryViewModelImpl.swift */,
-				592262272B6124C400CA5A11 /* DetailViewModelImpl.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -373,6 +371,7 @@
 				A890870B2B4EF8F900767225 /* Extension */,
 				5986DCEA2B392996005AE43B /* Home */,
 				59B886242B6A39E9005750EF /* StoreList */,
+				59B886552B6E3A59005750EF /* StoreInformation */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -398,14 +397,9 @@
 			isa = PBXGroup;
 			children = (
 				591A88802B384E600059E40F /* HomeViewController.swift */,
-				A81EFBD32B6019FD00D0C0D7 /* StoreInformationView.swift */,
-				A890870E2B4F836C00767225 /* SummaryView.swift */,
-				592262232B61203000CA5A11 /* DetailView.swift */,
 				59C306A32B4D7EBA00862625 /* Marker.swift */,
 				A89087032B4E7F3500767225 /* FilterButton.swift */,
 				5977BE572B5524D500725C90 /* RefreshButton.swift */,
-				A802D1F52B5277620091FDE7 /* CertificationLabel.swift */,
-				A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -450,6 +444,46 @@
 			isa = PBXGroup;
 			children = (
 				59B886452B6A5CDC005750EF /* StoreListViewModel.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		59B886552B6E3A59005750EF /* StoreInformation */ = {
+			isa = PBXGroup;
+			children = (
+				59B886572B6E3A8A005750EF /* View */,
+				59B886562B6E3A7F005750EF /* ViewModel */,
+			);
+			path = StoreInformation;
+			sourceTree = "<group>";
+		};
+		59B886562B6E3A7F005750EF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				59B886582B6E3A8E005750EF /* Protocol */,
+				A8ACB7E12B594F7400540BD1 /* SummaryViewModelImpl.swift */,
+				592262272B6124C400CA5A11 /* DetailViewModelImpl.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		59B886572B6E3A8A005750EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A81EFBD32B6019FD00D0C0D7 /* StoreInformationView.swift */,
+				A890870E2B4F836C00767225 /* SummaryView.swift */,
+				592262232B61203000CA5A11 /* DetailView.swift */,
+				A802D1F52B5277620091FDE7 /* CertificationLabel.swift */,
+				A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		59B886582B6E3A8E005750EF /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				A8ACB7DE2B594F4B00540BD1 /* SummaryViewModel.swift */,
+				592262252B61232F00CA5A11 /* DetailViewModel.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -603,8 +637,6 @@
 			isa = PBXGroup;
 			children = (
 				5977BE602B55374000725C90 /* HomeViewModel.swift */,
-				A8ACB7DE2B594F4B00540BD1 /* SummaryViewModel.swift */,
-				592262252B61232F00CA5A11 /* DetailViewModel.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
