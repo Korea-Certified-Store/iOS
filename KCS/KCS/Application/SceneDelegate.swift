@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import RxRelay
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -24,27 +25,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
             getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
         )
-        let summaryViewModel = SummaryViewModelImpl(
-            getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-            fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
+        let summaryViewHeightObserver = PublishRelay<CGFloat>()
+        let storeInformationViewController = StoreInformationViewController(
+            summaryViewHeightObserver: summaryViewHeightObserver,
+            viewModel: StoreInformationViewModelImpl(
+                getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
+                fetchImageUseCase: FetchImageUseCaseImpl(
+                    repository: ImageRepositoryImpl(cache: ImageCache())
+                )
+            )
         )
+        
         window?.rootViewController = HomeViewController(
             viewModel: viewModel,
-            summaryViewModel: summaryViewModel,
-            detailViewModel: DetailViewModelImpl(
-                getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-                fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
-            ),
+            storeInformationViewController: storeInformationViewController,
             storeListViewController: StoreListViewController(
                 viewModel: StoreListViewModelImpl(
                     fetchImageUseCase: FetchImageUseCaseImpl(
                         repository: ImageRepositoryImpl(cache: ImageCache())
                     )
                 )
-            )
+            ),
+            summaryViewHeightObserver: summaryViewHeightObserver
         )
         window?.makeKeyAndVisible()
     }
-
+    
 }
 
