@@ -20,15 +20,13 @@ final class HomeViewModelImpl: HomeViewModel {
     let refreshOutput = PublishRelay<Void>()
     let locationButtonOutput = PublishRelay<NMFMyPositionMode>()
     let locationButtonImageNameOutput = PublishRelay<String>()
-    let storeInformationViewHeightOutput = PublishRelay<StoreInformationViewConstraints>()
-    let summaryToDetailOutput = PublishRelay<Void>()
-    let detailToSummaryOutput = PublishRelay<Void>()
     let setMarkerOutput = PublishRelay<MarkerContents>()
     let locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
     let locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     let applyFiltersOutput = PublishRelay<[FilteredStores]>()
+    let dimViewTapGestureEndedOutput = PublishRelay<Void>()
     
     var dependency: HomeDependency
     
@@ -54,20 +52,8 @@ final class HomeViewModelImpl: HomeViewModel {
             markerTapped(tag: tag)
         case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
             locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
-        case .setStoreInformationOriginalHeight(let height):
-            setStoreInformationOriginalHeight(height: height)
-        case .storeInformationViewPanGestureChanged(let height):
-            storeInformationViewPanGestureChanged(height: height)
-        case .storeInformationViewPanGestureEnded(let height):
-            storeInformationViewPanGestureEnded(height: height)
-        case .storeInformationViewSwipe(let velocity):
-            storeInformationViewSwipe(velocity: velocity)
-        case .storeInformationViewTapGestureEnded:
-            storeInformationViewTapGestureEnded()
         case .dimViewTapGestureEnded:
             dimViewTapGestureEnded()
-        case .changeState(let state):
-            changeState(state: state)
         case .setMarker(let store, let certificationType):
             setMarker(store: store, certificationType: certificationType)
         case .checkLocationAuthorization(let status):
@@ -212,100 +198,8 @@ private extension HomeViewModelImpl {
         }
     }
     
-    func setStoreInformationOriginalHeight(height: CGFloat) {
-        dependency.storeInformationOriginalHeight = height
-    }
-    
-    func storeInformationViewPanGestureChanged(height: CGFloat) {
-        if height > 420 && height < 630 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: height,
-                    bottomConstraint: height - (420 + 21)
-                )
-            )
-            summaryToDetailOutput.accept(())
-        } else if height > 230 && height <= 420 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: height,
-                    bottomConstraint: -16
-                )
-            )
-            detailToSummaryOutput.accept(())
-        }
-    }
-    
-    func storeInformationViewPanGestureEnded(height: CGFloat) {
-        if height > 420 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: 616,
-                    bottomConstraint: 616 - 441,
-                    animated: true
-                )
-            )
-            summaryToDetailOutput.accept(())
-        } else {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: dependency.storeInformationOriginalHeight,
-                    bottomConstraint: -16,
-                    animated: true
-                )
-            )
-            detailToSummaryOutput.accept(())
-        }
-    }
-    
-    func storeInformationViewSwipe(velocity: Double) {
-        if velocity < -1000 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: 616,
-                    bottomConstraint: 616 - 441,
-                    animated: true
-                )
-            )
-            summaryToDetailOutput.accept(())
-        } else if velocity > 1000 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: dependency.storeInformationOriginalHeight,
-                    bottomConstraint: -16,
-                    animated: true
-                )
-            )
-            detailToSummaryOutput.accept(())
-        }
-    }
-    
-    func storeInformationViewTapGestureEnded() {
-        if dependency.state == .summary {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: 616,
-                    bottomConstraint: 616 - 441,
-                    animated: true
-                )
-            )
-            summaryToDetailOutput.accept(())
-        }
-    }
-    
     func dimViewTapGestureEnded() {
-        storeInformationViewHeightOutput.accept(
-            StoreInformationViewConstraints(
-                heightConstraint: dependency.storeInformationOriginalHeight,
-                bottomConstraint: -16,
-                animated: true
-            )
-        )
-        detailToSummaryOutput.accept(())
-    }
-    
-    func changeState(state: HomeViewState) {
-        dependency.state = state
+        dimViewTapGestureEndedOutput.accept(())
     }
     
     func checkLocationAuthorization(status: CLAuthorizationStatus) {

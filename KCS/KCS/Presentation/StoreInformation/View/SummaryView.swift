@@ -11,8 +11,6 @@ import RxCocoa
 
 final class SummaryView: UIView {
     
-    private let disposeBag = DisposeBag()
-    
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -86,76 +84,19 @@ final class SummaryView: UIView {
     
     private var callDisposable: Disposable?
     
-    private let dismissIndicatorView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.swipeBar
-        view.layer.cornerRadius = 2
-        
-        return view
-    }()
+    private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     
-    private let viewModel: SummaryViewModel
-    private let summaryViewHeightObserver: PublishRelay<CGFloat>
-    
-    init(viewModel: SummaryViewModel, summaryViewHeightObserver: PublishRelay<CGFloat>) {
-        self.viewModel = viewModel
+    init(summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>) {
         self.summaryViewHeightObserver = summaryViewHeightObserver
         super.init(frame: .zero)
         
         setBackgroundColor()
-        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addUIComponents()
         configureConstraints()
-        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-private extension SummaryView {
-    
-    func bind() {
-        viewModel.setUIContentsOutput
-            .bind { [weak self] contents in
-                guard let self = self else { return }
-                storeTitle.text = contents.storeTitle
-                if storeTitle.numberOfVisibleLines == 1 {
-                    summaryViewHeightObserver.accept(230)
-                } else {
-                    summaryViewHeightObserver.accept(253)
-                }
-                storeOpenClosed.text = contents.openClosedContent.openClosedType.rawValue
-                openingHour.text = contents.openClosedContent.nextOpeningHour
-                category.text = contents.category
-                contents.certificationTypes
-                    .map({
-                        CertificationLabel(certificationType: $0)
-                    })
-                    .forEach { [weak self] in
-                        self?.certificationStackView.addArrangedSubview($0)
-                    }
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.thumbnailImageOutput
-            .subscribe(onNext: { [weak self] data in
-                self?.storeImageView.image = UIImage(data: data)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.callButtonOutput
-            .bind { [weak self] phoneNumber in
-                guard let self = self else { return }
-                storeCallButton.isHidden = false
-                callDisposable = storeCallButton.rx.tap
-                    .bind { [weak self] _ in
-                        self?.callButtonTapped(phoneNum: phoneNumber)
-                    }
-            }
-            .disposed(by: disposeBag)
     }
     
 }
@@ -174,7 +115,6 @@ private extension SummaryView {
         addSubview(openingHour)
         addSubview(storeImageView)
         addSubview(storeCallButton)
-        addSubview(dismissIndicatorView)
     }
     
     func configureConstraints() {
@@ -217,13 +157,7 @@ private extension SummaryView {
             storeImageView.widthAnchor.constraint(equalToConstant: 132),
             storeImageView.heightAnchor.constraint(equalToConstant: 132)
         ])
-        
-        NSLayoutConstraint.activate([
-            dismissIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            dismissIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
-            dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
-        ])
+
     }
     
     func callButtonTapped(phoneNum: String) {
@@ -236,9 +170,35 @@ private extension SummaryView {
 
 extension SummaryView {
     
-    func setUIContents(store: Store) {
-        resetUIContents()
-        viewModel.action(input: .setUIContents(store: store))
+    func setUIContents(contents: SummaryViewContents) {
+        storeTitle.text = contents.storeTitle
+        if storeTitle.numberOfVisibleLines == 1 {
+            summaryViewHeightObserver.accept(.small)
+        } else {
+            summaryViewHeightObserver.accept(.large)
+        }
+        storeOpenClosed.text = contents.openClosedContent.openClosedType.rawValue
+        openingHour.text = contents.openClosedContent.nextOpeningHour
+        category.text = contents.category
+        contents.certificationTypes
+            .map({
+                CertificationLabel(certificationType: $0)
+            })
+            .forEach { [weak self] in
+                self?.certificationStackView.addArrangedSubview($0)
+            }
+    }
+    
+    func setThumbnailImage(imageData: Data) {
+        storeImageView.image = UIImage(data: imageData)
+    }
+    
+    func setCallButton(phoneNumber: String) {
+        storeCallButton.isHidden = false
+        callDisposable = storeCallButton.rx.tap
+            .bind { [weak self] _ in
+                self?.callButtonTapped(phoneNum: phoneNumber)
+            }
     }
     
     func resetUIContents() {

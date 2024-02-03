@@ -1,22 +1,24 @@
 //
-//  DetailViewModelImpl.swift
+//  StoreInformationViewModelImpl.swift
 //  KCS
 //
-//  Created by 조성민 on 1/24/24.
+//  Created by 조성민 on 2/3/24.
 //
 
-import RxSwift
 import RxRelay
+import RxSwift
 
-final class DetailViewModelImpl: DetailViewModel {
+final class StoreInformationViewModelImpl: StoreInformationViewModel {
     
     private let disposeBag = DisposeBag()
     
     let getOpenClosedUseCase: GetOpenClosedUseCase
     let fetchImageUseCase: FetchImageUseCase
     
-    let setUIContentsOutput = PublishRelay<DetailViewContents>()
+    let setDetailUIContentsOutput = PublishRelay<DetailViewContents>()
+    let setSummaryUIContentsOutput = PublishRelay<SummaryViewContents>()
     let thumbnailImageOutput = PublishRelay<Data>()
+    let summaryCallButtonOutput = PublishRelay<String>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     
     init(getOpenClosedUseCase: GetOpenClosedUseCase, fetchImageUseCase: FetchImageUseCase) {
@@ -24,7 +26,7 @@ final class DetailViewModelImpl: DetailViewModel {
         self.fetchImageUseCase = fetchImageUseCase
     }
     
-    func action(input: DetailViewModelInputCase) {
+    func action(input: StoreInformationViewModelInputCase) {
         switch input {
         case .setUIContents(let store):
             setUIContents(store: store)
@@ -33,19 +35,33 @@ final class DetailViewModelImpl: DetailViewModel {
     
 }
 
-private extension DetailViewModelImpl {
+private extension StoreInformationViewModelImpl {
     
     func setUIContents(store: Store) {
         fetchThumbnailImage(localPhotos: store.localPhotos)
+        
+        if let phoneNumber = store.phoneNumber {
+            summaryCallButtonOutput.accept(phoneNumber)
+        }
+        
         do {
-            setUIContentsOutput.accept(
+            let openClosedContent = try getOpenClosedUseCase.execute(openingHours: store.openingHour)
+            setSummaryUIContentsOutput.accept(
+                SummaryViewContents(
+                    storeTitle: store.title,
+                    category: store.category,
+                    certificationTypes: store.certificationTypes,
+                    openClosedContent: openClosedContent
+                )
+            )
+            setDetailUIContentsOutput.accept(
                 DetailViewContents(
                     storeTitle: store.title,
                     category: store.category,
                     certificationTypes: store.certificationTypes,
                     address: store.address,
                     phoneNumber: store.phoneNumber ?? "전화번호 정보 없음",
-                    openClosedContent: try getOpenClosedUseCase.execute(openingHours: store.openingHour),
+                    openClosedContent: openClosedContent,
                     detailOpeningHour: detailOpeningHour(openingHours: store.openingHour)
                 )
             )
@@ -70,7 +86,7 @@ private extension DetailViewModelImpl {
     
 }
 
-private extension DetailViewModelImpl {
+private extension StoreInformationViewModelImpl {
     
     func detailOpeningHour(openingHours: [RegularOpeningHours]) -> [DetailOpeningHour] {
         if openingHours.isEmpty { return [] }

@@ -11,8 +11,6 @@ import RxRelay
 
 final class DetailView: UIView {
     
-    private let disposeBag = DisposeBag()
-    
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -130,83 +128,21 @@ final class DetailView: UIView {
         return label
     }()
     
-    private let dismissIndicatorView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.swipeBar
-        view.layer.cornerRadius = 2
-        
-        return view
-    }()
-    
-    private let viewModel: DetailViewModel
     private lazy var addressConstraint = address.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
     private lazy var phoneNumberConstraint = phoneNumber.topAnchor.constraint(equalTo: openingHoursStackView.bottomAnchor, constant: 20)
     
-    init(viewModel: DetailViewModel) {
-        self.viewModel = viewModel
+    init() {
         super.init(frame: .zero)
         
         setBackgroundColor()
-        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addUIComponents()
         configureConstraints()
-        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-}
-
-private extension DetailView {
-    
-    func bind() {
-        viewModel.thumbnailImageOutput
-            .subscribe(onNext: { [weak self] data in
-                self?.storeImageView.image = UIImage(data: data)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.setUIContentsOutput
-            .bind { [weak self] detailViewContents in
-                guard let self = self else { return }
-                storeTitle.text = detailViewContents.storeTitle
-                category.text = detailViewContents.category
-                detailViewContents.certificationTypes
-                    .map({
-                        CertificationLabel(certificationType: $0)
-                    })
-                    .forEach { [weak self] in
-                        self?.certificationStackView.addArrangedSubview($0)
-                    }
-                address.text = detailViewContents.address
-                phoneNumber.text = detailViewContents.phoneNumber
-                setOpeningHourText(openClosedContent: detailViewContents.openClosedContent)
-                
-                var detailOpeningHours = detailViewContents.detailOpeningHour
-                if detailOpeningHours.isEmpty { return }
-                let today = detailOpeningHours.removeFirst()
-                openingHoursStackView.addArrangedSubview(
-                    OpeningHoursCellView(
-                        weekday: today.weekDay,
-                        openingHour: today.openingHour,
-                        isToday: true
-                    )
-                )
-                detailOpeningHours.forEach { [weak self] detailOpeningHour in
-                    self?.openingHoursStackView.addArrangedSubview(
-                        OpeningHoursCellView(
-                            weekday: detailOpeningHour.weekDay,
-                            openingHour: detailOpeningHour.openingHour
-                        )
-                    )
-                }
-            }
-            .disposed(by: disposeBag)
-    }
-    
 }
 
 private extension DetailView {
@@ -229,7 +165,6 @@ private extension DetailView {
         addSubview(phoneNumber)
         addSubview(addressIcon)
         addSubview(address)
-        addSubview(dismissIndicatorView)
     }
     
     func configureConstraints() {
@@ -261,13 +196,6 @@ private extension DetailView {
             divideView.leadingAnchor.constraint(equalTo: leadingAnchor),
             divideView.trailingAnchor.constraint(equalTo: trailingAnchor),
             divideView.heightAnchor.constraint(equalToConstant: 6)
-        ])
-        
-        NSLayoutConstraint.activate([
-            dismissIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            dismissIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
-            dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
         ])
         
         NSLayoutConstraint.activate([
@@ -351,9 +279,42 @@ private extension DetailView {
 
 extension DetailView {
     
-    func setUIContents(store: Store) {
-        resetUIContents()
-        viewModel.action(input: .setUIContents(store: store))
+    func setUIContents(contents: DetailViewContents) {
+        storeTitle.text = contents.storeTitle
+        category.text = contents.category
+        contents.certificationTypes
+            .map({
+                CertificationLabel(certificationType: $0)
+            })
+            .forEach { [weak self] in
+                self?.certificationStackView.addArrangedSubview($0)
+            }
+        address.text = contents.address
+        phoneNumber.text = contents.phoneNumber
+        setOpeningHourText(openClosedContent: contents.openClosedContent)
+        
+        var detailOpeningHours = contents.detailOpeningHour
+        if detailOpeningHours.isEmpty { return }
+        let today = detailOpeningHours.removeFirst()
+        openingHoursStackView.addArrangedSubview(
+            OpeningHoursCellView(
+                weekday: today.weekDay,
+                openingHour: today.openingHour,
+                isToday: true
+            )
+        )
+        detailOpeningHours.forEach { [weak self] detailOpeningHour in
+            self?.openingHoursStackView.addArrangedSubview(
+                OpeningHoursCellView(
+                    weekday: detailOpeningHour.weekDay,
+                    openingHour: detailOpeningHour.openingHour
+                )
+            )
+        }
+    }
+    
+    func setThumbnailImage(imageData: Data) {
+        storeImageView.image = UIImage(data: imageData)
     }
     
     func resetUIContents() {

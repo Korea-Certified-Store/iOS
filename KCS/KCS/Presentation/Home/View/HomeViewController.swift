@@ -14,8 +14,6 @@ import RxGesture
 
 final class HomeViewController: UIViewController {
     
-    private let disposeBag = DisposeBag()
-    
     private lazy var goodPriceFilterButton: FilterButton = {
         let type = CertificationType.goodPrice
         let button = FilterButton(type: type)
@@ -78,9 +76,6 @@ final class HomeViewController: UIViewController {
         
         return button
     }()
-    
-    private var markers: [Marker] = []
-    private var clickedMarker: Marker?
     
     private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
@@ -160,85 +155,24 @@ final class HomeViewController: UIViewController {
         return view
     }()
     
-    private lazy var storeInformationView: StoreInformationView = {
-        let view = StoreInformationView(
-            summaryViewModel: summaryViewModel,
-            summaryViewHeightObserver: summaryViewHeightObserver,
-            detailViewModel: detailViewModel
-        )
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.rx.panGesture()
-            .when(.changed)
-            .bind { [weak self] recognizer in
-                guard let self = self else { return }
-                let transition = recognizer.translation(in: storeInformationView)
-                recognizer.setTranslation(.zero, in: storeInformationView)
-                
-                viewModel.action(
-                    input: .storeInformationViewPanGestureChanged(
-                        height: storeInformationHeightConstraint.constant - transition.y
-                    )
-                )
-            }
-            .disposed(by: disposeBag)
-        
-        view.rx.panGesture()
-            .when(.ended)
-            .bind { [weak self] recognizer in
-                guard let self = self else { return }
-                viewModel.action(
-                    input: .storeInformationViewSwipe(
-                        velocity: recognizer.velocity(in: view).y
-                    )
-                )
-                viewModel.action(
-                    input: .storeInformationViewPanGestureEnded(
-                        height: storeInformationHeightConstraint.constant
-                    )
-                )
-            }
-            .disposed(by: disposeBag)
-        
-        view.rx.tapGesture()
-            .when(.ended)
-            .bind { [weak self] _ in
-                guard let self = self else { return }
-                viewModel.action(
-                    input: .storeInformationViewTapGestureEnded
-                )
-            }
-            .disposed(by: disposeBag)
-        
-        return view
-    }()
-    
+    private let disposeBag = DisposeBag()
+    private var markers: [Marker] = []
+    private let storeInformationViewController: StoreInformationViewController
+    private var clickedMarker: Marker?
     private let storeListViewController: StoreListViewController
-    
     private let viewModel: HomeViewModel
-    private let summaryViewModel: SummaryViewModel
-    private let detailViewModel: DetailViewModel
-    private lazy var storeInformationHeightConstraint = storeInformationView.heightAnchor.constraint(equalToConstant: 0)
-    private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
-        equalTo: storeInformationView.topAnchor,
-        constant: -37
-    )
-    private lazy var refreshButtonBottomConstraint = refreshButton.bottomAnchor.constraint(
-        equalTo: storeInformationView.topAnchor,
-        constant: -37
-    )
-    private let summaryViewHeightObserver = PublishRelay<CGFloat>()
+    private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     
     init(
         viewModel: HomeViewModel,
-        summaryViewModel: SummaryViewModel,
-        detailViewModel: DetailViewModel,
-        storeListViewController: StoreListViewController
+        storeInformationViewController: StoreInformationViewController,
+        storeListViewController: StoreListViewController,
+        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     ) {
         self.viewModel = viewModel
-        self.summaryViewModel = summaryViewModel
-        self.detailViewModel = detailViewModel
+        self.storeInformationViewController = storeInformationViewController
         self.storeListViewController = storeListViewController
+        self.summaryViewHeightObserver = summaryViewHeightObserver
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -252,6 +186,7 @@ final class HomeViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         bind()
+        unDimmedView()
         
         viewModel.action(
             input: .checkLocationAuthorization(
@@ -338,54 +273,39 @@ private extension HomeViewController {
     func bindStoreInformationView() {
         viewModel.getStoreInformationOutput
             .bind { [weak self] store in
-                self?.storeInformationView.setUIContents(store: store)
+                self?.storeInformationViewController.setUIContents(store: store)
             }
             .disposed(by: disposeBag)
         
-        viewModel.storeInformationViewHeightOutput
-            .bind { [weak self] constraints in
-                self?.setStoreInformationConstraints(
-                    heightConstraint: constraints.heightConstraint,
-                    bottomConstraint: constraints.bottomConstraint,
-                    animated: constraints.animated
-                )
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.detailToSummaryOutput
+        viewModel.dimViewTapGestureEndedOutput
             .bind { [weak self] _ in
-                self?.storeInformationView.changeToSummary()
+                self?.storeInformationViewController.changeToSummary()
                 self?.unDimmedView()
-                self?.viewModel.action(
-                    input: .changeState(state: .summary)
-                )
             }
             .disposed(by: disposeBag)
         
-        viewModel.summaryToDetailOutput
-            .bind { [weak self] _ in
-                self?.storeInformationView.changeToDetail()
-                self?.dimmedView()
-                self?.viewModel.action(
-                    input: .changeState(state: .detail)
-                )
+        summaryViewHeightObserver.bind { [weak self] heightCase in
+            guard let self = self else { return }
+            if let sheet = storeInformationViewController.sheetPresentationController {
+                sheet.animateChanges {
+                    switch heightCase {
+                    case .small:
+                        sheet.detents = [.smallSummaryViewDetent, .detailViewDetent]
+                        sheet.selectedDetentIdentifier = .smallSummaryDetentIdentifier
+                    case .large:
+                        sheet.detents = [.largeSummaryViewDetent, .detailViewDetent]
+                        sheet.selectedDetentIdentifier = .largeSummaryDetentIdentifier
+                    }
+                }
+                sheet.delegate = self
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = 15
+                sheet.largestUndimmedDetentIdentifier = .detailDetentIdentifier
             }
-            .disposed(by: disposeBag)
-        
-        // MARK: 추후 수정 필요
-        summaryViewHeightObserver.bind { [weak self] height in
-            self?.viewModel.action(
-                input: .setStoreInformationOriginalHeight(height: height)
-            )
-            self?.setStoreInformationConstraints(
-                heightConstraint: height,
-                bottomConstraint: -16,
-                animated: true
-            )
-            self?.storeInformationView.changeToSummary()
-            self?.viewModel.action(
-                input: .changeState(state: .summary)
-            )
+            storeInformationViewController.changeToSummary()
+            if !(presentedViewController is StoreInformationViewController) {
+                present(storeInformationViewController, animated: true)
+            }
         }
         .disposed(by: disposeBag)
     }
@@ -440,18 +360,6 @@ private extension HomeViewController {
                 self?.presentErrorAlert(error: error)
             }
             .disposed(by: disposeBag)
-        
-        summaryViewModel.errorAlertOutput
-            .bind { [weak self] error in
-                self?.presentErrorAlert(error: error)
-            }
-            .disposed(by: disposeBag)
-        
-        detailViewModel.errorAlertOutput
-            .bind { [weak self] error in
-                self?.presentErrorAlert(error: error)
-            }
-            .disposed(by: disposeBag)
     }
     
 }
@@ -464,7 +372,7 @@ private extension HomeViewController {
             if let clickedMarker = self?.clickedMarker {
                 if clickedMarker == marker { return true }
                 clickedMarker.deselect()
-                self?.storeInformationViewDismiss()
+                self?.storeInformationViewDismiss(changeMarker: true)
             }
             
             self?.viewModel.action(
@@ -477,29 +385,11 @@ private extension HomeViewController {
         }
     }
     
-    func storeInformationViewDismiss() {
+    func storeInformationViewDismiss(changeMarker: Bool = false) {
         clickedMarker?.deselect()
         clickedMarker = nil
-        setStoreInformationConstraints(
-            heightConstraint: 0,
-            bottomConstraint: -37,
-            animated: true
-        )
-        storeInformationView.dismissAll()
-        viewModel.action(
-            input: .changeState(state: .normal)
-        )
-        unDimmedView()
-    }
-    
-    func setStoreInformationConstraints(heightConstraint: CGFloat, bottomConstraint: CGFloat, animated: Bool = false) {
-        locationButtonBottomConstraint.constant = bottomConstraint
-        refreshButtonBottomConstraint.constant = bottomConstraint
-        storeInformationHeightConstraint.constant = heightConstraint
-        if animated {
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.view.layoutIfNeeded()
-            }
+        if !changeMarker {
+            storeInformationViewController.dismiss(animated: true)
         }
     }
     
@@ -514,6 +404,11 @@ private extension HomeViewController {
         dimView.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.dimView.backgroundColor = .clear
+        }
+        if let sheet = storeInformationViewController.sheetPresentationController {
+            sheet.animateChanges {
+                sheet.selectedDetentIdentifier = .smallSummaryDetentIdentifier
+            }
         }
     }
     
@@ -542,14 +437,6 @@ private extension HomeViewController {
             )
         )
     }
-    
-    func presentErrorAlert(error: ErrorAlertMessage) {
-        let alertController = UIAlertController(title: nil, message: error.errorDescription, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "확인", style: .default))
-        if !(presentedViewController is UIAlertController) {
-            present(alertController, animated: true)
-        }
-    }
         
 }
 
@@ -561,7 +448,6 @@ private extension HomeViewController {
         mapView.addSubview(filterButtonStackView)
         mapView.addSubview(refreshButton)
         mapView.addSubview(dimView)
-        mapView.addSubview(storeInformationView)
     }
     
     func configureConstraints() {
@@ -582,8 +468,7 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             locationButton.widthAnchor.constraint(equalToConstant: 48),
-            locationButton.heightAnchor.constraint(equalToConstant: 48),
-            locationButtonBottomConstraint
+            locationButton.heightAnchor.constraint(equalToConstant: 48)
         ])
         
         NSLayoutConstraint.activate([
@@ -594,15 +479,7 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
-            refreshButton.heightAnchor.constraint(equalToConstant: 35),
-            refreshButtonBottomConstraint
-        ])
-        
-        NSLayoutConstraint.activate([
-            storeInformationView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
-            storeInformationView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
-            storeInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 0),
-            storeInformationHeightConstraint
+            refreshButton.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
     
@@ -653,6 +530,25 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
+    }
+    
+}
+
+extension HomeViewController: UISheetPresentationControllerDelegate {
+    
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        if let identifier = sheetPresentationController.selectedDetentIdentifier {
+            switch identifier {
+            case .smallSummaryDetentIdentifier, .largeSummaryDetentIdentifier:
+                storeInformationViewController.changeToSummary()
+                unDimmedView()
+            case .detailDetentIdentifier:
+                storeInformationViewController.changeToDetail()
+                dimmedView()
+            default:
+                break
+            }
+        }
     }
     
 }
