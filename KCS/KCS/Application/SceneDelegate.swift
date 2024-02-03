@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
             getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
         )
-        let summaryViewHeightObserver = PublishRelay<CGFloat>()
+        let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
         let storeInformationViewController = StoreInformationViewController(
             summaryViewHeightObserver: summaryViewHeightObserver,
             viewModel: StoreInformationViewModelImpl(

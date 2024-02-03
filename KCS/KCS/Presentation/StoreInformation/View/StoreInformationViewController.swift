@@ -22,7 +22,7 @@ final class StoreInformationViewController: UIViewController {
         return view
     }()
     
-    private let summaryViewHeightObserver: PublishRelay<CGFloat>
+    private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     
     private lazy var detailView: DetailView = {
         let view = DetailView()
@@ -34,7 +34,7 @@ final class StoreInformationViewController: UIViewController {
     private let viewModel: StoreInformationViewModel
     
     init(
-        summaryViewHeightObserver: PublishRelay<CGFloat>,
+        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
         viewModel: StoreInformationViewModel
     ) {
         self.summaryViewHeightObserver = summaryViewHeightObserver
@@ -115,15 +115,6 @@ extension StoreInformationViewController {
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.summaryView.alpha = 0
             self?.detailView.alpha = 1
-        }
-    }
-    
-    func dismissAll() {
-        summaryView.isUserInteractionEnabled = false
-        detailView.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.summaryView.alpha = 0
-            self?.detailView.alpha = 0
         }
     }
     

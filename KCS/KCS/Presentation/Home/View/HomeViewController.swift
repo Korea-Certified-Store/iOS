@@ -161,13 +161,13 @@ final class HomeViewController: UIViewController {
     private var clickedMarker: Marker?
     private let storeListViewController: StoreListViewController
     private let viewModel: HomeViewModel
-    private let summaryViewHeightObserver: PublishRelay<CGFloat>
+    private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     
     init(
         viewModel: HomeViewModel,
         storeInformationViewController: StoreInformationViewController,
         storeListViewController: StoreListViewController,
-        summaryViewHeightObserver: PublishRelay<CGFloat>
+        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     ) {
         self.viewModel = viewModel
         self.storeInformationViewController = storeInformationViewController
@@ -284,14 +284,15 @@ private extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        summaryViewHeightObserver.bind { [weak self] height in
+        summaryViewHeightObserver.bind { [weak self] heightCase in
             guard let self = self else { return }
             if let sheet = storeInformationViewController.sheetPresentationController {
                 sheet.animateChanges {
-                    if height == 230 { // TODO: 하드코딩 삭제
+                    switch heightCase {
+                    case .small:
                         sheet.detents = [.smallSummaryViewDetent, .detailViewDetent]
                         sheet.selectedDetentIdentifier = .smallSummaryDetentIdentifier
-                    } else {
+                    case .large:
                         sheet.detents = [.largeSummaryViewDetent, .detailViewDetent]
                         sheet.selectedDetentIdentifier = .largeSummaryDetentIdentifier
                     }

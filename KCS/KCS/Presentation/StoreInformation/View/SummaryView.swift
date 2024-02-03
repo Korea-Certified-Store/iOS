@@ -84,9 +84,9 @@ final class SummaryView: UIView {
     
     private var callDisposable: Disposable?
     
-    private let summaryViewHeightObserver: PublishRelay<CGFloat>
+    private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     
-    init(summaryViewHeightObserver: PublishRelay<CGFloat>) {
+    init(summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>) {
         self.summaryViewHeightObserver = summaryViewHeightObserver
         super.init(frame: .zero)
         
@@ -173,9 +173,9 @@ extension SummaryView {
     func setUIContents(contents: SummaryViewContents) {
         storeTitle.text = contents.storeTitle
         if storeTitle.numberOfVisibleLines == 1 {
-            summaryViewHeightObserver.accept(230)
+            summaryViewHeightObserver.accept(.small)
         } else {
-            summaryViewHeightObserver.accept(253)
+            summaryViewHeightObserver.accept(.large)
         }
         storeOpenClosed.text = contents.openClosedContent.openClosedType.rawValue
         openingHour.text = contents.openClosedContent.nextOpeningHour
