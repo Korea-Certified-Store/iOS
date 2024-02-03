@@ -1,0 +1,12 @@
+disabled_rules:
+    - trailing_whitespace
+
+opt_in_rules:
+    - empty_string
+
+excluded:
+    - Pods
+    - KCS/Application
+
+line_length: 140
+file_length: 600

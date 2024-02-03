@@ -1,5 +1,5 @@
 ---
-name: issue template
+name: Issue Template
 about: issue template
 title: ''
 labels: ''
@@ -8,3 +8,4 @@ assignees: ''
 ---
 
 ## 📋 Description
+
