@@ -11,5 +11,6 @@ struct HomeDependency {
     
     let disposeBag = DisposeBag()
     var activatedFilter: [CertificationType] = []
+    var fetchCount: Int = .zero
     
 }

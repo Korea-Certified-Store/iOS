@@ -14,8 +14,8 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
     func execute(
         requestLocation: RequestLocation
     ) -> Observable<[Store]> {
-        let newLocation = parallelTranslate(requestLocation: requestLocation)
-        return repository.fetchRefreshStores(requestLocation: newLocation)
+//        let newLocation = parallelTranslate(requestLocation: requestLocation)
+        return repository.fetchRefreshStores(requestLocation: requestLocation)
     }
     
 }

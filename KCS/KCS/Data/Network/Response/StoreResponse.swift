@@ -13,6 +13,6 @@ struct StoreResponse: APIResponse {
     
     let code: Int
     let message: String
-    let data: [ResponseType]
+    let data: [[ResponseType]]
     
 }

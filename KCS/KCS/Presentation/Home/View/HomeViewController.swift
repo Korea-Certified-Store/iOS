@@ -219,7 +219,7 @@ private extension HomeViewController {
     }
     
     func bindRefresh() {
-        viewModel.refreshOutput
+        viewModel.refreshDoneOutput
             .bind { [weak self] _ in
                 self?.refreshButton.animationInvalidate()
             }
@@ -227,7 +227,7 @@ private extension HomeViewController {
     }
     
     func bindApplyFilters() {
-        viewModel.applyFiltersOutput
+        viewModel.filteredStoresOutput
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
@@ -355,7 +355,7 @@ private extension HomeViewController {
             .scan(false) { [weak self] (lastState, _) in
                 guard let self = self else { return lastState }
                 viewModel.action(
-                    input: .filterButtonTapped(activatedFilter: type, fetchCount: 1)
+                    input: .filterButtonTapped(activatedFilter: type)
                     // TODO: fetchCount Dependency에서 처리
                 )
                 return !lastState
@@ -490,7 +490,8 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
-            refreshButton.heightAnchor.constraint(equalToConstant: 35)
+            refreshButton.heightAnchor.constraint(equalToConstant: 35),
+            refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
         ])
     }
     
