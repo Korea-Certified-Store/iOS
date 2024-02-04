@@ -46,6 +46,8 @@ final class HomeViewModelImpl: HomeViewModel {
         switch input {
         case .refresh(let requestLocation):
             refresh(requestLocation: requestLocation)
+        case .moreStoreButtonTapped:
+            moreStoreButtonTapped()
         case .filterButtonTapped(let filter):
             filterButtonTapped(filter: filter)
         case .markerTapped(let tag):
@@ -76,6 +78,7 @@ private extension HomeViewModelImpl {
         .subscribe(
             onNext: { [weak self] stores in
                 guard let self = self else { return }
+                dependency.fetchCount = .zero
                 applyFilters(stores: stores, filters: getActivatedTypes())
                 refreshDoneOutput.accept(())
             },
@@ -88,6 +91,11 @@ private extension HomeViewModelImpl {
             }
         )
         .disposed(by: dependency.disposeBag)
+    }
+    
+    func moreStoreButtonTapped() {
+        dependency.fetchCount += 1
+        applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
     }
     
     func filterButtonTapped(filter: CertificationType) {

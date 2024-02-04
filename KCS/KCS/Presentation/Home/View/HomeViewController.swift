@@ -131,7 +131,20 @@ final class HomeViewController: UIViewController {
                     )
                 )
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
+    private lazy var moreStoreButton: MoreStoreButton = {
+        let button = MoreStoreButton()
+        button.isHidden = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.rx.tap
+            .bind { [weak self] in
+                self?.viewModel.action(input: .moreStoreButtonTapped)
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
@@ -222,6 +235,8 @@ private extension HomeViewController {
         viewModel.refreshDoneOutput
             .bind { [weak self] _ in
                 self?.refreshButton.animationInvalidate()
+                self?.refreshButton.isHidden = true
+                self?.moreStoreButton.isHidden = false
             }
             .disposed(by: disposeBag)
     }
@@ -458,6 +473,7 @@ private extension HomeViewController {
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
         mapView.addSubview(refreshButton)
+        mapView.addSubview(moreStoreButton)
         mapView.addSubview(dimView)
     }
     
@@ -493,6 +509,11 @@ private extension HomeViewController {
             refreshButton.heightAnchor.constraint(equalToConstant: 35),
             refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
         ])
+        
+        NSLayoutConstraint.activate([
+            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            moreStoreButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
+        ])
     }
     
 }
@@ -516,6 +537,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             locationButton.setImage(UIImage.locationButtonNone, for: .normal)
         }
         refreshButton.isHidden = false
+        moreStoreButton.isHidden = true
     }
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
