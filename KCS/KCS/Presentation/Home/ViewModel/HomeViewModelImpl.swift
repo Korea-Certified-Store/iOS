@@ -85,6 +85,7 @@ private extension HomeViewModelImpl {
                 applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
                 fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
                 refreshDoneOutput.accept(())
+                checkLastFetch()
             },
             onError: { [weak self] error in
                 if error is StoreRepositoryError {
@@ -103,7 +104,10 @@ private extension HomeViewModelImpl {
             applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
             fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount, fetchCount: dependency.fetchCount))
         }
-        
+        checkLastFetch()
+    }
+    
+    func checkLastFetch() {
         if dependency.fetchCount == dependency.maxFetchCount {
             noMoreStoresOutput.accept(())
         }
