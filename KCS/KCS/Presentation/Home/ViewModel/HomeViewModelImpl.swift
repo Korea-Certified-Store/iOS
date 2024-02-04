@@ -17,7 +17,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let getStoreInformationUseCase: GetStoreInformationUseCase
     
     let getStoreInformationOutput = PublishRelay<Store>()
-    let refreshOutput = PublishRelay<Void>()
+    let refreshDoneOutput = PublishRelay<Void>()
     let locationButtonOutput = PublishRelay<NMFMyPositionMode>()
     let locationButtonImageNameOutput = PublishRelay<String>()
     let setMarkerOutput = PublishRelay<MarkerContents>()
@@ -25,7 +25,9 @@ final class HomeViewModelImpl: HomeViewModel {
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
     let locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
-    let applyFiltersOutput = PublishRelay<[FilteredStores]>()
+    let filteredStoresOutput = PublishRelay<[FilteredStores]>()
+    let fetchCountOutput = PublishRelay<FetchCountContent>()
+    let noMoreStoresOutput = PublishRelay<Void>()
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
     
     var dependency: HomeDependency
@@ -46,8 +48,10 @@ final class HomeViewModelImpl: HomeViewModel {
         switch input {
         case .refresh(let requestLocation):
             refresh(requestLocation: requestLocation)
-        case .filterButtonTapped(let filter, let fetchCount):
-            filterButtonTapped(filter: filter, fetchCount: fetchCount)
+        case .moreStoreButtonTapped:
+            moreStoreButtonTapped()
+        case .filterButtonTapped(let filter):
+            filterButtonTapped(filter: filter)
         case .markerTapped(let tag):
             markerTapped(tag: tag)
         case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
@@ -74,10 +78,14 @@ private extension HomeViewModelImpl {
             requestLocation: requestLocation
         )
         .subscribe(
-            onNext: { [weak self] stores in
+            onNext: { [weak self] refreshContent in
                 guard let self = self else { return }
-                applyFilters(stores: stores, filters: getActivatedTypes())
-                refreshOutput.accept(())
+                dependency.resetFetchCount()
+                dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
+                applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
+                fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
+                refreshDoneOutput.accept(())
+                checkLastFetch()
             },
             onError: { [weak self] error in
                 if error is StoreRepositoryError {
@@ -90,13 +98,28 @@ private extension HomeViewModelImpl {
         .disposed(by: dependency.disposeBag)
     }
     
-    func filterButtonTapped(filter: CertificationType, fetchCount: Int) {
+    func moreStoreButtonTapped() {
+        if dependency.fetchCount < dependency.maxFetchCount {
+            dependency.fetchCount += 1
+            applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+            fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount, fetchCount: dependency.fetchCount))
+        }
+        checkLastFetch()
+    }
+    
+    func checkLastFetch() {
+        if dependency.fetchCount == dependency.maxFetchCount {
+            noMoreStoresOutput.accept(())
+        }
+    }
+    
+    func filterButtonTapped(filter: CertificationType) {
         if let lastIndex = dependency.activatedFilter.lastIndex(of: filter) {
             dependency.activatedFilter.remove(at: lastIndex)
         } else {
             dependency.activatedFilter.append(filter)
         }
-        applyFilters(stores: fetchStoresUseCase.execute(fetchCount: fetchCount), filters: getActivatedTypes())
+        applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
     }
     
     func getActivatedTypes() -> [CertificationType] {
@@ -139,7 +162,7 @@ private extension HomeViewModelImpl {
                 }
             }
         }
-        applyFiltersOutput.accept([goodPriceStores, exemplaryStores, safeStores])
+        filteredStoresOutput.accept([goodPriceStores, exemplaryStores, safeStores])
     }
     
     func markerTapped(tag: UInt) {

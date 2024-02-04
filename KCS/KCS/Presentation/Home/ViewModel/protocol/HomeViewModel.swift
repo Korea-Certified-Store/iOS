@@ -28,7 +28,8 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
 enum HomeViewModelInputCase {
     
     case refresh(requestLocation: RequestLocation)
-    case filterButtonTapped(activatedFilter: CertificationType, fetchCount: Int)
+    case moreStoreButtonTapped
+    case filterButtonTapped(activatedFilter: CertificationType)
     case markerTapped(tag: UInt)
     case locationButtonTapped(locationAuthorizationStatus: CLAuthorizationStatus, positionMode: NMFMyPositionMode)
     case dimViewTapGestureEnded
@@ -47,8 +48,8 @@ protocol HomeViewModelInput {
 protocol HomeViewModelOutput {
     
     var getStoreInformationOutput: PublishRelay<Store> { get }
-    var refreshOutput: PublishRelay<Void> { get }
-    var applyFiltersOutput: PublishRelay<[FilteredStores]> { get }
+    var refreshDoneOutput: PublishRelay<Void> { get }
+    var filteredStoresOutput: PublishRelay<[FilteredStores]> { get }
     var locationButtonOutput: PublishRelay<NMFMyPositionMode> { get }
     var locationButtonImageNameOutput: PublishRelay<String> { get }
     var setMarkerOutput: PublishRelay<MarkerContents> { get }
@@ -56,6 +57,8 @@ protocol HomeViewModelOutput {
     var locationStatusNotDeterminedOutput: PublishRelay<Void> { get }
     var locationStatusAuthorizedWhenInUse: PublishRelay<Void> { get }
     var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
+    var fetchCountOutput: PublishRelay<FetchCountContent> { get }
+    var noMoreStoresOutput: PublishRelay<Void> { get }
     var dimViewTapGestureEndedOutput: PublishRelay<Void> { get }
     
 }

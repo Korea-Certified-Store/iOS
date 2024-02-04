@@ -126,7 +126,6 @@ extension StoreInformationViewController {
 
 private extension StoreInformationViewController {
     
-    
     func addUIComponents() {
         view.addSubview(summaryView)
         view.addSubview(detailView)

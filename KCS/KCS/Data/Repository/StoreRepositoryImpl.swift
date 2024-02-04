@@ -16,11 +16,10 @@ final class StoreRepositoryImpl: StoreRepository {
         self.stores = stores
     }
     
-    // TODO: 현재 1차원 배열로 오는 로직으로 적용되어 있기 때문에, 2차원 배열 로직으로 변환해야 한다.
     func fetchRefreshStores(
         requestLocation: RequestLocation
-    ) -> Observable<[Store]> {
-        return Observable<[Store]>.create { observer -> Disposable in
+    ) -> Observable<FetchStores> {
+        return Observable<FetchStores>.create { observer -> Disposable in
             AF.request(StoreAPI.getStores(location: RequestLocationDTO(
                 nwLong: requestLocation.northWest.longitude,
                 nwLat: requestLocation.northWest.latitude,
@@ -35,9 +34,23 @@ final class StoreRepositoryImpl: StoreRepository {
                 do {
                     switch response.result {
                     case .success(let result):
-                        let resultStores = try result.data.map { try $0.toEntity() }
-                        self?.stores = [resultStores]
-                        observer.onNext(resultStores)
+                        let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
+                        self?.stores = resultStores
+                        if let firstIndexStore = resultStores.first {
+                            observer.onNext(
+                                FetchStores(
+                                    fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count),
+                                    stores: firstIndexStore
+                                )
+                            )
+                        } else {
+                            observer.onNext(
+                                FetchStores(
+                                    fetchCountContent: FetchCountContent(),
+                                    stores: []
+                                )
+                            )
+                        }
                     case .failure(let error):
                         throw error
                     }

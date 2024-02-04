@@ -131,7 +131,22 @@ final class HomeViewController: UIViewController {
                     )
                 )
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
+    private lazy var moreStoreButton: MoreStoreButton = {
+        let button = MoreStoreButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
+        button.rx.tap
+            .bind { [weak self] in
+                self?.viewModel.action(
+                    input: .moreStoreButtonTapped
+                )
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
@@ -209,7 +224,7 @@ private extension HomeViewController {
     }
     
     func bind() {
-        bindRefresh()
+        bindFetchStores()
         bindApplyFilters()
         bindSetMarker()
         bindLocationButton()
@@ -218,16 +233,31 @@ private extension HomeViewController {
         bindErrorAlert()
     }
     
-    func bindRefresh() {
-        viewModel.refreshOutput
-            .bind { [weak self] _ in
+    func bindFetchStores() {
+        viewModel.refreshDoneOutput
+            .bind { [weak self] in
                 self?.refreshButton.animationInvalidate()
+                self?.refreshButton.isHidden = true
+                self?.moreStoreButton.isHidden = false
+                self?.moreStoreButton.isEnabled = true
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.fetchCountOutput
+            .bind { [weak self] fetchCount in
+                self?.moreStoreButton.setFetchCount(fetchCount: fetchCount)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noMoreStoresOutput
+            .bind { [weak self] in
+                self?.moreStoreButton.isEnabled = false
             }
             .disposed(by: disposeBag)
     }
     
     func bindApplyFilters() {
-        viewModel.applyFiltersOutput
+        viewModel.filteredStoresOutput
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
@@ -355,8 +385,7 @@ private extension HomeViewController {
             .scan(false) { [weak self] (lastState, _) in
                 guard let self = self else { return lastState }
                 viewModel.action(
-                    input: .filterButtonTapped(activatedFilter: type, fetchCount: 1)
-                    // TODO: fetchCount Dependency에서 처리
+                    input: .filterButtonTapped(activatedFilter: type)
                 )
                 return !lastState
             }
@@ -458,6 +487,7 @@ private extension HomeViewController {
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
         mapView.addSubview(refreshButton)
+        mapView.addSubview(moreStoreButton)
         mapView.addSubview(dimView)
     }
     
@@ -480,6 +510,7 @@ private extension HomeViewController {
             locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             locationButton.widthAnchor.constraint(equalToConstant: 48),
             locationButton.heightAnchor.constraint(equalToConstant: 48)
+            // TODO: bottom constraints 필요
         ])
         
         NSLayoutConstraint.activate([
@@ -490,7 +521,15 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
-            refreshButton.heightAnchor.constraint(equalToConstant: 35)
+            refreshButton.heightAnchor.constraint(equalToConstant: 35),
+            refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
+            // TODO: bottom constraints 필요
+        ])
+        
+        NSLayoutConstraint.activate([
+            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            moreStoreButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
+            // TODO: bottom constraints 필요
         ])
     }
     
@@ -515,6 +554,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             locationButton.setImage(UIImage.locationButtonNone, for: .normal)
         }
         refreshButton.isHidden = false
+        moreStoreButton.isHidden = true
     }
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
