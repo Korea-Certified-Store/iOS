@@ -32,29 +32,33 @@ final class StoreListViewModelImpl: StoreListViewModel {
 private extension StoreListViewModelImpl {
     
     func updateList(stores: [Store]) {
-        Observable.zip(stores.map({ [weak self] store in
-            guard let self = self,
-                  let url = store.localPhotos.first else { return Observable<Data?>.just(nil) }
-            
-            return fetchImageUseCase.execute(url: url)
-                .flatMap { Observable<Data?>.just($0) }
-        }))
-        .bind { [weak self] imageDataArray in
-            var storeContentsArray: [StoreTableViewCellContents] = []
-            for index in stores.indices {
-                let store = stores[index]
-                storeContentsArray.append(
-                    StoreTableViewCellContents(
-                        storeTitle: store.title,
-                        category: store.category,
-                        certificationTypes: store.certificationTypes,
-                        thumbnailImageData: imageDataArray[index]
+        if stores.isEmpty {
+            updateListOutput.accept([])
+        } else {
+            Observable.zip(stores.map({ [weak self] store in
+                guard let self = self,
+                      let url = store.localPhotos.first else { return Observable<Data?>.just(nil) }
+                
+                return fetchImageUseCase.execute(url: url)
+                    .flatMap { Observable<Data?>.just($0) }
+            }))
+            .bind { [weak self] imageDataArray in
+                var storeContentsArray: [StoreTableViewCellContents] = []
+                for index in stores.indices {
+                    let store = stores[index]
+                    storeContentsArray.append(
+                        StoreTableViewCellContents(
+                            storeTitle: store.title,
+                            category: store.category,
+                            certificationTypes: store.certificationTypes,
+                            thumbnailImageData: imageDataArray[index]
+                        )
                     )
-                )
+                }
+                self?.updateListOutput.accept(storeContentsArray)
             }
-            self?.updateListOutput.accept(storeContentsArray)
+            .disposed(by: disposeBag)
         }
-        .disposed(by: disposeBag)
     }
     
 }

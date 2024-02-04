@@ -44,7 +44,12 @@ final class StoreRepositoryImpl: StoreRepository {
                                 )
                             )
                         } else {
-                            observer.onError(JSONContentsError.bundleRead)
+                            observer.onNext(
+                                FetchStores(
+                                    fetchCountContent: FetchCountContent(),
+                                    stores: []
+                                )
+                            )
                         }
                     case .failure(let error):
                         throw error
