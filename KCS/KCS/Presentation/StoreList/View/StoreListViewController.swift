@@ -60,6 +60,7 @@ final class StoreListViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         bind()
+        setup()
     }
     
     func updateList(stores: [Store]) {
@@ -69,6 +70,11 @@ final class StoreListViewController: UIViewController {
 }
 
 private extension StoreListViewController {
+    
+    func setup() {
+        title = "가게 모아보기"
+        isModalInPresentation = true
+    }
     
     func addUIComponents() {
         view.addSubview(storeTableView)

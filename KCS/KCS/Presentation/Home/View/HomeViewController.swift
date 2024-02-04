@@ -186,18 +186,21 @@ final class HomeViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         bind()
+        setup()
+    }
+    
+}
+
+private extension HomeViewController {
+    
+    func setup() {        
         unDimmedView()
-        
         viewModel.action(
             input: .checkLocationAuthorization(
                 status: locationManager.authorizationStatus
             )
         )
     }
-    
-}
-
-private extension HomeViewController {
     
     func bind() {
         bindRefresh()
@@ -524,12 +527,25 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         }
     }
     
+    func presentStoreListView() {
+        let newNC = UINavigationController(rootViewController: storeListViewController)
+        newNC.navigationBar.backgroundColor = .white
+        newNC.navigationBar.isTranslucent = false
+        if let sheet = newNC.sheetPresentationController {
+            sheet.detents = [.smallStoreListViewDetent, .largeStoreListViewDetent]
+            sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
+            sheet.prefersGrabberVisible = true
+        }
+        present(newNC, animated: true)
+    }
+    
 }
 
 extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
+        presentStoreListView()
     }
     
 }
