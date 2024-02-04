@@ -8,9 +8,12 @@
 import UIKit
 
 extension UISheetPresentationController.Detent.Identifier {
+    
     static let smallSummaryDetentIdentifier = UISheetPresentationController.Detent.Identifier("SmallSummaryDetent")
     static let largeSummaryDetentIdentifier = UISheetPresentationController.Detent.Identifier("LargeSummaryDetent")
     static let detailDetentIdentifier = UISheetPresentationController.Detent.Identifier("DetailDetent")
+    static let smallStoreListViewDetentIdentifier = UISheetPresentationController.Detent.Identifier("SmallListDetent")
+    static let largeStoreListViewDetentIdentifier = UISheetPresentationController.Detent.Identifier("LargeListDetent")
 }
             
 extension UISheetPresentationController.Detent {
@@ -23,6 +26,10 @@ extension UISheetPresentationController.Detent {
     }
     static let detailViewDetent = custom(identifier: .detailDetentIdentifier) { _ in
         return 616 - 21
+    }    
+    static let smallStoreListViewDetent = custom(identifier: .smallStoreListViewDetentIdentifier) { _ in
+        return 35
     }
+    static let largeStoreListViewDetent = large()
     
 }
