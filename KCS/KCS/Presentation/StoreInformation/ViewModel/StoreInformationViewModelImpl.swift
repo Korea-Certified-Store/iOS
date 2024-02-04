@@ -97,72 +97,72 @@ private extension StoreInformationViewModelImpl {
             let weekDayIndex = idx % 7 == 0 ? 7 : idx % 7
             if let weekday = Day.allCases.filter({ $0.index == weekDayIndex }).first {
                 let openingHours = openingHours.filter { $0.open.day == weekday }
-                if openingHours.isEmpty {
-                    detailOpeningHourArray.append(
-                        DetailOpeningHour(
-                            weekDay: weekday,
-                            openingHour: OpeningHour(
-                                openingHour: OpenClosedType.dayOff.rawValue,
-                                breakTime: nil
-                            )
+                detailOpeningHourArray.append(
+                    DetailOpeningHour(
+                        weekDay: weekday,
+                        openingHour: getOpeningHour(
+                            openingHours: openingHours
                         )
                     )
-                }
-                
-                if openingHours.count == 1 {
-                    if let openingHour = openingHours.first {
-                        detailOpeningHourArray.append(
-                            DetailOpeningHour(
-                                weekDay: weekday,
-                                openingHour: OpeningHour(
-                                    openingHour: openingHourToString(
-                                        open: openingHour.open,
-                                        close: openingHour.close
-                                    ),
-                                    breakTime: nil)
-                            )
-                        )
-                    }
+                )
+            }
+        }
+        return detailOpeningHourArray
+    }
+    
+    func getOpeningHour(openingHours: [RegularOpeningHours]) -> OpeningHour {
+        if openingHours.isEmpty {
+            return OpeningHour(
+                openingHour: OpenClosedType.dayOff.rawValue,
+                breakTime: nil
+            )
+        }
+        
+        if openingHours.count == 1 {
+            if let openingHour = openingHours.first {
+                if openingHour.open == openingHour.close {
+                    return OpeningHour(
+                        openingHour: OpenClosedType.alwaysOpen.rawValue,
+                        breakTime: nil
+                    )
                 } else {
-                    if let firstOpeningHour = openingHours.first,
-                       let lastOpeningHour = openingHours.last {
-                        if firstOpeningHour.open == lastOpeningHour.close {
-                            detailOpeningHourArray.append(
-                                DetailOpeningHour(
-                                    weekDay: weekday,
-                                    openingHour: OpeningHour(
-                                        openingHour: openingHourToString(
-                                            open: lastOpeningHour.open,
-                                            close: firstOpeningHour.close
-                                        ),
-                                        breakTime: nil
-                                    )
-                                )
-                            )
-                        } else {
-                            detailOpeningHourArray.append(
-                                DetailOpeningHour(
-                                    weekDay: weekday,
-                                    openingHour: OpeningHour(
-                                        openingHour: openingHourToString(
-                                            open: firstOpeningHour.open,
-                                            close: lastOpeningHour.close
-                                        ),
-                                        breakTime: openingHourToString(
-                                            open: firstOpeningHour.close,
-                                            close: lastOpeningHour.open,
-                                            isBreakTime: true
-                                        )
-                                    )
-                                )
-                            )
-                        }
-                    }
+                    return OpeningHour(
+                        openingHour: openingHourToString(
+                            open: openingHour.open,
+                            close: openingHour.close
+                        ),
+                        breakTime: nil
+                    )
+                }
+            }
+        } else {
+            if let firstOpeningHour = openingHours.first,
+               let lastOpeningHour = openingHours.last {
+                if firstOpeningHour.open == lastOpeningHour.close {
+                    return OpeningHour(
+                        openingHour: openingHourToString(
+                            open: lastOpeningHour.open,
+                            close: firstOpeningHour.close
+                        ),
+                        breakTime: nil
+                    )
+                } else {
+                    return OpeningHour(
+                        openingHour: openingHourToString(
+                            open: firstOpeningHour.open,
+                            close: lastOpeningHour.close
+                        ),
+                        breakTime: openingHourToString(
+                            open: firstOpeningHour.close,
+                            close: lastOpeningHour.open,
+                            isBreakTime: true
+                        )
+                    )
                 }
             }
         }
         
-        return detailOpeningHourArray
+        return OpeningHour(openingHour: nil, breakTime: nil)
     }
     
     func openingHourToString(open: BusinessHour, close: BusinessHour, isBreakTime: Bool = false) -> String {
