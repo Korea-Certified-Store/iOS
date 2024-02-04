@@ -528,15 +528,15 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     }
     
     func presentStoreListView() {
-        let newNC = UINavigationController(rootViewController: storeListViewController)
-        newNC.navigationBar.backgroundColor = .white
-        newNC.navigationBar.isTranslucent = false
-        if let sheet = newNC.sheetPresentationController {
+        let listNavigationController = UINavigationController(rootViewController: storeListViewController)
+        listNavigationController.navigationBar.backgroundColor = .white
+        listNavigationController.navigationBar.isTranslucent = false
+        if let sheet = listNavigationController.sheetPresentationController {
             sheet.detents = [.smallStoreListViewDetent, .largeStoreListViewDetent]
             sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
             sheet.prefersGrabberVisible = true
         }
-        present(newNC, animated: true)
+        present(listNavigationController, animated: true)
     }
     
 }
