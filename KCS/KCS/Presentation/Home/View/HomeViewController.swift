@@ -189,6 +189,12 @@ final class HomeViewController: UIViewController {
         setup()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        presentStoreListView()
+    }
+    
 }
 
 private extension HomeViewController {
@@ -307,6 +313,7 @@ private extension HomeViewController {
             }
             storeInformationViewController.changeToSummary()
             if !(presentedViewController is StoreInformationViewController) {
+                dismiss(animated: true)
                 present(storeInformationViewController, animated: true)
             }
         }
@@ -393,6 +400,7 @@ private extension HomeViewController {
         clickedMarker = nil
         if !changeMarker {
             storeInformationViewController.dismiss(animated: true)
+            presentStoreListView()
         }
     }
     
@@ -528,13 +536,15 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     }
     
     func presentStoreListView() {
-        if let sheet = storeListViewController.sheetPresentationController {
-            sheet.detents = [.smallStoreListViewDetent, .largeStoreListViewDetent]
-            sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 15
+        if !(presentedViewController is StoreListViewController) {
+            if let sheet = storeListViewController.sheetPresentationController {
+                sheet.detents = [.smallStoreListViewDetent, .largeStoreListViewDetent]
+                sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = 15
+            }
+            present(storeListViewController, animated: true)
         }
-        present(storeListViewController, animated: true)
     }
     
 }
@@ -543,7 +553,6 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
-        presentStoreListView()
     }
     
 }
