@@ -532,6 +532,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             sheet.detents = [.smallStoreListViewDetent, .largeStoreListViewDetent]
             sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
             sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 15
         }
         present(storeListViewController, animated: true)
     }
