@@ -224,7 +224,7 @@ private extension HomeViewController {
     }
     
     func bind() {
-        bindRefresh()
+        bindFetchStores()
         bindApplyFilters()
         bindSetMarker()
         bindLocationButton()
@@ -233,7 +233,7 @@ private extension HomeViewController {
         bindErrorAlert()
     }
     
-    func bindRefresh() {
+    func bindFetchStores() {
         viewModel.refreshDoneOutput
             .bind { [weak self] in
                 self?.refreshButton.animationInvalidate()
