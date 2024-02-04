@@ -177,7 +177,7 @@ extension SummaryView {
         } else {
             summaryViewHeightObserver.accept(.large)
         }
-        storeOpenClosed.text = contents.openClosedContent.openClosedType.rawValue
+        storeOpenClosed.text = contents.openClosedContent.openClosedType.description
         openingHour.text = contents.openClosedContent.nextOpeningHour
         category.text = contents.category
         contents.certificationTypes

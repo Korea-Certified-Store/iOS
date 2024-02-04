@@ -25,6 +25,8 @@ private extension GetOpenClosedUseCaseImpl {
             switch nowOpenClosedType {
             case .none, .dayOff:
                 return OpenClosedType.none.rawValue
+            case .alwaysOpen:
+                return OpenClosedType.alwaysOpen.rawValue
             case .breakTime, .closed:
                 return try getOpenClosedString(openingHour: openingHour, openClosedType: .open)
             case .open:
@@ -41,6 +43,9 @@ private extension GetOpenClosedUseCaseImpl {
     func getOpenClosedType(openingHour: [RegularOpeningHours]) throws -> OpenClosedType {
         if openingHour.isEmpty {
             return OpenClosedType.none
+        }
+        if !openingHour.filter({ $0.open == $0.close }).isEmpty {
+            return OpenClosedType.alwaysOpen
         }
         let openCloseTime = try getOpenClosedTimeArray(openingHours: openingHour)
         if openCloseTime.isEmpty {

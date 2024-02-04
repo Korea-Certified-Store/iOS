@@ -221,7 +221,7 @@ private extension DetailView {
         
         NSLayoutConstraint.activate([
             openingHour.bottomAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor),
-            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 12)
+            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 8)
         ])
         
         NSLayoutConstraint.activate([
@@ -267,7 +267,7 @@ private extension DetailView {
             addressConstraint.constant = -174
             phoneNumberConstraint.constant = 20 - 11
         } else {
-            storeOpenClosed.text = openClosedContent.openClosedType.rawValue
+            storeOpenClosed.text = openClosedContent.openClosedType.description
             storeOpenClosed.textColor = UIColor.goodPrice
             openingHour.text = openClosedContent.nextOpeningHour
             addressConstraint.constant = -16

@@ -521,14 +521,12 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
-            refreshButton.heightAnchor.constraint(equalToConstant: 35),
-            refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
+            refreshButton.heightAnchor.constraint(equalToConstant: 35)
             // TODO: bottom constraints 필요
         ])
         
         NSLayoutConstraint.activate([
-            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
-            moreStoreButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
+            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
             // TODO: bottom constraints 필요
         ])
     }
