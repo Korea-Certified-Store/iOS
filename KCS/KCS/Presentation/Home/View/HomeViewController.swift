@@ -77,11 +77,19 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    private lazy var compassView: NMFCompassView = {
+        let compass = NMFCompassView()
+        compass.translatesAutoresizingMaskIntoConstraints = false
+        compass.mapView = mapView.mapView
+        
+        return compass
+    }()
+    
     private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
-        map.showZoomControls = false
         map.showCompass = false
+        map.showZoomControls = false
         map.showScaleBar = false
         map.showIndoorLevelPicker = false
         map.showLocationButton = false
@@ -486,6 +494,7 @@ private extension HomeViewController {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
+        mapView.addSubview(compassView)
         mapView.addSubview(refreshButton)
         mapView.addSubview(moreStoreButton)
         mapView.addSubview(dimView)
@@ -516,6 +525,11 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             filterButtonStackView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8)
+        ])
+        
+        NSLayoutConstraint.activate([
+            compassView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            compassView.topAnchor.constraint(equalTo: filterButtonStackView.bottomAnchor, constant: 16)
         ])
         
         NSLayoutConstraint.activate([
