@@ -41,16 +41,15 @@ final class StoreInformationViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        isModalInPresentation = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         addUIComponents()
         configureConstraints()
         bind()
+        setup()
     }
     
     required init?(coder: NSCoder) {
@@ -60,6 +59,11 @@ final class StoreInformationViewController: UIViewController {
 }
 
 extension StoreInformationViewController {
+    
+    func setup() {
+        view.backgroundColor = .white
+        isModalInPresentation = true
+    }
     
     func bind() {
         viewModel.errorAlertOutput
@@ -122,9 +126,6 @@ extension StoreInformationViewController {
 
 private extension StoreInformationViewController {
     
-    func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
     
     func addUIComponents() {
         view.addSubview(summaryView)
