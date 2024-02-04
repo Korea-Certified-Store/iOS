@@ -9,16 +9,18 @@ import UIKit
 
 final class MoreStoreButton: UIButton {
     
-    private let originalTitle: AttributedString = {
-        var titleAttribute = AttributedString("결과 더보기")
-        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
-        
-        return titleAttribute
-    }()
+    override var isUserInteractionEnabled: Bool {
+        didSet {
+            if isUserInteractionEnabled {
+                configuration?.baseForegroundColor = .black
+            } else {
+                configuration?.baseForegroundColor = .grayLabel
+            }
+        }
+    }
     
     init() {
         super.init(frame: .zero)
-        setUI()
         setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
     }
     
@@ -26,13 +28,12 @@ final class MoreStoreButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-}
-
-private extension MoreStoreButton {
-    
-    func setUI() {
+    func setFetchCount(fetchCount: FetchCountContent) {
+        var titleAttribute = AttributedString(String(format: "결과 더보기 %d/%d", fetchCount.fetchCount, fetchCount.maxFetchCount))
+        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
+        
         var config = UIButton.Configuration.filled()
-        config.attributedTitle = originalTitle
+        config.attributedTitle = titleAttribute
         config.baseBackgroundColor = .white
         config.baseForegroundColor = .black
         config.cornerStyle = .capsule
@@ -41,4 +42,3 @@ private extension MoreStoreButton {
     }
     
 }
-

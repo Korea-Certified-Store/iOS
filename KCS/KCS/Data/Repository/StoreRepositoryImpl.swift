@@ -18,8 +18,8 @@ final class StoreRepositoryImpl: StoreRepository {
     
     func fetchRefreshStores(
         requestLocation: RequestLocation
-    ) -> Observable<[Store]> {
-        return Observable<[Store]>.create { observer -> Disposable in
+    ) -> Observable<FetchStores> {
+        return Observable<FetchStores>.create { observer -> Disposable in
             AF.request(StoreAPI.getStores(location: RequestLocationDTO(
                 nwLong: requestLocation.northWest.longitude,
                 nwLat: requestLocation.northWest.latitude,
@@ -37,7 +37,12 @@ final class StoreRepositoryImpl: StoreRepository {
                         let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
                         self?.stores = resultStores
                         if let firstIndexStore = resultStores.first {
-                            observer.onNext(firstIndexStore)
+                            observer.onNext(
+                                FetchStores(
+                                    fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count),
+                                    stores: firstIndexStore
+                                )
+                            )
                         } else {
                             observer.onError(JSONContentsError.bundleRead)
                         }
@@ -54,7 +59,7 @@ final class StoreRepositoryImpl: StoreRepository {
     
     func fetchStores(count: Int) -> [Store] {
         var fetchResult: [Store] = []
-        for index in 0..<count + 1 {
+        for index in 0..<count {
             fetchResult.append(contentsOf: stores[index])
         }
         return fetchResult

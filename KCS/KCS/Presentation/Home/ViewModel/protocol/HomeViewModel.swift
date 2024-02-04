@@ -57,6 +57,8 @@ protocol HomeViewModelOutput {
     var locationStatusNotDeterminedOutput: PublishRelay<Void> { get }
     var locationStatusAuthorizedWhenInUse: PublishRelay<Void> { get }
     var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
+    var fetchCountOutput: PublishRelay<FetchCountContent> { get }
+    var noMoreStoresOutput: PublishRelay<Void> { get }
     var dimViewTapGestureEndedOutput: PublishRelay<Void> { get }
     
 }

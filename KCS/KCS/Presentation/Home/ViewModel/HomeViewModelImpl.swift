@@ -26,6 +26,8 @@ final class HomeViewModelImpl: HomeViewModel {
     let locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     let filteredStoresOutput = PublishRelay<[FilteredStores]>()
+    let fetchCountOutput = PublishRelay<FetchCountContent>()
+    let noMoreStoresOutput = PublishRelay<Void>()
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
     
     var dependency: HomeDependency
@@ -76,10 +78,12 @@ private extension HomeViewModelImpl {
             requestLocation: requestLocation
         )
         .subscribe(
-            onNext: { [weak self] stores in
+            onNext: { [weak self] refreshContent in
                 guard let self = self else { return }
-                dependency.fetchCount = .zero
-                applyFilters(stores: stores, filters: getActivatedTypes())
+                dependency.resetFetchCount()
+                dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
+                applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
+                fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
                 refreshDoneOutput.accept(())
             },
             onError: { [weak self] error in
@@ -94,8 +98,15 @@ private extension HomeViewModelImpl {
     }
     
     func moreStoreButtonTapped() {
-        dependency.fetchCount += 1
-        applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+        if dependency.fetchCount < dependency.maxFetchCount {
+            dependency.fetchCount += 1
+            applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+            fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount, fetchCount: dependency.fetchCount))
+        }
+        
+        if dependency.fetchCount == dependency.maxFetchCount {
+            noMoreStoresOutput.accept(())
+        }
     }
     
     func filterButtonTapped(filter: CertificationType) {

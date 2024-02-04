@@ -11,6 +11,11 @@ struct HomeDependency {
     
     let disposeBag = DisposeBag()
     var activatedFilter: [CertificationType] = []
-    var fetchCount: Int = .zero
+    var fetchCount: Int = 1
+    var maxFetchCount: Int = 1
+    
+    mutating func resetFetchCount() {
+        fetchCount = 1
+    }
     
 }

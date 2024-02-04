@@ -138,11 +138,13 @@ final class HomeViewController: UIViewController {
     
     private lazy var moreStoreButton: MoreStoreButton = {
         let button = MoreStoreButton()
-        button.isHidden = true
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
         button.rx.tap
             .bind { [weak self] in
-                self?.viewModel.action(input: .moreStoreButtonTapped)
+                self?.viewModel.action(
+                    input: .moreStoreButtonTapped
+                )
             }
             .disposed(by: disposeBag)
         
@@ -233,10 +235,23 @@ private extension HomeViewController {
     
     func bindRefresh() {
         viewModel.refreshDoneOutput
-            .bind { [weak self] _ in
+            .bind { [weak self] in
                 self?.refreshButton.animationInvalidate()
                 self?.refreshButton.isHidden = true
                 self?.moreStoreButton.isHidden = false
+                self?.moreStoreButton.isUserInteractionEnabled = true
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.fetchCountOutput
+            .bind { [weak self] fetchCount in
+                self?.moreStoreButton.setFetchCount(fetchCount: fetchCount)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noMoreStoresOutput
+            .bind { [weak self] in
+                self?.moreStoreButton.isUserInteractionEnabled = false
             }
             .disposed(by: disposeBag)
     }
@@ -371,7 +386,6 @@ private extension HomeViewController {
                 guard let self = self else { return lastState }
                 viewModel.action(
                     input: .filterButtonTapped(activatedFilter: type)
-                    // TODO: fetchCount Dependency에서 처리
                 )
                 return !lastState
             }
@@ -496,6 +510,7 @@ private extension HomeViewController {
             locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             locationButton.widthAnchor.constraint(equalToConstant: 48),
             locationButton.heightAnchor.constraint(equalToConstant: 48)
+            // TODO: bottom constraints 필요
         ])
         
         NSLayoutConstraint.activate([
@@ -506,13 +521,13 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
-            refreshButton.heightAnchor.constraint(equalToConstant: 35),
-            refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
+            refreshButton.heightAnchor.constraint(equalToConstant: 35)
+            // TODO: bottom constraints 필요
         ])
         
         NSLayoutConstraint.activate([
-            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
-            moreStoreButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
+            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
+            // TODO: bottom constraints 필요
         ])
     }
     
