@@ -21,6 +21,7 @@ final class MoreStoreButton: UIButton {
     
     init() {
         super.init(frame: .zero)
+        setUI()
         setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
     }
     
@@ -31,9 +32,15 @@ final class MoreStoreButton: UIButton {
     func setFetchCount(fetchCount: FetchCountContent) {
         var titleAttribute = AttributedString(String(format: "결과 더보기 %d/%d", fetchCount.fetchCount, fetchCount.maxFetchCount))
         titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
-        
+        configuration?.attributedTitle = titleAttribute
+    }
+    
+}
+
+private extension MoreStoreButton {
+    
+    func setUI() {
         var config = UIButton.Configuration.filled()
-        config.attributedTitle = titleAttribute
         config.baseBackgroundColor = .white
         config.baseForegroundColor = .black
         config.cornerStyle = .capsule
