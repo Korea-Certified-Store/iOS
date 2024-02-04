@@ -528,15 +528,12 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     }
     
     func presentStoreListView() {
-        let listNavigationController = UINavigationController(rootViewController: storeListViewController)
-        listNavigationController.navigationBar.backgroundColor = .white
-        listNavigationController.navigationBar.isTranslucent = false
-        if let sheet = listNavigationController.sheetPresentationController {
+        if let sheet = storeListViewController.sheetPresentationController {
             sheet.detents = [.smallStoreListViewDetent, .largeStoreListViewDetent]
             sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
             sheet.prefersGrabberVisible = true
         }
-        present(listNavigationController, animated: true)
+        present(storeListViewController, animated: true)
     }
     
 }
@@ -545,6 +542,7 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
+        presentStoreListView()
     }
     
 }

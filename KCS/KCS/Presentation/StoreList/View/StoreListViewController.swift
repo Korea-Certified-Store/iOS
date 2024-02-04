@@ -12,6 +12,17 @@ final class StoreListViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
+    private let titleBar: UINavigationBar = {
+        let navigationBar = UINavigationBar()
+        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        let titleItem = UINavigationItem(title: "가게 모아보기")
+        navigationBar.setItems([titleItem], animated: true)
+        navigationBar.backgroundColor = .white
+        navigationBar.isTranslucent = false
+        
+        return navigationBar
+    }()
+    
     private let storeTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,17 +83,23 @@ final class StoreListViewController: UIViewController {
 private extension StoreListViewController {
     
     func setup() {
-        title = "가게 모아보기"
         isModalInPresentation = true
     }
     
     func addUIComponents() {
         view.addSubview(storeTableView)
+        view.addSubview(titleBar)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            storeTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            titleBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            titleBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            titleBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            storeTableView.topAnchor.constraint(equalTo: titleBar.bottomAnchor),
             storeTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             storeTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             storeTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
