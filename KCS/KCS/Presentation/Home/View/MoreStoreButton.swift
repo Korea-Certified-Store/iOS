@@ -9,9 +9,9 @@ import UIKit
 
 final class MoreStoreButton: UIButton {
     
-    override var isUserInteractionEnabled: Bool {
+    override var isEnabled: Bool {
         didSet {
-            if isUserInteractionEnabled {
+            if isEnabled {
                 configuration?.baseForegroundColor = .black
             } else {
                 configuration?.baseForegroundColor = .grayLabel
@@ -41,7 +41,7 @@ private extension MoreStoreButton {
     
     func setUI() {
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .white
+        config.background.backgroundColor = .white
         config.baseForegroundColor = .black
         config.cornerStyle = .capsule
         config.contentInsets = NSDirectionalEdgeInsets(top: 11, leading: 10, bottom: 11, trailing: 10)

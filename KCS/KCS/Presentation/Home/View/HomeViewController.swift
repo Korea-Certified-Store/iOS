@@ -239,7 +239,7 @@ private extension HomeViewController {
                 self?.refreshButton.animationInvalidate()
                 self?.refreshButton.isHidden = true
                 self?.moreStoreButton.isHidden = false
-                self?.moreStoreButton.isUserInteractionEnabled = true
+                self?.moreStoreButton.isEnabled = true
             }
             .disposed(by: disposeBag)
         
@@ -251,7 +251,7 @@ private extension HomeViewController {
         
         viewModel.noMoreStoresOutput
             .bind { [weak self] in
-                self?.moreStoreButton.isUserInteractionEnabled = false
+                self?.moreStoreButton.isEnabled = false
             }
             .disposed(by: disposeBag)
     }
@@ -521,12 +521,14 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
-            refreshButton.heightAnchor.constraint(equalToConstant: 35)
+            refreshButton.heightAnchor.constraint(equalToConstant: 35),
+            refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
             // TODO: bottom constraints 필요
         ])
         
         NSLayoutConstraint.activate([
-            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
+            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            moreStoreButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
             // TODO: bottom constraints 필요
         ])
     }
