@@ -86,6 +86,8 @@
 		A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */; };
 		A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */; };
 		A83367B82B6FA0E700E0A844 /* FetchStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B72B6FA0E700E0A844 /* FetchStores.swift */; };
+		A83367BB2B709C0200E0A844 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BA2B709C0200E0A844 /* OnBoardingViewController.swift */; };
+		A83367BD2B70A52900E0A844 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BC2B70A52900E0A844 /* Storage.swift */; };
 		A89087042B4E7F3500767225 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087032B4E7F3500767225 /* FilterButton.swift */; };
 		A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* SystemImage.swift */; };
 		A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870C2B4EF91600767225 /* UIView+SetLayer.swift */; };
@@ -206,6 +208,8 @@
 		A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStoreButton.swift; sourceTree = "<group>"; };
 		A83367B72B6FA0E700E0A844 /* FetchStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStores.swift; sourceTree = "<group>"; };
+		A83367BA2B709C0200E0A844 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
+		A83367BC2B70A52900E0A844 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		A89087032B4E7F3500767225 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		A89087092B4EF00B00767225 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		A890870C2B4EF91600767225 /* UIView+SetLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SetLayer.swift"; sourceTree = "<group>"; };
@@ -357,6 +361,7 @@
 				A8ACB7CD2B54ED6400540BD1 /* Repository */,
 				59C306AE2B4FFE3700862625 /* Network */,
 				5977BE9D2B59ACE800725C90 /* ImageCache.swift */,
+				A83367BC2B70A52900E0A844 /* Storage.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -378,6 +383,7 @@
 				5986DCEA2B392996005AE43B /* Home */,
 				59B886242B6A39E9005750EF /* StoreList */,
 				59B886552B6E3A59005750EF /* StoreInformation */,
+				A83367B92B709BE900E0A844 /* OnBoarding */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -596,6 +602,14 @@
 				A81EFBBF2B5D597400D0C0D7 /* Pretendard-Light.ttf */,
 			);
 			path = font;
+			sourceTree = "<group>";
+		};
+		A83367B92B709BE900E0A844 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				A83367BA2B709C0200E0A844 /* OnBoardingViewController.swift */,
+			);
+			path = OnBoarding;
 			sourceTree = "<group>";
 		};
 		A890870B2B4EF8F900767225 /* Extension */ = {
@@ -919,6 +933,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */,
+				A83367BD2B70A52900E0A844 /* Storage.swift in Sources */,
 				A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */,
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A890870F2B4F836C00767225 /* SummaryView.swift in Sources */,
@@ -941,6 +956,7 @@
 				5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */,
 				A8A7E05D2B64AF1300D015E5 /* StoreInformationViewConstraints.swift in Sources */,
 				5977BE5E2B5535C700725C90 /* FetchRefreshStoresUseCase.swift in Sources */,
+				A83367BB2B709C0200E0A844 /* OnBoardingViewController.swift in Sources */,
 				A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */,
 				59C306B02B4FFE4400862625 /* StoreResponse.swift in Sources */,
 				A8A7E0602B64E62200D015E5 /* NMFMyPosition+.swift in Sources */,
