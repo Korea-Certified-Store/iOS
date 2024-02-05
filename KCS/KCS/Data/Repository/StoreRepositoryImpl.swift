@@ -17,7 +17,8 @@ final class StoreRepositoryImpl: StoreRepository {
     }
     
     func fetchRefreshStores(
-        requestLocation: RequestLocation
+        requestLocation: RequestLocation,
+        isEntire: Bool
     ) -> Observable<FetchStores> {
         return Observable<FetchStores>.create { observer -> Disposable in
             AF.request(StoreAPI.getStores(location: RequestLocationDTO(
@@ -35,22 +36,27 @@ final class StoreRepositoryImpl: StoreRepository {
                     switch response.result {
                     case .success(let result):
                         let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
+                        var fetchStores: FetchStores
                         self?.stores = resultStores
-                        if let firstIndexStore = resultStores.first {
-                            observer.onNext(
-                                FetchStores(
+                        if isEntire {
+                            fetchStores = FetchStores(
+                                fetchCountContent: FetchCountContent(),
+                                stores: resultStores.flatMap { $0 }
+                            )
+                        } else {
+                            if let firstIndexStore = resultStores.first {
+                                fetchStores = FetchStores(
                                     fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count),
                                     stores: firstIndexStore
                                 )
-                            )
-                        } else {
-                            observer.onNext(
-                                FetchStores(
+                            } else {
+                                fetchStores = FetchStores(
                                     fetchCountContent: FetchCountContent(),
                                     stores: []
                                 )
-                            )
+                            }
                         }
+                        observer.onNext(fetchStores)
                     case .failure(let error):
                         throw error
                     }
