@@ -19,4 +19,8 @@ protocol StoreRepository {
         tag: UInt
     ) throws -> Store
     
+    func getStoreByIndex(
+        index: Int
+    ) throws -> Store
+    
 }
