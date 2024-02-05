@@ -11,7 +11,7 @@ protocol StoreRepository {
     
     func fetchRefreshStores(
         requestLocation: RequestLocation,
-        isFirst: Bool
+        isEntire: Bool
     ) -> Observable<FetchStores>
     
     func fetchStores(count: Int) -> [Store]

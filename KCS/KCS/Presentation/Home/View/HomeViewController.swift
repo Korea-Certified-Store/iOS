@@ -243,10 +243,10 @@ private extension HomeViewController {
     
     func bindFetchStores() {
         viewModel.refreshDoneOutput
-            .bind { [weak self] isFirst in
+            .bind { [weak self] isEntire in
                 self?.refreshButton.animationInvalidate()
                 self?.refreshButton.isHidden = true
-                self?.moreStoreButton.isHidden = isFirst
+                self?.moreStoreButton.isHidden = isEntire
                 self?.moreStoreButton.isEnabled = true
             }
             .disposed(by: disposeBag)
@@ -584,7 +584,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             viewModel.action(
                 input: .refresh(
                     requestLocation: makeRequestLocation(projection: mapView.projection),
-                    isFirst: true
+                    isEntire: true
                 )
             )
         }

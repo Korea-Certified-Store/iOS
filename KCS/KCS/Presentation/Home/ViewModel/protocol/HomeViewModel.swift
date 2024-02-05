@@ -27,7 +27,7 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
 
 enum HomeViewModelInputCase {
     
-    case refresh(requestLocation: RequestLocation, isFirst: Bool = false)
+    case refresh(requestLocation: RequestLocation, isEntire: Bool = false)
     case moreStoreButtonTapped
     case filterButtonTapped(activatedFilter: CertificationType)
     case markerTapped(tag: UInt)

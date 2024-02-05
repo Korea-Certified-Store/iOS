@@ -46,8 +46,8 @@ final class HomeViewModelImpl: HomeViewModel {
     
     func action(input: HomeViewModelInputCase) {
         switch input {
-        case .refresh(let requestLocation, let isFirst):
-            refresh(requestLocation: requestLocation, isFirst: isFirst)
+        case .refresh(let requestLocation, let isEntire):
+            refresh(requestLocation: requestLocation, isEntire: isEntire)
         case .moreStoreButtonTapped:
             moreStoreButtonTapped()
         case .filterButtonTapped(let filter):
@@ -73,11 +73,11 @@ private extension HomeViewModelImpl {
     
     func refresh(
         requestLocation: RequestLocation,
-        isFirst: Bool
+        isEntire: Bool
     ) {
         fetchRefreshStoresUseCase.execute(
             requestLocation: requestLocation,
-            isFirst: isFirst
+            isEntire: isEntire
         )
         .subscribe(
             onNext: { [weak self] refreshContent in
@@ -86,7 +86,7 @@ private extension HomeViewModelImpl {
                 dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
                 applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
                 fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
-                refreshDoneOutput.accept(isFirst)
+                refreshDoneOutput.accept(isEntire)
                 checkLastFetch()
             },
             onError: { [weak self] error in

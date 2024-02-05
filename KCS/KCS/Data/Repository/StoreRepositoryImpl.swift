@@ -18,7 +18,7 @@ final class StoreRepositoryImpl: StoreRepository {
     
     func fetchRefreshStores(
         requestLocation: RequestLocation,
-        isFirst: Bool
+        isEntire: Bool
     ) -> Observable<FetchStores> {
         return Observable<FetchStores>.create { observer -> Disposable in
             AF.request(StoreAPI.getStores(location: RequestLocationDTO(
@@ -38,7 +38,7 @@ final class StoreRepositoryImpl: StoreRepository {
                         let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
                         var fetchStores: FetchStores
                         self?.stores = resultStores
-                        if isFirst {
+                        if isEntire {
                             fetchStores = FetchStores(
                                 fetchCountContent: FetchCountContent(),
                                 stores: resultStores.flatMap { $0 }
