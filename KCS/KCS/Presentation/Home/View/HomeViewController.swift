@@ -185,17 +185,20 @@ final class HomeViewController: UIViewController {
     private let storeListViewController: StoreListViewController
     private let viewModel: HomeViewModel
     private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
-    
+    private let cellSelectedIndexObserver: PublishRelay<Int>
     init(
         viewModel: HomeViewModel,
         storeInformationViewController: StoreInformationViewController,
         storeListViewController: StoreListViewController,
-        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
+        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
+        cellSelectedIndexObserver: PublishRelay<Int>
     ) {
         self.viewModel = viewModel
         self.storeInformationViewController = storeInformationViewController
         self.storeListViewController = storeListViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
+        self.cellSelectedIndexObserver = cellSelectedIndexObserver
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -239,6 +242,7 @@ private extension HomeViewController {
         bindLocationAuthorization()
         bindStoreInformationView()
         bindErrorAlert()
+        bindStoreListCell()
     }
     
     func bindFetchStores() {
@@ -407,6 +411,13 @@ private extension HomeViewController {
                 self?.presentErrorAlert(error: error)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func bindStoreListCell() {
+        cellSelectedIndexObserver.bind { index in
+            <#code#>
+        }
+        .disposed(by: disposeBag)
     }
     
 }
