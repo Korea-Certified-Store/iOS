@@ -10,7 +10,8 @@ import RxSwift
 protocol StoreRepository {
     
     func fetchRefreshStores(
-        requestLocation: RequestLocation
+        requestLocation: RequestLocation,
+        isFirst: Bool
     ) -> Observable<FetchStores>
     
     func fetchStores(count: Int) -> [Store]

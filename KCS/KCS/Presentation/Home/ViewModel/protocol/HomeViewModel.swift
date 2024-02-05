@@ -27,7 +27,7 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
 
 enum HomeViewModelInputCase {
     
-    case refresh(requestLocation: RequestLocation)
+    case refresh(requestLocation: RequestLocation, isFirst: Bool = false)
     case moreStoreButtonTapped
     case filterButtonTapped(activatedFilter: CertificationType)
     case markerTapped(tag: UInt)
@@ -48,7 +48,7 @@ protocol HomeViewModelInput {
 protocol HomeViewModelOutput {
     
     var getStoreInformationOutput: PublishRelay<Store> { get }
-    var refreshDoneOutput: PublishRelay<Void> { get }
+    var refreshDoneOutput: PublishRelay<Bool> { get }
     var filteredStoresOutput: PublishRelay<[FilteredStores]> { get }
     var locationButtonOutput: PublishRelay<NMFMyPositionMode> { get }
     var locationButtonImageNameOutput: PublishRelay<String> { get }

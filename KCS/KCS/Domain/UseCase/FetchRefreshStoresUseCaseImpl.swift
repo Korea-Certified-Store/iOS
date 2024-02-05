@@ -12,9 +12,10 @@ struct FetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCase {
     let repository: StoreRepository
     
     func execute(
-        requestLocation: RequestLocation
+        requestLocation: RequestLocation,
+        isFirst: Bool
     ) -> Observable<FetchStores> {
-        return repository.fetchRefreshStores(requestLocation: requestLocation)
+        return repository.fetchRefreshStores(requestLocation: requestLocation, isFirst: isFirst)
     }
     
 }
