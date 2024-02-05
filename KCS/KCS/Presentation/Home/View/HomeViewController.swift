@@ -243,10 +243,10 @@ private extension HomeViewController {
     
     func bindFetchStores() {
         viewModel.refreshDoneOutput
-            .bind { [weak self] in
+            .bind { [weak self] isFirst in
                 self?.refreshButton.animationInvalidate()
                 self?.refreshButton.isHidden = true
-                self?.moreStoreButton.isHidden = false
+                self?.moreStoreButton.isHidden = isFirst
                 self?.moreStoreButton.isEnabled = true
             }
             .disposed(by: disposeBag)
@@ -535,12 +535,14 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
-            refreshButton.heightAnchor.constraint(equalToConstant: 35)
+            refreshButton.heightAnchor.constraint(equalToConstant: 35),
+            refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
             // TODO: bottom constraints 필요
         ])
         
         NSLayoutConstraint.activate([
-            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
+            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            moreStoreButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
             // TODO: bottom constraints 필요
         ])
     }
@@ -581,7 +583,8 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             refreshButton.animationFire()
             viewModel.action(
                 input: .refresh(
-                    requestLocation: makeRequestLocation(projection: mapView.projection)
+                    requestLocation: makeRequestLocation(projection: mapView.projection),
+                    isFirst: true
                 )
             )
         }
