@@ -26,7 +26,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
         )
         let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
-        let cellSelectedIndexObserver = PublishRelay<Int>()
         let storeInformationViewController = StoreInformationViewController(
             summaryViewHeightObserver: summaryViewHeightObserver,
             viewModel: StoreInformationViewModelImpl(
@@ -45,11 +44,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     fetchImageUseCase: FetchImageUseCaseImpl(
                         repository: ImageRepositoryImpl(cache: ImageCache())
                     )
-                ),
-                cellSelectedIndexObserver: cellSelectedIndexObserver
+                )
             ),
-            summaryViewHeightObserver: summaryViewHeightObserver,
-            cellSelectedIndexObserver: cellSelectedIndexObserver
+            summaryViewHeightObserver: summaryViewHeightObserver
         )
         window?.makeKeyAndVisible()
     }
