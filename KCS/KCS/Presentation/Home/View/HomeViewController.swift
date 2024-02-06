@@ -93,8 +93,8 @@ final class HomeViewController: UIViewController {
         map.showScaleBar = false
         map.showIndoorLevelPicker = false
         map.showLocationButton = false
-        map.mapView.logoAlign = .rightTop
-        map.mapView.logoMargin = UIEdgeInsets(top: 28, left: 0, bottom: 0, right: 0)
+        map.mapView.logoAlign = .rightBottom
+        map.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 55, right: 0)
         map.mapView.touchDelegate = self
         map.mapView.addCameraDelegate(delegate: self)
         
@@ -606,10 +606,12 @@ private extension HomeViewController {
             refreshButtonBottomConstraint.constant = -260
             locationButtonBottomConstraint.constant = -260
             moreStoreButtonBottomConstraint.constant = -260
+            mapView.mapView.logoMargin.bottom = 225
         } else {
             refreshButtonBottomConstraint.constant = -283
             locationButtonBottomConstraint.constant = -283
             moreStoreButtonBottomConstraint.constant = -283
+            mapView.mapView.logoMargin.bottom = 248
         }
         UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
             self.view.layoutIfNeeded()
@@ -661,6 +663,10 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             refreshButtonBottomConstraint.constant = -90
             locationButtonBottomConstraint.constant = -90
             moreStoreButtonBottomConstraint.constant = -90
+            mapView.mapView.logoMargin.bottom = 55
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }
             present(storeListViewController, animated: true)
         }
     }
