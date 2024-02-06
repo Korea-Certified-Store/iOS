@@ -17,7 +17,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let getStoreInformationUseCase: GetStoreInformationUseCase
     
     let getStoreInformationOutput = PublishRelay<Store>()
-    let refreshDoneOutput = PublishRelay<Void>()
+    let refreshDoneOutput = PublishRelay<Bool>()
     let locationButtonOutput = PublishRelay<NMFMyPositionMode>()
     let locationButtonImageNameOutput = PublishRelay<String>()
     let setMarkerOutput = PublishRelay<MarkerContents>()
@@ -46,8 +46,8 @@ final class HomeViewModelImpl: HomeViewModel {
     
     func action(input: HomeViewModelInputCase) {
         switch input {
-        case .refresh(let requestLocation):
-            refresh(requestLocation: requestLocation)
+        case .refresh(let requestLocation, let isEntire):
+            refresh(requestLocation: requestLocation, isEntire: isEntire)
         case .moreStoreButtonTapped:
             moreStoreButtonTapped()
         case .filterButtonTapped(let filter):
@@ -72,10 +72,12 @@ final class HomeViewModelImpl: HomeViewModel {
 private extension HomeViewModelImpl {
     
     func refresh(
-        requestLocation: RequestLocation
+        requestLocation: RequestLocation,
+        isEntire: Bool
     ) {
         fetchRefreshStoresUseCase.execute(
-            requestLocation: requestLocation
+            requestLocation: requestLocation,
+            isEntire: isEntire
         )
         .subscribe(
             onNext: { [weak self] refreshContent in
@@ -84,7 +86,7 @@ private extension HomeViewModelImpl {
                 dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
                 applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
                 fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
-                refreshDoneOutput.accept(())
+                refreshDoneOutput.accept(isEntire)
                 checkLastFetch()
             },
             onError: { [weak self] error in
