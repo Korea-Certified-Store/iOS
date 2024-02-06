@@ -562,8 +562,7 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             locationButton.widthAnchor.constraint(equalToConstant: 48),
-            locationButton.heightAnchor.constraint(equalToConstant: 48),
-            locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -100)
+            locationButton.heightAnchor.constraint(equalToConstant: 48)
             // TODO: bottom constraints 필요
         ])
         
