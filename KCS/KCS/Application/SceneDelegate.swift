@@ -36,8 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 )
             )
         )
-        
-        window?.rootViewController = HomeViewController(
+        let homeViewController = HomeViewController(
             viewModel: viewModel,
             storeInformationViewController: storeInformationViewController,
             storeListViewController: StoreListViewController(
@@ -51,6 +50,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             summaryViewHeightObserver: summaryViewHeightObserver,
             listCellSelectedObserver: listCellSelectedObserver
         )
+        
+        var rootViewController: UIViewController
+        
+        if Storage.isOnboarded() {
+            rootViewController = OnboardingViewController(homeViewController: homeViewController)
+        } else {
+            rootViewController = homeViewController
+        }
+        window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
     }
     
