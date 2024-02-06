@@ -50,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         var rootViewController: UIViewController
         
-        if Storage.isFirstTime() {
+        if Storage.executeOnBoarding() {
             rootViewController = OnBoardingViewController(homeViewController: homeViewController)
         } else {
             rootViewController = homeViewController

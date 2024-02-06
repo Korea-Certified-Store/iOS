@@ -9,10 +9,9 @@ import Foundation
 
 final class Storage {
     
-    static func isFirstTime() -> Bool {
+    static func executeOnBoarding() -> Bool {
         let defaults = UserDefaults.standard
-        if defaults.object(forKey: "isFirstTime") == nil {
-            defaults.set(false, forKey: "isFirstTime")
+        if defaults.object(forKey: "executeOnBoarding") == nil {
             return true
         } else {
             return false

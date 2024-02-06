@@ -34,6 +34,7 @@ final class OnBoardingViewController: UIViewController {
         scrollView.bounces = false
         scrollView.delegate = self
         
+        
         for index in 0..<5 {
             let view = onBoardingViews[index]
             view.frame = UIScreen.main.bounds
