@@ -34,8 +34,16 @@ final class SecondOnBoardingView: UIView {
         
         let text = "2011년부터 물가안정을 위해\n가격이 저렴하지만 양질의 서비스를\n제공하는 곳을 정부가 지정한\n우리 동네의 좋은 업소입니다."
         let attributeString = NSMutableAttributedString(string: text)
-        attributeString.addAttribute(.foregroundColor, value: UIFont.pretendard(size: 19, weight: .heavy), range: (text as NSString).range(of: "가격이 저렴"))
-        attributeString.addAttribute(.foregroundColor, value: UIFont.pretendard(size: 19, weight: .heavy), range: (text as NSString).range(of: "양질의 서비스"))
+        attributeString.addAttribute(
+            .foregroundColor,
+            value: UIFont.pretendard(size: 19, weight: .heavy),
+            range: (text as NSString).range(of: "가격이 저렴")
+        )
+        attributeString.addAttribute(
+            .foregroundColor,
+            value: UIFont.pretendard(size: 19, weight: .heavy),
+            range: (text as NSString).range(of: "양질의 서비스")
+        )
         
         label.attributedText = attributeString
         label.font = UIFont.pretendard(size: 19, weight: .medium)

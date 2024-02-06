@@ -34,7 +34,11 @@ final class FourthOnBoardingView: UIView {
         
         let text = "감염병에 취약한 식사문화 개선을 위해\n덜어먹기, 위생적 수저관리, 종사자 마스크\n착용 및 생활 방역을 준수하는 곳으로\n소재지 지자체의 인증을\n받은 음식점을 의미합니다."
         let attributeString = NSMutableAttributedString(string: text)
-        attributeString.addAttribute(.foregroundColor, value: UIFont.pretendard(size: 19, weight: .heavy), range: (text as NSString).range(of: "덜어먹기, 위생적 수저관리, 종사자 마스크\n착용 및 생활 방역을 준수하는 곳"))
+        attributeString.addAttribute(
+            .foregroundColor,
+            value: UIFont.pretendard(size: 19, weight: .heavy),
+            range: (text as NSString).range(of: "덜어먹기, 위생적 수저관리, 종사자 마스크\n착용 및 생활 방역을 준수하는 곳")
+        )
         
         label.attributedText = attributeString
         label.font = UIFont.pretendard(size: 19, weight: .medium)

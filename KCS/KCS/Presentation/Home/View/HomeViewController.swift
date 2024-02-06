@@ -611,7 +611,9 @@ extension HomeViewController: NMFMapViewTouchDelegate {
 
 extension HomeViewController: UISheetPresentationControllerDelegate {
     
-    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(
+        _ sheetPresentationController: UISheetPresentationController
+    ) {
         if let identifier = sheetPresentationController.selectedDetentIdentifier {
             switch identifier {
             case .smallSummaryDetentIdentifier, .largeSummaryDetentIdentifier:

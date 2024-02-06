@@ -12,7 +12,7 @@ final class Storage {
     static func isFirstTime() -> Bool {
         let defaults = UserDefaults.standard
         if defaults.object(forKey: "isFirstTime") == nil {
-            defaults.set(false, forKey:"isFirstTime")
+            defaults.set(false, forKey: "isFirstTime")
             return true
         } else {
             return false
