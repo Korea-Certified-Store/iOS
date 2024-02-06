@@ -381,7 +381,8 @@ private extension HomeViewController {
         
         viewModel.locationStatusAuthorizedWhenInUse
             .bind { [weak self] _ in
-                guard let location = self?.locationManager.location else { return }
+                guard let self = self else { return }
+                guard let location = locationManager.location else { return }
                 let cameraUpdate = NMFCameraUpdate(
                     scrollTo: NMGLatLng(
                         lat: location.coordinate.latitude,
@@ -389,7 +390,15 @@ private extension HomeViewController {
                     )
                 )
                 cameraUpdate.animation = .none
-                self?.mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.positionMode = .direction
+                
+                refreshButton.animationFire()
+                viewModel.action(
+                    input: .refresh(
+                        requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
+                    )
+                )
             }
             .disposed(by: disposeBag)
     }
@@ -421,7 +430,13 @@ private extension HomeViewController {
                 guard let self = self else { return }
                 if markers.indices ~= index {
                     let targetMarker = markers[index]
-                    // TODO: target Marker를 가운데로 카메라 이동
+                    
+                    let cameraUpdate = NMFCameraUpdate(
+                        position: NMFCameraPosition(targetMarker.position.toLatLng(), zoom: 15)
+                    )
+                    cameraUpdate.animation = .easeIn
+                    mapView.mapView.moveCamera(cameraUpdate)
+                    
                     viewModel.action(
                         input: .markerTapped(tag: targetMarker.tag)
                     )
@@ -560,8 +575,7 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
-            refreshButton.heightAnchor.constraint(equalToConstant: 35),
-            refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -400)
+            refreshButton.heightAnchor.constraint(equalToConstant: 35)
             // TODO: bottom constraints 필요
         ])
         
@@ -597,19 +611,12 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         if reason == NMFMapChangedByDeveloper {
-            mapView.positionMode = .direction
-            
             viewModel.action(input:
                     .checkLocationAuthorizationWhenCameraDidChange(
                         status: locationManager.authorizationStatus
                     )
             )
-            refreshButton.animationFire()
-            viewModel.action(
-                input: .refresh(
-                    requestLocation: makeRequestLocation(projection: mapView.projection)
-                )
-            )
+
         }
     }
     
