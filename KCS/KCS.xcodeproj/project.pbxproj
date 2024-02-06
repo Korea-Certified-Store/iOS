@@ -88,6 +88,11 @@
 		A83367B82B6FA0E700E0A844 /* FetchStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B72B6FA0E700E0A844 /* FetchStores.swift */; };
 		A83367BB2B709C0200E0A844 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BA2B709C0200E0A844 /* OnBoardingViewController.swift */; };
 		A83367BD2B70A52900E0A844 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BC2B70A52900E0A844 /* Storage.swift */; };
+		A83367BF2B7246E700E0A844 /* FirstOnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BE2B7246E700E0A844 /* FirstOnBoardingView.swift */; };
+		A83367C12B726E2600E0A844 /* SecondOnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367C02B726E2600E0A844 /* SecondOnBoardingView.swift */; };
+		A83367C32B72714C00E0A844 /* ThirdOnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367C22B72714B00E0A844 /* ThirdOnBoardingView.swift */; };
+		A83367C52B7271B900E0A844 /* FourthOnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367C42B7271B900E0A844 /* FourthOnBoardingView.swift */; };
+		A83367C72B72725700E0A844 /* FifthOnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367C62B72725700E0A844 /* FifthOnBoardingView.swift */; };
 		A89087042B4E7F3500767225 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087032B4E7F3500767225 /* FilterButton.swift */; };
 		A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* SystemImage.swift */; };
 		A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870C2B4EF91600767225 /* UIView+SetLayer.swift */; };
@@ -210,6 +215,11 @@
 		A83367B72B6FA0E700E0A844 /* FetchStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStores.swift; sourceTree = "<group>"; };
 		A83367BA2B709C0200E0A844 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		A83367BC2B70A52900E0A844 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		A83367BE2B7246E700E0A844 /* FirstOnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingView.swift; sourceTree = "<group>"; };
+		A83367C02B726E2600E0A844 /* SecondOnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingView.swift; sourceTree = "<group>"; };
+		A83367C22B72714B00E0A844 /* ThirdOnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnBoardingView.swift; sourceTree = "<group>"; };
+		A83367C42B7271B900E0A844 /* FourthOnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthOnBoardingView.swift; sourceTree = "<group>"; };
+		A83367C62B72725700E0A844 /* FifthOnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FifthOnBoardingView.swift; sourceTree = "<group>"; };
 		A89087032B4E7F3500767225 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		A89087092B4EF00B00767225 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		A890870C2B4EF91600767225 /* UIView+SetLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SetLayer.swift"; sourceTree = "<group>"; };
@@ -608,6 +618,11 @@
 			isa = PBXGroup;
 			children = (
 				A83367BA2B709C0200E0A844 /* OnBoardingViewController.swift */,
+				A83367BE2B7246E700E0A844 /* FirstOnBoardingView.swift */,
+				A83367C02B726E2600E0A844 /* SecondOnBoardingView.swift */,
+				A83367C22B72714B00E0A844 /* ThirdOnBoardingView.swift */,
+				A83367C42B7271B900E0A844 /* FourthOnBoardingView.swift */,
+				A83367C62B72725700E0A844 /* FifthOnBoardingView.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -939,6 +954,7 @@
 				A890870F2B4F836C00767225 /* SummaryView.swift in Sources */,
 				A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */,
 				59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */,
+				A83367C72B72725700E0A844 /* FifthOnBoardingView.swift in Sources */,
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
 				595EE2A52B693DE700CC01CE /* ErrorAlertMessage.swift in Sources */,
 				A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */,
@@ -965,6 +981,7 @@
 				59C306CD2B5035B100862625 /* StoreAPI.swift in Sources */,
 				A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */,
 				A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */,
+				A83367C52B7271B900E0A844 /* FourthOnBoardingView.swift in Sources */,
 				5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */,
 				59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
@@ -977,15 +994,18 @@
 				A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
+				A83367C32B72714C00E0A844 /* ThirdOnBoardingView.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */,
 				59B8864A2B6A9CCB005750EF /* UIStackView+clear.swift in Sources */,
 				59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */,
 				59C306CB2B50357900862625 /* Router.swift in Sources */,
 				A8ACB7E82B595A2100540BD1 /* GetOpenClosedUseCase.swift in Sources */,
+				A83367BF2B7246E700E0A844 /* FirstOnBoardingView.swift in Sources */,
 				59C306B62B50027300862625 /* Store.swift in Sources */,
 				59C306B42B50015500862625 /* APIResponse.swift in Sources */,
 				59B8865A2B6E3B40005750EF /* StoreInformationViewController.swift in Sources */,
+				A83367C12B726E2600E0A844 /* SecondOnBoardingView.swift in Sources */,
 				A8A7E0622B652F0D00D015E5 /* MarkerContents.swift in Sources */,
 				59B8865C2B6E4B8B005750EF /* StoreInformationViewModel.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
