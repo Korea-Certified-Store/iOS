@@ -1,5 +1,5 @@
 //
-//  OnBoardingViewController.swift
+//  OnboardingViewController.swift
 //  KCS
 //
 //  Created by 김영현 on 2/5/24.
@@ -9,23 +9,23 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class OnBoardingViewController: UIViewController {
+final class OnboardingViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let onBoardingViews: [UIView] = [
-        FirstOnBoardingView(),
-        SecondOnBoardingView(),
-        ThirdOnBoardingView(),
-        FourthOnBoardingView(),
-        FifthOnBoardingView()
+    private let onboardingViews: [UIView] = [
+        FirstOnboardingView(),
+        SecondOnboardingView(),
+        ThirdOnboardingView(),
+        FourthOnboardingView(),
+        FifthOnboardingView()
     ]
     
-    private lazy var onBoardingScrollView: UIScrollView = {
+    private lazy var onboardingScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.contentSize = CGSize(
-            width: UIScreen.main.bounds.width * CGFloat(onBoardingViews.count),
+            width: UIScreen.main.bounds.width * CGFloat(onboardingViews.count),
             height: scrollView.bounds.height
         )
         scrollView.isPagingEnabled = true
@@ -34,7 +34,7 @@ final class OnBoardingViewController: UIViewController {
         scrollView.bounces = false
         scrollView.delegate = self
         
-        onBoardingViews.forEach { view in
+        onboardingViews.forEach { view in
             scrollView.addSubview(view)
         }
         
@@ -46,7 +46,7 @@ final class OnBoardingViewController: UIViewController {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.pageIndicatorTintColor = .swipeBar
         pageControl.currentPageIndicatorTintColor = .primary1
-        pageControl.numberOfPages = onBoardingViews.count
+        pageControl.numberOfPages = onboardingViews.count
         pageControl.currentPage = 0
         pageControl.isUserInteractionEnabled = false
         
@@ -65,7 +65,7 @@ final class OnBoardingViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                UserDefaults.standard.set(false, forKey: "executeOnBoarding")
+                UserDefaults.standard.set(false, forKey: "executeOnboarding")
                 homeViewController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
                 present(homeViewController, animated: true)
             }
@@ -95,24 +95,24 @@ final class OnBoardingViewController: UIViewController {
     
 }
 
-private extension OnBoardingViewController {
+private extension OnboardingViewController {
     
     func setup() {
         view.backgroundColor = .white
     }
     
     func addUIComponents() {
-        view.addSubview(onBoardingScrollView)
+        view.addSubview(onboardingScrollView)
         view.addSubview(pageControl)
         view.addSubview(startButton)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            onBoardingScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 53),
-            onBoardingScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            onBoardingScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            onBoardingScrollView.bottomAnchor.constraint(equalTo: pageControl.topAnchor, constant: 50)
+            onboardingScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 53),
+            onboardingScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            onboardingScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            onboardingScrollView.bottomAnchor.constraint(equalTo: pageControl.topAnchor, constant: 50)
         ])
         
         NSLayoutConstraint.activate([
@@ -128,44 +128,44 @@ private extension OnBoardingViewController {
         ])
         
         NSLayoutConstraint.activate([
-            onBoardingViews[0].leadingAnchor.constraint(equalTo: onBoardingScrollView.leadingAnchor),
-            onBoardingViews[0].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
-            onBoardingViews[0].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+            onboardingViews[0].leadingAnchor.constraint(equalTo: onboardingScrollView.leadingAnchor),
+            onboardingViews[0].bottomAnchor.constraint(equalTo: onboardingScrollView.bottomAnchor),
+            onboardingViews[0].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
         
         NSLayoutConstraint.activate([
-            onBoardingViews[1].leadingAnchor.constraint(equalTo: onBoardingViews[0].trailingAnchor),
-            onBoardingViews[1].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
-            onBoardingViews[1].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+            onboardingViews[1].leadingAnchor.constraint(equalTo: onboardingViews[0].trailingAnchor),
+            onboardingViews[1].bottomAnchor.constraint(equalTo: onboardingScrollView.bottomAnchor),
+            onboardingViews[1].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
         
         NSLayoutConstraint.activate([
-            onBoardingViews[2].leadingAnchor.constraint(equalTo: onBoardingViews[1].trailingAnchor),
-            onBoardingViews[2].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
-            onBoardingViews[2].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+            onboardingViews[2].leadingAnchor.constraint(equalTo: onboardingViews[1].trailingAnchor),
+            onboardingViews[2].bottomAnchor.constraint(equalTo: onboardingScrollView.bottomAnchor),
+            onboardingViews[2].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
         
         NSLayoutConstraint.activate([
-            onBoardingViews[3].leadingAnchor.constraint(equalTo: onBoardingViews[2].trailingAnchor),
-            onBoardingViews[3].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
-            onBoardingViews[3].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+            onboardingViews[3].leadingAnchor.constraint(equalTo: onboardingViews[2].trailingAnchor),
+            onboardingViews[3].bottomAnchor.constraint(equalTo: onboardingScrollView.bottomAnchor),
+            onboardingViews[3].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
         
         NSLayoutConstraint.activate([
-            onBoardingViews[4].leadingAnchor.constraint(equalTo: onBoardingViews[3].trailingAnchor),
-            onBoardingViews[4].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
-            onBoardingViews[4].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+            onboardingViews[4].leadingAnchor.constraint(equalTo: onboardingViews[3].trailingAnchor),
+            onboardingViews[4].bottomAnchor.constraint(equalTo: onboardingScrollView.bottomAnchor),
+            onboardingViews[4].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
     }
     
 }
 
-extension OnBoardingViewController: UIScrollViewDelegate {
+extension OnboardingViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(round(scrollView.contentOffset.x / scrollView.frame.size.width))
         
-        if pageControl.currentPage == onBoardingViews.count - 1 {
+        if pageControl.currentPage == onboardingViews.count - 1 {
             startButton.isHidden = false
         } else {
             startButton.isHidden = true

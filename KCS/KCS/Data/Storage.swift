@@ -9,9 +9,9 @@ import Foundation
 
 final class Storage {
     
-    static func executeOnBoarding() -> Bool {
+    static func isOnboarded() -> Bool {
         let defaults = UserDefaults.standard
-        if defaults.object(forKey: "executeOnBoarding") == nil {
+        if defaults.object(forKey: "executeOnboarding") == nil {
             return true
         } else {
             return false

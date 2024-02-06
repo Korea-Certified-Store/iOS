@@ -1,5 +1,5 @@
 //
-//  FirstOnBoardingView.swift
+//  FirstOnboardingView.swift
 //  KCS
 //
 //  Created by 김영현 on 2/6/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FirstOnBoardingView: UIView {
+final class FirstOnboardingView: UIView {
     
     private let topLabel: UILabel = {
         let label = UILabel()
@@ -55,7 +55,7 @@ final class FirstOnBoardingView: UIView {
     
 }
 
-private extension FirstOnBoardingView {
+private extension FirstOnboardingView {
     
     func addUIComponents() {
         addSubview(topLabel)

@@ -50,8 +50,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         var rootViewController: UIViewController
         
-        if Storage.executeOnBoarding() {
-            rootViewController = OnBoardingViewController(homeViewController: homeViewController)
+        if Storage.isOnboarded() {
+            rootViewController = OnboardingViewController(homeViewController: homeViewController)
         } else {
             rootViewController = homeViewController
         }

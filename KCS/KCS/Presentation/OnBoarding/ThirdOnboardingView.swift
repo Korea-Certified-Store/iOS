@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ThirdOnBoardingView: UIView {
+final class ThirdOnboardingView: UIView {
     
     private let topLabel: UILabel = {
         let label = UILabel()
@@ -62,7 +62,7 @@ final class ThirdOnBoardingView: UIView {
     
 }
 
-private extension ThirdOnBoardingView {
+private extension ThirdOnboardingView {
     
     func addUIComponents() {
         addSubview(topLabel)

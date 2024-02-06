@@ -1,5 +1,5 @@
 //
-//  SecondOnBoardingView.swift
+//  FifthOnboardingView.swift
 //  KCS
 //
 //  Created by 김영현 on 2/6/24.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-final class SecondOnBoardingView: UIView {
+final class FifthOnboardingView: UIView {
     
     private let topLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "착한 가격 업소란?"
+        label.text = "나인가 시작하기"
         label.font = UIFont.pretendard(size: 24, weight: .bold)
         label.textColor = .primary1
         label.textAlignment = .center
@@ -21,7 +21,7 @@ final class SecondOnBoardingView: UIView {
     }()
     
     private let centerImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage.onBoarding2)
+        let imageView = UIImageView(image: UIImage.onBoarding5)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         
@@ -31,24 +31,10 @@ final class SecondOnBoardingView: UIView {
     private let bottomLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "이젠 정말 나인가와 함께 할 시간이에요!"
         label.font = UIFont.pretendard(size: 19, weight: .medium)
         label.textColor = .black
         label.textAlignment = .center
-        label.numberOfLines = 4
-        
-        let text = "2011년부터 물가안정을 위해\n가격이 저렴하지만 양질의 서비스를\n제공하는 곳을 정부가 지정한\n우리 동네의 좋은 업소입니다."
-        let attributeString = NSMutableAttributedString(string: text)
-        attributeString.addAttribute(
-            .font,
-            value: UIFont.pretendard(size: 19, weight: .heavy),
-            range: (text as NSString).range(of: "가격이 저렴")
-        )
-        attributeString.addAttribute(
-            .font,
-            value: UIFont.pretendard(size: 19, weight: .heavy),
-            range: (text as NSString).range(of: "양질의 서비스")
-        )
-        label.attributedText = attributeString
         
         return label
     }()
@@ -67,7 +53,7 @@ final class SecondOnBoardingView: UIView {
     
 }
 
-private extension SecondOnBoardingView {
+private extension FifthOnboardingView {
     
     func addUIComponents() {
         addSubview(topLabel)
@@ -84,12 +70,12 @@ private extension SecondOnBoardingView {
         NSLayoutConstraint.activate([
             centerImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             centerImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 83),
-            centerImageView.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 60)
+            centerImageView.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 73)
         ])
         
         NSLayoutConstraint.activate([
             bottomLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            bottomLabel.topAnchor.constraint(equalTo: centerImageView.bottomAnchor, constant: 89)
+            bottomLabel.topAnchor.constraint(equalTo: centerImageView.bottomAnchor, constant: 93)
         ])
     }
     
