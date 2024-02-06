@@ -185,17 +185,21 @@ final class HomeViewController: UIViewController {
     private let storeListViewController: StoreListViewController
     private let viewModel: HomeViewModel
     private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
+    private let listCellSelectedObserver: PublishRelay<Int>
     
     init(
         viewModel: HomeViewModel,
         storeInformationViewController: StoreInformationViewController,
         storeListViewController: StoreListViewController,
-        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
+        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
+        listCellSelectedObserver: PublishRelay<Int>
     ) {
         self.viewModel = viewModel
         self.storeInformationViewController = storeInformationViewController
         self.storeListViewController = storeListViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
+        self.listCellSelectedObserver = listCellSelectedObserver
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -239,6 +243,7 @@ private extension HomeViewController {
         bindLocationAuthorization()
         bindStoreInformationView()
         bindErrorAlert()
+        bindListCellSelected()
     }
     
     func bindFetchStores() {
@@ -269,6 +274,7 @@ private extension HomeViewController {
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
+                self.markers = []
                 var stores: [Store] = []
                 filteredStores.forEach { filteredStore in
                     filteredStore.stores.forEach { [weak self] store in
@@ -375,7 +381,8 @@ private extension HomeViewController {
         
         viewModel.locationStatusAuthorizedWhenInUse
             .bind { [weak self] _ in
-                guard let location = self?.locationManager.location else { return }
+                guard let self = self else { return }
+                guard let location = locationManager.location else { return }
                 let cameraUpdate = NMFCameraUpdate(
                     scrollTo: NMGLatLng(
                         lat: location.coordinate.latitude,
@@ -383,7 +390,15 @@ private extension HomeViewController {
                     )
                 )
                 cameraUpdate.animation = .none
-                self?.mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.positionMode = .direction
+                
+                refreshButton.animationFire()
+                viewModel.action(
+                    input: .refresh(
+                        requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
+                    )
+                )
             }
             .disposed(by: disposeBag)
     }
@@ -405,6 +420,31 @@ private extension HomeViewController {
         viewModel.errorAlertOutput
             .bind { [weak self] error in
                 self?.presentErrorAlert(error: error)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindListCellSelected() {
+        listCellSelectedObserver
+            .bind { [weak self] index in
+                guard let self = self else { return }
+                if markers.indices ~= index {
+                    let targetMarker = markers[index]
+                    
+                    let cameraUpdate = NMFCameraUpdate(
+                        position: NMFCameraPosition(targetMarker.position.toLatLng(), zoom: 15)
+                    )
+                    cameraUpdate.animation = .easeIn
+                    mapView.mapView.moveCamera(cameraUpdate)
+                    
+                    viewModel.action(
+                        input: .markerTapped(tag: targetMarker.tag)
+                    )
+                    targetMarker.select()
+                    clickedMarker = targetMarker
+                } else {
+                    presentErrorAlert(error: .data)
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -573,19 +613,10 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         if reason == NMFMapChangedByDeveloper {
-            mapView.positionMode = .direction
-            
             viewModel.action(input:
                     .checkLocationAuthorizationWhenCameraDidChange(
                         status: locationManager.authorizationStatus
                     )
-            )
-            refreshButton.animationFire()
-            viewModel.action(
-                input: .refresh(
-                    requestLocation: makeRequestLocation(projection: mapView.projection),
-                    isEntire: true
-                )
             )
         }
     }

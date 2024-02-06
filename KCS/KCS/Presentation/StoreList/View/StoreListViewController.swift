@@ -7,8 +7,11 @@
 
 import UIKit
 import RxSwift
+import RxRelay
 
 final class StoreListViewController: UIViewController {
+    
+    private let listCellSelectedObserver: PublishRelay<Int>
     
     private let disposeBag = DisposeBag()
     
@@ -48,6 +51,7 @@ final class StoreListViewController: UIViewController {
                 return StoreTableViewCell()
             }
             cell.setUIContents(storeContents: storeContents)
+            cell.selectionStyle = .none
             
             return cell
         }
@@ -55,8 +59,9 @@ final class StoreListViewController: UIViewController {
     
     private let viewModel: StoreListViewModel
     
-    init(viewModel: StoreListViewModel) {
+    init(viewModel: StoreListViewModel, listCellSelectedObserver: PublishRelay<Int>) {
         self.viewModel = viewModel
+        self.listCellSelectedObserver = listCellSelectedObserver
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -84,6 +89,7 @@ private extension StoreListViewController {
     
     func setup() {
         isModalInPresentation = true
+        storeTableView.delegate = self
     }
     
     func addUIComponents() {
@@ -116,6 +122,14 @@ private extension StoreListViewController {
                 dataSource.apply(snapshot)
             }
             .disposed(by: disposeBag)
+    }
+    
+}
+
+extension StoreListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        listCellSelectedObserver.accept(indexPath.row)
     }
     
 }
