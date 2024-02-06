@@ -215,7 +215,9 @@ final class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        presentStoreListView()
+        if Storage.executeOnBoarding() {
+            presentStoreListView()
+        }
     }
     
 }
