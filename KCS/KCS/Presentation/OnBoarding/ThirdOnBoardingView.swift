@@ -31,20 +31,19 @@ final class ThirdOnBoardingView: UIView {
     private let bottomLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        
-        let text = "식품위생법에 근거하여\n위생관리 상태 등이 우수한 업소를\n모범업소로 지정합니다.\n서비스 수준 향상과 위생적 개선을 도모하기\n위해 운영되고 있습니다."
-        let attributeString = NSMutableAttributedString(string: text)
-        attributeString.addAttribute(
-            .foregroundColor,
-            value: UIFont.pretendard(size: 19, weight: .heavy),
-            range: (text as NSString).range(of: "위생관리 상태 등이 우수한 업소")
-        )
-        
-        label.attributedText = attributeString
         label.font = UIFont.pretendard(size: 19, weight: .medium)
         label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 5
+        
+        let text = "식품위생법에 근거하여\n위생관리 상태 등이 우수한 업소를\n모범업소로 지정합니다.\n서비스 수준 향상과 위생적 개선을 도모하기\n위해 운영되고 있습니다."
+        let attributeString = NSMutableAttributedString(string: text)
+        attributeString.addAttribute(
+            .font,
+            value: UIFont.pretendard(size: 19, weight: .heavy),
+            range: (text as NSString).range(of: "위생관리 상태 등이 우수한 업소")
+        )
+        label.attributedText = attributeString
         
         return label
     }()
