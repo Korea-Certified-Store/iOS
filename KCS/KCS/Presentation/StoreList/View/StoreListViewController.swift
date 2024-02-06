@@ -51,6 +51,7 @@ final class StoreListViewController: UIViewController {
                 return StoreTableViewCell()
             }
             cell.setUIContents(storeContents: storeContents)
+            cell.selectionStyle = .none
             
             return cell
         }
