@@ -255,6 +255,8 @@ private extension HomeViewController {
                 self?.refreshButton.isHidden = true
                 self?.moreStoreButton.isHidden = isEntire
                 self?.moreStoreButton.isEnabled = true
+                self?.mapView.mapView.positionMode = .normal
+                self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)
             }
             .disposed(by: disposeBag)
         
