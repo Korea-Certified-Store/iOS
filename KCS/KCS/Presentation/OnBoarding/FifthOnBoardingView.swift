@@ -42,6 +42,7 @@ final class FifthOnBoardingView: UIView {
     init() {
         super.init(frame: .zero)
         
+        translatesAutoresizingMaskIntoConstraints = false
         addUIComponents()
         configureConstraints()
     }

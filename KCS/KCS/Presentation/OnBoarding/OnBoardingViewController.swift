@@ -34,11 +34,7 @@ final class OnBoardingViewController: UIViewController {
         scrollView.bounces = false
         scrollView.delegate = self
         
-        
-        for index in 0..<5 {
-            let view = onBoardingViews[index]
-            view.frame = UIScreen.main.bounds
-            view.frame.origin.x = UIScreen.main.bounds.width * CGFloat(index)
+        onBoardingViews.forEach { view in
             scrollView.addSubview(view)
         }
         
@@ -129,6 +125,36 @@ private extension OnBoardingViewController {
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             startButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            onBoardingViews[0].leadingAnchor.constraint(equalTo: onBoardingScrollView.leadingAnchor),
+            onBoardingViews[0].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
+            onBoardingViews[0].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+        ])
+        
+        NSLayoutConstraint.activate([
+            onBoardingViews[1].leadingAnchor.constraint(equalTo: onBoardingViews[0].trailingAnchor),
+            onBoardingViews[1].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
+            onBoardingViews[1].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+        ])
+        
+        NSLayoutConstraint.activate([
+            onBoardingViews[2].leadingAnchor.constraint(equalTo: onBoardingViews[1].trailingAnchor),
+            onBoardingViews[2].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
+            onBoardingViews[2].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+        ])
+        
+        NSLayoutConstraint.activate([
+            onBoardingViews[3].leadingAnchor.constraint(equalTo: onBoardingViews[2].trailingAnchor),
+            onBoardingViews[3].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
+            onBoardingViews[3].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+        ])
+        
+        NSLayoutConstraint.activate([
+            onBoardingViews[4].leadingAnchor.constraint(equalTo: onBoardingViews[3].trailingAnchor),
+            onBoardingViews[4].bottomAnchor.constraint(equalTo: onBoardingScrollView.bottomAnchor),
+            onBoardingViews[4].widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
     }
     

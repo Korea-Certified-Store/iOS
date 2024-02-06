@@ -44,6 +44,7 @@ final class FirstOnBoardingView: UIView {
     init() {
         super.init(frame: .zero)
         
+        translatesAutoresizingMaskIntoConstraints = false
         addUIComponents()
         configureConstraints()
     }

@@ -56,6 +56,7 @@ final class SecondOnBoardingView: UIView {
     init() {
         super.init(frame: .zero)
         
+        translatesAutoresizingMaskIntoConstraints = false
         addUIComponents()
         configureConstraints()
     }

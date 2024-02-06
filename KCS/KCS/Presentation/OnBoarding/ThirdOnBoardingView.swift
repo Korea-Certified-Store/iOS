@@ -51,6 +51,7 @@ final class ThirdOnBoardingView: UIView {
     init() {
         super.init(frame: .zero)
         
+        translatesAutoresizingMaskIntoConstraints = false
         addUIComponents()
         configureConstraints()
     }
