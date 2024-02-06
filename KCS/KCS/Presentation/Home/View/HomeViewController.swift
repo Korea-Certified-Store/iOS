@@ -185,17 +185,21 @@ final class HomeViewController: UIViewController {
     private let storeListViewController: StoreListViewController
     private let viewModel: HomeViewModel
     private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
+    private let listCellSelectedObserver: PublishRelay<Int>
     
     init(
         viewModel: HomeViewModel,
         storeInformationViewController: StoreInformationViewController,
         storeListViewController: StoreListViewController,
-        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
+        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
+        listCellSelectedObserver: PublishRelay<Int>
     ) {
         self.viewModel = viewModel
         self.storeInformationViewController = storeInformationViewController
         self.storeListViewController = storeListViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
+        self.listCellSelectedObserver = listCellSelectedObserver
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -239,6 +243,7 @@ private extension HomeViewController {
         bindLocationAuthorization()
         bindStoreInformationView()
         bindErrorAlert()
+        bindListCellSelected()
     }
     
     func bindFetchStores() {
@@ -269,6 +274,7 @@ private extension HomeViewController {
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
+                self.markers = []
                 var stores: [Store] = []
                 filteredStores.forEach { filteredStore in
                     filteredStore.stores.forEach { [weak self] store in
@@ -409,6 +415,25 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindListCellSelected() {
+        listCellSelectedObserver
+            .bind { [weak self] index in
+                guard let self = self else { return }
+                if markers.indices ~= index {
+                    let targetMarker = markers[index]
+                    // TODO: target Marker를 가운데로 카메라 이동
+                    viewModel.action(
+                        input: .markerTapped(tag: targetMarker.tag)
+                    )
+                    targetMarker.select()
+                    clickedMarker = targetMarker
+                } else {
+                    presentErrorAlert(error: .data)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }
 
 private extension HomeViewController {
@@ -535,7 +560,8 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
-            refreshButton.heightAnchor.constraint(equalToConstant: 35)
+            refreshButton.heightAnchor.constraint(equalToConstant: 35),
+            refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -400)
             // TODO: bottom constraints 필요
         ])
         
