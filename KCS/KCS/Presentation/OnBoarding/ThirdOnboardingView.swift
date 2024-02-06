@@ -21,7 +21,7 @@ final class ThirdOnboardingView: UIView {
     }()
     
     private let centerImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage.onBoarding3)
+        let imageView = UIImageView(image: UIImage.onboarding3)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         

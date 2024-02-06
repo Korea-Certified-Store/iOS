@@ -21,7 +21,7 @@ final class FifthOnboardingView: UIView {
     }()
     
     private let centerImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage.onBoarding5)
+        let imageView = UIImageView(image: UIImage.onboarding5)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         

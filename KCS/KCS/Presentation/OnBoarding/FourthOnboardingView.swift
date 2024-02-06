@@ -21,7 +21,7 @@ final class FourthOnboardingView: UIView {
     }()
     
     private let centerImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage.onBoarding4)
+        let imageView = UIImageView(image: UIImage.onboarding4)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         

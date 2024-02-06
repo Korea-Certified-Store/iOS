@@ -21,7 +21,7 @@ final class SecondOnboardingView: UIView {
     }()
     
     private let centerImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage.onBoarding2)
+        let imageView = UIImageView(image: UIImage.onboarding2)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         
