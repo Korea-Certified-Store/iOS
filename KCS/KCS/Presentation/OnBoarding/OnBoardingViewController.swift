@@ -68,6 +68,7 @@ final class OnBoardingViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                UserDefaults.standard.set(false, forKey: "executeOnBoarding")
                 homeViewController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
                 present(homeViewController, animated: true)
             }
@@ -90,7 +91,7 @@ final class OnBoardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
+        setup()
         addUIComponents()
         configureConstraints()
     }
@@ -99,7 +100,7 @@ final class OnBoardingViewController: UIViewController {
 
 private extension OnBoardingViewController {
     
-    func setBackgroundColor() {
+    func setup() {
         view.backgroundColor = .white
     }
     
