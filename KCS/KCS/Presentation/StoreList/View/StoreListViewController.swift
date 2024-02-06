@@ -90,6 +90,7 @@ private extension StoreListViewController {
     func setup() {
         isModalInPresentation = true
         storeTableView.delegate = self
+        view.backgroundColor = .white
     }
     
     func addUIComponents() {
@@ -99,9 +100,10 @@ private extension StoreListViewController {
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            titleBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            titleBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             titleBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            titleBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            titleBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            titleBar.heightAnchor.constraint(equalToConstant: 65)
         ])
         
         NSLayoutConstraint.activate([
