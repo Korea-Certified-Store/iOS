@@ -255,6 +255,8 @@ private extension HomeViewController {
                 self?.refreshButton.isHidden = true
                 self?.moreStoreButton.isHidden = isEntire
                 self?.moreStoreButton.isEnabled = true
+                self?.mapView.mapView.positionMode = .normal
+                self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)
             }
             .disposed(by: disposeBag)
         
@@ -560,7 +562,8 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             locationButton.widthAnchor.constraint(equalToConstant: 48),
-            locationButton.heightAnchor.constraint(equalToConstant: 48)
+            locationButton.heightAnchor.constraint(equalToConstant: 48),
+            locationButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -100)
             // TODO: bottom constraints 필요
         ])
         
