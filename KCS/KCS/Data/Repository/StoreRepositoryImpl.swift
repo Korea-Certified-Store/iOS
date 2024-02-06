@@ -77,15 +77,4 @@ final class StoreRepositoryImpl: StoreRepository {
         return store
     }
     
-    func getStoreByIndex(
-        index: Int
-    ) throws -> Store {
-        let flattenStores = stores.flatMap({ $0 })
-        if flattenStores.indices ~= index {
-            return flattenStores[index]
-        } else {
-            throw StoreRepositoryError.wrongStoreIndex
-        }
-    }
-    
 }
