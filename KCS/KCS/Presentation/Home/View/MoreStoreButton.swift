@@ -14,7 +14,7 @@ final class MoreStoreButton: UIButton {
             if isEnabled {
                 configuration?.baseForegroundColor = .black
             } else {
-                configuration?.baseForegroundColor = .gray
+                configuration?.baseForegroundColor = .grayLabel
             }
         }
     }
