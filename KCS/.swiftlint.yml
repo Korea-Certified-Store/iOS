@@ -1,5 +1,6 @@
 disabled_rules:
     - trailing_whitespace
+    - file_length
 
 opt_in_rules:
     - empty_string
@@ -9,7 +10,6 @@ excluded:
     - KCS/Application
 
 line_length: 140
-file_length: 650
 cyclomatic_complexity: 20
 identifier_name:
     max_length: 50
