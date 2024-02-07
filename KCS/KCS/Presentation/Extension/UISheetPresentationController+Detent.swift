@@ -28,7 +28,7 @@ extension UISheetPresentationController.Detent {
         return 616 - 21
     }    
     static let smallStoreListViewDetent = custom(identifier: .smallStoreListViewDetentIdentifier) { _ in
-        return 35
+        return 40
     }
     static let largeStoreListViewDetent = large()
     

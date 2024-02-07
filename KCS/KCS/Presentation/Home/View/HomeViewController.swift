@@ -93,8 +93,8 @@ final class HomeViewController: UIViewController {
         map.showScaleBar = false
         map.showIndoorLevelPicker = false
         map.showLocationButton = false
-        map.mapView.logoAlign = .rightTop
-        map.mapView.logoMargin = UIEdgeInsets(top: 28, left: 0, bottom: 0, right: 0)
+        map.mapView.logoAlign = .rightBottom
+        map.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 55, right: 0)
         map.mapView.touchDelegate = self
         map.mapView.addCameraDelegate(delegate: self)
         
@@ -124,6 +124,7 @@ final class HomeViewController: UIViewController {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
+            .debounce(.milliseconds(10), scheduler: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
                 button.animationFire()
@@ -149,6 +150,7 @@ final class HomeViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         button.rx.tap
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] in
                 self?.viewModel.action(
                     input: .moreStoreButtonTapped
@@ -177,6 +179,18 @@ final class HomeViewController: UIViewController {
         
         return view
     }()
+    
+    private lazy var refreshButtonBottomConstraint = refreshButton.bottomAnchor.constraint(
+        equalTo: mapView.bottomAnchor, constant: -90
+    )
+    
+    private lazy var moreStoreButtonBottomConstraint = moreStoreButton.bottomAnchor.constraint(
+        equalTo: mapView.bottomAnchor, constant: -90
+    )
+    
+    private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
+        equalTo: mapView.bottomAnchor, constant: -90
+    )
     
     private let disposeBag = DisposeBag()
     private var markers: [Marker] = []
@@ -214,14 +228,6 @@ final class HomeViewController: UIViewController {
         configureConstraints()
         bind()
         setup()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if Storage.isOnboarded() {
-            presentStoreListView()
-        }
     }
     
 }
@@ -331,6 +337,7 @@ private extension HomeViewController {
         viewModel.getStoreInformationOutput
             .bind { [weak self] store in
                 self?.storeInformationViewController.setUIContents(store: store)
+                self?.changeButtonsConstraints(delay: false)
             }
             .disposed(by: disposeBag)
         
@@ -362,6 +369,7 @@ private extension HomeViewController {
             storeInformationViewController.changeToSummary()
             if !(presentedViewController is StoreInformationViewController) {
                 dismiss(animated: true)
+                changeButtonsConstraints(delay: true)
                 present(storeInformationViewController, animated: true)
             }
         }
@@ -384,6 +392,7 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
         
         viewModel.locationStatusAuthorizedWhenInUse
+            .debounce(.milliseconds(10), scheduler: MainScheduler())
             .bind { [weak self] _ in
                 guard let self = self else { return }
                 guard let location = locationManager.location else { return }
@@ -422,6 +431,7 @@ private extension HomeViewController {
     
     func bindErrorAlert() {
         viewModel.errorAlertOutput
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] error in
                 self?.presentErrorAlert(error: error)
             }
@@ -430,6 +440,7 @@ private extension HomeViewController {
     
     func bindListCellSelected() {
         listCellSelectedObserver
+            .debounce(.milliseconds(10), scheduler: MainScheduler())
             .bind { [weak self] index in
                 guard let self = self else { return }
                 if markers.indices ~= index {
@@ -562,8 +573,8 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             locationButton.widthAnchor.constraint(equalToConstant: 48),
-            locationButton.heightAnchor.constraint(equalToConstant: 48)
-            // TODO: bottom constraints 필요
+            locationButton.heightAnchor.constraint(equalToConstant: 48),
+            locationButtonBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
@@ -580,15 +591,32 @@ private extension HomeViewController {
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
             refreshButton.heightAnchor.constraint(equalToConstant: 35),
-            refreshButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
-            // TODO: bottom constraints 필요
+            refreshButtonBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
             moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
-            moreStoreButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -100)
-            // TODO: bottom constraints 필요
+            moreStoreButton.widthAnchor.constraint(equalToConstant: 97),
+            moreStoreButtonBottomConstraint
         ])
+    }
+    
+    func changeButtonsConstraints(delay: Bool) {
+        guard let controller = storeInformationViewController.sheetPresentationController else { return }
+        if controller.detents.contains(.smallSummaryViewDetent) {
+            refreshButtonBottomConstraint.constant = -260
+            locationButtonBottomConstraint.constant = -260
+            moreStoreButtonBottomConstraint.constant = -260
+            mapView.mapView.logoMargin.bottom = 225
+        } else {
+            refreshButtonBottomConstraint.constant = -283
+            locationButtonBottomConstraint.constant = -283
+            moreStoreButtonBottomConstraint.constant = -283
+            mapView.mapView.logoMargin.bottom = 248
+        }
+        UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
+            self.view.layoutIfNeeded()
+        }
     }
     
 }
@@ -632,6 +660,13 @@ extension HomeViewController: NMFMapViewCameraDelegate {
                 sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
                 sheet.prefersGrabberVisible = true
                 sheet.preferredCornerRadius = 15
+            }
+            refreshButtonBottomConstraint.constant = -90
+            locationButtonBottomConstraint.constant = -90
+            moreStoreButtonBottomConstraint.constant = -90
+            mapView.mapView.logoMargin.bottom = 55
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
             }
             present(storeListViewController, animated: true)
         }
