@@ -93,7 +93,9 @@ private extension HomeViewModelImpl {
                 if error is StoreRepositoryError {
                     self?.errorAlertOutput.accept(.client)
                 } else {
-                    self?.errorAlertOutput.accept(.server)
+                    guard let error = error as? ErrorAlertMessage else { return }
+                    self?.errorAlertOutput.accept(error)
+                    self?.refreshDoneOutput.accept(true)
                 }
             }
         )

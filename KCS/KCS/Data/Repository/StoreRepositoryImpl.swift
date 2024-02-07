@@ -57,11 +57,14 @@ final class StoreRepositoryImpl: StoreRepository {
                             }
                         }
                         observer.onNext(fetchStores)
-                    case .failure(let error as NSError):
-                        if error == AFError.sessionTaskFailed(error: NSError(domain: "NSURLErrorDomain", code: -1009)) as NSError {
-                            observer.onError(ErrorAlertMessage.internet)
-                        } else {
-                            throw error
+                    case .failure(let error):
+                        if let underlyingError = error.underlyingError as? NSError {
+                            switch underlyingError.code {
+                            case URLError.notConnectedToInternet.rawValue:
+                                observer.onError(ErrorAlertMessage.internet)
+                            default:
+                                observer.onError(ErrorAlertMessage.server)
+                            }
                         }
                     }
                 } catch {
