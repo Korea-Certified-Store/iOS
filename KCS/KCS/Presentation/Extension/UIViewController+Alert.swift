@@ -14,7 +14,7 @@ extension UIViewController {
         alertController.addAction(UIAlertAction(title: "확인", style: .default))
         if let presentController = presentedViewController {
             presentController.presentErrorAlert(error: error)
-        } else {
+        } else if !(self is UIAlertController) {
             present(alertController, animated: true)
         }
     }

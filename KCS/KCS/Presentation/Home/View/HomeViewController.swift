@@ -209,6 +209,7 @@ final class HomeViewController: UIViewController {
         configureConstraints()
         bind()
         setup()
+        refresh()
     }
     
 }
@@ -386,13 +387,7 @@ private extension HomeViewController {
                 cameraUpdate.animation = .none
                 mapView.mapView.moveCamera(cameraUpdate)
                 mapView.mapView.positionMode = .direction
-                
-                refreshButton.animationFire()
-                viewModel.action(
-                    input: .refresh(
-                        requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
-                    )
-                )
+                refresh()
             }
             .disposed(by: disposeBag)
     }
@@ -518,6 +513,15 @@ private extension HomeViewController {
             northEast: Location(
                 longitude: northEastPoint.lng,
                 latitude: northEastPoint.lat
+            )
+        )
+    }
+    
+    func refresh() {
+        refreshButton.animationFire()
+        viewModel.action(
+            input: .refresh(
+                requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
             )
         )
     }
