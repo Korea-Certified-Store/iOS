@@ -40,7 +40,7 @@ final class StoreInformationViewController: UIViewController {
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
+        bind()
     }
     
     override func viewDidLoad() {
@@ -48,7 +48,6 @@ final class StoreInformationViewController: UIViewController {
         
         addUIComponents()
         configureConstraints()
-        bind()
         setup()
     }
     
@@ -67,6 +66,7 @@ extension StoreInformationViewController {
     
     func bind() {
         viewModel.errorAlertOutput
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] error in
                 self?.presentErrorAlert(error: error)
             }
@@ -80,6 +80,7 @@ extension StoreInformationViewController {
             .disposed(by: disposeBag)
         
         viewModel.summaryCallButtonOutput
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] phoneNumber in
                 self?.summaryView.setCallButton(phoneNumber: phoneNumber)
             }

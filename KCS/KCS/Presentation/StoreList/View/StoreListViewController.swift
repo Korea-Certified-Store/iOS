@@ -15,15 +15,22 @@ final class StoreListViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let titleBar: UINavigationBar = {
-        let navigationBar = UINavigationBar()
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        let titleItem = UINavigationItem(title: "가게 모아보기")
-        navigationBar.setItems([titleItem], animated: true)
-        navigationBar.backgroundColor = .white
-        navigationBar.isTranslucent = false
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "가게 모아보기"
+        label.font = UIFont.pretendard(size: 16, weight: .medium)
+        label.textColor = .black
         
-        return navigationBar
+        return label
+    }()    
+    
+    private let divideView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.lightGray
+        
+        return view
     }()
     
     private let storeTableView: UITableView = {
@@ -95,19 +102,25 @@ private extension StoreListViewController {
     
     func addUIComponents() {
         view.addSubview(storeTableView)
-        view.addSubview(titleBar)
+        view.addSubview(titleLabel)
+        view.addSubview(divideView)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            titleBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            titleBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            titleBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            titleBar.heightAnchor.constraint(equalToConstant: 65)
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
+            titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            storeTableView.topAnchor.constraint(equalTo: titleBar.bottomAnchor),
+            divideView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 27),
+            divideView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            divideView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            divideView.heightAnchor.constraint(equalToConstant: 0.5)
+        ])
+        
+        NSLayoutConstraint.activate([
+            storeTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
             storeTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             storeTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             storeTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
