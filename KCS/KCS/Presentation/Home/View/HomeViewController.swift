@@ -124,6 +124,7 @@ final class HomeViewController: UIViewController {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
+            .debounce(.milliseconds(10), scheduler: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
                 button.animationFire()
@@ -149,6 +150,7 @@ final class HomeViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         button.rx.tap
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] in
                 self?.viewModel.action(
                     input: .moreStoreButtonTapped
@@ -390,6 +392,7 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
         
         viewModel.locationStatusAuthorizedWhenInUse
+            .debounce(.milliseconds(10), scheduler: MainScheduler())
             .bind { [weak self] _ in
                 guard let self = self else { return }
                 guard let location = locationManager.location else { return }
@@ -428,6 +431,7 @@ private extension HomeViewController {
     
     func bindErrorAlert() {
         viewModel.errorAlertOutput
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] error in
                 self?.presentErrorAlert(error: error)
             }
@@ -436,6 +440,7 @@ private extension HomeViewController {
     
     func bindListCellSelected() {
         listCellSelectedObserver
+            .debounce(.milliseconds(10), scheduler: MainScheduler())
             .bind { [weak self] index in
                 guard let self = self else { return }
                 if markers.indices ~= index {

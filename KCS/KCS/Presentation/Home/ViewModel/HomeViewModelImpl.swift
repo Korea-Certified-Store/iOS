@@ -75,8 +75,6 @@ private extension HomeViewModelImpl {
         requestLocation: RequestLocation,
         isEntire: Bool
     ) {
-        if dependency.isRefreshReady {
-            dependency.isRefreshReady = false
             fetchRefreshStoresUseCase.execute(
                 requestLocation: requestLocation,
                 isEntire: isEntire
@@ -90,7 +88,6 @@ private extension HomeViewModelImpl {
                     fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
                     refreshDoneOutput.accept(isEntire)
                     checkLastFetch()
-                    dependency.isRefreshReady = true
                 },
                 onError: { [weak self] error in
                     if error is StoreRepositoryError {
@@ -101,7 +98,6 @@ private extension HomeViewModelImpl {
                 }
             )
             .disposed(by: dependency.disposeBag)
-        }
     }
     
     func moreStoreButtonTapped() {

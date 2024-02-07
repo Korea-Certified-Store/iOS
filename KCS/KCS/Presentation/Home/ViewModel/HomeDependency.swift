@@ -13,7 +13,6 @@ struct HomeDependency {
     var activatedFilter: [CertificationType] = []
     var fetchCount: Int = 1
     var maxFetchCount: Int = 1
-    var isRefreshReady: Bool = true
     
     mutating func resetFetchCount() {
         fetchCount = 1
