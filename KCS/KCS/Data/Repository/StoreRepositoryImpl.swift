@@ -57,8 +57,12 @@ final class StoreRepositoryImpl: StoreRepository {
                             }
                         }
                         observer.onNext(fetchStores)
-                    case .failure(let error):
-                        throw error
+                    case .failure(let error as NSError):
+                        if error == AFError.sessionTaskFailed(error: NSError(domain: "NSURLErrorDomain", code: -1009)) as NSError {
+                            observer.onError(ErrorAlertMessage.internet)
+                        } else {
+                            throw error
+                        }
                     }
                 } catch {
                     observer.onError(error)

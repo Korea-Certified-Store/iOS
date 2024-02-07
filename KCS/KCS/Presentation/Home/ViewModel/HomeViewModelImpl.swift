@@ -92,6 +92,9 @@ private extension HomeViewModelImpl {
             onError: { [weak self] error in
                 if error is StoreRepositoryError {
                     self?.errorAlertOutput.accept(.client)
+                } else if error is ErrorAlertMessage {
+                    self?.errorAlertOutput.accept(.internet)
+                    self?.refreshDoneOutput.accept(true)
                 } else {
                     self?.errorAlertOutput.accept(.server)
                 }
