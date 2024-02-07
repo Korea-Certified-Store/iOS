@@ -75,29 +75,33 @@ private extension HomeViewModelImpl {
         requestLocation: RequestLocation,
         isEntire: Bool
     ) {
-        fetchRefreshStoresUseCase.execute(
-            requestLocation: requestLocation,
-            isEntire: isEntire
-        )
-        .subscribe(
-            onNext: { [weak self] refreshContent in
-                guard let self = self else { return }
-                dependency.resetFetchCount()
-                dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
-                applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
-                fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
-                refreshDoneOutput.accept(isEntire)
-                checkLastFetch()
-            },
-            onError: { [weak self] error in
-                if error is StoreRepositoryError {
-                    self?.errorAlertOutput.accept(.data)
-                } else {
-                    self?.errorAlertOutput.accept(.server)
+        if dependency.isRefreshReady {
+            dependency.isRefreshReady = false
+            fetchRefreshStoresUseCase.execute(
+                requestLocation: requestLocation,
+                isEntire: isEntire
+            )
+            .subscribe(
+                onNext: { [weak self] refreshContent in
+                    guard let self = self else { return }
+                    dependency.resetFetchCount()
+                    dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
+                    applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
+                    fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
+                    refreshDoneOutput.accept(isEntire)
+                    checkLastFetch()
+                    dependency.isRefreshReady = true
+                },
+                onError: { [weak self] error in
+                    if error is StoreRepositoryError {
+                        self?.errorAlertOutput.accept(.data)
+                    } else {
+                        self?.errorAlertOutput.accept(.server)
+                    }
                 }
-            }
-        )
-        .disposed(by: dependency.disposeBag)
+            )
+            .disposed(by: dependency.disposeBag)
+        }
     }
     
     func moreStoreButtonTapped() {

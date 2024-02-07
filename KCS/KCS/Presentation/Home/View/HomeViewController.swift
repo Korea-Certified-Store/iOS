@@ -228,14 +228,6 @@ final class HomeViewController: UIViewController {
         setup()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if Storage.isOnboarded() {
-            presentStoreListView()
-        }
-    }
-    
 }
 
 private extension HomeViewController {
