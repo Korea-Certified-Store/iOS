@@ -75,29 +75,31 @@ private extension HomeViewModelImpl {
         requestLocation: RequestLocation,
         isEntire: Bool
     ) {
-            fetchRefreshStoresUseCase.execute(
-                requestLocation: requestLocation,
-                isEntire: isEntire
-            )
-            .subscribe(
-                onNext: { [weak self] refreshContent in
-                    guard let self = self else { return }
-                    dependency.resetFetchCount()
-                    dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
-                    applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
-                    fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
-                    refreshDoneOutput.accept(isEntire)
-                    checkLastFetch()
-                },
-                onError: { [weak self] error in
-                    if error is StoreRepositoryError {
-                        self?.errorAlertOutput.accept(.data)
-                    } else {
-                        self?.errorAlertOutput.accept(.server)
-                    }
+        fetchRefreshStoresUseCase.execute(
+            requestLocation: requestLocation,
+            isEntire: isEntire
+        )
+        .subscribe(
+            onNext: { [weak self] refreshContent in
+                guard let self = self else { return }
+                dependency.resetFetchCount()
+                dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
+                applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
+                fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
+                refreshDoneOutput.accept(isEntire)
+                checkLastFetch()
+            },
+            onError: { [weak self] error in
+                if error is StoreRepositoryError {
+                    self?.errorAlertOutput.accept(.client)
+                } else {
+                    guard let error = error as? ErrorAlertMessage else { return }
+                    self?.errorAlertOutput.accept(error)
+                    self?.refreshDoneOutput.accept(true)
                 }
-            )
-            .disposed(by: dependency.disposeBag)
+            }
+        )
+        .disposed(by: dependency.disposeBag)
     }
     
     func moreStoreButtonTapped() {
@@ -173,7 +175,7 @@ private extension HomeViewModelImpl {
                 try getStoreInformationUseCase.execute(tag: tag)
             )
         } catch {
-            errorAlertOutput.accept(.data)
+            errorAlertOutput.accept(.client)
         }
     }
     

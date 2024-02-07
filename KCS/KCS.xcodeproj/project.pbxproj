@@ -42,7 +42,7 @@
 		59B8865A2B6E3B40005750EF /* StoreInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886592B6E3B40005750EF /* StoreInformationViewController.swift */; };
 		59B8865C2B6E4B8B005750EF /* StoreInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8865B2B6E4B8B005750EF /* StoreInformationViewModel.swift */; };
 		59B8865E2B6E4B98005750EF /* StoreInformationViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8865D2B6E4B98005750EF /* StoreInformationViewModelImpl.swift */; };
-		59B886602B6E7CF6005750EF /* UIViewController+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8865F2B6E7CF6005750EF /* UIViewController+ErrorAlert.swift */; };
+		59B886602B6E7CF6005750EF /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8865F2B6E7CF6005750EF /* UIViewController+Alert.swift */; };
 		59B886622B6E8484005750EF /* UISheetPresentationController+Detent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886612B6E8484005750EF /* UISheetPresentationController+Detent.swift */; };
 		59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886632B6EC816005750EF /* SummaryViewHeightCase.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
@@ -165,7 +165,7 @@
 		59B886592B6E3B40005750EF /* StoreInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInformationViewController.swift; sourceTree = "<group>"; };
 		59B8865B2B6E4B8B005750EF /* StoreInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInformationViewModel.swift; sourceTree = "<group>"; };
 		59B8865D2B6E4B98005750EF /* StoreInformationViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInformationViewModelImpl.swift; sourceTree = "<group>"; };
-		59B8865F2B6E7CF6005750EF /* UIViewController+ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ErrorAlert.swift"; sourceTree = "<group>"; };
+		59B8865F2B6E7CF6005750EF /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		59B886612B6E8484005750EF /* UISheetPresentationController+Detent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISheetPresentationController+Detent.swift"; sourceTree = "<group>"; };
 		59B886632B6EC816005750EF /* SummaryViewHeightCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewHeightCase.swift; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
@@ -637,7 +637,7 @@
 				A8A7E05F2B64E62200D015E5 /* NMFMyPosition+.swift */,
 				59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */,
 				59B886492B6A9CCB005750EF /* UIStackView+clear.swift */,
-				59B8865F2B6E7CF6005750EF /* UIViewController+ErrorAlert.swift */,
+				59B8865F2B6E7CF6005750EF /* UIViewController+Alert.swift */,
 				59B886612B6E8484005750EF /* UISheetPresentationController+Detent.swift */,
 			);
 			path = Extension;
@@ -1027,7 +1027,7 @@
 				A8ACB7DD2B58E3DE00540BD1 /* OpenClosedType.swift in Sources */,
 				59B886622B6E8484005750EF /* UISheetPresentationController+Detent.swift in Sources */,
 				59C306D82B50650D00862625 /* Encodable+.swift in Sources */,
-				59B886602B6E7CF6005750EF /* UIViewController+ErrorAlert.swift in Sources */,
+				59B886602B6E7CF6005750EF /* UIViewController+Alert.swift in Sources */,
 				5977BE682B553C8300725C90 /* HomeDependency.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1199,7 +1199,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 7CQAR4CYZX;
+				DEVELOPMENT_TEAM = MMM58CZBQF;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCS/Resource/Info.plist;
@@ -1216,7 +1216,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.nainga;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.yeonghyeon.nainga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1237,7 +1237,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7CQAR4CYZX;
+				DEVELOPMENT_TEAM = MMM58CZBQF;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCS/Resource/Info.plist;
@@ -1254,7 +1254,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.nainga;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.yeonghyeon.nainga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

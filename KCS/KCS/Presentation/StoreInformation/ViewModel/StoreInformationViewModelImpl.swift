@@ -66,7 +66,7 @@ private extension StoreInformationViewModelImpl {
                 )
             )
         } catch {
-            errorAlertOutput.accept(.data)
+            errorAlertOutput.accept(.client)
         }
     }
     

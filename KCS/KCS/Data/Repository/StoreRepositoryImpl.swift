@@ -58,7 +58,14 @@ final class StoreRepositoryImpl: StoreRepository {
                         }
                         observer.onNext(fetchStores)
                     case .failure(let error):
-                        throw error
+                        if let underlyingError = error.underlyingError as? NSError {
+                            switch underlyingError.code {
+                            case URLError.notConnectedToInternet.rawValue:
+                                observer.onError(ErrorAlertMessage.internet)
+                            default:
+                                observer.onError(ErrorAlertMessage.server)
+                            }
+                        }
                     }
                 } catch {
                     observer.onError(error)
