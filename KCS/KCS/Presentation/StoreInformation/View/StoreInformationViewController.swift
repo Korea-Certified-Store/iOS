@@ -40,7 +40,7 @@ final class StoreInformationViewController: UIViewController {
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
+        bind()
     }
     
     override func viewDidLoad() {
@@ -48,7 +48,6 @@ final class StoreInformationViewController: UIViewController {
         
         addUIComponents()
         configureConstraints()
-        bind()
         setup()
     }
     
