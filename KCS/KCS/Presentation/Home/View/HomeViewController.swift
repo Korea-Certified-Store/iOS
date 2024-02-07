@@ -447,7 +447,7 @@ private extension HomeViewController {
                     targetMarker.select()
                     clickedMarker = targetMarker
                 } else {
-                    presentErrorAlert(error: .data)
+                    presentErrorAlert(error: .client)
                 }
             }
             .disposed(by: disposeBag)

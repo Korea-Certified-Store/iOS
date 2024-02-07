@@ -91,7 +91,7 @@ private extension HomeViewModelImpl {
             },
             onError: { [weak self] error in
                 if error is StoreRepositoryError {
-                    self?.errorAlertOutput.accept(.data)
+                    self?.errorAlertOutput.accept(.client)
                 } else {
                     self?.errorAlertOutput.accept(.server)
                 }
@@ -173,7 +173,7 @@ private extension HomeViewModelImpl {
                 try getStoreInformationUseCase.execute(tag: tag)
             )
         } catch {
-            errorAlertOutput.accept(.data)
+            errorAlertOutput.accept(.client)
         }
     }
     
