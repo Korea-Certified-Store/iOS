@@ -31,7 +31,7 @@ final class StoreRepositoryImpl: StoreRepository {
                 neLong: requestLocation.northEast.longitude,
                 neLat: requestLocation.northEast.latitude
             )))
-            .responseDecodable(of: StoreResponse.self) { [weak self] response in
+            .responseDecodable(of: RefreshStoreResponse.self) { [weak self] response in
                 do {
                     switch response.result {
                     case .success(let result):
@@ -85,6 +85,37 @@ final class StoreRepositoryImpl: StoreRepository {
     ) throws -> Store {
         guard let store = stores.flatMap({ $0 }).first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
         return store
+    }
+    
+    func fetchSearchStores(location: Location, keyword: String) -> Observable<[Store]> {
+        return Observable<[Store]>.create { observer -> Disposable in
+            AF.request(StoreAPI.getSearchStores(searchDTO: SearchDTO(
+                currLong: location.longitude,
+                currLat: location.latitude,
+                searchKeyword: keyword
+            )))
+            .responseDecodable(of: SearchStoreResponse.self) { [weak self] response in
+                do {
+                    switch response.result {
+                    case .success(let result):
+                        let resultStores = try result.data.map { try $0.toEntity() }
+                        // TODO: 일차원 배열 가게들 저장
+                    case .failure(let error):
+                        if let underlyingError = error.underlyingError as? NSError {
+                            switch underlyingError.code {
+                            case URLError.notConnectedToInternet.rawValue:
+                                observer.onError(ErrorAlertMessage.internet)
+                            default:
+                                observer.onError(ErrorAlertMessage.server)
+                            }
+                        }
+                    }
+                } catch {
+                    observer.onError(error)
+                }
+            }
+            return Disposables.create()
+        }
     }
     
 }

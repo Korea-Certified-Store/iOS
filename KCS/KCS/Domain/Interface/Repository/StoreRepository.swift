@@ -20,4 +20,9 @@ protocol StoreRepository {
         tag: UInt
     ) throws -> Store
     
+    func fetchSearchStores(
+        location: Location,
+        keyword: String
+    ) -> Observable<[Store]>
+    
 }
