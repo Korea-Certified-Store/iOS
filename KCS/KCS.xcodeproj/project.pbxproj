@@ -85,6 +85,12 @@
 		A81EFBC82B5D597400D0C0D7 /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBBF2B5D597400D0C0D7 /* Pretendard-Light.ttf */; };
 		A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */; };
 		A821A3742B74B84700089B8F /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A3732B74B84700089B8F /* SplashViewController.swift */; };
+		A821A3762B74B9F900089B8F /* NetworkRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A3752B74B9F900089B8F /* NetworkRepositoryImpl.swift */; };
+		A821A3782B74BAA700089B8F /* NetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A3772B74BAA700089B8F /* NetworkRepository.swift */; };
+		A821A37A2B74BBE200089B8F /* CheckNetworkStatusUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A3792B74BBE200089B8F /* CheckNetworkStatusUseCaseImpl.swift */; };
+		A821A37C2B74BC4B00089B8F /* CheckNetworkStatusUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A37B2B74BC4B00089B8F /* CheckNetworkStatusUseCase.swift */; };
+		A821A3802B74BDA200089B8F /* SplashViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A37F2B74BDA200089B8F /* SplashViewModelImpl.swift */; };
+		A821A3832B74C08600089B8F /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A3822B74C08600089B8F /* SplashViewModel.swift */; };
 		A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */; };
 		A83367B82B6FA0E700E0A844 /* FetchStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B72B6FA0E700E0A844 /* FetchStores.swift */; };
 		A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */; };
@@ -213,6 +219,12 @@
 		A81EFBBF2B5D597400D0C0D7 /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		A821A3732B74B84700089B8F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		A821A3752B74B9F900089B8F /* NetworkRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRepositoryImpl.swift; sourceTree = "<group>"; };
+		A821A3772B74BAA700089B8F /* NetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRepository.swift; sourceTree = "<group>"; };
+		A821A3792B74BBE200089B8F /* CheckNetworkStatusUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNetworkStatusUseCaseImpl.swift; sourceTree = "<group>"; };
+		A821A37B2B74BC4B00089B8F /* CheckNetworkStatusUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNetworkStatusUseCase.swift; sourceTree = "<group>"; };
+		A821A37F2B74BDA200089B8F /* SplashViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModelImpl.swift; sourceTree = "<group>"; };
+		A821A3822B74C08600089B8F /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStoreButton.swift; sourceTree = "<group>"; };
 		A83367B72B6FA0E700E0A844 /* FetchStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStores.swift; sourceTree = "<group>"; };
 		A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -306,6 +318,7 @@
 				A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */,
 				A8ACB7E72B595A2100540BD1 /* GetOpenClosedUseCase.swift */,
 				59F478B42B59BE0B002FEF9E /* FetchImageUseCase.swift */,
+				A821A37B2B74BC4B00089B8F /* CheckNetworkStatusUseCase.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -320,6 +333,7 @@
 				A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */,
 				A8ACB7E92B595A3E00540BD1 /* GetOpenClosedUseCaseImpl.swift */,
 				59F478B22B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift */,
+				A821A3792B74BBE200089B8F /* CheckNetworkStatusUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -518,6 +532,7 @@
 			children = (
 				59C306A82B4FF9AF00862625 /* StoreRepository.swift */,
 				5977BE992B59AC3300725C90 /* ImageRepository.swift */,
+				A821A3772B74BAA700089B8F /* NetworkRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -621,9 +636,35 @@
 		A821A3722B74B82600089B8F /* Splash */ = {
 			isa = PBXGroup;
 			children = (
-				A821A3732B74B84700089B8F /* SplashViewController.swift */,
+				A821A37D2B74BD7B00089B8F /* View */,
+				A821A37E2B74BD8400089B8F /* ViewModel */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		A821A37D2B74BD7B00089B8F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A821A3732B74B84700089B8F /* SplashViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A821A37E2B74BD8400089B8F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A821A3812B74C05500089B8F /* protocol */,
+				A821A37F2B74BDA200089B8F /* SplashViewModelImpl.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A821A3812B74C05500089B8F /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				A821A3822B74C08600089B8F /* SplashViewModel.swift */,
+			);
+			path = protocol;
 			sourceTree = "<group>";
 		};
 		A83367B92B709BE900E0A844 /* OnBoarding */ = {
@@ -669,6 +710,7 @@
 				A8ACB7D62B57BE4E00540BD1 /* Error */,
 				59C306B12B50001F00862625 /* StoreRepositoryImpl.swift */,
 				5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */,
+				A821A3752B74B9F900089B8F /* NetworkRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -958,6 +1000,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A821A3762B74B9F900089B8F /* NetworkRepositoryImpl.swift in Sources */,
 				59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */,
 				A83367BD2B70A52900E0A844 /* Storage.swift in Sources */,
 				A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */,
@@ -968,9 +1011,12 @@
 				A83367C72B72725700E0A844 /* FifthOnboardingView.swift in Sources */,
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
 				595EE2A52B693DE700CC01CE /* ErrorAlertMessage.swift in Sources */,
+				A821A37A2B74BBE200089B8F /* CheckNetworkStatusUseCaseImpl.swift in Sources */,
 				A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */,
 				A89087042B4E7F3500767225 /* FilterButton.swift in Sources */,
 				59F478B12B59BB00002FEF9E /* ImageRepositoryError.swift in Sources */,
+				A821A3832B74C08600089B8F /* SplashViewModel.swift in Sources */,
+				A821A3802B74BDA200089B8F /* SplashViewModelImpl.swift in Sources */,
 				59C306C92B501B9D00862625 /* RegularOpeningHours.swift in Sources */,
 				A83367B82B6FA0E700E0A844 /* FetchStores.swift in Sources */,
 				59F478B52B59BE0B002FEF9E /* FetchImageUseCase.swift in Sources */,
@@ -981,6 +1027,7 @@
 				59F478B32B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift in Sources */,
 				A8ACB7ED2B59647400540BD1 /* OpeningHourError.swift in Sources */,
 				5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */,
+				A821A37C2B74BC4B00089B8F /* CheckNetworkStatusUseCase.swift in Sources */,
 				A8A7E05D2B64AF1300D015E5 /* StoreInformationViewConstraints.swift in Sources */,
 				5977BE5E2B5535C700725C90 /* FetchRefreshStoresUseCase.swift in Sources */,
 				A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */,
@@ -990,6 +1037,7 @@
 				A8ACB7EA2B595A3E00540BD1 /* GetOpenClosedUseCaseImpl.swift in Sources */,
 				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
 				59C306CD2B5035B100862625 /* StoreAPI.swift in Sources */,
+				A821A3782B74BAA700089B8F /* NetworkRepository.swift in Sources */,
 				A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */,
 				A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */,
 				A83367C52B7271B900E0A844 /* FourthOnboardingView.swift in Sources */,
