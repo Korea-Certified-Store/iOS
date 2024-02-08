@@ -152,7 +152,6 @@ final class HomeViewController: UIViewController {
         button.rx.tap
             .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] in
-                button.isHidden = true
                 self?.storeInformationViewDismiss()
                 if let sheet = self?.storeListViewController.sheetPresentationController {
                     sheet.animateChanges {
@@ -175,7 +174,6 @@ final class HomeViewController: UIViewController {
         view.rx.tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                self?.backStoreListButton.isHidden = true
                 self?.viewModel.action(
                     input: .dimViewTapGestureEnded
                 )
@@ -258,7 +256,6 @@ private extension HomeViewController {
         bindStoreInformationView()
         bindErrorAlert()
         bindListCellSelected()
-        bindBackStoreListButton()
     }
     
     func bindFetchStores() {
@@ -463,19 +460,10 @@ private extension HomeViewController {
                     targetMarker.select()
                     clickedMarker = targetMarker
                     
-                    viewModel.action(input: .storeListCellTapped(row: index))
+                    setBackStoreListButton(row: index)
                 } else {
                     presentErrorAlert(error: .client)
                 }
-            }
-            .disposed(by: disposeBag)
-    }
-    
-    func bindBackStoreListButton() {
-        viewModel.backStoreListButtonOutput
-            .bind { [weak self] row in
-                self?.storeListViewController.scrollToPreviousCell(indexPath: IndexPath(row: row, section: 0))
-                self?.backStoreListButton.isHidden = false
             }
             .disposed(by: disposeBag)
     }
@@ -504,6 +492,7 @@ private extension HomeViewController {
     }
     
     func storeInformationViewDismiss(changeMarker: Bool = false) {
+        backStoreListButton.isHidden = true
         clickedMarker?.deselect()
         clickedMarker = nil
         if !changeMarker {
@@ -564,6 +553,11 @@ private extension HomeViewController {
                 requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
             )
         )
+    }
+    
+    func setBackStoreListButton(row: Int) {
+        storeListViewController.scrollToPreviousCell(indexPath: IndexPath(row: row, section: 0))
+        backStoreListButton.isHidden = false
     }
         
 }
