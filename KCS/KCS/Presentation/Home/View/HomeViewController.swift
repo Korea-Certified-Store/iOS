@@ -142,6 +142,7 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    // TODO: BackButton configuration 수정 필요
     private lazy var backStoreListButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -625,6 +626,7 @@ private extension HomeViewController {
             moreStoreButtonBottomConstraint
         ])
         
+        // TODO: BackButton AutoLayout 수정 필요
         NSLayoutConstraint.activate([
             backStoreListButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
             backStoreListButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -290),
