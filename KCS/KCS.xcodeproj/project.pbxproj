@@ -15,6 +15,9 @@
 		591A88892B384E610059E40F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591A88872B384E610059E40F /* LaunchScreen.storyboard */; };
 		592262242B61203000CA5A11 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592262232B61203000CA5A11 /* DetailView.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
+		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
+		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
+		59503A542B751FD50006CF35 /* SearchViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A532B751FD50006CF35 /* SearchViewModelImpl.swift */; };
 		595EE2A52B693DE700CC01CE /* ErrorAlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595EE2A42B693DE700CC01CE /* ErrorAlertMessage.swift */; };
 		596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596DDC4C2B6416AB00A4BBC4 /* SummaryViewContents.swift */; };
 		5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE572B5524D500725C90 /* RefreshButton.swift */; };
@@ -144,6 +147,9 @@
 		591A888A2B384E610059E40F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		592262232B61203000CA5A11 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
+		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		59503A532B751FD50006CF35 /* SearchViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelImpl.swift; sourceTree = "<group>"; };
 		595EE2A42B693DE700CC01CE /* ErrorAlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertMessage.swift; sourceTree = "<group>"; };
 		596DDC4C2B6416AB00A4BBC4 /* SummaryViewContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewContents.swift; sourceTree = "<group>"; };
 		5977BE572B5524D500725C90 /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
@@ -311,6 +317,40 @@
 			path = KCS;
 			sourceTree = "<group>";
 		};
+		59503A4B2B751AEE0006CF35 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				59503A4C2B751AFD0006CF35 /* View */,
+				59503A4F2B751FB30006CF35 /* ViewModel */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		59503A4C2B751AFD0006CF35 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				59503A4D2B751B0B0006CF35 /* SearchViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		59503A4F2B751FB30006CF35 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				59503A502B751FBE0006CF35 /* Protocol */,
+				59503A532B751FD50006CF35 /* SearchViewModelImpl.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		59503A502B751FBE0006CF35 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				59503A512B751FCC0006CF35 /* SearchViewModel.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		5977BE592B55355D00725C90 /* protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +447,7 @@
 		5986DCDF2B3892EB005AE43B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				59503A4B2B751AEE0006CF35 /* Search */,
 				A890870B2B4EF8F900767225 /* Extension */,
 				5986DCEA2B392996005AE43B /* Home */,
 				59B886242B6A39E9005750EF /* StoreList */,
@@ -1034,7 +1075,9 @@
 				A821A37C2B74BC4B00089B8F /* CheckNetworkStatusUseCase.swift in Sources */,
 				A8A7E05D2B64AF1300D015E5 /* StoreInformationViewConstraints.swift in Sources */,
 				5977BE5E2B5535C700725C90 /* FetchRefreshStoresUseCase.swift in Sources */,
+				59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */,
 				A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */,
+				59503A542B751FD50006CF35 /* SearchViewModelImpl.swift in Sources */,
 				A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */,
 				59C306B02B4FFE4400862625 /* StoreResponse.swift in Sources */,
 				A8A7E0602B64E62200D015E5 /* NMFMyPosition+.swift in Sources */,
@@ -1060,6 +1103,7 @@
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A83367C32B72714C00E0A844 /* ThirdOnboardingView.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
+				59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */,
 				A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */,
 				59B8864A2B6A9CCB005750EF /* UIStackView+clear.swift in Sources */,
 				59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */,
