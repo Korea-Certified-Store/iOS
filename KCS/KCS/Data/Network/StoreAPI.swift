@@ -20,7 +20,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     var baseURL: String? {
         switch self {
         case .getStores:
-            return getURL(type: .develop)
+            return getURL(type: .product)
         case .getImage(let url):
             return url
         }

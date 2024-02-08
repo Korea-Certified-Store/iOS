@@ -36,27 +36,23 @@ final class StoreRepositoryImpl: StoreRepository {
                     switch response.result {
                     case .success(let result):
                         let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
-                        var fetchStores: FetchStores
                         self?.stores = resultStores
                         if isEntire {
-                            fetchStores = FetchStores(
+                            observer.onNext(FetchStores(
                                 fetchCountContent: FetchCountContent(),
                                 stores: resultStores.flatMap { $0 }
-                            )
+                            ))
+                        } else if let firstIndexStore = resultStores.first {
+                            observer.onNext(FetchStores(
+                                fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count),
+                                stores: firstIndexStore
+                            ))
                         } else {
-                            if let firstIndexStore = resultStores.first {
-                                fetchStores = FetchStores(
-                                    fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count),
-                                    stores: firstIndexStore
-                                )
-                            } else {
-                                fetchStores = FetchStores(
-                                    fetchCountContent: FetchCountContent(),
-                                    stores: []
-                                )
-                            }
+                            observer.onNext(FetchStores(
+                                fetchCountContent: FetchCountContent(),
+                                stores: []
+                            ))
                         }
-                        observer.onNext(fetchStores)
                     case .failure(let error):
                         if let underlyingError = error.underlyingError as? NSError {
                             switch underlyingError.code {
