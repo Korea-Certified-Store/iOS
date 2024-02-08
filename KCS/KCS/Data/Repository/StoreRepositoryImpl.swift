@@ -103,7 +103,8 @@ final class StoreRepositoryImpl: StoreRepository {
                     switch response.result {
                     case .success(let result):
                         let resultStores = try result.data.map { try $0.toEntity() }
-                        // TODO: 일차원 배열 가게들 저장
+                        self?.stores = resultStores
+                        observer.onNext(resultStores)
                     case .failure(let error):
                         if let underlyingError = error.underlyingError as? NSError {
                             switch underlyingError.code {
