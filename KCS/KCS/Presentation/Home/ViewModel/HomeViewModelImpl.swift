@@ -29,6 +29,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let fetchCountOutput = PublishRelay<FetchCountContent>()
     let noMoreStoresOutput = PublishRelay<Void>()
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
+    let backStoreListButtonOutput = PublishRelay<Int>()
     
     var dependency: HomeDependency
     
@@ -60,6 +61,8 @@ final class HomeViewModelImpl: HomeViewModel {
             dimViewTapGestureEnded()
         case .setMarker(let store, let certificationType):
             setMarker(store: store, certificationType: certificationType)
+        case .storeListCellTapped(let row):
+            storeListCellTapped(row: row)
         case .checkLocationAuthorization(let status):
             checkLocationAuthorization(status: status)
         case .checkLocationAuthorizationWhenCameraDidChange(let status):
@@ -209,6 +212,10 @@ private extension HomeViewModelImpl {
                 )
             )
         }
+    }
+    
+    func storeListCellTapped(row: Int) {
+        backStoreListButtonOutput.accept(row)
     }
     
     func locationButtonTapped(locationAuthorizationStatus: CLAuthorizationStatus, positionMode: NMFMyPositionMode) {

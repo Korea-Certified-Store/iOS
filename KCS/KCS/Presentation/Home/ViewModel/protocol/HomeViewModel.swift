@@ -34,6 +34,7 @@ enum HomeViewModelInputCase {
     case locationButtonTapped(locationAuthorizationStatus: CLAuthorizationStatus, positionMode: NMFMyPositionMode)
     case dimViewTapGestureEnded
     case setMarker(store: Store, certificationType: CertificationType)
+    case storeListCellTapped(row: Int)
     case checkLocationAuthorization(status: CLAuthorizationStatus)
     case checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus)
     
@@ -60,5 +61,6 @@ protocol HomeViewModelOutput {
     var fetchCountOutput: PublishRelay<FetchCountContent> { get }
     var noMoreStoresOutput: PublishRelay<Void> { get }
     var dimViewTapGestureEndedOutput: PublishRelay<Void> { get }
+    var backStoreListButtonOutput: PublishRelay<Int> { get }
     
 }

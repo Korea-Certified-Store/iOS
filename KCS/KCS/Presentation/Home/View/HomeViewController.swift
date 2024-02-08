@@ -142,6 +142,29 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    private lazy var backStoreListButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .blue
+        button.setTitle("뒤로가기", for: .normal)
+        button.isHidden = true
+        button.rx.tap
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .bind { [weak self] in
+                button.isHidden = true
+                self?.storeInformationViewController.dismiss(animated: true)
+                self?.presentStoreListView()
+                if let sheet = self?.storeListViewController.sheetPresentationController {
+                    sheet.animateChanges {
+                        sheet.selectedDetentIdentifier = .large
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
     private lazy var dimView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -152,6 +175,7 @@ final class HomeViewController: UIViewController {
         view.rx.tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
+                self?.backStoreListButton.isHidden = true
                 self?.viewModel.action(
                     input: .dimViewTapGestureEnded
                 )
@@ -234,6 +258,7 @@ private extension HomeViewController {
         bindStoreInformationView()
         bindErrorAlert()
         bindListCellSelected()
+        bindBackStoreListButton()
     }
     
     func bindFetchStores() {
@@ -263,6 +288,7 @@ private extension HomeViewController {
     
     func bindApplyFilters() {
         viewModel.filteredStoresOutput
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
@@ -436,9 +462,20 @@ private extension HomeViewController {
                     )
                     targetMarker.select()
                     clickedMarker = targetMarker
+                    
+                    viewModel.action(input: .storeListCellTapped(row: index))
                 } else {
                     presentErrorAlert(error: .client)
                 }
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindBackStoreListButton() {
+        viewModel.backStoreListButtonOutput
+            .bind { [weak self] row in
+                self?.storeListViewController.scrollToPreviousCell(indexPath: IndexPath(row: row, section: 0))
+                self?.backStoreListButton.isHidden = false
             }
             .disposed(by: disposeBag)
     }
@@ -540,6 +577,7 @@ private extension HomeViewController {
         mapView.addSubview(compassView)
         mapView.addSubview(refreshButton)
         mapView.addSubview(moreStoreButton)
+        mapView.addSubview(backStoreListButton)
         mapView.addSubview(dimView)
     }
     
@@ -586,6 +624,13 @@ private extension HomeViewController {
             moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             moreStoreButton.widthAnchor.constraint(equalToConstant: 97),
             moreStoreButtonBottomConstraint
+        ])
+        
+        NSLayoutConstraint.activate([
+            backStoreListButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
+            backStoreListButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -290),
+            backStoreListButton.widthAnchor.constraint(equalToConstant: 80),
+            backStoreListButton.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
     
