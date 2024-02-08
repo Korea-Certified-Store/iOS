@@ -10,16 +10,17 @@ import Alamofire
 
 final class StoreRepositoryImpl: StoreRepository {
     
-    private var stores: [Store]
+    private var stores: [[Store]]
     
-    init(stores: [Store] = []) {
+    init(stores: [[Store]] = []) {
         self.stores = stores
     }
     
     func fetchRefreshStores(
-        requestLocation: RequestLocation
-    ) -> Observable<[Store]> {
-        return Observable<[Store]>.create { observer -> Disposable in
+        requestLocation: RequestLocation,
+        isEntire: Bool
+    ) -> Observable<FetchStores> {
+        return Observable<FetchStores>.create { observer -> Disposable in
             AF.request(StoreAPI.getStores(location: RequestLocationDTO(
                 nwLong: requestLocation.northWest.longitude,
                 nwLat: requestLocation.northWest.latitude,
@@ -34,11 +35,33 @@ final class StoreRepositoryImpl: StoreRepository {
                 do {
                     switch response.result {
                     case .success(let result):
-                        let resultStores = try result.data.map { try $0.toEntity() }
+                        let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
                         self?.stores = resultStores
-                        observer.onNext(resultStores)
+                        if isEntire {
+                            observer.onNext(FetchStores(
+                                fetchCountContent: FetchCountContent(),
+                                stores: resultStores.flatMap { $0 }
+                            ))
+                        } else if let firstIndexStore = resultStores.first {
+                            observer.onNext(FetchStores(
+                                fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count),
+                                stores: firstIndexStore
+                            ))
+                        } else {
+                            observer.onNext(FetchStores(
+                                fetchCountContent: FetchCountContent(),
+                                stores: []
+                            ))
+                        }
                     case .failure(let error):
-                        throw error
+                        if let underlyingError = error.underlyingError as? NSError {
+                            switch underlyingError.code {
+                            case URLError.notConnectedToInternet.rawValue:
+                                observer.onError(ErrorAlertMessage.internet)
+                            default:
+                                observer.onError(ErrorAlertMessage.server)
+                            }
+                        }
                     }
                 } catch {
                     observer.onError(error)
@@ -48,14 +71,18 @@ final class StoreRepositoryImpl: StoreRepository {
         }
     }
     
-    func fetchStores() -> [Store] {
-        return stores
+    func fetchStores(count: Int) -> [Store] {
+        var fetchResult: [Store] = []
+        for index in 0..<count {
+            fetchResult.append(contentsOf: stores[index])
+        }
+        return fetchResult
     }
     
     func getStoreInformation(
         tag: UInt
     ) throws -> Store {
-        guard let store = stores.first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
+        guard let store = stores.flatMap({ $0 }).first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
         return store
     }
     

@@ -11,13 +11,11 @@ import RxRelay
 
 final class DetailView: UIView {
     
-    private let disposeBag = DisposeBag()
-    
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 22, weight: .bold)
-        label.textColor = UIColor.primary2
+        label.textColor = UIColor.primary1
         label.numberOfLines = 2
         
         return label
@@ -56,6 +54,7 @@ final class DetailView: UIView {
         imageView.setLayerCorner(cornerRadius: 6)
         imageView.clipsToBounds = true
         imageView.image = UIImage.basicStore
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }()
@@ -129,83 +128,21 @@ final class DetailView: UIView {
         return label
     }()
     
-    private let dismissIndicatorView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.swipeBar
-        view.layer.cornerRadius = 2
-        
-        return view
-    }()
-    
-    private let viewModel: DetailViewModel
     private lazy var addressConstraint = address.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
     private lazy var phoneNumberConstraint = phoneNumber.topAnchor.constraint(equalTo: openingHoursStackView.bottomAnchor, constant: 20)
     
-    init(viewModel: DetailViewModel) {
-        self.viewModel = viewModel
+    init() {
         super.init(frame: .zero)
         
         setBackgroundColor()
-        setLayerCorner(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addUIComponents()
         configureConstraints()
-        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-}
-
-private extension DetailView {
-    
-    func bind() {
-        viewModel.thumbnailImageOutput
-            .subscribe(onNext: { [weak self] data in
-                self?.storeImageView.image = UIImage(data: data)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.setUIContentsOutput
-            .bind { [weak self] detailViewContents in
-                guard let self = self else { return }
-                storeTitle.text = detailViewContents.storeTitle
-                category.text = detailViewContents.category
-                detailViewContents.certificationTypes
-                    .map({
-                        CertificationLabel(certificationType: $0)
-                    })
-                    .forEach { [weak self] in
-                        self?.certificationStackView.addArrangedSubview($0)
-                    }
-                address.text = detailViewContents.address
-                phoneNumber.text = detailViewContents.phoneNumber
-                setOpeningHourText(openClosedContent: detailViewContents.openClosedContent)
-                
-                var detailOpeningHours = detailViewContents.detailOpeningHour
-                if detailOpeningHours.isEmpty { return }
-                let today = detailOpeningHours.removeFirst()
-                openingHoursStackView.addArrangedSubview(
-                    OpeningHoursCellView(
-                        weekday: today.weekDay,
-                        openingHour: today.openingHour,
-                        isToday: true
-                    )
-                )
-                detailOpeningHours.forEach { [weak self] detailOpeningHour in
-                    self?.openingHoursStackView.addArrangedSubview(
-                        OpeningHoursCellView(
-                            weekday: detailOpeningHour.weekDay,
-                            openingHour: detailOpeningHour.openingHour
-                        )
-                    )
-                }
-            }
-            .disposed(by: disposeBag)
-    }
-    
 }
 
 private extension DetailView {
@@ -228,7 +165,6 @@ private extension DetailView {
         addSubview(phoneNumber)
         addSubview(addressIcon)
         addSubview(address)
-        addSubview(dismissIndicatorView)
     }
     
     func configureConstraints() {
@@ -263,13 +199,6 @@ private extension DetailView {
         ])
         
         NSLayoutConstraint.activate([
-            dismissIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            dismissIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dismissIndicatorView.widthAnchor.constraint(equalToConstant: 35),
-            dismissIndicatorView.heightAnchor.constraint(equalToConstant: 4)
-        ])
-        
-        NSLayoutConstraint.activate([
             storeImageView.topAnchor.constraint(equalTo: divideView.bottomAnchor, constant: 16),
             storeImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             storeImageView.widthAnchor.constraint(equalToConstant: 150),
@@ -292,7 +221,7 @@ private extension DetailView {
         
         NSLayoutConstraint.activate([
             openingHour.bottomAnchor.constraint(equalTo: storeOpenClosed.bottomAnchor),
-            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 12)
+            openingHour.leadingAnchor.constraint(equalTo: storeOpenClosed.trailingAnchor, constant: 8)
         ])
         
         NSLayoutConstraint.activate([
@@ -330,14 +259,6 @@ private extension DetailView {
         ])
     }
     
-    func removeStackView(stackView: UIStackView) {
-        let subviews = stackView.arrangedSubviews
-        stackView.arrangedSubviews.forEach {
-            stackView.removeArrangedSubview($0)
-        }
-        subviews.forEach { $0.removeFromSuperview() }
-    }
-    
     func setOpeningHourText(openClosedContent: OpenClosedContent) {
         if openClosedContent.openClosedType == .none {
             storeOpenClosed.text = "영업시간 정보 없음"
@@ -346,7 +267,7 @@ private extension DetailView {
             addressConstraint.constant = -174
             phoneNumberConstraint.constant = 20 - 11
         } else {
-            storeOpenClosed.text = openClosedContent.openClosedType.rawValue
+            storeOpenClosed.text = openClosedContent.openClosedType.description
             storeOpenClosed.textColor = UIColor.goodPrice
             openingHour.text = openClosedContent.nextOpeningHour
             addressConstraint.constant = -16
@@ -358,9 +279,42 @@ private extension DetailView {
 
 extension DetailView {
     
-    func setUIContents(store: Store) {
-        resetUIContents()
-        viewModel.action(input: .setUIContents(store: store))
+    func setUIContents(contents: DetailViewContents) {
+        storeTitle.text = contents.storeTitle
+        category.text = contents.category
+        contents.certificationTypes
+            .map({
+                CertificationLabel(certificationType: $0)
+            })
+            .forEach { [weak self] in
+                self?.certificationStackView.addArrangedSubview($0)
+            }
+        address.text = contents.address
+        phoneNumber.text = contents.phoneNumber
+        setOpeningHourText(openClosedContent: contents.openClosedContent)
+        
+        var detailOpeningHours = contents.detailOpeningHour
+        if detailOpeningHours.isEmpty { return }
+        let today = detailOpeningHours.removeFirst()
+        openingHoursStackView.addArrangedSubview(
+            OpeningHoursCellView(
+                weekday: today.weekDay,
+                openingHour: today.openingHour,
+                isToday: true
+            )
+        )
+        detailOpeningHours.forEach { [weak self] detailOpeningHour in
+            self?.openingHoursStackView.addArrangedSubview(
+                OpeningHoursCellView(
+                    weekday: detailOpeningHour.weekDay,
+                    openingHour: detailOpeningHour.openingHour
+                )
+            )
+        }
+    }
+    
+    func setThumbnailImage(imageData: Data) {
+        storeImageView.image = UIImage(data: imageData)
     }
     
     func resetUIContents() {
@@ -371,7 +325,7 @@ extension DetailView {
         storeOpenClosed.text = nil
         openingHour.text = nil
         storeImageView.image = UIImage.basicStore
-        removeStackView(stackView: certificationStackView)
-        removeStackView(stackView: openingHoursStackView)
+        certificationStackView.clear()
+        openingHoursStackView.clear()
     }
 }

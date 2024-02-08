@@ -14,8 +14,6 @@ import RxGesture
 
 final class HomeViewController: UIViewController {
     
-    private let disposeBag = DisposeBag()
-    
     private lazy var goodPriceFilterButton: FilterButton = {
         let type = CertificationType.goodPrice
         let button = FilterButton(type: type)
@@ -79,48 +77,35 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
-    private var markers: [Marker] = []
-    private var clickedMarker: Marker?
+    private lazy var compassView: NMFCompassView = {
+        let compass = NMFCompassView()
+        compass.translatesAutoresizingMaskIntoConstraints = false
+        compass.mapView = mapView.mapView
+        
+        return compass
+    }()
     
     private lazy var mapView: NMFNaverMapView = {
         let map = NMFNaverMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
-        map.showZoomControls = false
         map.showCompass = false
+        map.showZoomControls = false
         map.showScaleBar = false
         map.showIndoorLevelPicker = false
         map.showLocationButton = false
-        map.mapView.logoAlign = .rightTop
-        map.mapView.logoMargin = UIEdgeInsets(top: 28, left: 0, bottom: 0, right: 0)
+        map.mapView.logoAlign = .rightBottom
+        map.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 55, right: 0)
         map.mapView.touchDelegate = self
         map.mapView.addCameraDelegate(delegate: self)
         
         return map
     }()
     
-    private let requestLocationServiceAlert: UIAlertController = {
-        let alertController = UIAlertController(
-            title: "위치 정보 이용",
-            message: "위치 서비스를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서 위치 서비스를 켜주세요.",
-            preferredStyle: .alert
-        )
-        let goSetting = UIAlertAction(title: "설정으로 이동", style: .destructive) { _ in
-            if let appSetting = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(appSetting)
-            }
-        }
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        alertController.addAction(cancel)
-        alertController.addAction(goSetting)
-        
-        return alertController
-    }()
-    
     private lazy var refreshButton: RefreshButton = {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
+            .debounce(.milliseconds(10), scheduler: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
                 button.animationFire()
@@ -136,7 +121,23 @@ final class HomeViewController: UIViewController {
                     )
                 )
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
+    private lazy var moreStoreButton: MoreStoreButton = {
+        let button = MoreStoreButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
+        button.rx.tap
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .bind { [weak self] in
+                self?.viewModel.action(
+                    input: .moreStoreButtonTapped
+                )
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
@@ -160,81 +161,40 @@ final class HomeViewController: UIViewController {
         return view
     }()
     
-    private lazy var storeInformationView: StoreInformationView = {
-        let view = StoreInformationView(
-            summaryViewModel: summaryInformationViewModel,
-            summaryInformationHeightObserver: summaryInformationHeightObserver,
-            detailViewModel: detailViewModel
-        )
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.rx.panGesture()
-            .when(.changed)
-            .bind { [weak self] recognizer in
-                guard let self = self else { return }
-                let transition = recognizer.translation(in: storeInformationView)
-                recognizer.setTranslation(.zero, in: storeInformationView)
-                
-                viewModel.action(
-                    input: .storeInformationViewPanGestureChanged(
-                        height: storeInformationHeightConstraint.constant - transition.y
-                    )
-                )
-            }
-            .disposed(by: disposeBag)
-        
-        view.rx.panGesture()
-            .when(.ended)
-            .bind { [weak self] recognizer in
-                guard let self = self else { return }
-                viewModel.action(
-                    input: .storeInformationViewSwipe(
-                        velocity: recognizer.velocity(in: view).y
-                    )
-                )
-                viewModel.action(
-                    input: .storeInformationViewPanGestureEnded(
-                        height: storeInformationHeightConstraint.constant
-                    )
-                )
-            }
-            .disposed(by: disposeBag)
-        
-        view.rx.tapGesture()
-            .when(.ended)
-            .bind { [weak self] _ in
-                guard let self = self else { return }
-                viewModel.action(
-                    input: .storeInformationViewTapGestureEnded
-                )
-            }
-            .disposed(by: disposeBag)
-        
-        return view
-    }()
-    
-    private let viewModel: HomeViewModel
-    private let summaryInformationViewModel: SummaryViewModel
-    private let detailViewModel: DetailViewModel
-    private lazy var storeInformationHeightConstraint = storeInformationView.heightAnchor.constraint(equalToConstant: 0)
-    private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
-        equalTo: storeInformationView.topAnchor,
-        constant: -37
-    )
     private lazy var refreshButtonBottomConstraint = refreshButton.bottomAnchor.constraint(
-        equalTo: storeInformationView.topAnchor,
-        constant: -37
+        equalTo: mapView.bottomAnchor, constant: -90
     )
-    private let summaryInformationHeightObserver = PublishRelay<CGFloat>()
+    
+    private lazy var moreStoreButtonBottomConstraint = moreStoreButton.bottomAnchor.constraint(
+        equalTo: mapView.bottomAnchor, constant: -90
+    )
+    
+    private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
+        equalTo: mapView.bottomAnchor, constant: -90
+    )
+    
+    private let disposeBag = DisposeBag()
+    private var markers: [Marker] = []
+    private let storeInformationViewController: StoreInformationViewController
+    private var clickedMarker: Marker?
+    private let storeListViewController: StoreListViewController
+    private let viewModel: HomeViewModel
+    private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
+    private let listCellSelectedObserver: PublishRelay<Int>
     
     init(
         viewModel: HomeViewModel,
-        summaryInformationViewModel: SummaryViewModel,
-        detailViewModel: DetailViewModel
+        storeInformationViewController: StoreInformationViewController,
+        storeListViewController: StoreListViewController,
+        summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
+        listCellSelectedObserver: PublishRelay<Int>
     ) {
         self.viewModel = viewModel
-        self.summaryInformationViewModel = summaryInformationViewModel
-        self.detailViewModel = detailViewModel
+        self.storeInformationViewController = storeInformationViewController
+        self.storeListViewController = storeListViewController
+        self.summaryViewHeightObserver = summaryViewHeightObserver
+        self.listCellSelectedObserver = listCellSelectedObserver
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -248,7 +208,16 @@ final class HomeViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         bind()
-        
+        setup()
+        refresh()
+    }
+    
+}
+
+private extension HomeViewController {
+    
+    func setup() {        
+        unDimmedView()
         viewModel.action(
             input: .checkLocationAuthorization(
                 status: locationManager.authorizationStatus
@@ -256,34 +225,49 @@ final class HomeViewController: UIViewController {
         )
     }
     
-}
-
-private extension HomeViewController {
-    
     func bind() {
-        bindRefresh()
+        bindFetchStores()
         bindApplyFilters()
         bindSetMarker()
         bindLocationButton()
         bindLocationAuthorization()
         bindStoreInformationView()
         bindErrorAlert()
+        bindListCellSelected()
     }
     
-    func bindRefresh() {
-        viewModel.refreshOutput
-            .bind { [weak self] _ in
+    func bindFetchStores() {
+        viewModel.refreshDoneOutput
+            .bind { [weak self] isEntire in
                 self?.refreshButton.animationInvalidate()
-                self?.storeInformationViewDismiss()
+                self?.refreshButton.isHidden = true
+                self?.moreStoreButton.isHidden = isEntire
+                self?.moreStoreButton.isEnabled = true
+                self?.mapView.mapView.positionMode = .normal
+                self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.fetchCountOutput
+            .bind { [weak self] fetchCount in
+                self?.moreStoreButton.setFetchCount(fetchCount: fetchCount)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noMoreStoresOutput
+            .bind { [weak self] in
+                self?.moreStoreButton.isEnabled = false
             }
             .disposed(by: disposeBag)
     }
     
     func bindApplyFilters() {
-        viewModel.applyFiltersOutput
+        viewModel.filteredStoresOutput
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
+                self.markers = []
+                var stores: [Store] = []
                 filteredStores.forEach { filteredStore in
                     filteredStore.stores.forEach { [weak self] store in
                         self?.viewModel.action(
@@ -292,8 +276,11 @@ private extension HomeViewController {
                                 certificationType: filteredStore.type
                             )
                         )
+                        stores.append(store)
                     }
                 }
+                storeInformationViewDismiss()
+                storeListViewController.updateList(stores: stores)
             }
             .disposed(by: disposeBag)
     }
@@ -331,54 +318,42 @@ private extension HomeViewController {
     func bindStoreInformationView() {
         viewModel.getStoreInformationOutput
             .bind { [weak self] store in
-                self?.storeInformationView.setUIContents(store: store)
+                self?.storeInformationViewController.setUIContents(store: store)
+                self?.changeButtonsConstraints(delay: false)
             }
             .disposed(by: disposeBag)
         
-        viewModel.storeInformationViewHeightOutput
-            .bind { [weak self] constraints in
-                self?.setStoreInformationConstraints(
-                    heightConstraint: constraints.heightConstraint,
-                    bottomConstraint: constraints.bottomConstraint,
-                    animated: constraints.animated
-                )
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.detailToSummaryOutput
+        viewModel.dimViewTapGestureEndedOutput
             .bind { [weak self] _ in
-                self?.storeInformationView.changeToSummary()
+                self?.storeInformationViewController.changeToSummary()
                 self?.unDimmedView()
-                self?.viewModel.action(
-                    input: .changeState(state: .summary)
-                )
             }
             .disposed(by: disposeBag)
         
-        viewModel.summaryToDetailOutput
-            .bind { [weak self] _ in
-                self?.storeInformationView.changeToDetail()
-                self?.dimmedView()
-                self?.viewModel.action(
-                    input: .changeState(state: .detail)
-                )
+        summaryViewHeightObserver.bind { [weak self] heightCase in
+            guard let self = self else { return }
+            if let sheet = storeInformationViewController.sheetPresentationController {
+                sheet.animateChanges {
+                    switch heightCase {
+                    case .small:
+                        sheet.detents = [.smallSummaryViewDetent, .detailViewDetent]
+                        sheet.selectedDetentIdentifier = .smallSummaryDetentIdentifier
+                    case .large:
+                        sheet.detents = [.largeSummaryViewDetent, .detailViewDetent]
+                        sheet.selectedDetentIdentifier = .largeSummaryDetentIdentifier
+                    }
+                }
+                sheet.delegate = self
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = 15
+                sheet.largestUndimmedDetentIdentifier = .detailDetentIdentifier
             }
-            .disposed(by: disposeBag)
-        
-        // MARK: 추후 수정 필요
-        summaryInformationHeightObserver.bind { [weak self] height in
-            self?.viewModel.action(
-                input: .setStoreInformationOriginalHeight(height: height)
-            )
-            self?.setStoreInformationConstraints(
-                heightConstraint: height,
-                bottomConstraint: -16,
-                animated: true
-            )
-            self?.storeInformationView.changeToSummary()
-            self?.viewModel.action(
-                input: .changeState(state: .summary)
-            )
+            storeInformationViewController.changeToSummary()
+            if !(presentedViewController is StoreInformationViewController) {
+                dismiss(animated: true)
+                changeButtonsConstraints(delay: true)
+                present(storeInformationViewController, animated: true)
+            }
         }
         .disposed(by: disposeBag)
     }
@@ -387,7 +362,7 @@ private extension HomeViewController {
         viewModel.locationAuthorizationStatusDeniedOutput
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                present(requestLocationServiceAlert, animated: true)
+                presentLocationAlert()
             }
             .disposed(by: disposeBag)
         
@@ -399,8 +374,10 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
         
         viewModel.locationStatusAuthorizedWhenInUse
+            .debounce(.milliseconds(10), scheduler: MainScheduler())
             .bind { [weak self] _ in
-                guard let location = self?.locationManager.location else { return }
+                guard let self = self else { return }
+                guard let location = locationManager.location else { return }
                 let cameraUpdate = NMFCameraUpdate(
                     scrollTo: NMGLatLng(
                         lat: location.coordinate.latitude,
@@ -408,7 +385,9 @@ private extension HomeViewController {
                     )
                 )
                 cameraUpdate.animation = .none
-                self?.mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.positionMode = .direction
+                refresh()
             }
             .disposed(by: disposeBag)
     }
@@ -428,20 +407,35 @@ private extension HomeViewController {
     
     func bindErrorAlert() {
         viewModel.errorAlertOutput
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] error in
                 self?.presentErrorAlert(error: error)
             }
             .disposed(by: disposeBag)
-        
-        summaryInformationViewModel.errorAlertOutput
-            .bind { [weak self] error in
-                self?.presentErrorAlert(error: error)
-            }
-            .disposed(by: disposeBag)
-        
-        detailViewModel.errorAlertOutput
-            .bind { [weak self] error in
-                self?.presentErrorAlert(error: error)
+    }
+    
+    func bindListCellSelected() {
+        listCellSelectedObserver
+            .debounce(.milliseconds(10), scheduler: MainScheduler())
+            .bind { [weak self] index in
+                guard let self = self else { return }
+                if markers.indices ~= index {
+                    let targetMarker = markers[index]
+                    
+                    let cameraUpdate = NMFCameraUpdate(
+                        position: NMFCameraPosition(targetMarker.position.toLatLng(), zoom: 15)
+                    )
+                    cameraUpdate.animation = .easeIn
+                    mapView.mapView.moveCamera(cameraUpdate)
+                    
+                    viewModel.action(
+                        input: .markerTapped(tag: targetMarker.tag)
+                    )
+                    targetMarker.select()
+                    clickedMarker = targetMarker
+                } else {
+                    presentErrorAlert(error: .client)
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -456,7 +450,7 @@ private extension HomeViewController {
             if let clickedMarker = self?.clickedMarker {
                 if clickedMarker == marker { return true }
                 clickedMarker.deselect()
-                self?.storeInformationViewDismiss()
+                self?.storeInformationViewDismiss(changeMarker: true)
             }
             
             self?.viewModel.action(
@@ -469,29 +463,12 @@ private extension HomeViewController {
         }
     }
     
-    func storeInformationViewDismiss() {
+    func storeInformationViewDismiss(changeMarker: Bool = false) {
         clickedMarker?.deselect()
         clickedMarker = nil
-        setStoreInformationConstraints(
-            heightConstraint: 0,
-            bottomConstraint: -37,
-            animated: true
-        )
-        storeInformationView.dismissAll()
-        viewModel.action(
-            input: .changeState(state: .normal)
-        )
-        unDimmedView()
-    }
-    
-    func setStoreInformationConstraints(heightConstraint: CGFloat, bottomConstraint: CGFloat, animated: Bool = false) {
-        locationButtonBottomConstraint.constant = bottomConstraint
-        refreshButtonBottomConstraint.constant = bottomConstraint
-        storeInformationHeightConstraint.constant = heightConstraint
-        if animated {
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.view.layoutIfNeeded()
-            }
+        if !changeMarker {
+            storeInformationViewController.dismiss(animated: true)
+            presentStoreListView()
         }
     }
     
@@ -506,6 +483,11 @@ private extension HomeViewController {
         dimView.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.dimView.backgroundColor = .clear
+        }
+        if let sheet = storeInformationViewController.sheetPresentationController {
+            sheet.animateChanges {
+                sheet.selectedDetentIdentifier = .smallSummaryDetentIdentifier
+            }
         }
     }
     
@@ -535,12 +517,13 @@ private extension HomeViewController {
         )
     }
     
-    func presentErrorAlert(error: ErrorAlertMessage) {
-        let alertController = UIAlertController(title: nil, message: error.errorDescription, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "확인", style: .default))
-        if !(presentedViewController is UIAlertController) {
-            present(alertController, animated: true)
-        }
+    func refresh() {
+        refreshButton.animationFire()
+        viewModel.action(
+            input: .refresh(
+                requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
+            )
+        )
     }
         
 }
@@ -551,9 +534,10 @@ private extension HomeViewController {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
+        mapView.addSubview(compassView)
         mapView.addSubview(refreshButton)
+        mapView.addSubview(moreStoreButton)
         mapView.addSubview(dimView)
-        mapView.addSubview(storeInformationView)
     }
     
     func configureConstraints() {
@@ -584,6 +568,11 @@ private extension HomeViewController {
         ])
         
         NSLayoutConstraint.activate([
+            compassView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            compassView.topAnchor.constraint(equalTo: filterButtonStackView.bottomAnchor, constant: 16)
+        ])
+        
+        NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             refreshButton.widthAnchor.constraint(equalToConstant: 110),
             refreshButton.heightAnchor.constraint(equalToConstant: 35),
@@ -591,11 +580,28 @@ private extension HomeViewController {
         ])
         
         NSLayoutConstraint.activate([
-            storeInformationView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
-            storeInformationView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
-            storeInformationView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 0),
-            storeInformationHeightConstraint
+            moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            moreStoreButton.widthAnchor.constraint(equalToConstant: 97),
+            moreStoreButtonBottomConstraint
         ])
+    }
+    
+    func changeButtonsConstraints(delay: Bool) {
+        guard let controller = storeInformationViewController.sheetPresentationController else { return }
+        if controller.detents.contains(.smallSummaryViewDetent) {
+            refreshButtonBottomConstraint.constant = -260
+            locationButtonBottomConstraint.constant = -260
+            moreStoreButtonBottomConstraint.constant = -260
+            mapView.mapView.logoMargin.bottom = 225
+        } else {
+            refreshButtonBottomConstraint.constant = -283
+            locationButtonBottomConstraint.constant = -283
+            moreStoreButtonBottomConstraint.constant = -283
+            mapView.mapView.logoMargin.bottom = 248
+        }
+        UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
+            self.view.layoutIfNeeded()
+        }
     }
     
 }
@@ -619,23 +625,35 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             locationButton.setImage(UIImage.locationButtonNone, for: .normal)
         }
         refreshButton.isHidden = false
+        moreStoreButton.isHidden = true
     }
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         if reason == NMFMapChangedByDeveloper {
-            mapView.positionMode = .direction
-            
             viewModel.action(input:
                     .checkLocationAuthorizationWhenCameraDidChange(
                         status: locationManager.authorizationStatus
                     )
             )
-            refreshButton.animationFire()
-            viewModel.action(
-                input: .refresh(
-                    requestLocation: makeRequestLocation(projection: mapView.projection)
-                )
-            )
+        }
+    }
+    
+    func presentStoreListView() {
+        if !(presentedViewController is StoreListViewController) {
+            if let sheet = storeListViewController.sheetPresentationController {
+                sheet.detents = [.smallStoreListViewDetent, .largeStoreListViewDetent]
+                sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = 15
+            }
+            refreshButtonBottomConstraint.constant = -90
+            locationButtonBottomConstraint.constant = -90
+            moreStoreButtonBottomConstraint.constant = -90
+            mapView.mapView.logoMargin.bottom = 55
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }
+            present(storeListViewController, animated: true)
         }
     }
     
@@ -645,6 +663,27 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
+    }
+    
+}
+
+extension HomeViewController: UISheetPresentationControllerDelegate {
+    
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(
+        _ sheetPresentationController: UISheetPresentationController
+    ) {
+        if let identifier = sheetPresentationController.selectedDetentIdentifier {
+            switch identifier {
+            case .smallSummaryDetentIdentifier, .largeSummaryDetentIdentifier:
+                storeInformationViewController.changeToSummary()
+                unDimmedView()
+            case .detailDetentIdentifier:
+                storeInformationViewController.changeToDetail()
+                dimmedView()
+            default:
+                break
+            }
+        }
     }
     
 }

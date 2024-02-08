@@ -17,18 +17,18 @@ final class HomeViewModelImpl: HomeViewModel {
     let getStoreInformationUseCase: GetStoreInformationUseCase
     
     let getStoreInformationOutput = PublishRelay<Store>()
-    let refreshOutput = PublishRelay<Void>()
+    let refreshDoneOutput = PublishRelay<Bool>()
     let locationButtonOutput = PublishRelay<NMFMyPositionMode>()
     let locationButtonImageNameOutput = PublishRelay<String>()
-    let storeInformationViewHeightOutput = PublishRelay<StoreInformationViewConstraints>()
-    let summaryToDetailOutput = PublishRelay<Void>()
-    let detailToSummaryOutput = PublishRelay<Void>()
     let setMarkerOutput = PublishRelay<MarkerContents>()
     let locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
     let locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
-    let applyFiltersOutput = PublishRelay<[FilteredStores]>()
+    let filteredStoresOutput = PublishRelay<[FilteredStores]>()
+    let fetchCountOutput = PublishRelay<FetchCountContent>()
+    let noMoreStoresOutput = PublishRelay<Void>()
+    let dimViewTapGestureEndedOutput = PublishRelay<Void>()
     
     var dependency: HomeDependency
     
@@ -46,28 +46,18 @@ final class HomeViewModelImpl: HomeViewModel {
     
     func action(input: HomeViewModelInputCase) {
         switch input {
-        case .refresh(let requestLocation):
-            refresh(requestLocation: requestLocation)
+        case .refresh(let requestLocation, let isEntire):
+            refresh(requestLocation: requestLocation, isEntire: isEntire)
+        case .moreStoreButtonTapped:
+            moreStoreButtonTapped()
         case .filterButtonTapped(let filter):
             filterButtonTapped(filter: filter)
         case .markerTapped(let tag):
             markerTapped(tag: tag)
         case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
             locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
-        case .setStoreInformationOriginalHeight(let height):
-            setStoreInformationOriginalHeight(height: height)
-        case .storeInformationViewPanGestureChanged(let height):
-            storeInformationViewPanGestureChanged(height: height)
-        case .storeInformationViewPanGestureEnded(let height):
-            storeInformationViewPanGestureEnded(height: height)
-        case .storeInformationViewSwipe(let velocity):
-            storeInformationViewSwipe(velocity: velocity)
-        case .storeInformationViewTapGestureEnded:
-            storeInformationViewTapGestureEnded()
         case .dimViewTapGestureEnded:
             dimViewTapGestureEnded()
-        case .changeState(let state):
-            changeState(state: state)
         case .setMarker(let store, let certificationType):
             setMarker(store: store, certificationType: certificationType)
         case .checkLocationAuthorization(let status):
@@ -82,26 +72,49 @@ final class HomeViewModelImpl: HomeViewModel {
 private extension HomeViewModelImpl {
     
     func refresh(
-        requestLocation: RequestLocation
+        requestLocation: RequestLocation,
+        isEntire: Bool
     ) {
         fetchRefreshStoresUseCase.execute(
-            requestLocation: requestLocation
+            requestLocation: requestLocation,
+            isEntire: isEntire
         )
         .subscribe(
-            onNext: { [weak self] stores in
+            onNext: { [weak self] refreshContent in
                 guard let self = self else { return }
-                applyFilters(stores: stores, filters: getActivatedTypes())
-                refreshOutput.accept(())
+                dependency.resetFetchCount()
+                dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
+                applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
+                fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
+                refreshDoneOutput.accept(isEntire)
+                checkLastFetch()
             },
             onError: { [weak self] error in
                 if error is StoreRepositoryError {
-                    self?.errorAlertOutput.accept(.data)
+                    self?.errorAlertOutput.accept(.client)
                 } else {
-                    self?.errorAlertOutput.accept(.server)
+                    guard let error = error as? ErrorAlertMessage else { return }
+                    self?.errorAlertOutput.accept(error)
+                    self?.refreshDoneOutput.accept(true)
                 }
             }
         )
         .disposed(by: dependency.disposeBag)
+    }
+    
+    func moreStoreButtonTapped() {
+        if dependency.fetchCount < dependency.maxFetchCount {
+            dependency.fetchCount += 1
+            applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+            fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount, fetchCount: dependency.fetchCount))
+        }
+        checkLastFetch()
+    }
+    
+    func checkLastFetch() {
+        if dependency.fetchCount == dependency.maxFetchCount {
+            noMoreStoresOutput.accept(())
+        }
     }
     
     func filterButtonTapped(filter: CertificationType) {
@@ -110,7 +123,7 @@ private extension HomeViewModelImpl {
         } else {
             dependency.activatedFilter.append(filter)
         }
-        applyFilters(stores: fetchStoresUseCase.execute(), filters: getActivatedTypes())
+        applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
     }
     
     func getActivatedTypes() -> [CertificationType] {
@@ -153,7 +166,7 @@ private extension HomeViewModelImpl {
                 }
             }
         }
-        applyFiltersOutput.accept([goodPriceStores, exemplaryStores, safeStores])
+        filteredStoresOutput.accept([goodPriceStores, exemplaryStores, safeStores])
     }
     
     func markerTapped(tag: UInt) {
@@ -162,7 +175,7 @@ private extension HomeViewModelImpl {
                 try getStoreInformationUseCase.execute(tag: tag)
             )
         } catch {
-            errorAlertOutput.accept(.data)
+            errorAlertOutput.accept(.client)
         }
     }
     
@@ -212,100 +225,8 @@ private extension HomeViewModelImpl {
         }
     }
     
-    func setStoreInformationOriginalHeight(height: CGFloat) {
-        dependency.storeInformationOriginalHeight = height
-    }
-    
-    func storeInformationViewPanGestureChanged(height: CGFloat) {
-        if height > 420 && height < 630 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: height,
-                    bottomConstraint: height - (420 + 21)
-                )
-            )
-            summaryToDetailOutput.accept(())
-        } else if height > 230 && height <= 420 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: height,
-                    bottomConstraint: -16
-                )
-            )
-            detailToSummaryOutput.accept(())
-        }
-    }
-    
-    func storeInformationViewPanGestureEnded(height: CGFloat) {
-        if height > 420 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: 616,
-                    bottomConstraint: 616 - 441,
-                    animated: true
-                )
-            )
-            summaryToDetailOutput.accept(())
-        } else {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: dependency.storeInformationOriginalHeight,
-                    bottomConstraint: -16,
-                    animated: true
-                )
-            )
-            detailToSummaryOutput.accept(())
-        }
-    }
-    
-    func storeInformationViewSwipe(velocity: Double) {
-        if velocity < -1000 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: 616,
-                    bottomConstraint: 616 - 441,
-                    animated: true
-                )
-            )
-            summaryToDetailOutput.accept(())
-        } else if velocity > 1000 {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: dependency.storeInformationOriginalHeight,
-                    bottomConstraint: -16,
-                    animated: true
-                )
-            )
-            detailToSummaryOutput.accept(())
-        }
-    }
-    
-    func storeInformationViewTapGestureEnded() {
-        if dependency.state == .summary {
-            storeInformationViewHeightOutput.accept(
-                StoreInformationViewConstraints(
-                    heightConstraint: 616,
-                    bottomConstraint: 616 - 441,
-                    animated: true
-                )
-            )
-            summaryToDetailOutput.accept(())
-        }
-    }
-    
     func dimViewTapGestureEnded() {
-        storeInformationViewHeightOutput.accept(
-            StoreInformationViewConstraints(
-                heightConstraint: dependency.storeInformationOriginalHeight,
-                bottomConstraint: -16,
-                animated: true
-            )
-        )
-        detailToSummaryOutput.accept(())
-    }
-    
-    func changeState(state: HomeViewState) {
-        dependency.state = state
+        dimViewTapGestureEndedOutput.accept(())
     }
     
     func checkLocationAuthorization(status: CLAuthorizationStatus) {

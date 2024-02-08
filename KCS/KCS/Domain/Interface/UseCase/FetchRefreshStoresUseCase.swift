@@ -14,7 +14,8 @@ protocol FetchRefreshStoresUseCase {
     init(repository: StoreRepository)
     
     func execute(
-        requestLocation: RequestLocation
-    ) -> Observable<[Store]>
+        requestLocation: RequestLocation,
+        isEntire: Bool
+    ) -> Observable<FetchStores>
 
 }

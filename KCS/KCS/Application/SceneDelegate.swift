@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import RxRelay
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -24,20 +25,42 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
             getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
         )
-        let summaryInformationViewModel = SummaryViewModelImpl(
-            getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-            fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
-        )
-        window?.rootViewController = HomeViewController(
-            viewModel: viewModel,
-            summaryInformationViewModel: summaryInformationViewModel,
-            detailViewModel: DetailViewModelImpl(
+        let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
+        let listCellSelectedObserver = PublishRelay<Int>()
+        let storeInformationViewController = StoreInformationViewController(
+            summaryViewHeightObserver: summaryViewHeightObserver,
+            viewModel: StoreInformationViewModelImpl(
                 getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-                fetchImageUseCase: FetchImageUseCaseImpl(repository: ImageRepositoryImpl())
+                fetchImageUseCase: FetchImageUseCaseImpl(
+                    repository: ImageRepositoryImpl(cache: ImageCache())
+                )
             )
         )
+        let homeViewController = HomeViewController(
+            viewModel: viewModel,
+            storeInformationViewController: storeInformationViewController,
+            storeListViewController: StoreListViewController(
+                viewModel: StoreListViewModelImpl(
+                    fetchImageUseCase: FetchImageUseCaseImpl(
+                        repository: ImageRepositoryImpl(cache: ImageCache())
+                    )
+                ),
+                listCellSelectedObserver: listCellSelectedObserver
+            ),
+            summaryViewHeightObserver: summaryViewHeightObserver,
+            listCellSelectedObserver: listCellSelectedObserver
+        )
+        
+        var rootViewController: UIViewController
+        
+        if Storage.isOnboarded() {
+            rootViewController = OnboardingViewController(homeViewController: homeViewController)
+        } else {
+            rootViewController = homeViewController
+        }
+        window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
     }
-
+    
 }
 
