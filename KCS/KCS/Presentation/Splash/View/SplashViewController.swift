@@ -19,11 +19,11 @@ final class SplashViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     let viewModel: SplashViewModel
-    let rootViewController: UIViewController
+    let mainNavigationController: UINavigationController
     
-    init(viewModel: SplashViewModel, rootViewController: UIViewController) {
+    init(viewModel: SplashViewModel, mainNavigationController: UINavigationController) {
         self.viewModel = viewModel
-        self.rootViewController = rootViewController
+        self.mainNavigationController = mainNavigationController
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,8 +58,8 @@ private extension SplashViewController {
         viewModel.networkEnableOutput
             .bind { [weak self] in
                 guard let self = self else { return }
-                rootViewController.modalPresentationStyle = .fullScreen
-                present(rootViewController, animated: true)
+                mainNavigationController.modalPresentationStyle = .fullScreen
+                present(mainNavigationController, animated: true)
             }
             .disposed(by: disposeBag)
         

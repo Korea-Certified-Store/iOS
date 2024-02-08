@@ -259,6 +259,7 @@ private extension HomeViewController {
                 status: locationManager.authorizationStatus
             )
         )
+        navigationController?.isNavigationBarHidden = true
     }
     
     func bind() {

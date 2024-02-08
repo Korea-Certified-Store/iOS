@@ -58,13 +58,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             rootViewController = homeViewController
         }
+        let mainNavigationController = UINavigationController(rootViewController: rootViewController)
         
         let splashViewController = SplashViewController(
             viewModel: SplashViewModelImpl(
                 checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
                     repository: NetworkRepositoryImpl()
                 )
-            ), rootViewController: rootViewController
+            ), mainNavigationController: mainNavigationController
         )
         
         window?.rootViewController = splashViewController
