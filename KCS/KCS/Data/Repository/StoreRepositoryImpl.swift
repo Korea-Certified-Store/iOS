@@ -72,6 +72,7 @@ final class StoreRepositoryImpl: StoreRepository {
     }
     
     func fetchStores(count: Int) -> [Store] {
+        if stores.isEmpty { return [] }
         var fetchResult: [Store] = []
         for index in 0..<count {
             fetchResult.append(contentsOf: stores[index])
