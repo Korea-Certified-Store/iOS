@@ -49,7 +49,7 @@ extension UIViewController {
     func showToast(message: String) {
         let toastLabel = UILabel()
         toastLabel.translatesAutoresizingMaskIntoConstraints = false
-        toastLabel.backgroundColor = .black.withAlphaComponent(0.7)
+        toastLabel.backgroundColor = .black.withAlphaComponent(0.6)
         toastLabel.textColor = .white
         toastLabel.font = .pretendard(size: 14, weight: .medium)
         toastLabel.textAlignment = .center
@@ -60,7 +60,7 @@ extension UIViewController {
         view.addSubview(toastLabel)
         NSLayoutConstraint.activate([
             toastLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toastLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200),
+            toastLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             toastLabel.widthAnchor.constraint(equalToConstant: 150),
             toastLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
