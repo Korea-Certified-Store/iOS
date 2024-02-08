@@ -10,9 +10,9 @@ import Alamofire
 
 final class StoreRepositoryImpl: StoreRepository {
     
-    private var stores: [[Store]]
+    private var stores: [Store]
     
-    init(stores: [[Store]] = []) {
+    init(stores: [Store] = []) {
         self.stores = stores
     }
     
@@ -36,7 +36,7 @@ final class StoreRepositoryImpl: StoreRepository {
                     switch response.result {
                     case .success(let result):
                         let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
-                        self?.stores = resultStores
+                        self?.stores = resultStores.flatMap({ $0 })
                         if isEntire {
                             observer.onNext(FetchStores(
                                 fetchCountContent: FetchCountContent(),
@@ -74,8 +74,12 @@ final class StoreRepositoryImpl: StoreRepository {
     func fetchStores(count: Int) -> [Store] {
         if stores.isEmpty { return [] }
         var fetchResult: [Store] = []
-        for index in 0..<count {
-            fetchResult.append(contentsOf: stores[index])
+        var storeCount = count * 15
+        if storeCount > stores.count {
+            storeCount = stores.count
+        }
+        for index in 0..<storeCount {
+            fetchResult.append(stores[index])
         }
         return fetchResult
     }
@@ -83,7 +87,7 @@ final class StoreRepositoryImpl: StoreRepository {
     func getStoreInformation(
         tag: UInt
     ) throws -> Store {
-        guard let store = stores.flatMap({ $0 }).first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
+        guard let store = stores.first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
         return store
     }
     
