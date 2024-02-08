@@ -281,6 +281,9 @@ private extension HomeViewController {
                 }
                 storeInformationViewDismiss()
                 storeListViewController.updateList(stores: stores)
+                if stores.isEmpty {
+                    showToast(message: "가게가 없습니다.")
+                }
             }
             .disposed(by: disposeBag)
     }

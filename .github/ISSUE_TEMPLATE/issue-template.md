@@ -1,6 +1,6 @@
 ---
 name: Issue Template
-about: 기본 이슈 템
+about: issue template
 title: ''
 labels: ''
 assignees: ''
@@ -8,3 +8,4 @@ assignees: ''
 ---
 
 ## 📋 Description
+
