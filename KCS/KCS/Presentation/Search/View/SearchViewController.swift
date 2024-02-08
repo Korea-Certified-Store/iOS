@@ -18,7 +18,7 @@ final class SearchViewController: UIViewController {
         button.tintColor = .primary3
         button.rx.tap
             .bind { [weak self] _ in
-                self?.dismiss(animated: false)
+                self?.navigationController?.dismiss(animated: false)
             }
             .disposed(by: disposeBag)
         
