@@ -494,8 +494,9 @@ private extension HomeViewController {
     
     func bindSearch() {
         searchObserver
-            .bind { keyword in
+            .bind { [weak self] keyword in
                 // TODO: ViewModel.action() search 진행
+                print(keyword)
             }
             .disposed(by: disposeBag)
     }
@@ -596,7 +597,7 @@ private extension HomeViewController {
         if let presentedViewController = presentedViewController {
             let navigationController = UINavigationController(rootViewController: searchViewController)
             navigationController.modalPresentationStyle = .fullScreen
-            presentedViewController.present(navigationController, animated: true)
+            presentedViewController.present(navigationController, animated: false)
         }
     }
     

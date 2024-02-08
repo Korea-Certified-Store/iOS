@@ -15,9 +15,10 @@ final class SearchViewController: UIViewController {
     
     private lazy var backButton: UIBarButtonItem = {
         let button = UIBarButtonItem(image: SystemImage.back, style: .plain, target: nil, action: nil)
+        button.tintColor = .primary3
         button.rx.tap
             .bind { [weak self] _ in
-                self?.dismiss(animated: true)
+                self?.dismiss(animated: false)
             }
             .disposed(by: disposeBag)
         
@@ -157,7 +158,9 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
+        
         searchObserver.accept(text)
+        navigationController?.dismiss(animated: false)
     }
     
 }
@@ -166,7 +169,9 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let text = dataSource.itemIdentifier(for: indexPath) else { return }
+        self.dismiss(animated: true)
         searchObserver.accept(text)
+        navigationController?.dismiss(animated: false)
     }
     
 }
