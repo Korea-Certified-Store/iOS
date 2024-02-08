@@ -58,7 +58,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             rootViewController = homeViewController
         }
-        window?.rootViewController = rootViewController
+        
+        let splashViewController = SplashViewController(
+            viewModel: SplashViewModelImpl(
+                checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
+                    repository: NetworkRepositoryImpl()
+                )
+            ), rootViewController: rootViewController
+        )
+        
+        window?.rootViewController = splashViewController
         window?.makeKeyAndVisible()
     }
     
