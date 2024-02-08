@@ -58,7 +58,9 @@ final class HomeViewController: UIViewController {
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                // TODO: SearchViewController로 넘어가기.
+                guard let self = self else { return }
+                searchViewController.setSearchKeyword(keyword: view.getSearchKeyword())
+                presentSearchViewController()
             })
             .disposed(by: disposeBag)
         
@@ -209,6 +211,8 @@ final class HomeViewController: UIViewController {
         equalTo: mapView.bottomAnchor, constant: -90
     )
     
+    private let searchViewController: SearchViewController
+    private let searchObserver: PublishRelay<String>
     private let disposeBag = DisposeBag()
     private var markers: [Marker] = []
     private let storeInformationViewController: StoreInformationViewController
@@ -223,13 +227,17 @@ final class HomeViewController: UIViewController {
         storeInformationViewController: StoreInformationViewController,
         storeListViewController: StoreListViewController,
         summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
-        listCellSelectedObserver: PublishRelay<Int>
+        listCellSelectedObserver: PublishRelay<Int>,
+        searchViewController: SearchViewController,
+        searchObserver: PublishRelay<String>
     ) {
         self.viewModel = viewModel
         self.storeInformationViewController = storeInformationViewController
         self.storeListViewController = storeListViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.listCellSelectedObserver = listCellSelectedObserver
+        self.searchViewController = searchViewController
+        self.searchObserver = searchObserver
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -271,6 +279,7 @@ private extension HomeViewController {
         bindStoreInformationView()
         bindErrorAlert()
         bindListCellSelected()
+        bindSearch()
     }
     
     func bindFetchStores() {
@@ -483,6 +492,14 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindSearch() {
+        searchObserver
+            .bind { keyword in
+                // TODO: ViewModel.action() search 진행
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }
 
 private extension HomeViewController {
@@ -574,7 +591,15 @@ private extension HomeViewController {
         storeListViewController.scrollToPreviousCell(indexPath: IndexPath(row: row, section: 0))
         backStoreListButton.isHidden = false
     }
-        
+    
+    func presentSearchViewController() {
+        if let presentedViewController = presentedViewController {
+            let navigationController = UINavigationController(rootViewController: searchViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            presentedViewController.present(navigationController, animated: true)
+        }
+    }
+    
 }
 
 private extension HomeViewController {

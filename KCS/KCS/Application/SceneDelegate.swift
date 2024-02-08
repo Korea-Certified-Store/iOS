@@ -36,6 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 )
             )
         )
+        let searchObserver = PublishRelay<String>()
         let homeViewController = HomeViewController(
             viewModel: viewModel,
             storeInformationViewController: storeInformationViewController,
@@ -48,7 +49,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 listCellSelectedObserver: listCellSelectedObserver
             ),
             summaryViewHeightObserver: summaryViewHeightObserver,
-            listCellSelectedObserver: listCellSelectedObserver
+            listCellSelectedObserver: listCellSelectedObserver,
+            searchViewController: SearchViewController(
+                viewModel: SearchViewModelImpl(),
+                searchObserver: searchObserver
+            ),
+            searchObserver: searchObserver
         )
         
         var rootViewController: UIViewController
@@ -58,14 +64,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             rootViewController = homeViewController
         }
-        let mainNavigationController = UINavigationController(rootViewController: rootViewController)
         
         let splashViewController = SplashViewController(
             viewModel: SplashViewModelImpl(
                 checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
                     repository: NetworkRepositoryImpl()
                 )
-            ), mainNavigationController: mainNavigationController
+            ), rootViewController: rootViewController
         )
         
         window?.rootViewController = splashViewController
