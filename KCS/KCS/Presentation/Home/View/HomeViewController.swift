@@ -51,6 +51,20 @@ final class HomeViewController: UIViewController {
         return stack
     }()
     
+    private lazy var searchView: SearchWordView = {
+        let view = SearchWordView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.rx
+            .tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                // TODO: SearchViewController로 넘어가기.
+            })
+            .disposed(by: disposeBag)
+        
+        return view
+    }()
+    
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -568,6 +582,7 @@ private extension HomeViewController {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
+        mapView.addSubview(searchView)
         mapView.addSubview(compassView)
         mapView.addSubview(refreshButton)
         mapView.addSubview(moreStoreButton)
@@ -600,6 +615,13 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             filterButtonStackView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8)
+        ])
+        
+        NSLayoutConstraint.activate([
+            searchView.centerXAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.centerXAnchor),
+            searchView.topAnchor.constraint(equalTo: filterButtonStackView.bottomAnchor, constant: 10),
+            searchView.widthAnchor.constraint(equalToConstant: 150),
+            searchView.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         NSLayoutConstraint.activate([
