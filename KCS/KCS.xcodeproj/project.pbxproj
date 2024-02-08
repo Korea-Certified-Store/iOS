@@ -84,6 +84,7 @@
 		A81EFBC72B5D597400D0C0D7 /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBBE2B5D597400D0C0D7 /* Pretendard-Bold.ttf */; };
 		A81EFBC82B5D597400D0C0D7 /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBBF2B5D597400D0C0D7 /* Pretendard-Light.ttf */; };
 		A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */; };
+		A821A3742B74B84700089B8F /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A3732B74B84700089B8F /* SplashViewController.swift */; };
 		A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */; };
 		A83367B82B6FA0E700E0A844 /* FetchStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B72B6FA0E700E0A844 /* FetchStores.swift */; };
 		A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */; };
@@ -211,6 +212,7 @@
 		A81EFBBE2B5D597400D0C0D7 /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
 		A81EFBBF2B5D597400D0C0D7 /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		A821A3732B74B84700089B8F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStoreButton.swift; sourceTree = "<group>"; };
 		A83367B72B6FA0E700E0A844 /* FetchStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStores.swift; sourceTree = "<group>"; };
 		A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -296,7 +298,7 @@
 			path = KCS;
 			sourceTree = "<group>";
 		};
-		5977BE592B55355D00725C90 /* UseCase */ = {
+		5977BE592B55355D00725C90 /* protocol */ = {
 			isa = PBXGroup;
 			children = (
 				5977BE5D2B5535C700725C90 /* FetchRefreshStoresUseCase.swift */,
@@ -305,12 +307,13 @@
 				A8ACB7E72B595A2100540BD1 /* GetOpenClosedUseCase.swift */,
 				59F478B42B59BE0B002FEF9E /* FetchImageUseCase.swift */,
 			);
-			path = UseCase;
+			path = protocol;
 			sourceTree = "<group>";
 		};
 		5977BE5A2B55356600725C90 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				5977BE592B55355D00725C90 /* protocol */,
 				A8ACB7EB2B59644100540BD1 /* Error */,
 				5977BE5B2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift */,
 				5977BE972B5999E000725C90 /* FetchStoresUseCaseImpl.swift */,
@@ -394,6 +397,7 @@
 				59B886242B6A39E9005750EF /* StoreList */,
 				59B886552B6E3A59005750EF /* StoreInformation */,
 				A83367B92B709BE900E0A844 /* OnBoarding */,
+				A821A3722B74B82600089B8F /* Splash */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -614,6 +618,14 @@
 			path = font;
 			sourceTree = "<group>";
 		};
+		A821A3722B74B82600089B8F /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				A821A3732B74B84700089B8F /* SplashViewController.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
 		A83367B92B709BE900E0A844 /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -646,7 +658,6 @@
 		A8ACB7CC2B54ED3800540BD1 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				5977BE592B55355D00725C90 /* UseCase */,
 				59C306A72B4FF98600862625 /* Repository */,
 			);
 			path = Interface;
@@ -993,6 +1004,7 @@
 				592262242B61203000CA5A11 /* DetailView.swift in Sources */,
 				A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */,
+				A821A3742B74B84700089B8F /* SplashViewController.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A83367C32B72714C00E0A844 /* ThirdOnboardingView.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
