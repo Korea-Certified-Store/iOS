@@ -67,7 +67,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ), rootViewController: rootViewController
         )
         
-        window?.rootViewController = splashViewController
+//        window?.rootViewController = splashViewController
+        
+        window?.rootViewController = UINavigationController(rootViewController: SearchViewController(viewModel: SearchViewModelImpl(), searchObserver: PublishRelay<String>()))
         window?.makeKeyAndVisible()
     }
     

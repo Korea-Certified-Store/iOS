@@ -35,7 +35,6 @@ extension UIViewController {
         requestLocationServiceAlert.addAction(cancel)
         requestLocationServiceAlert.addAction(goSetting)
         
-        
         if let presentController = presentedViewController {
             presentController.presentLocationAlert()
         } else {
