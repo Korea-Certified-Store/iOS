@@ -64,8 +64,8 @@ final class HomeViewModelImpl: HomeViewModel {
             checkLocationAuthorization(status: status)
         case .checkLocationAuthorizationWhenCameraDidChange(let status):
             checkLocationAuthorizationWhenCameraDidChange(status: status)
-        case .search(let keyword):
-            search(keyword: keyword)
+        case .search(let location, let keyword):
+            search(location: location, keyword: keyword)
         }
     }
     
@@ -253,7 +253,7 @@ private extension HomeViewModelImpl {
         }
     }
     
-    func search(keyword: String) {
+    func search(location: Location, keyword: String) {
         // TODO: SearchUsecase 실행 후 output accept
     }
     

@@ -36,7 +36,7 @@ enum HomeViewModelInputCase {
     case setMarker(store: Store, certificationType: CertificationType)
     case checkLocationAuthorization(status: CLAuthorizationStatus)
     case checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus)
-    case search(keyword: String)
+    case search(location: Location, keyword: String)
     
 }
 

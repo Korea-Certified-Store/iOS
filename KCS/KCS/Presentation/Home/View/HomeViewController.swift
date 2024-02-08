@@ -496,7 +496,12 @@ private extension HomeViewController {
         searchObserver
             .bind { [weak self] keyword in
                 // TODO: ViewModel.action() search 진행
-                self?.viewModel.action(input: .search(keyword: keyword))
+                guard let center = self?.view.center else { return }
+                let centerPosition = Location(
+                    longitude: Double(center.x),
+                    latitude: Double(center.y)
+                )
+                self?.viewModel.action(input: .search(location: centerPosition, keyword: keyword))
             }
             .disposed(by: disposeBag)
     }
