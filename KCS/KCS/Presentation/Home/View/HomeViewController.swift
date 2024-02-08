@@ -504,6 +504,18 @@ private extension HomeViewController {
                 self?.viewModel.action(input: .search(location: centerPosition, keyword: keyword))
             }
             .disposed(by: disposeBag)
+        
+        viewModel.searchStoresOutput
+            .bind { stores in
+                // TODO: 마커 및 필터 초기화, 카메라 및 줌 이동, 마커 설정
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.searchOneStoreOutput
+            .bind { store in
+                // TODO: 마커 및 필터 초기화, 카메라 및 줌 이동, 마커 설정, 요약 카드 present
+            }
+            .disposed(by: disposeBag)
     }
     
 }
