@@ -28,7 +28,9 @@ extension StoreAPI: Router, URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .getStores, .getImage:
+        case .getStores:
+            return "/v2/storecertification/byLocation"
+        case .getImage:
             return ""
         }
     }
