@@ -142,6 +142,28 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    // TODO: BackButton configuration 수정 필요
+    private lazy var backStoreListButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .blue
+        button.setTitle("뒤로가기", for: .normal)
+        button.isHidden = true
+        button.rx.tap
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .bind { [weak self] in
+                self?.storeInformationViewDismiss()
+                if let sheet = self?.storeListViewController.sheetPresentationController {
+                    sheet.animateChanges {
+                        sheet.selectedDetentIdentifier = .largeStoreListViewDetentIdentifier
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
     private lazy var dimView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -263,6 +285,7 @@ private extension HomeViewController {
     
     func bindApplyFilters() {
         viewModel.filteredStoresOutput
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
@@ -436,6 +459,8 @@ private extension HomeViewController {
                     )
                     targetMarker.select()
                     clickedMarker = targetMarker
+                    
+                    setBackStoreListButton(row: index)
                 } else {
                     presentErrorAlert(error: .client)
                 }
@@ -467,6 +492,7 @@ private extension HomeViewController {
     }
     
     func storeInformationViewDismiss(changeMarker: Bool = false) {
+        backStoreListButton.isHidden = true
         clickedMarker?.deselect()
         clickedMarker = nil
         if !changeMarker {
@@ -528,6 +554,11 @@ private extension HomeViewController {
             )
         )
     }
+    
+    func setBackStoreListButton(row: Int) {
+        storeListViewController.scrollToPreviousCell(indexPath: IndexPath(row: row, section: 0))
+        backStoreListButton.isHidden = false
+    }
         
 }
 
@@ -540,6 +571,7 @@ private extension HomeViewController {
         mapView.addSubview(compassView)
         mapView.addSubview(refreshButton)
         mapView.addSubview(moreStoreButton)
+        mapView.addSubview(backStoreListButton)
         mapView.addSubview(dimView)
     }
     
@@ -586,6 +618,14 @@ private extension HomeViewController {
             moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             moreStoreButton.widthAnchor.constraint(equalToConstant: 97),
             moreStoreButtonBottomConstraint
+        ])
+        
+        // TODO: BackButton AutoLayout 수정 필요
+        NSLayoutConstraint.activate([
+            backStoreListButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
+            backStoreListButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -290),
+            backStoreListButton.widthAnchor.constraint(equalToConstant: 80),
+            backStoreListButton.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
     
