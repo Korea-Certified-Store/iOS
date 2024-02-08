@@ -25,10 +25,8 @@ private extension SearchViewModelImpl {
     func textChanged(text: String) {
         if text.isEmpty {
             // TODO: recentHistory usecase 실행(debounce) 후 generateDataOutput.accept([])
-            generateDataOutput.accept(["recentHistory1", "recentHistory2", "recentHistory3", "recentHistory4"])
         } else {
             // TODO: autoCompletion usecase 실행(debounce) 후 generateDataOutput.accept([])
-            generateDataOutput.accept(["completion1", "completion2", "completion3"])
         }
     }
     
