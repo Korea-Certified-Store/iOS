@@ -495,7 +495,6 @@ private extension HomeViewController {
     func bindSearch() {
         searchObserver
             .bind { [weak self] keyword in
-                // TODO: ViewModel.action() search 진행
                 guard let center = self?.view.center else { return }
                 let centerPosition = Location(
                     longitude: Double(center.x),

@@ -259,7 +259,6 @@ private extension HomeViewModelImpl {
     }
     
     func search(location: Location, keyword: String) {
-        // TODO: SearchUsecase 실행 후 output accept
         fetchSearchStoresUseCase.execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
