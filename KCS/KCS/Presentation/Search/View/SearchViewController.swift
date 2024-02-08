@@ -89,6 +89,10 @@ final class SearchViewController: UIViewController {
         
         searchController.searchBar.becomeFirstResponder()
     }
+    
+    func setSearchKeyword(keyword: String) {
+        searchController.searchBar.searchTextField.text = keyword
+    }
 
 }
 
