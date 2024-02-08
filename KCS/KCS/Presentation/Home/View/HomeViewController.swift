@@ -496,7 +496,7 @@ private extension HomeViewController {
         searchObserver
             .bind { [weak self] keyword in
                 // TODO: ViewModel.action() search 진행
-                print(keyword)
+                self?.viewModel.action(input: .search(keyword: keyword))
             }
             .disposed(by: disposeBag)
     }
