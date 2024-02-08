@@ -46,4 +46,45 @@ extension UIViewController {
         }
     }
     
+    func showToast(message: String) {
+        let toastLabel = UILabel()
+        toastLabel.translatesAutoresizingMaskIntoConstraints = false
+        toastLabel.backgroundColor = .black.withAlphaComponent(0.7)
+        toastLabel.textColor = .white
+        toastLabel.font = .pretendard(size: 14, weight: .medium)
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        toastLabel.alpha = 0
+        toastLabel.setLayerCorner(cornerRadius: 12)
+        toastLabel.clipsToBounds = true
+        view.addSubview(toastLabel)
+        NSLayoutConstraint.activate([
+            toastLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200),
+            toastLabel.widthAnchor.constraint(equalToConstant: 150),
+            toastLabel.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0,
+            options: .curveEaseIn,
+            animations: {
+                toastLabel.alpha = 1.0
+            },
+            completion: { _ in
+                UIView.animate(
+                    withDuration: 0.8,
+                    delay: 1.4,
+                    options: .curveEaseOut,
+                    animations: {
+                        toastLabel.alpha = 0.0
+                    }, completion: { _ in
+                        toastLabel.removeFromSuperview()
+                    }
+                )
+            }
+        )
+    }
+    
 }
