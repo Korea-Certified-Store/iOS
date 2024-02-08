@@ -152,11 +152,10 @@ final class HomeViewController: UIViewController {
             .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] in
                 button.isHidden = true
-                self?.storeInformationViewController.dismiss(animated: true)
-                self?.presentStoreListView()
+                self?.storeInformationViewDismiss()
                 if let sheet = self?.storeListViewController.sheetPresentationController {
                     sheet.animateChanges {
-                        sheet.selectedDetentIdentifier = .large
+                        sheet.selectedDetentIdentifier = .largeStoreListViewDetentIdentifier
                     }
                 }
             }
