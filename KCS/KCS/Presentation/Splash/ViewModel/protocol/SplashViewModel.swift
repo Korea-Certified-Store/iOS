@@ -27,6 +27,7 @@ enum SplashViewModelInputCase {
 
 protocol SplashViewModelOutput {
     
-    var networkStatusOutput: PublishRelay<Bool> { get }
+    var networkEnableOutput: PublishRelay<Void> { get }
+    var networkDisableOutput: PublishRelay<Void> { get }
     
 }

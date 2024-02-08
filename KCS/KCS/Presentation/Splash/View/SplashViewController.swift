@@ -55,15 +55,17 @@ private extension SplashViewController {
     }
     
     func bind() {
-        viewModel.networkStatusOutput
-            .bind { [weak self] status in
+        viewModel.networkEnableOutput
+            .bind { [weak self] in
                 guard let self = self else { return }
-                if !status {
-                    presentNetworkAlert()
-                } else {
-                    rootViewController.modalPresentationStyle = .fullScreen
-                    present(rootViewController, animated: true)
-                }
+                rootViewController.modalPresentationStyle = .fullScreen
+                present(rootViewController, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.networkDisableOutput
+            .bind { [weak self] in
+                self?.presentNetworkAlert()
             }
             .disposed(by: disposeBag)
     }

@@ -11,7 +11,8 @@ final class SplashViewModelImpl: SplashViewModel {
     
     let checkNetworkStatusUseCase: CheckNetworkStatusUseCase
     
-    let networkStatusOutput = PublishRelay<Bool>()
+    let networkEnableOutput = PublishRelay<Void>()
+    let networkDisableOutput = PublishRelay<Void>()
     
     init(checkNetworkStatusUseCase: CheckNetworkStatusUseCase) {
         self.checkNetworkStatusUseCase = checkNetworkStatusUseCase
@@ -29,7 +30,11 @@ final class SplashViewModelImpl: SplashViewModel {
 private extension SplashViewModelImpl {
     
     func checkNetworkInput() {
-        networkStatusOutput.accept(checkNetworkStatusUseCase.execute())
+        if checkNetworkStatusUseCase.execute() {
+            networkEnableOutput.accept(())
+        } else {
+            networkDisableOutput.accept(())
+        }
     }
     
 }
