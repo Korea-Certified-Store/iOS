@@ -33,5 +33,8 @@ target 'KCSUnitTest' do
 
   pod 'RxTest'
   pod 'RxBlocking'
-  
+
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
+
 end
