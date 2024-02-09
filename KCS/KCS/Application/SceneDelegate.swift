@@ -52,7 +52,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             summaryViewHeightObserver: summaryViewHeightObserver,
             listCellSelectedObserver: listCellSelectedObserver,
             searchViewController: SearchViewController(
-                viewModel: SearchViewModelImpl(),
+                viewModel: SearchViewModelImpl(
+                    fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
+                        repository: SearchKeywordRepositoryImpl(
+                            userDefaults: UserDefaults()
+                        )
+                    ),
+                    saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
+                        repository: SearchKeywordRepositoryImpl(
+                            userDefaults: UserDefaults()
+                        )
+                    )
+                ),
                 searchObserver: searchObserver
             ),
             searchObserver: searchObserver

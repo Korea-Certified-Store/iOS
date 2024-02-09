@@ -9,6 +9,6 @@ import Foundation
 
 struct RecentSearchKeyword: Equatable {
     
-    let keyword: String
+    let searchKeyword: String
     
 }
