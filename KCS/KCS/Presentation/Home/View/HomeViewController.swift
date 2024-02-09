@@ -542,7 +542,6 @@ private extension HomeViewController {
                 guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
                 if let clickedMarker = clickedMarker {
                     if clickedMarker == marker { return }
-                    clickedMarker.deselect()
                     storeInformationViewDismiss(changeMarker: true)
                 }
                 storeInformationViewController.setUIContents(store: store)
