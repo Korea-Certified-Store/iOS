@@ -14,16 +14,19 @@ final class SearchViewModelImpl: SearchViewModel {
     
     var fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase
     var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase
+    var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase
     
     let generateDataOutput = PublishRelay<[String]>()
     let recentSearchKeywordsOutput = PublishRelay<[RecentSearchKeyword]>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
-        saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase
+        saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase,
+        deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase
     ) {
         self.fetchRecentSearchKeywordUseCase = fetchRecentSearchKeywordUseCase
         self.saveRecentSearchKeywordUseCase = saveRecentSearchKeywordUseCase
+        self.deleteRecentSearchKeywordUseCase = deleteRecentSearchKeywordUseCase
     }
     
     func action(input: SearchViewModelInputCase) {
@@ -34,6 +37,8 @@ final class SearchViewModelImpl: SearchViewModel {
             textChanged(text: text)
         case .searchButtonTapped(let text):
             searchButtonTapped(text: text)
+        case .deleteSearchHistory(let index):
+            deleteSearchHistory(index: index)
         }
     }
     
@@ -63,6 +68,10 @@ private extension SearchViewModelImpl {
                 searchKeyword: text
             )
         )
+    }
+    
+    func deleteSearchHistory(index: Int) {
+        deleteRecentSearchKeywordUseCase.execute(index: index)
     }
     
 }

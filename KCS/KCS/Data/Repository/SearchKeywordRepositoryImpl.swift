@@ -38,6 +38,12 @@ final class SearchKeywordRepositoryImpl: SearchKeywordsRepository {
         persist(keywords: keywords)
     }
     
+    func deleteRecentSearchKeywords(index: Int) {
+        var keywords = fetchKeywords()
+        keywords.remove(at: index)
+        persist(keywords: keywords)
+    }
+    
 }
 
 private extension SearchKeywordRepositoryImpl {

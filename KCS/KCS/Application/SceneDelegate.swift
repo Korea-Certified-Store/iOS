@@ -38,6 +38,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             )
         )
         let searchObserver = PublishRelay<String>()
+        let searchKeywordRepository = SearchKeywordRepositoryImpl(
+            userDefaults: UserDefaults()
+        )
         let homeViewController = HomeViewController(
             viewModel: viewModel,
             storeInformationViewController: storeInformationViewController,
@@ -54,14 +57,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             searchViewController: SearchViewController(
                 viewModel: SearchViewModelImpl(
                     fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
-                        repository: SearchKeywordRepositoryImpl(
-                            userDefaults: UserDefaults()
-                        )
+                        repository: searchKeywordRepository
                     ),
                     saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
-                        repository: SearchKeywordRepositoryImpl(
-                            userDefaults: UserDefaults()
-                        )
+                        repository: searchKeywordRepository
+                    ), 
+                    deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
                     )
                 ),
                 searchObserver: searchObserver

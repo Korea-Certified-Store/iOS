@@ -11,5 +11,6 @@ protocol SearchKeywordsRepository {
     
     func fetchRecentSearchKeywords() -> Observable<[RecentSearchKeyword]>
     func saveRecentSearchKeywords(recentSearchKeyword: RecentSearchKeyword)
+    func deleteRecentSearchKeywords(index: Int)
     
 }

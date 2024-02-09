@@ -183,6 +183,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
 
 extension SearchViewController: UITableViewDelegate {
     
+    // TODO: 최근 검색어 삭제 action 필요
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let text = dataSource.itemIdentifier(for: indexPath) else { return }
         self.dismiss(animated: true)

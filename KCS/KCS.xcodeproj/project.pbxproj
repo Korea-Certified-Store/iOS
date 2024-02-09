@@ -117,6 +117,8 @@
 		A8722F002B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8722EFF2B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift */; };
 		A8722F022B764620001ED988 /* SaveRecentSearchKeywordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8722F012B764620001ED988 /* SaveRecentSearchKeywordUseCase.swift */; };
 		A8722F042B764679001ED988 /* SaveRecentSearchKeywordUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8722F032B764679001ED988 /* SaveRecentSearchKeywordUseCaseImpl.swift */; };
+		A8722F062B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8722F052B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift */; };
+		A8722F082B7662F5001ED988 /* DeleteRecentSearchKeywordUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8722F072B7662F5001ED988 /* DeleteRecentSearchKeywordUseCaseImpl.swift */; };
 		A89087042B4E7F3500767225 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087032B4E7F3500767225 /* FilterButton.swift */; };
 		A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* SystemImage.swift */; };
 		A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870C2B4EF91600767225 /* UIView+SetLayer.swift */; };
@@ -267,6 +269,8 @@
 		A8722EFF2B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRecentSearchKeywordUseCase.swift; sourceTree = "<group>"; };
 		A8722F012B764620001ED988 /* SaveRecentSearchKeywordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRecentSearchKeywordUseCase.swift; sourceTree = "<group>"; };
 		A8722F032B764679001ED988 /* SaveRecentSearchKeywordUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRecentSearchKeywordUseCaseImpl.swift; sourceTree = "<group>"; };
+		A8722F052B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecentSearchKeywordUseCase.swift; sourceTree = "<group>"; };
+		A8722F072B7662F5001ED988 /* DeleteRecentSearchKeywordUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecentSearchKeywordUseCaseImpl.swift; sourceTree = "<group>"; };
 		A89087032B4E7F3500767225 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		A89087092B4EF00B00767225 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		A890870C2B4EF91600767225 /* UIView+SetLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SetLayer.swift"; sourceTree = "<group>"; };
@@ -389,6 +393,7 @@
 				59503A5D2B7596990006CF35 /* FetchSearchStoresUseCase.swift */,
 				A8722EFF2B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift */,
 				A8722F012B764620001ED988 /* SaveRecentSearchKeywordUseCase.swift */,
+				A8722F052B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -407,6 +412,7 @@
 				59503A5F2B75970E0006CF35 /* FetchSearchStoresUseCaseImpl.swift */,
 				A8722EFD2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift */,
 				A8722F032B764679001ED988 /* SaveRecentSearchKeywordUseCaseImpl.swift */,
+				A8722F072B7662F5001ED988 /* DeleteRecentSearchKeywordUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1102,6 +1108,7 @@
 			files = (
 				A821A3762B74B9F900089B8F /* NetworkRepositoryImpl.swift in Sources */,
 				59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */,
+				A8722F082B7662F5001ED988 /* DeleteRecentSearchKeywordUseCaseImpl.swift in Sources */,
 				A83367BD2B70A52900E0A844 /* Storage.swift in Sources */,
 				A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */,
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
@@ -1181,6 +1188,7 @@
 				59B8865C2B6E4B8B005750EF /* StoreInformationViewModel.swift in Sources */,
 				A86D92112B760B75003B9FEE /* SearchKeywordRepositoryImpl.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
+				A8722F062B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift in Sources */,
 				5977BE942B59738800725C90 /* FetchStoresUseCase.swift in Sources */,
 				59B886502B6AB9F7005750EF /* StoreTableViewCellContents.swift in Sources */,
 				59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */,
