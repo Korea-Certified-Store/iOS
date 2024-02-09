@@ -519,6 +519,7 @@ private extension HomeViewController {
                 cameraUpdate.animation = .easeIn
                 cameraUpdate.animationDuration = 0.5
                 mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.positionMode = .normal
             }
             .disposed(by: disposeBag)
         
@@ -536,6 +537,7 @@ private extension HomeViewController {
                 cameraUpdate.animation = .easeIn
                 cameraUpdate.animationDuration = 0.5
                 mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.positionMode = .normal
                 
                 guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
                 if let clickedMarker = clickedMarker {
