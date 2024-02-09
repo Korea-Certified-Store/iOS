@@ -11,13 +11,8 @@ struct FetchSearchStoresUseCaseImpl: FetchSearchStoresUseCase {
     
     var repository: StoreRepository
     
-    init(repository: StoreRepository) {
-        self.repository = repository
-    }
-    
     func execute(location: Location, keyword: String) -> Observable<[Store]> {
         return repository.fetchSearchStores(location: location, keyword: keyword)
     }
-    
     
 }

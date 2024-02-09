@@ -505,14 +505,48 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
         
         viewModel.searchStoresOutput
-            .bind { stores in
-                // TODO: 마커 및 필터 초기화, 카메라 및 줌 이동, 마커 설정
+            .bind { [weak self] stores in
+                guard let self = self else { return }
+                resetFilters()
+                storeInformationViewDismiss()
+                setSearchStoresMarker(stores: stores)
+                
+                mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
+                let cameraUpdate = NMFCameraUpdate(
+                    fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
+                    padding: 30
+                )
+                cameraUpdate.animation = .easeIn
+                cameraUpdate.animationDuration = 0.5
+                mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.positionMode = .normal
             }
             .disposed(by: disposeBag)
         
         viewModel.searchOneStoreOutput
-            .bind { store in
-                // TODO: 마커 및 필터 초기화, 카메라 및 줌 이동, 마커 설정, 요약 카드 present
+            .bind { [weak self] store in
+                guard let self = self else { return }
+                resetFilters()
+                setSearchStoresMarker(stores: [store])
+                
+                mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
+                
+                let cameraUpdate = NMFCameraUpdate(
+                    position: NMFCameraPosition(store.location.toMapLocation(), zoom: 15)
+                )
+                cameraUpdate.animation = .easeIn
+                cameraUpdate.animationDuration = 0.5
+                mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.positionMode = .normal
+                
+                guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
+                if let clickedMarker = clickedMarker {
+                    if clickedMarker == marker { return }
+                    storeInformationViewDismiss(changeMarker: true)
+                }
+                storeInformationViewController.setUIContents(store: store)
+                marker.select()
+                clickedMarker = marker
             }
             .disposed(by: disposeBag)
     }
@@ -526,7 +560,6 @@ private extension HomeViewController {
             
             if let clickedMarker = self?.clickedMarker {
                 if clickedMarker == marker { return true }
-                clickedMarker.deselect()
                 self?.storeInformationViewDismiss(changeMarker: true)
             }
             
@@ -709,6 +742,29 @@ private extension HomeViewController {
         }
         UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    func resetFilters() {
+        safeFilterButton.isSelected = false
+        exemplaryFilterButton.isSelected = false
+        goodPriceFilterButton.isSelected = false
+        viewModel.action(input: .resetFilters)
+    }
+    
+    func setSearchStoresMarker(stores: [Store]) {
+        markers.forEach({ $0.mapView = nil })
+        markers = []
+        stores.forEach { [weak self] store in
+            guard let certificationType = store.certificationTypes.last else { return }
+            self?.viewModel.action(input: .setMarker(
+                store: store,
+                certificationType: certificationType
+            ))
+        }
+        storeListViewController.updateList(stores: stores)
+        if stores.isEmpty {
+            showToast(message: "가게가 없습니다.")
         }
     }
     
