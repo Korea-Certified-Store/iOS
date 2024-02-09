@@ -506,17 +506,18 @@ private extension HomeViewController {
         
         viewModel.searchStoresOutput
             .bind { [weak self] stores in
-                self?.setCamera()
                 self?.resetFilters()
-                // TODO: 마커 초기화, 마커 설정
+                self?.setSearchStoresMarker(stores: stores)
+                self?.setCamera()
             }
             .disposed(by: disposeBag)
         
         viewModel.searchOneStoreOutput
             .bind { [weak self] store in
-                self?.setCamera()
                 self?.resetFilters()
-                // TODO: 마커 초기화, 마커 설정, 요약 카드 present
+                self?.setSearchStoresMarker(stores: [store])
+                self?.setCamera()
+                // TODO: 요약 카드 present
             }
             .disposed(by: disposeBag)
     }
@@ -719,8 +720,11 @@ private extension HomeViewController {
     func setCamera() {
         mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
         let cameraUpdate = NMFCameraUpdate(
-            fit: NMGLatLngBounds(latLngs: markers.map({ $0.position }))
+            fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
+            padding: 30
         )
+        cameraUpdate.animation = .easeIn
+        cameraUpdate.animationDuration = 0.5
         mapView.mapView.moveCamera(cameraUpdate)
     }
     
@@ -729,6 +733,23 @@ private extension HomeViewController {
         exemplaryFilterButton.isSelected = false
         goodPriceFilterButton.isSelected = false
         viewModel.action(input: .resetFilters)
+    }
+    
+    func setSearchStoresMarker(stores: [Store]) {
+        markers.forEach({ $0.mapView = nil })
+        markers = []
+        stores.forEach { [weak self] store in
+            guard let certificationType = store.certificationTypes.last else { return }
+            self?.viewModel.action(input: .setMarker(
+                store: store,
+                certificationType: certificationType
+            ))
+        }
+        storeInformationViewDismiss()
+        storeListViewController.updateList(stores: stores)
+        if stores.isEmpty {
+            showToast(message: "가게가 없습니다.")
+        }
     }
     
 }
