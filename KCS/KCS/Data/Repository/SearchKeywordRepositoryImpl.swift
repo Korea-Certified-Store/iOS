@@ -32,6 +32,7 @@ final class SearchKeywordRepositoryImpl: SearchKeywordsRepository {
             keywords.remove(at: index)
         }
         keywords.insert(recentSearchKeyword, at: 0)
+        // TODO: 최근 검색 최대 개수 수정 필요
         if keywords.count > 5 {
             keywords.removeLast()
         }
