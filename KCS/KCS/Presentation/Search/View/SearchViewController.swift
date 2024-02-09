@@ -52,6 +52,7 @@ final class SearchViewController: UIViewController {
         return tableView
     }()
     
+    // TODO: Section 별로 layout 따로 구현
     enum Section {
         case autoCompleteKeyword
         case recentSearchKeyword
