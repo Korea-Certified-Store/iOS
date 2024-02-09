@@ -28,8 +28,6 @@ post_install do |installer|
 end
 
 target 'KCSUnitTest' do
-  # add serarch_paths for firebase for test
-  inherit! :search_paths
 
   pod 'RxTest'
   pod 'RxBlocking'
