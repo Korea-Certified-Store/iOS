@@ -9,6 +9,9 @@ import RxRelay
 
 protocol SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
     
+    var fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase { get }
+    var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase { get }
+    
 }
 
 protocol SearchViewModelInput {
@@ -19,12 +22,15 @@ protocol SearchViewModelInput {
 
 enum SearchViewModelInputCase {
     
+    case viewWillAppear
     case textChanged(text: String)
+    case searchButtonTapped(text: String)
     
 }
 
 protocol SearchViewModelOutput {
     
     var generateDataOutput: PublishRelay<[String]> { get }
+    var recentSearchKeywordsOutput: PublishRelay<[RecentSearchKeyword]> { get }
     
 }

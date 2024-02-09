@@ -53,7 +53,8 @@ final class SearchViewController: UIViewController {
     }()
     
     enum Section {
-        case keyword
+        case autoCompleteKeyword
+        case recentSearchKeyword
     }
     
     private lazy var dataSource: UITableViewDiffableDataSource<Section, String> = {
@@ -96,6 +97,10 @@ final class SearchViewController: UIViewController {
         setup()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.action(input: .viewWillAppear)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -135,6 +140,16 @@ private extension SearchViewController {
                 self?.generateData(data: data)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.recentSearchKeywordsOutput
+            .bind { [weak self] keywords in
+                let keywordArray = keywords.map { $0.searchKeyword }
+                var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
+                snapshot.appendSections([.recentSearchKeyword])
+                snapshot.appendItems(keywordArray)
+                self?.dataSource.apply(snapshot)
+            }
+            .disposed(by: disposeBag)
     }
     
 }
@@ -143,7 +158,7 @@ private extension SearchViewController {
     
     func generateData(data: [String]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
-        snapshot.appendSections([.keyword])
+        snapshot.appendSections([.autoCompleteKeyword])
         snapshot.appendItems(data)
         dataSource.apply(snapshot, animatingDifferences: false)
     }
@@ -160,6 +175,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         
         searchObserver.accept(text)
+        viewModel.action(input: .searchButtonTapped(text: text))
         navigationController?.dismiss(animated: false)
     }
     
@@ -171,6 +187,7 @@ extension SearchViewController: UITableViewDelegate {
         guard let text = dataSource.itemIdentifier(for: indexPath) else { return }
         self.dismiss(animated: true)
         searchObserver.accept(text)
+        viewModel.action(input: .searchButtonTapped(text: text))
         navigationController?.dismiss(animated: false)
     }
     
