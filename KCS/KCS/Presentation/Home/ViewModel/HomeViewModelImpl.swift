@@ -71,6 +71,8 @@ final class HomeViewModelImpl: HomeViewModel {
             checkLocationAuthorizationWhenCameraDidChange(status: status)
         case .search(let location, let keyword):
             search(location: location, keyword: keyword)
+        case .resetFilters:
+            resetFilters()
         }
     }
     
@@ -272,6 +274,10 @@ private extension HomeViewModelImpl {
                 }
             })
             .disposed(by: dependency.disposeBag)
+    }
+    
+    func resetFilters() {
+        dependency.activatedFilter = []
     }
     
 }

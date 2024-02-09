@@ -505,14 +505,18 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
         
         viewModel.searchStoresOutput
-            .bind { stores in
-                // TODO: 마커 및 필터 초기화, 카메라 및 줌 이동, 마커 설정
+            .bind { [weak self] stores in
+                self?.setCamera()
+                self?.resetFilters()
+                // TODO: 마커 초기화, 마커 설정
             }
             .disposed(by: disposeBag)
         
         viewModel.searchOneStoreOutput
-            .bind { store in
-                // TODO: 마커 및 필터 초기화, 카메라 및 줌 이동, 마커 설정, 요약 카드 present
+            .bind { [weak self] store in
+                self?.setCamera()
+                self?.resetFilters()
+                // TODO: 마커 초기화, 마커 설정, 요약 카드 present
             }
             .disposed(by: disposeBag)
     }
@@ -710,6 +714,21 @@ private extension HomeViewController {
         UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
             self.view.layoutIfNeeded()
         }
+    }
+    
+    func setCamera() {
+        mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
+        let cameraUpdate = NMFCameraUpdate(
+            fit: NMGLatLngBounds(latLngs: markers.map({ $0.position }))
+        )
+        mapView.mapView.moveCamera(cameraUpdate)
+    }
+    
+    func resetFilters() {
+        safeFilterButton.isSelected = false
+        exemplaryFilterButton.isSelected = false
+        goodPriceFilterButton.isSelected = false
+        viewModel.action(input: .resetFilters)
     }
     
 }

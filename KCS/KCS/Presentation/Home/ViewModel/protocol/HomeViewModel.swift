@@ -39,6 +39,7 @@ enum HomeViewModelInputCase {
     case checkLocationAuthorization(status: CLAuthorizationStatus)
     case checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus)
     case search(location: Location, keyword: String)
+    case resetFilters
     
 }
 
