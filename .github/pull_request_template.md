@@ -1,11 +1,11 @@
 
 ## ⭐️ Issue Number
 
-#number
+- #number
 
 ## 🚩 Summary
 
-
+- 
 
 ## 🛠️ Technical Concerns
 
@@ -16,6 +16,11 @@ Content
 ### Concern 2
 
 Content
+
+## 🙂 To Reviwer
+
+- Review Point
+- Caution Point
 
 ## 📋 To Do
 

@@ -10,6 +10,20 @@ import Foundation
 struct OpenClosedContent {
     
     let openClosedType: OpenClosedType
-    let openingHour: String
+    let nextOpeningHour: String
+    
+}
+
+struct DetailOpeningHour {
+    
+    let weekDay: Day
+    let openingHour: OpeningHour
+    
+}
+
+struct OpeningHour {
+    
+    let openingHour: String?
+    let breakTime: String?
     
 }

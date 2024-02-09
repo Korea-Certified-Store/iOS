@@ -28,7 +28,7 @@ struct ImageRepositoryImpl: ImageRepository {
                         .response(completionHandler: { response in
                             switch response.result {
                             case .success(let result):
-                                if let resultData = result {
+                                if let resultData = result, String(data: resultData, encoding: .utf8) == nil {
                                     cache.setImageData(resultData as NSData, for: imageURL as NSURL)
                                     observer.onNext(resultData)
                                 } else {

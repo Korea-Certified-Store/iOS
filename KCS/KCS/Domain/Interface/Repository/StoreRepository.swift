@@ -10,13 +10,19 @@ import RxSwift
 protocol StoreRepository {
     
     func fetchRefreshStores(
-        requestLocation: RequestLocation
-    ) -> Observable<[Store]>
+        requestLocation: RequestLocation,
+        isEntire: Bool
+    ) -> Observable<FetchStores>
     
-    func fetchStores() -> [Store]
+    func fetchStores(count: Int) -> [Store]
     
     func getStoreInformation(
         tag: UInt
     ) throws -> Store
+    
+    func fetchSearchStores(
+        location: Location,
+        keyword: String
+    ) -> Observable<[Store]>
     
 }
