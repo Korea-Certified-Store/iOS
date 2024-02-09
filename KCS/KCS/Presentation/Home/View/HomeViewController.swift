@@ -51,8 +51,8 @@ final class HomeViewController: UIViewController {
         return stack
     }()
     
-    private lazy var searchView: SearchWordView = {
-        let view = SearchWordView()
+    private lazy var searchView: SearchBarView = {
+        let view = SearchBarView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.rx
             .tapGesture()

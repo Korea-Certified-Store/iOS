@@ -1,5 +1,5 @@
 //
-//  SearchWordView.swift
+//  SearchBarView.swift
 //  KCS
 //
 //  Created by 조성민 on 2/9/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SearchWordView: UIView {
+final class SearchBarView: UIView {
     
     private let searchingKeywordLabel: UILabel = {
         let label = UILabel()
@@ -38,7 +38,7 @@ final class SearchWordView: UIView {
     
 }
 
-private extension SearchWordView {
+private extension SearchBarView {
     
     func setup() {
         backgroundColor = .white
