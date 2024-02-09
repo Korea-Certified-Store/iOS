@@ -23,7 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             dependency: HomeDependency(),
             fetchRefreshStoresUseCase: FetchRefreshStoresUseCaseImpl(repository: repository),
             fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
-            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
+            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository),
+            fetchSearchStoresUseCase: FetchSearchStoresUseCaseImpl(repository: repository)
         )
         let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
         let listCellSelectedObserver = PublishRelay<Int>()
@@ -36,6 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 )
             )
         )
+        let searchObserver = PublishRelay<String>()
         let homeViewController = HomeViewController(
             viewModel: viewModel,
             storeInformationViewController: storeInformationViewController,
@@ -48,7 +50,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 listCellSelectedObserver: listCellSelectedObserver
             ),
             summaryViewHeightObserver: summaryViewHeightObserver,
-            listCellSelectedObserver: listCellSelectedObserver
+            listCellSelectedObserver: listCellSelectedObserver,
+            searchViewController: SearchViewController(
+                viewModel: SearchViewModelImpl(),
+                searchObserver: searchObserver
+            ),
+            searchObserver: searchObserver
         )
         
         var rootViewController: UIViewController

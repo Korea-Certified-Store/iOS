@@ -15,12 +15,14 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     var fetchRefreshStoresUseCase: FetchRefreshStoresUseCase { get }
     var fetchStoresUseCase: FetchStoresUseCase { get }
     var getStoreInformationUseCase: GetStoreInformationUseCase { get }
+    var fetchSearchStoresUseCase: FetchSearchStoresUseCase { get }
     
     init(
         dependency: HomeDependency,
         fetchRefreshStoresUseCase: FetchRefreshStoresUseCase,
         fetchStoresUseCase: FetchStoresUseCase,
-        getStoreInformationUseCase: GetStoreInformationUseCase
+        getStoreInformationUseCase: GetStoreInformationUseCase,
+        fetchSearchStoresUseCase: FetchSearchStoresUseCase
     )
     
 }
@@ -36,6 +38,7 @@ enum HomeViewModelInputCase {
     case setMarker(store: Store, certificationType: CertificationType)
     case checkLocationAuthorization(status: CLAuthorizationStatus)
     case checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus)
+    case search(location: Location, keyword: String)
     
 }
 
@@ -60,5 +63,7 @@ protocol HomeViewModelOutput {
     var fetchCountOutput: PublishRelay<FetchCountContent> { get }
     var noMoreStoresOutput: PublishRelay<Void> { get }
     var dimViewTapGestureEndedOutput: PublishRelay<Void> { get }
+    var searchStoresOutput: PublishRelay<[Store]> { get }
+    var searchOneStoreOutput: PublishRelay<Store> { get }
     
 }

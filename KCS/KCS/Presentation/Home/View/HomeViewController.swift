@@ -51,6 +51,22 @@ final class HomeViewController: UIViewController {
         return stack
     }()
     
+    private lazy var searchView: SearchBarView = {
+        let view = SearchBarView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.rx
+            .tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                searchViewController.setSearchKeyword(keyword: view.getSearchKeyword())
+                presentSearchViewController()
+            })
+            .disposed(by: disposeBag)
+        
+        return view
+    }()
+    
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -195,6 +211,8 @@ final class HomeViewController: UIViewController {
         equalTo: mapView.bottomAnchor, constant: -90
     )
     
+    private let searchViewController: SearchViewController
+    private let searchObserver: PublishRelay<String>
     private let disposeBag = DisposeBag()
     private var markers: [Marker] = []
     private let storeInformationViewController: StoreInformationViewController
@@ -209,13 +227,17 @@ final class HomeViewController: UIViewController {
         storeInformationViewController: StoreInformationViewController,
         storeListViewController: StoreListViewController,
         summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
-        listCellSelectedObserver: PublishRelay<Int>
+        listCellSelectedObserver: PublishRelay<Int>,
+        searchViewController: SearchViewController,
+        searchObserver: PublishRelay<String>
     ) {
         self.viewModel = viewModel
         self.storeInformationViewController = storeInformationViewController
         self.storeListViewController = storeListViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.listCellSelectedObserver = listCellSelectedObserver
+        self.searchViewController = searchViewController
+        self.searchObserver = searchObserver
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -245,6 +267,7 @@ private extension HomeViewController {
                 status: locationManager.authorizationStatus
             )
         )
+        navigationController?.isNavigationBarHidden = true
     }
     
     func bind() {
@@ -256,6 +279,7 @@ private extension HomeViewController {
         bindStoreInformationView()
         bindErrorAlert()
         bindListCellSelected()
+        bindSearch()
     }
     
     func bindFetchStores() {
@@ -468,6 +492,31 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindSearch() {
+        searchObserver
+            .bind { [weak self] keyword in
+                guard let center = self?.view.center else { return }
+                let centerPosition = Location(
+                    longitude: Double(center.x),
+                    latitude: Double(center.y)
+                )
+                self?.viewModel.action(input: .search(location: centerPosition, keyword: keyword))
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.searchStoresOutput
+            .bind { stores in
+                // TODO: 마커 및 필터 초기화, 카메라 및 줌 이동, 마커 설정
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.searchOneStoreOutput
+            .bind { store in
+                // TODO: 마커 및 필터 초기화, 카메라 및 줌 이동, 마커 설정, 요약 카드 present
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }
 
 private extension HomeViewController {
@@ -559,7 +608,15 @@ private extension HomeViewController {
         storeListViewController.scrollToPreviousCell(indexPath: IndexPath(row: row, section: 0))
         backStoreListButton.isHidden = false
     }
-        
+    
+    func presentSearchViewController() {
+        if let presentedViewController = presentedViewController {
+            let navigationController = UINavigationController(rootViewController: searchViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            presentedViewController.present(navigationController, animated: false)
+        }
+    }
+    
 }
 
 private extension HomeViewController {
@@ -568,6 +625,7 @@ private extension HomeViewController {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
+        mapView.addSubview(searchView)
         mapView.addSubview(compassView)
         mapView.addSubview(refreshButton)
         mapView.addSubview(moreStoreButton)
@@ -600,6 +658,13 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             filterButtonStackView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8)
+        ])
+        
+        NSLayoutConstraint.activate([
+            searchView.centerXAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.centerXAnchor),
+            searchView.topAnchor.constraint(equalTo: filterButtonStackView.bottomAnchor, constant: 10),
+            searchView.widthAnchor.constraint(equalToConstant: 150),
+            searchView.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         NSLayoutConstraint.activate([

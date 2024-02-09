@@ -12,6 +12,7 @@ enum StoreAPI {
     
     case getStores(location: RequestLocationDTO)
     case getImage(url: String)
+    case getSearchStores(searchDTO: SearchDTO)
     
 }
 
@@ -19,7 +20,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     
     var baseURL: String? {
         switch self {
-        case .getStores:
+        case .getStores, .getSearchStores:
             return getURL(type: .develop)
         case .getImage(let url):
             return url
@@ -28,21 +29,25 @@ extension StoreAPI: Router, URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .getStores, .getImage:
+        case .getStores:
+            return "/v2/storecertification/byLocation"
+        case .getImage:
             return ""
+        case .getSearchStores:
+            return "/v1/storecertification/byLocationAndKeyword"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .getStores, .getImage:
+        case .getStores, .getImage, .getSearchStores:
             return .get
         }
     }
     
     var headers: [String: String] {
         switch self {
-        case .getStores:
+        case .getStores, .getSearchStores:
             return [
                 "Content-Type": "application/json"
             ]
@@ -58,6 +63,8 @@ extension StoreAPI: Router, URLRequestConvertible {
                 return try location.asDictionary()
             case .getImage:
                 return [:]
+            case let .getSearchStores(searchDTO):
+                return try searchDTO.asDictionary()
             }
         } catch {
             return nil
@@ -68,7 +75,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     /// 바디에 담아서 보내야할 것이 있다면, JSONEncoding.default
     var encoding: ParameterEncoding? {
         switch self {
-        case .getStores:
+        case .getStores, .getSearchStores:
             return URLEncoding.default
         case .getImage:
             return nil

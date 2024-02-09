@@ -13,6 +13,18 @@ final class SearchViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
+    private lazy var backButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: SystemImage.back, style: .plain, target: nil, action: nil)
+        button.tintColor = .primary3
+        button.rx.tap
+            .bind { [weak self] _ in
+                self?.navigationController?.dismiss(animated: false)
+            }
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색어를 입력하세요"
@@ -90,7 +102,7 @@ final class SearchViewController: UIViewController {
         searchController.searchBar.becomeFirstResponder()
     }
     
-    func setSearchKeyword(keyword: String) {
+    func setSearchKeyword(keyword: String?) {
         searchController.searchBar.searchTextField.text = keyword
     }
 
@@ -105,6 +117,7 @@ private extension SearchViewController {
     
     func addUIComponents() {
         view.addSubview(searchTableView)
+        navigationItem.setLeftBarButton(backButton, animated: true)
     }
     
     func configureConstraints() {
@@ -145,7 +158,9 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
+        
         searchObserver.accept(text)
+        navigationController?.dismiss(animated: false)
     }
     
 }
@@ -154,7 +169,9 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let text = dataSource.itemIdentifier(for: indexPath) else { return }
+        self.dismiss(animated: true)
         searchObserver.accept(text)
+        navigationController?.dismiss(animated: false)
     }
     
 }

@@ -15,6 +15,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let fetchRefreshStoresUseCase: FetchRefreshStoresUseCase
     let fetchStoresUseCase: FetchStoresUseCase
     let getStoreInformationUseCase: GetStoreInformationUseCase
+    let fetchSearchStoresUseCase: FetchSearchStoresUseCase
     
     let getStoreInformationOutput = PublishRelay<Store>()
     let refreshDoneOutput = PublishRelay<Bool>()
@@ -29,6 +30,8 @@ final class HomeViewModelImpl: HomeViewModel {
     let fetchCountOutput = PublishRelay<FetchCountContent>()
     let noMoreStoresOutput = PublishRelay<Void>()
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
+    let searchStoresOutput = PublishRelay<[Store]>()
+    let searchOneStoreOutput = PublishRelay<Store>()
     
     var dependency: HomeDependency
     
@@ -36,12 +39,14 @@ final class HomeViewModelImpl: HomeViewModel {
         dependency: HomeDependency,
         fetchRefreshStoresUseCase: FetchRefreshStoresUseCase,
         fetchStoresUseCase: FetchStoresUseCase,
-        getStoreInformationUseCase: GetStoreInformationUseCase
+        getStoreInformationUseCase: GetStoreInformationUseCase,
+        fetchSearchStoresUseCase: FetchSearchStoresUseCase
     ) {
         self.dependency = dependency
         self.fetchRefreshStoresUseCase = fetchRefreshStoresUseCase
         self.fetchStoresUseCase = fetchStoresUseCase
         self.getStoreInformationUseCase = getStoreInformationUseCase
+        self.fetchSearchStoresUseCase = fetchSearchStoresUseCase
     }
     
     func action(input: HomeViewModelInputCase) {
@@ -64,6 +69,8 @@ final class HomeViewModelImpl: HomeViewModel {
             checkLocationAuthorization(status: status)
         case .checkLocationAuthorizationWhenCameraDidChange(let status):
             checkLocationAuthorizationWhenCameraDidChange(status: status)
+        case .search(let location, let keyword):
+            search(location: location, keyword: keyword)
         }
     }
     
@@ -249,6 +256,22 @@ private extension HomeViewModelImpl {
         default:
             break
         }
+    }
+    
+    func search(location: Location, keyword: String) {
+        fetchSearchStoresUseCase.execute(location: location, keyword: keyword)
+            .subscribe(onNext: { [weak self] stores in
+                guard let self = self else { return }
+                dependency.resetFetchCount()
+                dependency.maxFetchCount = 1
+                if stores.count == 1 {
+                    guard let oneStore = stores.first else { return }
+                    searchOneStoreOutput.accept(oneStore)
+                } else {
+                    searchStoresOutput.accept(stores)
+                }
+            })
+            .disposed(by: dependency.disposeBag)
     }
     
 }
