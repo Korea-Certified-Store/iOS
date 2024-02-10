@@ -55,6 +55,7 @@ final class HomeViewController: UIViewController {
         let view = SearchBarView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.searchTextField.delegate = self
+        
         view.xmarkImageView.rx
             .tapGesture()
             .when(.ended)
@@ -62,6 +63,7 @@ final class HomeViewController: UIViewController {
                 // TODO: 검색 초기화 처리
             })
             .disposed(by: disposeBag)
+        
         view.searchImageView.rx
             .tapGesture()
             .when(.ended)
@@ -507,6 +509,7 @@ private extension HomeViewController {
                     latitude: Double(center.y)
                 )
                 self?.viewModel.action(input: .search(location: centerPosition, keyword: keyword))
+                self?.searchBarView.searchTextField.text = keyword
             }
             .disposed(by: disposeBag)
         
@@ -518,13 +521,15 @@ private extension HomeViewController {
                 setSearchStoresMarker(stores: stores)
                 
                 mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
-                let cameraUpdate = NMFCameraUpdate(
-                    fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
-                    padding: 30
-                )
-                cameraUpdate.animation = .easeIn
-                cameraUpdate.animationDuration = 0.5
-                mapView.mapView.moveCamera(cameraUpdate)
+                if !stores.isEmpty {
+                    let cameraUpdate = NMFCameraUpdate(
+                        fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
+                        padding: 30
+                    )
+                    cameraUpdate.animation = .easeIn
+                    cameraUpdate.animationDuration = 0.5
+                    mapView.mapView.moveCamera(cameraUpdate)
+                }
                 mapView.mapView.positionMode = .normal
             }
             .disposed(by: disposeBag)

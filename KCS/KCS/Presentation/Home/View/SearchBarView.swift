@@ -17,6 +17,20 @@ final class SearchBarView: UIView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "가게명, 업종, 주소 검색"
         textField.returnKeyType = .search
+        textField.enablesReturnKeyAutomatically = true
+        
+        Observable.merge(
+            textField.rx.observe(String.self, "text"),
+            textField.rx.text.asObservable()
+        )
+        .bind { [weak self]_ in
+            if textField.text?.isEmpty == true {
+                self?.switchToSearch()
+            } else {
+                self?.switchToXmark()
+            }
+        }
+        .disposed(by: disposeBag)
         
         return textField
     }()
@@ -59,20 +73,8 @@ private extension SearchBarView {
     func setup() {
         backgroundColor = .white
         
-        searchTextField.rx.text
-            .bind { [weak self] text in
-                guard let self = self else { return }
-                if let text = text, !text.isEmpty {
-                    switchToXmark()
-                } else {
-                    switchToSearch()
-                }
-            }
-            .disposed(by: disposeBag)
-        
         setLayerCorner(cornerRadius: 12)
         setLayerShadow(shadowOffset: CGSize(width: 0, height: 3))
-        switchToSearch()
     }
     
     func addUIComponents() {
@@ -104,8 +106,8 @@ private extension SearchBarView {
     }
     
     func switchToXmark() {
-            searchImageView.isHidden = true
-            xmarkImageView.isHidden = false
+        searchImageView.isHidden = true
+        xmarkImageView.isHidden = false
     }
     
     func switchToSearch() {
