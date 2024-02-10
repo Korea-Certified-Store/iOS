@@ -24,7 +24,7 @@ final class SearchBarView: UIView {
     var searchImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = SystemImage.search
+        imageView.image = .searchIcon
         imageView.tintColor = .grayLabel
         
         return imageView
@@ -33,7 +33,7 @@ final class SearchBarView: UIView {
     var xmarkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = SystemImage.xmark
+        imageView.image = .xMarkIcon
         imageView.tintColor = .grayLabel
         imageView.isHidden = true
         
