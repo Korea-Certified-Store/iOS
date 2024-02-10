@@ -144,10 +144,9 @@ private extension SearchViewController {
         
         viewModel.recentSearchKeywordsOutput
             .bind { [weak self] keywords in
-                let keywordArray = keywords.map { $0.searchKeyword }
                 var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
                 snapshot.appendSections([.recentSearchKeyword])
-                snapshot.appendItems(keywordArray)
+                snapshot.appendItems(keywords)
                 self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
             .disposed(by: disposeBag)

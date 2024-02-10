@@ -17,7 +17,7 @@ final class SearchViewModelImpl: SearchViewModel {
     var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase
     
     let generateDataOutput = PublishRelay<[String]>()
-    let recentSearchKeywordsOutput = PublishRelay<[RecentSearchKeyword]>()
+    let recentSearchKeywordsOutput = PublishRelay<[String]>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
@@ -64,9 +64,7 @@ private extension SearchViewModelImpl {
     
     func searchButtonTapped(text: String) {
         saveRecentSearchKeywordUseCase.execute(
-            recentSearchKeyword: RecentSearchKeyword(
-                searchKeyword: text
-            )
+            recentSearchKeyword: text
         )
     }
     

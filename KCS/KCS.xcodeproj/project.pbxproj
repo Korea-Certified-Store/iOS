@@ -110,8 +110,6 @@
 		A83367C52B7271B900E0A844 /* FourthOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367C42B7271B900E0A844 /* FourthOnboardingView.swift */; };
 		A83367C72B72725700E0A844 /* FifthOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367C62B72725700E0A844 /* FifthOnboardingView.swift */; };
 		A86D92112B760B75003B9FEE /* SearchKeywordRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86D92102B760B74003B9FEE /* SearchKeywordRepositoryImpl.swift */; };
-		A86D92142B760E3F003B9FEE /*  RecentSearchKeywordsUDS+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86D92132B760E3F003B9FEE /*  RecentSearchKeywordsUDS+Mapping.swift */; };
-		A86D92162B760F4A003B9FEE /* RecentSearchKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86D92152B760F4A003B9FEE /* RecentSearchKeyword.swift */; };
 		A86D92192B761EC7003B9FEE /* SearchKeywordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */; };
 		A8722EFE2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8722EFD2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift */; };
 		A8722F002B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8722EFF2B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift */; };
@@ -262,8 +260,6 @@
 		A83367C42B7271B900E0A844 /* FourthOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthOnboardingView.swift; sourceTree = "<group>"; };
 		A83367C62B72725700E0A844 /* FifthOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FifthOnboardingView.swift; sourceTree = "<group>"; };
 		A86D92102B760B74003B9FEE /* SearchKeywordRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeywordRepositoryImpl.swift; sourceTree = "<group>"; };
-		A86D92132B760E3F003B9FEE /*  RecentSearchKeywordsUDS+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " RecentSearchKeywordsUDS+Mapping.swift"; sourceTree = "<group>"; };
-		A86D92152B760F4A003B9FEE /* RecentSearchKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchKeyword.swift; sourceTree = "<group>"; };
 		A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeywordsRepository.swift; sourceTree = "<group>"; };
 		A8722EFD2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRecentSearchKeywordUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8722EFF2B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRecentSearchKeywordUseCase.swift; sourceTree = "<group>"; };
@@ -638,7 +634,6 @@
 				59B8864F2B6AB9F7005750EF /* StoreTableViewCellContents.swift */,
 				59B886632B6EC816005750EF /* SummaryViewHeightCase.swift */,
 				A83367B72B6FA0E700E0A844 /* FetchStores.swift */,
-				A86D92152B760F4A003B9FEE /* RecentSearchKeyword.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -767,19 +762,10 @@
 		A86D920E2B760637003B9FEE /* PersistentStorage */ = {
 			isa = PBXGroup;
 			children = (
-				A86D92172B761E7F003B9FEE /* RecentSearchKeywordsStorage */,
 				5977BE9D2B59ACE800725C90 /* ImageCache.swift */,
 				A83367BC2B70A52900E0A844 /* Storage.swift */,
 			);
 			path = PersistentStorage;
-			sourceTree = "<group>";
-		};
-		A86D92172B761E7F003B9FEE /* RecentSearchKeywordsStorage */ = {
-			isa = PBXGroup;
-			children = (
-				A86D92132B760E3F003B9FEE /*  RecentSearchKeywordsUDS+Mapping.swift */,
-			);
-			path = RecentSearchKeywordsStorage;
 			sourceTree = "<group>";
 		};
 		A890870B2B4EF8F900767225 /* Extension */ = {
@@ -1165,7 +1151,6 @@
 				5977BE5C2B5535A100725C90 /* FetchRefreshStoresUseCaseImpl.swift in Sources */,
 				A821A3742B74B84700089B8F /* SplashViewController.swift in Sources */,
 				59503A602B75970E0006CF35 /* FetchSearchStoresUseCaseImpl.swift in Sources */,
-				A86D92162B760F4A003B9FEE /* RecentSearchKeyword.swift in Sources */,
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A83367C32B72714C00E0A844 /* ThirdOnboardingView.swift in Sources */,
 				59503A562B756CCD0006CF35 /* SearchBarView.swift in Sources */,
@@ -1205,7 +1190,6 @@
 				A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */,
 				591A887F2B384E600059E40F /* SceneDelegate.swift in Sources */,
 				A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */,
-				A86D92142B760E3F003B9FEE /*  RecentSearchKeywordsUDS+Mapping.swift in Sources */,
 				A8ACB7DD2B58E3DE00540BD1 /* OpenClosedType.swift in Sources */,
 				59503A5C2B75927F0006CF35 /* SearchStoreResponse.swift in Sources */,
 				59B886622B6E8484005750EF /* UISheetPresentationController+Detent.swift in Sources */,

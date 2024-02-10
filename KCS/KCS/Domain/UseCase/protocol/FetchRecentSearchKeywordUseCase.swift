@@ -13,6 +13,6 @@ protocol FetchRecentSearchKeywordUseCase {
     
     init(repository: SearchKeywordsRepository)
     
-    func execute() -> Observable<[RecentSearchKeyword]>
+    func execute() -> Observable<[String]>
     
 }

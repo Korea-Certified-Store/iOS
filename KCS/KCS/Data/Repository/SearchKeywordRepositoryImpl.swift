@@ -17,7 +17,7 @@ final class SearchKeywordRepositoryImpl: SearchKeywordsRepository {
         self.userDefaults = userDefaults
     }
     
-    func fetchRecentSearchKeywords() -> Observable<[RecentSearchKeyword]> {
+    func fetchRecentSearchKeywords() -> Observable<[String]> {
         return Observable.create { [weak self] observer -> Disposable in
             if let keywords = self?.fetchKeywords() {
                 observer.onNext(keywords)
@@ -26,7 +26,7 @@ final class SearchKeywordRepositoryImpl: SearchKeywordsRepository {
         }
     }
     
-    func saveRecentSearchKeywords(recentSearchKeyword: RecentSearchKeyword) {
+    func saveRecentSearchKeywords(recentSearchKeyword: String) {
         var keywords = fetchKeywords()
         if let index = keywords.firstIndex(of: recentSearchKeyword) {
             keywords.remove(at: index)
@@ -49,21 +49,15 @@ final class SearchKeywordRepositoryImpl: SearchKeywordsRepository {
 
 private extension SearchKeywordRepositoryImpl {
     
-    func fetchKeywords() -> [RecentSearchKeyword] {
-        if let recentSearchKeywordData = userDefaults.object(forKey: recentSearchKeywordsKey) as? Data {
-            if let recentSearchKeyword = try? JSONDecoder().decode(RecentSearchKeywordsListUDS.self, from: recentSearchKeywordData) {
-                return recentSearchKeyword.searchKeywordsList.map { $0.toEntity() }
-            }
+    func fetchKeywords() -> [String] {
+        if let recentSearchKeywordArray = userDefaults.array(forKey: recentSearchKeywordsKey) as? [String] {
+            return recentSearchKeywordArray
         }
         return []
     }
     
-    func persist(keywords: [RecentSearchKeyword]) {
-        let encoder = JSONEncoder()
-        let recentSearchKeywordsListUDS = keywords.map(RecentSearchKeywordsUDS.init)
-        if let encoded = try? encoder.encode(RecentSearchKeywordsListUDS(searchKeywordsList: recentSearchKeywordsListUDS)) {
-            userDefaults.set(encoded, forKey: recentSearchKeywordsKey)
-        }
+    func persist(keywords: [String]) {
+        userDefaults.set(keywords, forKey: recentSearchKeywordsKey)
     }
     
 }

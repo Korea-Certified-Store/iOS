@@ -9,8 +9,8 @@ import RxSwift
 
 protocol SearchKeywordsRepository {
     
-    func fetchRecentSearchKeywords() -> Observable<[RecentSearchKeyword]>
-    func saveRecentSearchKeywords(recentSearchKeyword: RecentSearchKeyword)
+    func fetchRecentSearchKeywords() -> Observable<[String]>
+    func saveRecentSearchKeywords(recentSearchKeyword: String)
     func deleteRecentSearchKeywords(index: Int)
     
 }

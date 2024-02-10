@@ -33,6 +33,6 @@ enum SearchViewModelInputCase {
 protocol SearchViewModelOutput {
     
     var generateDataOutput: PublishRelay<[String]> { get }
-    var recentSearchKeywordsOutput: PublishRelay<[RecentSearchKeyword]> { get }
+    var recentSearchKeywordsOutput: PublishRelay<[String]> { get }
     
 }

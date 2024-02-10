@@ -11,7 +11,7 @@ struct SaveRecentSearchKeywordUseCaseImpl: SaveRecentSearchKeywordUseCase {
     
     var repository: SearchKeywordsRepository
     
-    func execute(recentSearchKeyword: RecentSearchKeyword) {
+    func execute(recentSearchKeyword: String) {
         return repository.saveRecentSearchKeywords(recentSearchKeyword: recentSearchKeyword)
     }
     

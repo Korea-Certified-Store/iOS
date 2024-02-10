@@ -13,6 +13,6 @@ protocol SaveRecentSearchKeywordUseCase {
     
     init(repository: SearchKeywordsRepository)
     
-    func execute(recentSearchKeyword: RecentSearchKeyword)
+    func execute(recentSearchKeyword: String)
     
 }

@@ -11,7 +11,7 @@ struct FetchRecentSearchKeywordUseCaseImpl: FetchRecentSearchKeywordUseCase {
     
     var repository: SearchKeywordsRepository
     
-    func execute() -> Observable<[RecentSearchKeyword]> {
+    func execute() -> Observable<[String]> {
         return repository.fetchRecentSearchKeywords()
     }
     
