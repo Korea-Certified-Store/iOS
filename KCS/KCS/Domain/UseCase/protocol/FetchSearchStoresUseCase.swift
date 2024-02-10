@@ -9,9 +9,9 @@ import RxSwift
 
 protocol FetchSearchStoresUseCase {
     
-    var repository: StoreRepository { get }
+    var repository: FetchSearchStoresRepository { get }
     
-    init(repository: StoreRepository)
+    init(repository: FetchSearchStoresRepository)
     
     func execute(
         location: Location,

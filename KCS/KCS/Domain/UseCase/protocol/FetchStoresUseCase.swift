@@ -2,17 +2,20 @@
 //  FetchStoresUseCase.swift
 //  KCS
 //
-//  Created by 조성민 on 1/18/24.
+//  Created by 조성민 on 1/15/24.
 //
 
-import Foundation
+import RxSwift
 
 protocol FetchStoresUseCase {
     
-    var repository: StoreRepository { get }
+    var repository: FetchStoresRepository { get }
     
-    init(repository: StoreRepository)
+    init(repository: FetchStoresRepository)
     
-    func execute(fetchCount: Int) -> [Store]
+    func execute(
+        requestLocation: RequestLocation,
+        isEntire: Bool
+    ) -> Observable<FetchStores>
 
 }

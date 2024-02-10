@@ -9,7 +9,7 @@ import RxSwift
 
 struct FetchSearchStoresUseCaseImpl: FetchSearchStoresUseCase {
     
-    var repository: StoreRepository
+    var repository: FetchSearchStoresRepository
     
     func execute(location: Location, keyword: String) -> Observable<[Store]> {
         return repository.fetchSearchStores(location: location, keyword: keyword)

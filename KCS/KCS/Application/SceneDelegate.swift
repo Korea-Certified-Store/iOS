@@ -18,13 +18,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let repository = StoreRepositoryImpl()
+        let storeStorage = StoreStorage()
         let viewModel  = HomeViewModelImpl(
             dependency: HomeDependency(),
-            fetchRefreshStoresUseCase: FetchRefreshStoresUseCaseImpl(repository: repository),
-            fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
-            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository),
-            fetchSearchStoresUseCase: FetchSearchStoresUseCaseImpl(repository: repository)
+            fetchStoresUseCase: FetchStoresUseCaseImpl(
+                repository: FetchStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            ),
+            getStoresUseCase: GetStoresUseCaseImpl(
+                repository: GetStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            ),
+            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
+                repository: GetStoreInformationRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            ),
+            fetchSearchStoresUseCase: FetchSearchStoresUseCaseImpl(
+                repository: FetchSearchStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            )
         )
         let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
         let listCellSelectedObserver = PublishRelay<Int>()
@@ -73,7 +89,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         var rootViewController: UIViewController
         
-        if Storage.isOnboarded() {
+        if OnboardStorage.isOnboarded() {
             rootViewController = OnboardingViewController(homeViewController: homeViewController)
         } else {
             rootViewController = homeViewController

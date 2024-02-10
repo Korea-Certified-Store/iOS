@@ -12,15 +12,15 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     var dependency: HomeDependency { get }
     
-    var fetchRefreshStoresUseCase: FetchRefreshStoresUseCase { get }
     var fetchStoresUseCase: FetchStoresUseCase { get }
+    var getStoresUseCase: GetStoresUseCase { get }
     var getStoreInformationUseCase: GetStoreInformationUseCase { get }
     var fetchSearchStoresUseCase: FetchSearchStoresUseCase { get }
     
     init(
         dependency: HomeDependency,
-        fetchRefreshStoresUseCase: FetchRefreshStoresUseCase,
         fetchStoresUseCase: FetchStoresUseCase,
+        getStoresUseCase: GetStoresUseCase,
         getStoreInformationUseCase: GetStoreInformationUseCase,
         fetchSearchStoresUseCase: FetchSearchStoresUseCase
     )

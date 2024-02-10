@@ -9,9 +9,9 @@ import Foundation
 
 protocol GetStoreInformationUseCase {
     
-    var repository: StoreRepository { get }
+    var repository: GetStoreInformationRepository { get }
     
-    init(repository: StoreRepository)
+    init(repository: GetStoreInformationRepository)
     
     func execute(tag: UInt) throws -> Store
     

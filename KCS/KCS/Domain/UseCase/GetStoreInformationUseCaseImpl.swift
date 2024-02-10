@@ -9,7 +9,7 @@ import Foundation
 
 struct GetStoreInformationUseCaseImpl: GetStoreInformationUseCase {
     
-    let repository: StoreRepository
+    let repository: GetStoreInformationRepository
     
     func execute(tag: UInt) throws -> Store {
         return try repository.getStoreInformation(tag: tag)

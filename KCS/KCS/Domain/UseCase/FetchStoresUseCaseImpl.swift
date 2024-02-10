@@ -2,17 +2,20 @@
 //  FetchStoresUseCaseImpl.swift
 //  KCS
 //
-//  Created by 조성민 on 1/18/24.
+//  Created by 조성민 on 1/15/24.
 //
 
-import Foundation
+import RxSwift
 
 struct FetchStoresUseCaseImpl: FetchStoresUseCase {
     
-    let repository: StoreRepository
+    let repository: FetchStoresRepository
     
-    func execute(fetchCount: Int) -> [Store] {
-        return repository.fetchStores(count: fetchCount)
+    func execute(
+        requestLocation: RequestLocation,
+        isEntire: Bool
+    ) -> Observable<FetchStores> {
+        return repository.fetchStores(requestLocation: requestLocation, isEntire: isEntire)
     }
-
+    
 }
