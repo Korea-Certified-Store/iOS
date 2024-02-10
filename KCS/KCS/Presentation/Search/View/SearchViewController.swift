@@ -148,7 +148,7 @@ private extension SearchViewController {
                 var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
                 snapshot.appendSections([.recentSearchKeyword])
                 snapshot.appendItems(keywordArray)
-                self?.dataSource.apply(snapshot)
+                self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
             .disposed(by: disposeBag)
     }
