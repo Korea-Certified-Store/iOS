@@ -51,16 +51,22 @@ final class HomeViewController: UIViewController {
         return stack
     }()
     
-    private lazy var searchView: SearchBarView = {
+    private lazy var searchBarView: SearchBarView = {
         let view = SearchBarView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.rx
+        view.searchTextField.delegate = self
+        view.xmarkImageView.rx
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                searchViewController.setSearchKeyword(keyword: view.getSearchKeyword())
-                presentSearchViewController()
+                // TODO: 검색 초기화 처리
+            })
+            .disposed(by: disposeBag)
+        view.searchImageView.rx
+            .tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                self?.presentSearchViewController()
             })
             .disposed(by: disposeBag)
         
@@ -643,6 +649,7 @@ private extension HomeViewController {
     }
     
     func presentSearchViewController() {
+        searchViewController.setSearchKeyword(keyword: searchBarView.searchTextField.text)
         if let presentedViewController = presentedViewController {
             let navigationController = UINavigationController(rootViewController: searchViewController)
             navigationController.modalPresentationStyle = .fullScreen
@@ -658,7 +665,7 @@ private extension HomeViewController {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
-        mapView.addSubview(searchView)
+        mapView.addSubview(searchBarView)
         mapView.addSubview(compassView)
         mapView.addSubview(refreshButton)
         mapView.addSubview(moreStoreButton)
@@ -689,15 +696,15 @@ private extension HomeViewController {
         ])
         
         NSLayoutConstraint.activate([
-            filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            filterButtonStackView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8)
+            searchBarView.centerXAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.centerXAnchor),
+            searchBarView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8),
+            searchBarView.widthAnchor.constraint(equalToConstant: 361),
+            searchBarView.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         NSLayoutConstraint.activate([
-            searchView.centerXAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.centerXAnchor),
-            searchView.topAnchor.constraint(equalTo: filterButtonStackView.bottomAnchor, constant: 10),
-            searchView.widthAnchor.constraint(equalToConstant: 150),
-            searchView.heightAnchor.constraint(equalToConstant: 30)
+            filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            filterButtonStackView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 8)
         ])
         
         NSLayoutConstraint.activate([
@@ -848,6 +855,15 @@ extension HomeViewController: UISheetPresentationControllerDelegate {
                 break
             }
         }
+    }
+    
+}
+
+extension HomeViewController: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        presentSearchViewController()
+        return false
     }
     
 }
