@@ -1,5 +1,5 @@
 //
-//  FetchSearchStoresUseCase.swift
+//  GetSearchStoresUseCase.swift
 //  KCS
 //
 //  Created by 조성민 on 2/9/24.
@@ -7,11 +7,11 @@
 
 import RxSwift
 
-protocol FetchSearchStoresUseCase {
+protocol GetSearchStoresUseCase {
     
-    var repository: StoreRepository { get }
+    var repository: FetchSearchStoresRepository { get }
     
-    init(repository: StoreRepository)
+    init(repository: FetchSearchStoresRepository)
     
     func execute(
         location: Location,

@@ -1,5 +1,5 @@
 //
-//  StoreRepositoryImpl.swift
+//  FetchStoresRepositoryImpl.swift
 //  KCS
 //
 //  Created by 조성민 on 1/11/24.
@@ -8,15 +8,15 @@
 import RxSwift
 import Alamofire
 
-final class StoreRepositoryImpl: StoreRepository {
+final class FetchStoresRepositoryImpl: FetchStoresRepository {
     
-    private var stores: [Store]
+    let storeStorage: StoreStorage
     
-    init(stores: [Store] = []) {
-        self.stores = stores
+    init(storeStorage: StoreStorage) {
+        self.storeStorage = storeStorage
     }
     
-    func fetchRefreshStores(
+    func fetchStores(
         requestLocation: RequestLocation,
         isEntire: Bool
     ) -> Observable<FetchStores> {
@@ -36,7 +36,7 @@ final class StoreRepositoryImpl: StoreRepository {
                     switch response.result {
                     case .success(let result):
                         let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
-                        self?.stores = resultStores.flatMap({ $0 })
+                        self?.storeStorage.stores = resultStores.flatMap({ $0 })
                         if isEntire {
                             observer.onNext(FetchStores(
                                 fetchCountContent: FetchCountContent(),
@@ -53,58 +53,6 @@ final class StoreRepositoryImpl: StoreRepository {
                                 stores: []
                             ))
                         }
-                    case .failure(let error):
-                        if let underlyingError = error.underlyingError as? NSError {
-                            switch underlyingError.code {
-                            case URLError.notConnectedToInternet.rawValue:
-                                observer.onError(ErrorAlertMessage.internet)
-                            default:
-                                observer.onError(ErrorAlertMessage.server)
-                            }
-                        }
-                    }
-                } catch {
-                    observer.onError(error)
-                }
-            }
-            return Disposables.create()
-        }
-    }
-    
-    func fetchStores(count: Int) -> [Store] {
-        if stores.isEmpty { return [] }
-        var fetchResult: [Store] = []
-        var storeCount = count * 15
-        if storeCount > stores.count {
-            storeCount = stores.count
-        }
-        for index in 0..<storeCount {
-            fetchResult.append(stores[index])
-        }
-        return fetchResult
-    }
-    
-    func getStoreInformation(
-        tag: UInt
-    ) throws -> Store {
-        guard let store = stores.first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
-        return store
-    }
-    
-    func fetchSearchStores(location: Location, keyword: String) -> Observable<[Store]> {
-        return Observable<[Store]>.create { observer -> Disposable in
-            AF.request(StoreAPI.getSearchStores(searchDTO: SearchDTO(
-                currLong: location.longitude,
-                currLat: location.latitude,
-                searchKeyword: keyword
-            )))
-            .responseDecodable(of: SearchStoreResponse.self) { [weak self] response in
-                do {
-                    switch response.result {
-                    case .success(let result):
-                        let resultStores = try result.data.map { try $0.toEntity() }
-                        self?.stores = resultStores
-                        observer.onNext(resultStores)
                     case .failure(let error):
                         if let underlyingError = error.underlyingError as? NSError {
                             switch underlyingError.code {
