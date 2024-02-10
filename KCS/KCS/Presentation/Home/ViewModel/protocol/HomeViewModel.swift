@@ -55,7 +55,8 @@ protocol HomeViewModelOutput {
     var setMarkerOutput: PublishRelay<MarkerContents> { get }
     var locationAuthorizationStatusDeniedOutput: PublishRelay<Void> { get }
     var locationStatusNotDeterminedOutput: PublishRelay<Void> { get }
-    var locationStatusAuthorizedWhenInUse: PublishRelay<Void> { get }
+    var locationStatusAuthorizedWhenInUseOutput: PublishRelay<Void> { get }
+    var requestLocationAuthorizationOutput: PublishRelay<Void> { get }
     var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
     var fetchCountOutput: PublishRelay<FetchCountContent> { get }
     var noMoreStoresOutput: PublishRelay<Void> { get }
