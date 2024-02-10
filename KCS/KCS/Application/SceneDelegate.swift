@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let storeStorage = StoreStorage()
         let viewModel  = HomeViewModelImpl(
             dependency: HomeDependency(),
-            fetchStoresUseCase: FetchStoresUseCaseImpl(
+            getStoresUseCase: GetStoresUseCaseImpl(
                 repository: FetchStoresRepositoryImpl(
                     storeStorage: storeStorage
                 )
@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     storeStorage: storeStorage
                 )
             ),
-            fetchSearchStoresUseCase: FetchSearchStoresUseCaseImpl(
+            getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
                 repository: FetchSearchStoresRepositoryImpl(
                     storeStorage: storeStorage
                 )

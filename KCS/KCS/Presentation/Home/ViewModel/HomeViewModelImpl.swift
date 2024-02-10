@@ -12,10 +12,10 @@ import NMapsMap
 
 final class HomeViewModelImpl: HomeViewModel {
     
-    var fetchStoresUseCase: FetchStoresUseCase
+    var getStoresUseCase: GetStoresUseCase
     var getRefreshStoresUseCase: GetRefreshStoresUseCase
     var getStoreInformationUseCase: GetStoreInformationUseCase
-    var fetchSearchStoresUseCase: FetchSearchStoresUseCase
+    var getSearchStoresUseCase: GetSearchStoresUseCase
     
     let getStoreInformationOutput = PublishRelay<Store>()
     let refreshDoneOutput = PublishRelay<Bool>()
@@ -37,16 +37,16 @@ final class HomeViewModelImpl: HomeViewModel {
     
     init(
         dependency: HomeDependency,
-        fetchStoresUseCase: FetchStoresUseCase,
+        getStoresUseCase: GetStoresUseCase,
         getRefreshStoresUseCase: GetRefreshStoresUseCase,
         getStoreInformationUseCase: GetStoreInformationUseCase,
-        fetchSearchStoresUseCase: FetchSearchStoresUseCase
+        getSearchStoresUseCase: GetSearchStoresUseCase
     ) {
         self.dependency = dependency
-        self.fetchStoresUseCase = fetchStoresUseCase
+        self.getStoresUseCase = getStoresUseCase
         self.getRefreshStoresUseCase = getRefreshStoresUseCase
         self.getStoreInformationUseCase = getStoreInformationUseCase
-        self.fetchSearchStoresUseCase = fetchSearchStoresUseCase
+        self.getSearchStoresUseCase = getSearchStoresUseCase
     }
     
     func action(input: HomeViewModelInputCase) {
@@ -84,7 +84,7 @@ private extension HomeViewModelImpl {
         requestLocation: RequestLocation,
         isEntire: Bool
     ) {
-        fetchStoresUseCase.execute(
+        getStoresUseCase.execute(
             requestLocation: requestLocation,
             isEntire: isEntire
         )
@@ -261,7 +261,7 @@ private extension HomeViewModelImpl {
     }
     
     func search(location: Location, keyword: String) {
-        fetchSearchStoresUseCase.execute(location: location, keyword: keyword)
+        getSearchStoresUseCase.execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
                 dependency.resetFetchCount()
