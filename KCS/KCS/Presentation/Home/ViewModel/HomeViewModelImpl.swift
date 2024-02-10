@@ -13,7 +13,7 @@ import NMapsMap
 final class HomeViewModelImpl: HomeViewModel {
     
     var fetchStoresUseCase: FetchStoresUseCase
-    var getStoresUseCase: GetStoresUseCase
+    var getRefreshStoresUseCase: GetRefreshStoresUseCase
     var getStoreInformationUseCase: GetStoreInformationUseCase
     var fetchSearchStoresUseCase: FetchSearchStoresUseCase
     
@@ -38,13 +38,13 @@ final class HomeViewModelImpl: HomeViewModel {
     init(
         dependency: HomeDependency,
         fetchStoresUseCase: FetchStoresUseCase,
-        getStoresUseCase: GetStoresUseCase,
+        getRefreshStoresUseCase: GetRefreshStoresUseCase,
         getStoreInformationUseCase: GetStoreInformationUseCase,
         fetchSearchStoresUseCase: FetchSearchStoresUseCase
     ) {
         self.dependency = dependency
         self.fetchStoresUseCase = fetchStoresUseCase
-        self.getStoresUseCase = getStoresUseCase
+        self.getRefreshStoresUseCase = getRefreshStoresUseCase
         self.getStoreInformationUseCase = getStoreInformationUseCase
         self.fetchSearchStoresUseCase = fetchSearchStoresUseCase
     }
@@ -114,7 +114,7 @@ private extension HomeViewModelImpl {
     func moreStoreButtonTapped() {
         if dependency.fetchCount < dependency.maxFetchCount {
             dependency.fetchCount += 1
-            applyFilters(stores: getStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+            applyFilters(stores: getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
             fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount, fetchCount: dependency.fetchCount))
         }
         checkLastFetch()
@@ -132,7 +132,7 @@ private extension HomeViewModelImpl {
         } else {
             dependency.activatedFilter.append(filter)
         }
-        applyFilters(stores: getStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+        applyFilters(stores: getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
     }
     
     func getActivatedTypes() -> [CertificationType] {

@@ -22,17 +22,7 @@ protocol GetStoresRepository {
     
     var storeStorage: StoreStorage { get }
     
-    func getStores(count: Int) -> [Store]
-    
-}
-
-protocol GetStoreInformationRepository {
-    
-    var storeStorage: StoreStorage { get }
-    
-    func getStoreInformation(
-        tag: UInt
-    ) throws -> Store
+    func getStores() -> [Store]
     
 }
 

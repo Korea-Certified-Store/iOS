@@ -33,8 +33,8 @@
 		5977BE682B553C8300725C90 /* HomeDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE672B553C8300725C90 /* HomeDependency.swift */; };
 		5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE732B57FA7A00725C90 /* FilteredStores.swift */; };
 		5977BE8D2B5966F900725C90 /* StoreRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE8C2B5966F900725C90 /* StoreRepositoryImplTests.swift */; };
-		5977BE942B59738800725C90 /* GetStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE932B59738800725C90 /* GetStoresUseCase.swift */; };
-		5977BE982B5999E000725C90 /* GetStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE972B5999E000725C90 /* GetStoresUseCaseImpl.swift */; };
+		5977BE942B59738800725C90 /* GetRefreshStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE932B59738800725C90 /* GetRefreshStoresUseCase.swift */; };
+		5977BE982B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE972B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift */; };
 		5977BE9A2B59AC3300725C90 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE992B59AC3300725C90 /* ImageRepository.swift */; };
 		5977BE9C2B59AC8D00725C90 /* ImageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */; };
 		5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE9D2B59ACE800725C90 /* ImageCache.swift */; };
@@ -136,7 +136,6 @@
 		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
 		A8E53C252B77DDF3003FCBA2 /* StoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */; };
 		A8E53C272B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */; };
-		A8E53C292B77F9ED003FCBA2 /* GetStoreInformationRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C282B77F9ED003FCBA2 /* GetStoreInformationRepositoryImpl.swift */; };
 		A8E53C2B2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */; };
 		AE60727C9A543E3D0F3A0279 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */; };
 		BBE1483137890D1D37D0E308 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3902FBE673069073F47D82 /* Pods_KCS.framework */; };
@@ -183,8 +182,8 @@
 		5977BE732B57FA7A00725C90 /* FilteredStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredStores.swift; sourceTree = "<group>"; };
 		5977BE8A2B5966F900725C90 /* KCSUnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCSUnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5977BE8C2B5966F900725C90 /* StoreRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepositoryImplTests.swift; sourceTree = "<group>"; };
-		5977BE932B59738800725C90 /* GetStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresUseCase.swift; sourceTree = "<group>"; };
-		5977BE972B5999E000725C90 /* GetStoresUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoresUseCaseImpl.swift; sourceTree = "<group>"; };
+		5977BE932B59738800725C90 /* GetRefreshStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRefreshStoresUseCase.swift; sourceTree = "<group>"; };
+		5977BE972B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetRefreshStoresUseCaseImpl.swift; sourceTree = "<group>"; };
 		5977BE992B59AC3300725C90 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryImpl.swift; sourceTree = "<group>"; };
 		5977BE9D2B59ACE800725C90 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
@@ -290,7 +289,6 @@
 		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
 		A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreStorage.swift; sourceTree = "<group>"; };
 		A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepositoryImpl.swift; sourceTree = "<group>"; };
-		A8E53C282B77F9ED003FCBA2 /* GetStoreInformationRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreInformationRepositoryImpl.swift; sourceTree = "<group>"; };
 		A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchStoresRepositoryImpl.swift; sourceTree = "<group>"; };
 		D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -389,7 +387,7 @@
 			isa = PBXGroup;
 			children = (
 				5977BE5D2B5535C700725C90 /* FetchStoresUseCase.swift */,
-				5977BE932B59738800725C90 /* GetStoresUseCase.swift */,
+				5977BE932B59738800725C90 /* GetRefreshStoresUseCase.swift */,
 				A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */,
 				A8ACB7E72B595A2100540BD1 /* GetOpenClosedUseCase.swift */,
 				59F478B42B59BE0B002FEF9E /* FetchImageUseCase.swift */,
@@ -408,7 +406,7 @@
 				5977BE592B55355D00725C90 /* protocol */,
 				A8ACB7EB2B59644100540BD1 /* Error */,
 				5977BE5B2B5535A100725C90 /* FetchStoresUseCaseImpl.swift */,
-				5977BE972B5999E000725C90 /* GetStoresUseCaseImpl.swift */,
+				5977BE972B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift */,
 				A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */,
 				A8ACB7E92B595A3E00540BD1 /* GetOpenClosedUseCaseImpl.swift */,
 				59F478B22B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift */,
@@ -807,7 +805,6 @@
 				A8ACB7D62B57BE4E00540BD1 /* Error */,
 				59C306B12B50001F00862625 /* FetchStoresRepositoryImpl.swift */,
 				A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */,
-				A8E53C282B77F9ED003FCBA2 /* GetStoreInformationRepositoryImpl.swift */,
 				A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */,
 				5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */,
 				A821A3752B74B9F900089B8F /* NetworkRepositoryImpl.swift */,
@@ -1168,7 +1165,6 @@
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A83367C32B72714C00E0A844 /* ThirdOnboardingView.swift in Sources */,
 				59503A562B756CCD0006CF35 /* SearchBarView.swift in Sources */,
-				A8E53C292B77F9ED003FCBA2 /* GetStoreInformationRepositoryImpl.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */,
 				A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */,
@@ -1190,7 +1186,7 @@
 				A86D92112B760B75003B9FEE /* SearchKeywordRepositoryImpl.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
 				A8722F062B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift in Sources */,
-				5977BE942B59738800725C90 /* GetStoresUseCase.swift in Sources */,
+				5977BE942B59738800725C90 /* GetRefreshStoresUseCase.swift in Sources */,
 				59B886502B6AB9F7005750EF /* StoreTableViewCellContents.swift in Sources */,
 				59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */,
 				596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */,
@@ -1202,7 +1198,7 @@
 				59C306C32B50114100862625 /* Day.swift in Sources */,
 				59C306AD2B4FFAC700862625 /* StoreDTO.swift in Sources */,
 				59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */,
-				5977BE982B5999E000725C90 /* GetStoresUseCaseImpl.swift in Sources */,
+				5977BE982B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift in Sources */,
 				A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */,
 				591A887F2B384E600059E40F /* SceneDelegate.swift in Sources */,
 				A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */,

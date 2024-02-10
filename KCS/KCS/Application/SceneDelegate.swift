@@ -26,13 +26,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     storeStorage: storeStorage
                 )
             ),
-            getStoresUseCase: GetStoresUseCaseImpl(
+            getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
                 repository: GetStoresRepositoryImpl(
                     storeStorage: storeStorage
                 )
             ),
             getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
-                repository: GetStoreInformationRepositoryImpl(
+                repository: GetStoresRepositoryImpl(
                     storeStorage: storeStorage
                 )
             ),

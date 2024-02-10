@@ -15,18 +15,8 @@ final class GetStoresRepositoryImpl: GetStoresRepository {
         self.storeStorage = storeStorage
     }
     
-    func getStores(count: Int) -> [Store] {
-        let stores = storeStorage.stores
-        if stores.isEmpty { return [] }
-        var fetchResult: [Store] = []
-        var storeCount = count * 15
-        if storeCount > stores.count {
-            storeCount = stores.count
-        }
-        for index in 0..<storeCount {
-            fetchResult.append(stores[index])
-        }
-        return fetchResult
+    func getStores() -> [Store] {
+        return storeStorage.stores
     }
     
 }

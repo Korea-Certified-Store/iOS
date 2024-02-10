@@ -1,5 +1,5 @@
 //
-//  GetStoresUseCase.swift
+//  GetRefreshStoresUseCase.swift
 //  KCS
 //
 //  Created by 조성민 on 1/18/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol GetStoresUseCase {
+protocol GetRefreshStoresUseCase {
     
     var repository: GetStoresRepository { get }
     
