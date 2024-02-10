@@ -62,6 +62,7 @@ private extension SearchViewModelImpl {
         }
     }
     
+    // TODO: Cell 선택시 UseCase 내부에서 최근 검색어에 있는지 확인 해야 한다. 
     func searchButtonTapped(text: String) {
         saveRecentSearchKeywordUseCase.execute(
             recentSearchKeyword: text
