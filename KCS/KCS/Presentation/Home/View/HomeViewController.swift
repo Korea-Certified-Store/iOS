@@ -61,6 +61,7 @@ final class HomeViewController: UIViewController {
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 // TODO: 검색 초기화 처리
+                view.searchTextField.text = ""
             })
             .disposed(by: disposeBag)
         
