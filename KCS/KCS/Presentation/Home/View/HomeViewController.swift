@@ -651,9 +651,7 @@ private extension HomeViewController {
     func presentSearchViewController() {
         searchViewController.setSearchKeyword(keyword: searchBarView.searchTextField.text)
         if let presentedViewController = presentedViewController {
-            let navigationController = UINavigationController(rootViewController: searchViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            presentedViewController.present(navigationController, animated: false)
+            presentedViewController.present(searchViewController, animated: false)
         }
     }
     
