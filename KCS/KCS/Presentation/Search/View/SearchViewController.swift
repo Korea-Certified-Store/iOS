@@ -13,31 +13,54 @@ final class SearchViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private lazy var backButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: SystemImage.back, style: .plain, target: nil, action: nil)
-        button.tintColor = .primary3
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        var config = UIButton.Configuration.plain()
+        config.image = .backButton
+        config.baseForegroundColor = .grayLabel
+        button.configuration = config
+        
         button.rx.tap
             .bind { [weak self] _ in
-                self?.navigationController?.dismiss(animated: false)
+                self?.dismissViewController()
             }
             .disposed(by: disposeBag)
-        
+
         return button
     }()
     
-    private lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "검색어를 입력하세요"
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.automaticallyShowsCancelButton = false
-        searchController.searchBar.delegate = self
+    private lazy var searchBarView: SearchBarView = {
+        let view = SearchBarView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.searchTextField.delegate = self
         
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        view.searchTextField.rx.text
+            .bind { [weak self] text in
+                self?.viewModel.action(input: .textChanged(text: text ?? ""))
+            }
+            .disposed(by: disposeBag)
         
-        return searchController
+        view.xmarkImageView.rx
+            .tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                view.searchTextField.text = ""
+            })
+            .disposed(by: disposeBag)
+        
+        view.searchImageView.rx
+            .tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                if let text = view.searchTextField.text {
+                    self?.searchObserver.accept(text)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        return view
     }()
     
     private lazy var searchTableView: UITableView = {
@@ -46,8 +69,7 @@ final class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
         tableView.backgroundColor = .white
-        // TODO: 디자인에 맞춰야 함
-        tableView.rowHeight = 50
+        tableView.rowHeight = 49
         
         return tableView
     }()
@@ -81,6 +103,7 @@ final class SearchViewController: UIViewController {
         self.searchObserver = searchObserver
         
         super.init(nibName: nil, bundle: nil)
+        setup()
     }
     
     required init?(coder: NSCoder) {
@@ -93,36 +116,55 @@ final class SearchViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         bind()
-        setup()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        searchController.searchBar.becomeFirstResponder()
+        searchBarView.searchTextField.becomeFirstResponder()
     }
     
     func setSearchKeyword(keyword: String?) {
-        searchController.searchBar.searchTextField.text = keyword
+        searchBarView.searchTextField.text = keyword
     }
-
+    
+    func dismissViewController() {
+        view.endEditing(true)
+        dismiss(animated: false)
+    }
+    
 }
 
 private extension SearchViewController {
     
     func setup() {
         view.backgroundColor = .white
-        searchController.isActive = true
+        modalPresentationStyle = .fullScreen
     }
     
     func addUIComponents() {
+        view.addSubview(backButton)
+        view.addSubview(searchBarView)
         view.addSubview(searchTableView)
-        navigationItem.setLeftBarButton(backButton, animated: true)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            searchTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            backButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            backButton.widthAnchor.constraint(equalToConstant: 10),
+            backButton.heightAnchor.constraint(equalToConstant: 16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            searchBarView.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
+            searchBarView.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 16),
+            searchBarView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            searchBarView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            searchTableView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 10),
             searchTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             searchTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             searchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -147,21 +189,6 @@ private extension SearchViewController {
         snapshot.appendItems(data)
         dataSource.apply(snapshot, animatingDifferences: false)
     }
-}
-
-extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        viewModel.action(input: .textChanged(text: text))
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text else { return }
-        
-        searchObserver.accept(text)
-        navigationController?.dismiss(animated: false)
-    }
     
 }
 
@@ -169,9 +196,22 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let text = dataSource.itemIdentifier(for: indexPath) else { return }
-        self.dismiss(animated: true)
+        dismissViewController()
         searchObserver.accept(text)
-        navigationController?.dismiss(animated: false)
+    }
+    
+}
+
+extension SearchViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = textField.text {
+            searchObserver.accept(text)
+            dismissViewController()
+            return true
+        } else {
+            return false
+        }
     }
     
 }
