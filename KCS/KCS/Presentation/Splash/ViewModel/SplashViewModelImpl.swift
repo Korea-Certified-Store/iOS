@@ -59,7 +59,6 @@ private extension SplashViewModelImpl {
             results.count > 0,
             let appStoreVersion = results[0]["version"] as? String
         else { return false }
-        print("\(version), \(appStoreVersion)")
         if !(version == appStoreVersion) { return true }
         return false
     }
