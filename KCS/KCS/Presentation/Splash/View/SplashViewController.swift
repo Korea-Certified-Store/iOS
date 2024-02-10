@@ -56,16 +56,42 @@ private extension SplashViewController {
     
     func bind() {
         viewModel.networkEnableOutput
+            .observe(on: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
             .bind { [weak self] in
                 guard let self = self else { return }
-                rootViewController.modalPresentationStyle = .fullScreen
-                present(rootViewController, animated: true)
+                viewModel.input(action: .checkUpdateInput)
             }
             .disposed(by: disposeBag)
         
         viewModel.networkDisableOutput
             .bind { [weak self] in
                 self?.presentNetworkAlert()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.needToUpdateOutput
+            .observe(on: MainScheduler())
+            .bind { [weak self] in
+                guard let self = self else { return }
+                let updateAlert = UIAlertController(title: "", message: "업데이트가 필요합니다", preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "업데이트", style: .default) { [weak self] _ in
+                    guard let url = URL(string: "https://apps.apple.com/app/6476478078") else {
+                        return
+                    }
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    self?.viewModel.input(action: .checkUpdateInput)
+                }
+                updateAlert.addAction(alertAction)
+                present(updateAlert, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noNeedToUpdateOutput
+            .observe(on: MainScheduler())
+            .bind { [weak self] in
+                guard let self = self else { return }
+                rootViewController.modalPresentationStyle = .fullScreen
+                present(rootViewController, animated: true)
             }
             .disposed(by: disposeBag)
     }
