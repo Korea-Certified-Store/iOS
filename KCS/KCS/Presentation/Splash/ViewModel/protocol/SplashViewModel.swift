@@ -22,6 +22,7 @@ protocol SplashViewModelInput {
 enum SplashViewModelInputCase {
     
     case checkNetworkInput
+    case checkUpdateInput
     
 }
 
@@ -29,5 +30,7 @@ protocol SplashViewModelOutput {
     
     var networkEnableOutput: PublishRelay<Void> { get }
     var networkDisableOutput: PublishRelay<Void> { get }
+    var needToUpdateOutput: PublishRelay<Void> { get }
+    var noNeedToUpdateOutput: PublishRelay<Void> { get }
     
 }

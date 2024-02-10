@@ -8,7 +8,7 @@
 import Foundation
 import SystemConfiguration
 
-class NetworkRepositoryImpl: NetworkRepository {
+final class NetworkRepositoryImpl: NetworkRepository {
     
     func checkDeviceNetworkStatus() -> Bool {
         var zeroAddress = sockaddr_in(
