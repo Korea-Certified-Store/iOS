@@ -56,7 +56,7 @@ final class HomeViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.searchTextField.delegate = self
         
-        view.xmarkImageView.rx
+        view.xMarkImageView.rx
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
@@ -700,9 +700,9 @@ private extension HomeViewController {
         ])
         
         NSLayoutConstraint.activate([
-            searchBarView.centerXAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.centerXAnchor),
             searchBarView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8),
-            searchBarView.widthAnchor.constraint(equalToConstant: 361),
+            searchBarView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            searchBarView.trailingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             searchBarView.heightAnchor.constraint(equalToConstant: 50)
         ])
         

@@ -27,7 +27,7 @@ final class SearchBarView: UIView {
             if textField.text?.isEmpty == true {
                 self?.switchToSearch()
             } else {
-                self?.switchToXmark()
+                self?.switchToXMark()
             }
         }
         .disposed(by: disposeBag)
@@ -44,7 +44,7 @@ final class SearchBarView: UIView {
         return imageView
     }()
     
-    var xmarkImageView: UIImageView = {
+    var xMarkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = .xMarkIcon
@@ -79,16 +79,16 @@ private extension SearchBarView {
     
     func addUIComponents() {
         addSubview(searchTextField)
-        addSubview(xmarkImageView)
+        addSubview(xMarkImageView)
         addSubview(searchImageView)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            xmarkImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            xmarkImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            xmarkImageView.widthAnchor.constraint(equalToConstant: 16),
-            xmarkImageView.heightAnchor.constraint(equalToConstant: 16)
+            xMarkImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            xMarkImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            xMarkImageView.widthAnchor.constraint(equalToConstant: 16),
+            xMarkImageView.heightAnchor.constraint(equalToConstant: 16)
         ])
         
         NSLayoutConstraint.activate([
@@ -101,18 +101,18 @@ private extension SearchBarView {
         NSLayoutConstraint.activate([
             searchTextField.centerYAnchor.constraint(equalTo: centerYAnchor),
             searchTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            searchTextField.trailingAnchor.constraint(equalTo: xmarkImageView.leadingAnchor, constant: -5)
+            searchTextField.trailingAnchor.constraint(equalTo: xMarkImageView.leadingAnchor, constant: -5)
         ])
     }
     
-    func switchToXmark() {
+    func switchToXMark() {
         searchImageView.isHidden = true
-        xmarkImageView.isHidden = false
+        xMarkImageView.isHidden = false
     }
     
     func switchToSearch() {
         searchImageView.isHidden = false
-        xmarkImageView.isHidden = true
+        xMarkImageView.isHidden = true
     }
     
 }

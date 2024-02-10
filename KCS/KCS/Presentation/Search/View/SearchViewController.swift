@@ -36,13 +36,16 @@ final class SearchViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.searchTextField.delegate = self
         
-        view.searchTextField.rx.text
-            .bind { [weak self] text in
-                self?.viewModel.action(input: .textChanged(text: text ?? ""))
-            }
-            .disposed(by: disposeBag)
+        Observable.merge(
+            view.searchTextField.rx.text.asObservable(),
+            view.searchTextField.rx.observe(String.self, "text")
+        )
+        .bind { [weak self] text in
+            self?.viewModel.action(input: .textChanged(text: text ?? ""))
+        }
+        .disposed(by: disposeBag)
         
-        view.xmarkImageView.rx
+        view.xMarkImageView.rx
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
