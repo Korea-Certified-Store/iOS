@@ -437,7 +437,7 @@ private extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.locationStatusAuthorizedWhenInUse
+        viewModel.locationStatusAuthorizedWhenInUseOutput
             .debounce(.milliseconds(10), scheduler: MainScheduler())
             .bind { [weak self] _ in
                 guard let self = self else { return }

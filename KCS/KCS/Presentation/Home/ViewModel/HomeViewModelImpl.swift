@@ -24,7 +24,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let setMarkerOutput = PublishRelay<MarkerContents>()
     let locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
-    let locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
+    let locationStatusAuthorizedWhenInUseOutput = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     let filteredStoresOutput = PublishRelay<[FilteredStores]>()
     let fetchCountOutput = PublishRelay<FetchCountContent>()
@@ -251,7 +251,7 @@ private extension HomeViewModelImpl {
         case .notDetermined:
             locationStatusNotDeterminedOutput.accept(())
         case .authorizedWhenInUse:
-            locationStatusAuthorizedWhenInUse.accept(())
+            locationStatusAuthorizedWhenInUseOutput.accept(())
         default:
             break
         }
