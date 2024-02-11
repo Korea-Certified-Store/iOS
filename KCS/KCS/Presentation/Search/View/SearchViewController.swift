@@ -66,6 +66,14 @@ final class SearchViewController: UIViewController {
         return view
     }()
     
+    enum RecentHistorySection {
+        case recentHistory
+    }
+    
+    enum AutoCompletionSection {
+        case autoCompletion
+    }
+    
     private lazy var recentHistoryTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,20 +88,46 @@ final class SearchViewController: UIViewController {
         return tableView
     }()
     
-    enum RecentHistorySection {
-        case recentHistory
-    }
-    
     private lazy var recentHistoryDataSource: UITableViewDiffableDataSource<RecentHistorySection, String> = {
         let dataSource = UITableViewDiffableDataSource<RecentHistorySection, String>(
             tableView: recentHistoryTableView,
-            cellProvider: { (tableView, indexPath, keyword) in
+            cellProvider: { (tableView, _, keyword) in
                 guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: RecentHistoryTableViewCell.identifier
                 ) as? RecentHistoryTableViewCell else { return RecentHistoryTableViewCell() }
                 cell.setUIContents(keyword: keyword)
                 cell.selectionStyle = .none
                 // TODO: cell 삭제 바인딩
+                
+                return cell
+            }
+        )
+        
+        return dataSource
+    }()
+    
+    private lazy var autoCompletionTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(AutoCompletionTableViewCell.self, forCellReuseIdentifier: AutoCompletionTableViewCell.identifier)
+        tableView.delegate = self
+        tableView.bounces = false
+        tableView.sectionHeaderTopPadding = 0
+        tableView.cellLayoutMarginsFollowReadableWidth = false
+        tableView.separatorInset = .zero
+        
+        return tableView
+    }()
+    
+    private lazy var autoCompletionDataSource: UITableViewDiffableDataSource<AutoCompletionSection, String> = {
+        let dataSource = UITableViewDiffableDataSource<AutoCompletionSection, String>(
+            tableView: autoCompletionTableView,
+            cellProvider: { (tableView, _, keyword) in
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: AutoCompletionTableViewCell.identifier
+                ) as? AutoCompletionTableViewCell else { return AutoCompletionTableViewCell() }
+                cell.setUIContents(keyword: keyword)
+                cell.selectionStyle = .none
                 
                 return cell
             }
@@ -162,6 +196,7 @@ private extension SearchViewController {
         view.addSubview(searchBarView)
         view.addSubview(divideView)
         view.addSubview(recentHistoryTableView)
+        view.addSubview(autoCompletionTableView)
     }
     
     func configureConstraints() {
@@ -192,18 +227,29 @@ private extension SearchViewController {
             recentHistoryTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             recentHistoryTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            autoCompletionTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
+            autoCompletionTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            autoCompletionTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            autoCompletionTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
     
     func bind() {
-        viewModel.autoCompleteKeywordsOutput
+        viewModel.recentSearchKeywordsOutput
             .bind { [weak self] keywords in
-//                self?.generateData(data: keywords, section: .autoCompleteKeyword)
+                self?.recentHistoryTableView.isHidden = false
+                self?.autoCompletionTableView.isHidden = true
+                self?.generateRecentHistoryData(data: keywords)
             }
             .disposed(by: disposeBag)
         
-        viewModel.recentSearchKeywordsOutput
+        viewModel.autoCompleteKeywordsOutput
             .bind { [weak self] keywords in
-                self?.generateRecentHistoryData(data: keywords)
+                self?.recentHistoryTableView.isHidden = true
+                self?.autoCompletionTableView.isHidden = false
+                self?.generateAutoCompletionData(data: keywords)
             }
             .disposed(by: disposeBag)
     }
@@ -217,6 +263,13 @@ private extension SearchViewController {
         snapshot.appendSections([.recentHistory])
         snapshot.appendItems(data)
         recentHistoryDataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    func generateAutoCompletionData(data: [String]) {
+        var snapshot = NSDiffableDataSourceSnapshot<AutoCompletionSection, String>()
+        snapshot.appendSections([.autoCompletion])
+        snapshot.appendItems(data)
+        autoCompletionDataSource.apply(snapshot, animatingDifferences: false)
     }
     
     func search(text: String) {
