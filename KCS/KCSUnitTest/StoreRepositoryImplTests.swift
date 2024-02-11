@@ -14,16 +14,16 @@ import Alamofire
 
 final class StoreRepositoryImplTests: XCTestCase {
 
-    var storeRepositoryImpl: StoreRepositoryImpl!
+    var storeRepositoryImpl: FetchStoresRepositoryImpl!
     var disposeBag: DisposeBag!
     
     override func setUp() {
-        storeRepositoryImpl = StoreRepositoryImpl()
+        storeRepositoryImpl = FetchStoresRepositoryImpl()
         disposeBag = DisposeBag()
     }
 
     func test_Store가_없는_경우_getStores_결과는_빈_배열을_반환한다() {
-        storeRepositoryImpl = StoreRepositoryImpl(stores: [])
+        storeRepositoryImpl = FetchStoresRepositoryImpl(stores: [])
         
         XCTAssertTrue(storeRepositoryImpl.fetchStores().isEmpty)
     }
@@ -71,7 +71,7 @@ final class StoreRepositoryImplTests: XCTestCase {
                 localPhotos: []
             )
         ]
-        storeRepositoryImpl = StoreRepositoryImpl(stores: stores)
+        storeRepositoryImpl = FetchStoresRepositoryImpl(stores: stores)
         
         XCTAssertEqual(storeRepositoryImpl.fetchStores(), stores)
     }
