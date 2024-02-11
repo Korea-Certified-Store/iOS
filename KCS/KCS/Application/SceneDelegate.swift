@@ -18,12 +18,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let repository = StoreRepositoryImpl()
+        let storeStorage = StoreStorage()
         let viewModel  = HomeViewModelImpl(
             dependency: HomeDependency(),
-            fetchRefreshStoresUseCase: FetchRefreshStoresUseCaseImpl(repository: repository),
-            fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
-            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
+            getStoresUseCase: GetStoresUseCaseImpl(
+                repository: FetchStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            ),
+            getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
+                repository: GetStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            ),
+            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
+                repository: GetStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            ),
+            getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
+                repository: FetchSearchStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            )
         )
         let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
         let listCellSelectedObserver = PublishRelay<Int>()
@@ -35,6 +52,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     repository: ImageRepositoryImpl(cache: ImageCache())
                 )
             )
+        )
+        let searchObserver = PublishRelay<String>()
+        let searchKeywordRepository = SearchKeywordRepositoryImpl(
+            userDefaults: UserDefaults()
         )
         let homeViewController = HomeViewController(
             viewModel: viewModel,
@@ -48,17 +69,41 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 listCellSelectedObserver: listCellSelectedObserver
             ),
             summaryViewHeightObserver: summaryViewHeightObserver,
-            listCellSelectedObserver: listCellSelectedObserver
+            listCellSelectedObserver: listCellSelectedObserver,
+            searchViewController: SearchViewController(
+                viewModel: SearchViewModelImpl(
+                    fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ), 
+                    deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    )
+                ),
+                searchObserver: searchObserver
+            ),
+            searchObserver: searchObserver
         )
         
         var rootViewController: UIViewController
         
-        if Storage.isOnboarded() {
+        if OnboardStorage.isOnboarded() {
             rootViewController = OnboardingViewController(homeViewController: homeViewController)
         } else {
             rootViewController = homeViewController
         }
-        window?.rootViewController = rootViewController
+        
+        let splashViewController = SplashViewController(
+            viewModel: SplashViewModelImpl(
+                checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
+                    repository: NetworkRepositoryImpl()
+                )
+            ), rootViewController: rootViewController
+        )
+        
+        window?.rootViewController = splashViewController
         window?.makeKeyAndVisible()
     }
     

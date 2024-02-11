@@ -51,6 +51,31 @@ final class HomeViewController: UIViewController {
         return stack
     }()
     
+    private lazy var searchBarView: SearchBarView = {
+        let view = SearchBarView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.searchTextField.delegate = self
+        
+        view.xMarkImageView.rx
+            .tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                // TODO: 검색 초기화 처리
+                view.searchTextField.text = ""
+            })
+            .disposed(by: disposeBag)
+        
+        view.searchImageView.rx
+            .tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                self?.presentSearchViewController()
+            })
+            .disposed(by: disposeBag)
+        
+        return view
+    }()
+    
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -142,6 +167,28 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    // TODO: BackButton configuration 수정 필요
+    private lazy var backStoreListButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .blue
+        button.setTitle("뒤로가기", for: .normal)
+        button.isHidden = true
+        button.rx.tap
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .bind { [weak self] in
+                self?.storeInformationViewDismiss()
+                if let sheet = self?.storeListViewController.sheetPresentationController {
+                    sheet.animateChanges {
+                        sheet.selectedDetentIdentifier = .largeStoreListViewDetentIdentifier
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
     private lazy var dimView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -173,6 +220,8 @@ final class HomeViewController: UIViewController {
         equalTo: mapView.bottomAnchor, constant: -90
     )
     
+    private let searchViewController: SearchViewController
+    private let searchObserver: PublishRelay<String>
     private let disposeBag = DisposeBag()
     private var markers: [Marker] = []
     private let storeInformationViewController: StoreInformationViewController
@@ -187,13 +236,17 @@ final class HomeViewController: UIViewController {
         storeInformationViewController: StoreInformationViewController,
         storeListViewController: StoreListViewController,
         summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
-        listCellSelectedObserver: PublishRelay<Int>
+        listCellSelectedObserver: PublishRelay<Int>,
+        searchViewController: SearchViewController,
+        searchObserver: PublishRelay<String>
     ) {
         self.viewModel = viewModel
         self.storeInformationViewController = storeInformationViewController
         self.storeListViewController = storeListViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.listCellSelectedObserver = listCellSelectedObserver
+        self.searchViewController = searchViewController
+        self.searchObserver = searchObserver
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -222,6 +275,7 @@ private extension HomeViewController {
                 status: locationManager.authorizationStatus
             )
         )
+        navigationController?.isNavigationBarHidden = true
     }
     
     func bind() {
@@ -233,6 +287,7 @@ private extension HomeViewController {
         bindStoreInformationView()
         bindErrorAlert()
         bindListCellSelected()
+        bindSearch()
     }
     
     func bindFetchStores() {
@@ -262,6 +317,7 @@ private extension HomeViewController {
     
     func bindApplyFilters() {
         viewModel.filteredStoresOutput
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
@@ -280,6 +336,9 @@ private extension HomeViewController {
                 }
                 storeInformationViewDismiss()
                 storeListViewController.updateList(stores: stores)
+                if stores.isEmpty {
+                    showToast(message: "가게가 없습니다.")
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -437,9 +496,73 @@ private extension HomeViewController {
                     )
                     targetMarker.select()
                     clickedMarker = targetMarker
+                    
+                    setBackStoreListButton(row: index)
                 } else {
                     presentErrorAlert(error: .client)
                 }
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindSearch() {
+        searchObserver
+            .bind { [weak self] keyword in
+                guard let center = self?.view.center else { return }
+                let centerPosition = Location(
+                    longitude: Double(center.x),
+                    latitude: Double(center.y)
+                )
+                self?.viewModel.action(input: .search(location: centerPosition, keyword: keyword))
+                self?.searchBarView.searchTextField.text = keyword
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.searchStoresOutput
+            .bind { [weak self] stores in
+                guard let self = self else { return }
+                resetFilters()
+                storeInformationViewDismiss()
+                setSearchStoresMarker(stores: stores)
+                
+                mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
+                if !stores.isEmpty {
+                    let cameraUpdate = NMFCameraUpdate(
+                        fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
+                        padding: 30
+                    )
+                    cameraUpdate.animation = .easeIn
+                    cameraUpdate.animationDuration = 0.5
+                    mapView.mapView.moveCamera(cameraUpdate)
+                }
+                mapView.mapView.positionMode = .normal
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.searchOneStoreOutput
+            .bind { [weak self] store in
+                guard let self = self else { return }
+                resetFilters()
+                setSearchStoresMarker(stores: [store])
+                
+                mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
+                
+                let cameraUpdate = NMFCameraUpdate(
+                    position: NMFCameraPosition(store.location.toMapLocation(), zoom: 15)
+                )
+                cameraUpdate.animation = .easeIn
+                cameraUpdate.animationDuration = 0.5
+                mapView.mapView.moveCamera(cameraUpdate)
+                mapView.mapView.positionMode = .normal
+                
+                guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
+                if let clickedMarker = clickedMarker {
+                    if clickedMarker == marker { return }
+                    storeInformationViewDismiss(changeMarker: true)
+                }
+                storeInformationViewController.setUIContents(store: store)
+                marker.select()
+                clickedMarker = marker
             }
             .disposed(by: disposeBag)
     }
@@ -453,7 +576,6 @@ private extension HomeViewController {
             
             if let clickedMarker = self?.clickedMarker {
                 if clickedMarker == marker { return true }
-                clickedMarker.deselect()
                 self?.storeInformationViewDismiss(changeMarker: true)
             }
             
@@ -468,6 +590,7 @@ private extension HomeViewController {
     }
     
     func storeInformationViewDismiss(changeMarker: Bool = false) {
+        backStoreListButton.isHidden = true
         clickedMarker?.deselect()
         clickedMarker = nil
         if !changeMarker {
@@ -529,7 +652,19 @@ private extension HomeViewController {
             )
         )
     }
-        
+    
+    func setBackStoreListButton(row: Int) {
+        storeListViewController.scrollToPreviousCell(indexPath: IndexPath(row: row, section: 0))
+        backStoreListButton.isHidden = false
+    }
+    
+    func presentSearchViewController() {
+        searchViewController.setSearchKeyword(keyword: searchBarView.searchTextField.text)
+        if let presentedViewController = presentedViewController {
+            presentedViewController.present(searchViewController, animated: false)
+        }
+    }
+    
 }
 
 private extension HomeViewController {
@@ -538,9 +673,11 @@ private extension HomeViewController {
         view.addSubview(mapView)
         mapView.addSubview(locationButton)
         mapView.addSubview(filterButtonStackView)
+        mapView.addSubview(searchBarView)
         mapView.addSubview(compassView)
         mapView.addSubview(refreshButton)
         mapView.addSubview(moreStoreButton)
+        mapView.addSubview(backStoreListButton)
         mapView.addSubview(dimView)
     }
     
@@ -567,8 +704,15 @@ private extension HomeViewController {
         ])
         
         NSLayoutConstraint.activate([
+            searchBarView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8),
+            searchBarView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            searchBarView.trailingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            searchBarView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
             filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            filterButtonStackView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8)
+            filterButtonStackView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 8)
         ])
         
         NSLayoutConstraint.activate([
@@ -588,6 +732,14 @@ private extension HomeViewController {
             moreStoreButton.widthAnchor.constraint(equalToConstant: 97),
             moreStoreButtonBottomConstraint
         ])
+        
+        // TODO: BackButton AutoLayout 수정 필요
+        NSLayoutConstraint.activate([
+            backStoreListButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
+            backStoreListButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -290),
+            backStoreListButton.widthAnchor.constraint(equalToConstant: 80),
+            backStoreListButton.heightAnchor.constraint(equalToConstant: 35)
+        ])
     }
     
     func changeButtonsConstraints(delay: Bool) {
@@ -605,6 +757,29 @@ private extension HomeViewController {
         }
         UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    func resetFilters() {
+        safeFilterButton.isSelected = false
+        exemplaryFilterButton.isSelected = false
+        goodPriceFilterButton.isSelected = false
+        viewModel.action(input: .resetFilters)
+    }
+    
+    func setSearchStoresMarker(stores: [Store]) {
+        markers.forEach({ $0.mapView = nil })
+        markers = []
+        stores.forEach { [weak self] store in
+            guard let certificationType = store.certificationTypes.last else { return }
+            self?.viewModel.action(input: .setMarker(
+                store: store,
+                certificationType: certificationType
+            ))
+        }
+        storeListViewController.updateList(stores: stores)
+        if stores.isEmpty {
+            showToast(message: "가게가 없습니다.")
         }
     }
     
@@ -688,6 +863,15 @@ extension HomeViewController: UISheetPresentationControllerDelegate {
                 break
             }
         }
+    }
+    
+}
+
+extension HomeViewController: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        presentSearchViewController()
+        return false
     }
     
 }

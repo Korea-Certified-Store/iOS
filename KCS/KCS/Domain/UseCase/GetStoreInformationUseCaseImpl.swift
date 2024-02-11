@@ -9,10 +9,12 @@ import Foundation
 
 struct GetStoreInformationUseCaseImpl: GetStoreInformationUseCase {
     
-    let repository: StoreRepository
+    let repository: GetStoresRepository
     
     func execute(tag: UInt) throws -> Store {
-        return try repository.getStoreInformation(tag: tag)
+        let stores = repository.getStores()
+        guard let store = stores.first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
+        return store
     }
     
 }
