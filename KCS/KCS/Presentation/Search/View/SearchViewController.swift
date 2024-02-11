@@ -58,10 +58,18 @@ final class SearchViewController: UIViewController {
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 if let text = view.searchTextField.text {
-                    self?.searchObserver.accept(text)
+                    self?.search(text: text)
                 }
             })
             .disposed(by: disposeBag)
+        
+        return view
+    }()
+    
+    private let divideView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .grayLabel
         
         return view
     }()
@@ -91,6 +99,7 @@ final class SearchViewController: UIViewController {
                 withIdentifier: UITableViewCell.identifier,
                 for: indexPath
             )
+            
             cell.selectionStyle = .none
             var configuration = cell.defaultContentConfiguration()
             configuration.text = keyword
@@ -154,6 +163,7 @@ private extension SearchViewController {
     func addUIComponents() {
         view.addSubview(backButton)
         view.addSubview(searchBarView)
+        view.addSubview(divideView)
         view.addSubview(searchTableView)
     }
     
@@ -173,7 +183,14 @@ private extension SearchViewController {
         ])
         
         NSLayoutConstraint.activate([
-            searchTableView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 10),
+            divideView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 16),
+            divideView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            divideView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            divideView.heightAnchor.constraint(equalToConstant: 6)
+        ])
+        
+        NSLayoutConstraint.activate([
+            searchTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
             searchTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             searchTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             searchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -207,6 +224,12 @@ private extension SearchViewController {
         snapshot.appendItems(data)
         dataSource.apply(snapshot, animatingDifferences: false)
     }
+    
+    func search(text: String) {
+        dismissViewController()
+        searchObserver.accept(text)
+        viewModel.action(input: .searchButtonTapped(text: text))
+    }
 
 }
 
@@ -215,8 +238,7 @@ extension SearchViewController: UITableViewDelegate {
     // TODO: 최근 검색어 삭제 action 필요
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let text = dataSource.itemIdentifier(for: indexPath) else { return }
-        dismissViewController()
-        searchObserver.accept(text)
+        search(text: text)
     }
     
 }
@@ -225,8 +247,7 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = textField.text {
-            searchObserver.accept(text)
-            dismissViewController()
+            search(text: text)
             return true
         } else {
             return false
