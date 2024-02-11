@@ -25,6 +25,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
     let locationStatusAuthorizedWhenInUseOutput = PublishRelay<Void>()
+    let requestLocationAuthorizationOutput = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     let filteredStoresOutput = PublishRelay<[FilteredStores]>()
     let fetchCountOutput = PublishRelay<FetchCountContent>()
@@ -230,7 +231,7 @@ private extension HomeViewModelImpl {
     
     func locationButtonTapped(locationAuthorizationStatus: CLAuthorizationStatus, positionMode: NMFMyPositionMode) {
         if locationAuthorizationStatus == .denied {
-            locationAuthorizationStatusDeniedOutput.accept(())
+            requestLocationAuthorizationOutput.accept(())
         }
         switch positionMode {
         case .direction:
@@ -253,7 +254,7 @@ private extension HomeViewModelImpl {
         case .authorizedWhenInUse:
             locationStatusAuthorizedWhenInUseOutput.accept(())
         default:
-            break
+            locationAuthorizationStatusDeniedOutput.accept(())
         }
     }
     

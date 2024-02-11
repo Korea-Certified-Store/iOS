@@ -264,9 +264,8 @@ final class HomeViewController: UIViewController {
         
         addUIComponents()
         configureConstraints()
-        bind()
         setup()
-        refresh()
+        bind()
     }
     
 }
@@ -377,6 +376,12 @@ private extension HomeViewController {
                 self?.locationButton.setImage(UIImage(named: imageName), for: .normal)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.requestLocationAuthorizationOutput
+            .bind { [weak self] in
+                self?.presentLocationAlert()
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindStoreInformationView() {
@@ -424,14 +429,13 @@ private extension HomeViewController {
     
     func bindLocationAuthorization() {
         viewModel.locationAuthorizationStatusDeniedOutput
-            .bind { [weak self] _ in
-                guard let self = self else { return }
-                presentLocationAlert()
+            .bind { [weak self] in
+                self?.refresh()
             }
             .disposed(by: disposeBag)
         
         viewModel.locationStatusNotDeterminedOutput
-            .bind { [weak self] _ in
+            .bind { [weak self] in
                 self?.locationManager.requestWhenInUseAuthorization()
                 self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)
             }
@@ -439,7 +443,7 @@ private extension HomeViewController {
         
         viewModel.locationStatusAuthorizedWhenInUseOutput
             .debounce(.milliseconds(10), scheduler: MainScheduler())
-            .bind { [weak self] _ in
+            .bind { [weak self] in
                 guard let self = self else { return }
                 guard let location = locationManager.location else { return }
                 let cameraUpdate = NMFCameraUpdate(
