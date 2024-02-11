@@ -145,6 +145,7 @@ final class HomeViewController: UIViewController {
                         requestLocation: location
                     )
                 )
+                refreshCameraPositionObserver.accept(mapView.mapView.cameraPosition)
             }
             .disposed(by: disposeBag)
         
@@ -227,6 +228,7 @@ final class HomeViewController: UIViewController {
     private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     private let listCellSelectedObserver: PublishRelay<Int>
     private let searchObserver: PublishRelay<String>
+    private let refreshCameraPositionObserver: BehaviorRelay<NMFCameraPosition>
     private let disposeBag = DisposeBag()
     private var markers: [Marker] = []
     private var clickedMarker: Marker?
@@ -238,7 +240,8 @@ final class HomeViewController: UIViewController {
         searchViewController: SearchViewController,
         summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
         listCellSelectedObserver: PublishRelay<Int>,
-        searchObserver: PublishRelay<String>
+        searchObserver: PublishRelay<String>,
+        refreshCameraPositionObserver: BehaviorRelay<NMFCameraPosition>
     ) {
         self.viewModel = viewModel
         self.storeListViewController = storeListViewController
@@ -247,6 +250,7 @@ final class HomeViewController: UIViewController {
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.listCellSelectedObserver = listCellSelectedObserver
         self.searchObserver = searchObserver
+        self.refreshCameraPositionObserver = refreshCameraPositionObserver
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -289,6 +293,7 @@ private extension HomeViewController {
         bindErrorAlert()
         bindListCellSelected()
         bindSearch()
+        bindMoreStoreButton()
     }
     
     func bindFetchStores() {
@@ -563,6 +568,15 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindMoreStoreButton() {
+        viewModel.moreStoreButtonHiddenOutput
+            .bind { [weak self] in
+                self?.refreshButton.isHidden = false
+                self?.moreStoreButton.isHidden = true
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }
 
 private extension HomeViewController {
@@ -647,7 +661,7 @@ private extension HomeViewController {
                 requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
             )
         )
-        
+        refreshCameraPositionObserver.accept(mapView.mapView.cameraPosition)
     }
     
     func setBackStoreListButton(row: Int) {
@@ -819,8 +833,6 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         if reason == NMFMapChangedByGesture {
             locationButton.setImage(UIImage.locationButtonNone, for: .normal)
         }
-        refreshButton.isHidden = false
-        moreStoreButton.isHidden = true
     }
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
@@ -834,7 +846,19 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-        print("end move : \(mapView.cameraPosition)")
+        refreshCameraPositionObserver
+            .observe(on: MainScheduler())
+            .bind { [weak self] cameraPosition in
+            self?.viewModel.action(
+                input: .compareCameraPosition(
+                    refreshCameraPosition: cameraPosition,
+                    endMoveCameraPosition: mapView.cameraPosition,
+                    refreshCameraPoint: mapView.projection.point(from: cameraPosition.target),
+                    endMoveCameraPoint: mapView.projection.point(from: mapView.cameraPosition.target)
+                )
+            )
+        }
+        .disposed(by: disposeBag)
     }
     
 }
@@ -843,7 +867,6 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
-        dump(mapView.cameraPosition)
     }
     
 }
