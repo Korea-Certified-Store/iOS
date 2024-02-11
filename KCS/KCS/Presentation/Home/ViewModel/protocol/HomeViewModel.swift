@@ -40,6 +40,12 @@ enum HomeViewModelInputCase {
     case checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus)
     case search(location: Location, keyword: String)
     case resetFilters
+    case compareCameraPosition(
+        refreshCameraPosition: NMFCameraPosition,
+        endMoveCameraPosition: NMFCameraPosition,
+        refreshCameraPoint: CGPoint,
+        endMoveCameraPoint: CGPoint
+    )
     
 }
 
@@ -59,12 +65,13 @@ protocol HomeViewModelOutput {
     var setMarkerOutput: PublishRelay<MarkerContents> { get }
     var locationAuthorizationStatusDeniedOutput: PublishRelay<Void> { get }
     var locationStatusNotDeterminedOutput: PublishRelay<Void> { get }
-    var locationStatusAuthorizedWhenInUse: PublishRelay<Void> { get }
+    var locationStatusAuthorizedWhenInUseOutput: PublishRelay<Void> { get }
     var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
     var fetchCountOutput: PublishRelay<FetchCountContent> { get }
     var noMoreStoresOutput: PublishRelay<Void> { get }
     var dimViewTapGestureEndedOutput: PublishRelay<Void> { get }
     var searchStoresOutput: PublishRelay<[Store]> { get }
     var searchOneStoreOutput: PublishRelay<Store> { get }
+    var moreStoreButtonHiddenOutput: PublishRelay<Void> { get }
     
 }

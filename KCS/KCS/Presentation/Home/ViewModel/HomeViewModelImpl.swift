@@ -24,7 +24,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let setMarkerOutput = PublishRelay<MarkerContents>()
     let locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
-    let locationStatusAuthorizedWhenInUse = PublishRelay<Void>()
+    let locationStatusAuthorizedWhenInUseOutput = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     let filteredStoresOutput = PublishRelay<[FilteredStores]>()
     let fetchCountOutput = PublishRelay<FetchCountContent>()
@@ -32,6 +32,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
     let searchStoresOutput = PublishRelay<[Store]>()
     let searchOneStoreOutput = PublishRelay<Store>()
+    let moreStoreButtonHiddenOutput = PublishRelay<Void>()
     
     var dependency: HomeDependency
     
@@ -73,6 +74,13 @@ final class HomeViewModelImpl: HomeViewModel {
             search(location: location, keyword: keyword)
         case .resetFilters:
             resetFilters()
+        case .compareCameraPosition(let refreshCameraPosition, let endMoveCameraPosition, let refreshCameraPoint, let endMoveCameraPoint):
+            compareCameraPosition(
+                refreshCameraPosition: refreshCameraPosition,
+                endMoveCameraPosition: endMoveCameraPosition,
+                refreshCameraPoint: refreshCameraPoint,
+                endMoveCameraPoint: endMoveCameraPoint
+            )
         }
     }
     
@@ -243,7 +251,7 @@ private extension HomeViewModelImpl {
         case .notDetermined:
             locationStatusNotDeterminedOutput.accept(())
         case .authorizedWhenInUse:
-            locationStatusAuthorizedWhenInUse.accept(())
+            locationStatusAuthorizedWhenInUseOutput.accept(())
         default:
             break
         }
@@ -278,6 +286,22 @@ private extension HomeViewModelImpl {
     
     func resetFilters() {
         dependency.activatedFilter = []
+    }
+    
+    func compareCameraPosition(
+        refreshCameraPosition: NMFCameraPosition,
+        endMoveCameraPosition: NMFCameraPosition,
+        refreshCameraPoint: CGPoint,
+        endMoveCameraPoint: CGPoint
+    ) {
+        let zoomDifference = abs(refreshCameraPosition.zoom - endMoveCameraPosition.zoom)
+        let pointDifference = sqrt(
+            pow(refreshCameraPoint.x - endMoveCameraPoint.x, 2) +
+            pow(refreshCameraPoint.y - endMoveCameraPoint.y, 2)
+        )
+        if zoomDifference > 0.5 || pointDifference > 50 {
+            moreStoreButtonHiddenOutput.accept(())
+        }
     }
     
 }
