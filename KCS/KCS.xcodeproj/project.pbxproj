@@ -23,6 +23,9 @@
 		59503A5C2B75927F0006CF35 /* SearchStoreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A5B2B75927F0006CF35 /* SearchStoreResponse.swift */; };
 		59503A5E2B7596990006CF35 /* GetSearchStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A5D2B7596990006CF35 /* GetSearchStoresUseCase.swift */; };
 		59503A602B75970E0006CF35 /* GetSearchStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A5F2B75970E0006CF35 /* GetSearchStoresUseCaseImpl.swift */; };
+		59503A662B791C940006CF35 /* RecentHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A652B791C930006CF35 /* RecentHistoryHeaderView.swift */; };
+		59503A682B79253B0006CF35 /* UITableViewCell+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A672B79253B0006CF35 /* UITableViewCell+Identifier.swift */; };
+		59503A6A2B7946D30006CF35 /* RecentHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A692B7946D30006CF35 /* RecentHistoryTableViewCell.swift */; };
 		595EE2A52B693DE700CC01CE /* ErrorAlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595EE2A42B693DE700CC01CE /* ErrorAlertMessage.swift */; };
 		596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596DDC4C2B6416AB00A4BBC4 /* SummaryViewContents.swift */; };
 		5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE572B5524D500725C90 /* RefreshButton.swift */; };
@@ -43,7 +46,6 @@
 		598CC4DD2B5D44940043D064 /* MockFailStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */; };
 		59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886252B6A3A02005750EF /* StoreListViewController.swift */; };
 		59B886292B6A3F1E005750EF /* StoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */; };
-		59B8862B2B6A3F7F005750EF /* UITableViewCell+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */; };
 		59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886452B6A5CDC005750EF /* StoreListViewModel.swift */; };
 		59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */; };
 		59B8864A2B6A9CCB005750EF /* UIStackView+clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886492B6A9CCB005750EF /* UIStackView+clear.swift */; };
@@ -171,6 +173,9 @@
 		59503A5B2B75927F0006CF35 /* SearchStoreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoreResponse.swift; sourceTree = "<group>"; };
 		59503A5D2B7596990006CF35 /* GetSearchStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchStoresUseCase.swift; sourceTree = "<group>"; };
 		59503A5F2B75970E0006CF35 /* GetSearchStoresUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchStoresUseCaseImpl.swift; sourceTree = "<group>"; };
+		59503A652B791C930006CF35 /* RecentHistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentHistoryHeaderView.swift; sourceTree = "<group>"; };
+		59503A672B79253B0006CF35 /* UITableViewCell+Identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Identifier.swift"; sourceTree = "<group>"; };
+		59503A692B7946D30006CF35 /* RecentHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		595EE2A42B693DE700CC01CE /* ErrorAlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertMessage.swift; sourceTree = "<group>"; };
 		596DDC4C2B6416AB00A4BBC4 /* SummaryViewContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewContents.swift; sourceTree = "<group>"; };
 		5977BE572B5524D500725C90 /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
@@ -192,7 +197,6 @@
 		598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFailStoreRepository.swift; sourceTree = "<group>"; };
 		59B886252B6A3A02005750EF /* StoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewController.swift; sourceTree = "<group>"; };
 		59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTableViewCell.swift; sourceTree = "<group>"; };
-		59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Identifier.swift"; sourceTree = "<group>"; };
 		59B886452B6A5CDC005750EF /* StoreListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewModel.swift; sourceTree = "<group>"; };
 		59B886472B6A5CE9005750EF /* StoreListViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewModelImpl.swift; sourceTree = "<group>"; };
 		59B886492B6A9CCB005750EF /* UIStackView+clear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+clear.swift"; sourceTree = "<group>"; };
@@ -362,6 +366,8 @@
 			isa = PBXGroup;
 			children = (
 				59503A4D2B751B0B0006CF35 /* SearchViewController.swift */,
+				59503A652B791C930006CF35 /* RecentHistoryHeaderView.swift */,
+				59503A692B7946D30006CF35 /* RecentHistoryTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -783,7 +789,7 @@
 				A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */,
 				A81EFBC92B5D5A2300D0C0D7 /* UIFont+.swift */,
 				A8A7E05F2B64E62200D015E5 /* NMFMyPosition+.swift */,
-				59B8862A2B6A3F7F005750EF /* UITableViewCell+Identifier.swift */,
+				59503A672B79253B0006CF35 /* UITableViewCell+Identifier.swift */,
 				59B886492B6A9CCB005750EF /* UIStackView+clear.swift */,
 				59B8865F2B6E7CF6005750EF /* UIViewController+Alert.swift */,
 				59B886612B6E8484005750EF /* UISheetPresentationController+Detent.swift */,
@@ -1109,6 +1115,7 @@
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A890870F2B4F836C00767225 /* SummaryView.swift in Sources */,
 				A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */,
+				59503A662B791C940006CF35 /* RecentHistoryHeaderView.swift in Sources */,
 				59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */,
 				A83367C72B72725700E0A844 /* FifthOnboardingView.swift in Sources */,
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
@@ -1124,6 +1131,7 @@
 				59F478B52B59BE0B002FEF9E /* FetchImageUseCase.swift in Sources */,
 				A8722F042B764679001ED988 /* SaveRecentSearchKeywordUseCaseImpl.swift in Sources */,
 				59C306BF2B50109100862625 /* Location.swift in Sources */,
+				59503A6A2B7946D30006CF35 /* RecentHistoryTableViewCell.swift in Sources */,
 				A8A7E05B2B642EC900D015E5 /* DetailViewContents.swift in Sources */,
 				591A88812B384E600059E40F /* HomeViewController.swift in Sources */,
 				5977BE9C2B59AC8D00725C90 /* ImageRepositoryImpl.swift in Sources */,
@@ -1140,6 +1148,7 @@
 				59C306B02B4FFE4400862625 /* RefreshStoreResponse.swift in Sources */,
 				A8722F022B764620001ED988 /* SaveRecentSearchKeywordUseCase.swift in Sources */,
 				A8A7E0602B64E62200D015E5 /* NMFMyPosition+.swift in Sources */,
+				59503A682B79253B0006CF35 /* UITableViewCell+Identifier.swift in Sources */,
 				A8E53C272B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift in Sources */,
 				A8ACB7EA2B595A3E00540BD1 /* GetOpenClosedUseCaseImpl.swift in Sources */,
 				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
@@ -1151,7 +1160,6 @@
 				5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */,
 				59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
-				59B8862B2B6A3F7F005750EF /* UITableViewCell+Identifier.swift in Sources */,
 				59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */,
 				A8E53C2B2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift in Sources */,
 				59B8865E2B6E4B98005750EF /* StoreInformationViewModelImpl.swift in Sources */,
@@ -1381,7 +1389,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MMM58CZBQF;
+				DEVELOPMENT_TEAM = 7CQAR4CYZX;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCS/Resource/Info.plist;
@@ -1399,7 +1407,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.yeonghyeon.nainga;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.nainga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1420,7 +1428,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MMM58CZBQF;
+				DEVELOPMENT_TEAM = 7CQAR4CYZX;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCS/Resource/Info.plist;
@@ -1438,7 +1446,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.yeonghyeon.nainga;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kcs.nainga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

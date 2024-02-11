@@ -66,47 +66,48 @@ final class SearchViewController: UIViewController {
         return view
     }()
     
+    private lazy var recentHistoryTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(RecentHistoryTableViewCell.self, forCellReuseIdentifier: RecentHistoryTableViewCell.identifier)
+        tableView.register(RecentHistoryHeaderView.self, forHeaderFooterViewReuseIdentifier: RecentHistoryHeaderView.identifier)
+        tableView.delegate = self
+        tableView.bounces = false
+        tableView.sectionHeaderTopPadding = 0
+        tableView.cellLayoutMarginsFollowReadableWidth = false
+        tableView.separatorInset = .zero
+        
+        return tableView
+    }()
+    
+    enum RecentHistorySection {
+        case recentHistory
+    }
+    
+    private lazy var recentHistoryDataSource: UITableViewDiffableDataSource<RecentHistorySection, String> = {
+        let dataSource = UITableViewDiffableDataSource<RecentHistorySection, String>(
+            tableView: recentHistoryTableView,
+            cellProvider: { (tableView, indexPath, keyword) in
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: RecentHistoryTableViewCell.identifier
+                ) as? RecentHistoryTableViewCell else { return RecentHistoryTableViewCell() }
+                cell.setUIContents(keyword: keyword)
+                cell.selectionStyle = .none
+                // TODO: cell 삭제 바인딩
+                
+                return cell
+            }
+        )
+        
+        return dataSource
+    }()
+    
     private let divideView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .kcsGray3
         
         return view
-    }()
-    
-    private lazy var searchTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
-        tableView.backgroundColor = .white
-        tableView.rowHeight = 49
-        
-        return tableView
-    }()
-    
-    // TODO: Section 별로 layout 따로 구현
-    enum Section {
-        case autoCompleteKeyword
-        case recentSearchKeyword
-    }
-    
-    private lazy var dataSource: UITableViewDiffableDataSource<Section, String> = {
-        return UITableViewDiffableDataSource<Section, String>(
-            tableView: searchTableView
-        ) { (tableView, indexPath, keyword) in
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: UITableViewCell.identifier,
-                for: indexPath
-            )
-            
-            cell.selectionStyle = .none
-            var configuration = cell.defaultContentConfiguration()
-            configuration.text = keyword
-            cell.contentConfiguration = configuration
-            
-            return cell
-        }
     }()
     
     private let searchObserver: PublishRelay<String>
@@ -130,10 +131,6 @@ final class SearchViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         bind()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        viewModel.action(input: .viewWillAppear)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -164,7 +161,7 @@ private extension SearchViewController {
         view.addSubview(backButton)
         view.addSubview(searchBarView)
         view.addSubview(divideView)
-        view.addSubview(searchTableView)
+        view.addSubview(recentHistoryTableView)
     }
     
     func configureConstraints() {
@@ -190,26 +187,23 @@ private extension SearchViewController {
         ])
         
         NSLayoutConstraint.activate([
-            searchTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
-            searchTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            searchTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            searchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            recentHistoryTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
+            recentHistoryTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            recentHistoryTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            recentHistoryTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
     func bind() {
-        viewModel.generateDataOutput
-            .bind { [weak self] data in
-                self?.generateData(data: data)
+        viewModel.autoCompleteKeywordsOutput
+            .bind { [weak self] keywords in
+//                self?.generateData(data: keywords, section: .autoCompleteKeyword)
             }
             .disposed(by: disposeBag)
         
         viewModel.recentSearchKeywordsOutput
             .bind { [weak self] keywords in
-                var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
-                snapshot.appendSections([.recentSearchKeyword])
-                snapshot.appendItems(keywords)
-                self?.dataSource.apply(snapshot, animatingDifferences: false)
+                self?.generateRecentHistoryData(data: keywords)
             }
             .disposed(by: disposeBag)
     }
@@ -218,11 +212,11 @@ private extension SearchViewController {
 
 private extension SearchViewController {
     
-    func generateData(data: [String]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
-        snapshot.appendSections([.autoCompleteKeyword])
+    func generateRecentHistoryData(data: [String]) {
+        var snapshot = NSDiffableDataSourceSnapshot<RecentHistorySection, String>()
+        snapshot.appendSections([.recentHistory])
         snapshot.appendItems(data)
-        dataSource.apply(snapshot, animatingDifferences: false)
+        recentHistoryDataSource.apply(snapshot, animatingDifferences: false)
     }
     
     func search(text: String) {
@@ -235,10 +229,26 @@ private extension SearchViewController {
 
 extension SearchViewController: UITableViewDelegate {
     
-    // TODO: 최근 검색어 삭제 action 필요
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let text = dataSource.itemIdentifier(for: indexPath) else { return }
-        search(text: text)
+        if tableView == recentHistoryTableView {
+            guard let keyword = recentHistoryDataSource.itemIdentifier(for: indexPath) else { return }
+            search(text: keyword)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if tableView == recentHistoryTableView {
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(
+                withIdentifier: RecentHistoryHeaderView.identifier
+            ) else { return nil }
+            return headerView
+        } else { return nil }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if tableView == recentHistoryTableView {
+            return 38
+        } else { return 0 }
     }
     
 }
