@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 
+// TODO: 키보드 높이에 따른 레이아웃 수정
 final class SearchViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
