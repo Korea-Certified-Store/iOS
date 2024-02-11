@@ -7,32 +7,17 @@
 
 import RxSwift
 
-protocol FetchStoresRepository {
+protocol StoreRepository {
     
-    var storeStorage: StoreStorage { get }
-    
-    func fetchStores(
+    func fetchRefreshStores(
         requestLocation: RequestLocation,
         isEntire: Bool
     ) -> Observable<FetchStores>
     
-}
-
-protocol GetStoresRepository {
+    func fetchStores(count: Int) -> [Store]
     
-    var storeStorage: StoreStorage { get }
-    
-    func getStores() -> [Store]
-    
-}
-
-protocol FetchSearchStoresRepository {
-    
-    var storeStorage: StoreStorage { get }
-    
-    func fetchSearchStores(
-        location: Location,
-        keyword: String
-    ) -> Observable<[Store]>
+    func getStoreInformation(
+        tag: UInt
+    ) throws -> Store
     
 }

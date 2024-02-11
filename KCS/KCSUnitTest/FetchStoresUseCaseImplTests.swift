@@ -13,7 +13,7 @@ import RxBlocking
 
 final class FetchStoresUseCaseImplTests: XCTestCase {
 
-    var fetchStoresUseCaseImpl: GetStoresUseCaseImpl!
+    var fetchStoresUseCaseImpl: FetchStoresUseCaseImpl!
     var disposeBag: DisposeBag!
     
     override func setUp() {
@@ -21,7 +21,7 @@ final class FetchStoresUseCaseImplTests: XCTestCase {
     }
 
     func test_Store가_없으면_execute의_결과는_빈_배열을_반환한다() {
-        fetchStoresUseCaseImpl = GetStoresUseCaseImpl(
+        fetchStoresUseCaseImpl = FetchStoresUseCaseImpl(
             repository: MockSuccessStoreRepository(stores: [])
         )
         let result = fetchStoresUseCaseImpl.execute()
@@ -72,7 +72,7 @@ final class FetchStoresUseCaseImplTests: XCTestCase {
                 localPhotos: []
             )
         ]
-        fetchStoresUseCaseImpl = GetStoresUseCaseImpl(
+        fetchStoresUseCaseImpl = FetchStoresUseCaseImpl(
             repository: MockSuccessStoreRepository(stores: stores)
         )
         let result = fetchStoresUseCaseImpl.execute()

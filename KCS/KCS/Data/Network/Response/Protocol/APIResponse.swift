@@ -13,6 +13,6 @@ protocol APIResponse: Codable {
     
     var code: Int { get }
     var message: String { get }
-    var data: ResponseType { get }
+    var data: [[ResponseType]] { get }
     
 }
