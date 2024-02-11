@@ -15,7 +15,7 @@ final class CertificationLabel: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 9, weight: .medium)
-        label.textColor = UIColor.grayLabel
+        label.textColor = UIColor.kcsGray1
         label.text = certificationType.description
         
         return label

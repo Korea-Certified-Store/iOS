@@ -39,7 +39,7 @@ final class SearchBarView: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = .searchIcon
-        imageView.tintColor = .grayLabel
+        imageView.tintColor = .kcsGray1
         
         return imageView
     }()
@@ -48,7 +48,7 @@ final class SearchBarView: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = .xMarkIcon
-        imageView.tintColor = .grayLabel
+        imageView.tintColor = .kcsGray1
         imageView.isHidden = true
         
         return imageView

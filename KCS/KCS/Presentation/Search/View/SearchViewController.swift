@@ -19,7 +19,7 @@ final class SearchViewController: UIViewController {
         
         var config = UIButton.Configuration.plain()
         config.image = .backButton
-        config.baseForegroundColor = .grayLabel
+        config.baseForegroundColor = .kcsGray1
         button.configuration = config
         
         button.rx.tap
@@ -69,7 +69,7 @@ final class SearchViewController: UIViewController {
     private let divideView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .grayLabel
+        view.backgroundColor = .kcsGray3
         
         return view
     }()

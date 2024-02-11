@@ -28,7 +28,7 @@ final class StoreListViewController: UIViewController {
     private let divideView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = UIColor.kcsGray2
         
         return view
     }()
