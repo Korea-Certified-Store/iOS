@@ -13,7 +13,7 @@ import RxBlocking
 
 final class FetchRefreshStoresUseCaseImplTests: XCTestCase {
 
-    var fetchRefreshStoresUseCaseImpl: FetchStoresUseCaseImpl!
+    var fetchRefreshStoresUseCaseImpl: FetchRefreshStoresUseCaseImpl!
     var disposeBag: DisposeBag!
     
     override func setUp() {
@@ -40,7 +40,7 @@ final class FetchRefreshStoresUseCaseImplTests: XCTestCase {
                 )
             }
         }
-        fetchRefreshStoresUseCaseImpl = FetchStoresUseCaseImpl(repository: MockSuccessStoreRepository(stores: stores))
+        fetchRefreshStoresUseCaseImpl = FetchRefreshStoresUseCaseImpl(repository: MockSuccessStoreRepository(stores: stores))
     }
     
     func test_변의_길이가_작은_경우_해당하는_좌표안의_가게들을_재검색하여_불러온다() {

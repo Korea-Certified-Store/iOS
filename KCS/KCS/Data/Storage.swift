@@ -1,5 +1,5 @@
 //
-//  OnboardStorage.swift
+//  Storage.swift
 //  KCS
 //
 //  Created by 김영현 on 2/5/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class OnboardStorage {
+final class Storage {
     
     static func isOnboarded() -> Bool {
         let defaults = UserDefaults.standard
