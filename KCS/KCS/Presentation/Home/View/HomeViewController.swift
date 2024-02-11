@@ -220,32 +220,32 @@ final class HomeViewController: UIViewController {
         equalTo: mapView.bottomAnchor, constant: -90
     )
     
+    private let viewModel: HomeViewModel
+    private let storeListViewController: StoreListViewController
+    private let storeInformationViewController: StoreInformationViewController
     private let searchViewController: SearchViewController
+    private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
+    private let listCellSelectedObserver: PublishRelay<Int>
     private let searchObserver: PublishRelay<String>
     private let disposeBag = DisposeBag()
     private var markers: [Marker] = []
-    private let storeInformationViewController: StoreInformationViewController
     private var clickedMarker: Marker?
-    private let storeListViewController: StoreListViewController
-    private let viewModel: HomeViewModel
-    private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
-    private let listCellSelectedObserver: PublishRelay<Int>
     
     init(
         viewModel: HomeViewModel,
-        storeInformationViewController: StoreInformationViewController,
         storeListViewController: StoreListViewController,
+        storeInformationViewController: StoreInformationViewController,
+        searchViewController: SearchViewController,
         summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
         listCellSelectedObserver: PublishRelay<Int>,
-        searchViewController: SearchViewController,
         searchObserver: PublishRelay<String>
     ) {
         self.viewModel = viewModel
-        self.storeInformationViewController = storeInformationViewController
         self.storeListViewController = storeListViewController
+        self.storeInformationViewController = storeInformationViewController
+        self.searchViewController = searchViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.listCellSelectedObserver = listCellSelectedObserver
-        self.searchViewController = searchViewController
         self.searchObserver = searchObserver
         
         super.init(nibName: nil, bundle: nil)
@@ -647,6 +647,7 @@ private extension HomeViewController {
                 requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
             )
         )
+        
     }
     
     func setBackStoreListButton(row: Int) {
@@ -658,6 +659,25 @@ private extension HomeViewController {
         searchViewController.setSearchKeyword(keyword: searchBarView.searchTextField.text)
         if let presentedViewController = presentedViewController {
             presentedViewController.present(searchViewController, animated: false)
+        }
+    }
+    
+    func presentStoreListView() {
+        if !(presentedViewController is StoreListViewController) {
+            if let sheet = storeListViewController.sheetPresentationController {
+                sheet.detents = [.smallStoreListViewDetent, .largeStoreListViewDetent]
+                sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = 15
+            }
+            refreshButtonBottomConstraint.constant = -90
+            locationButtonBottomConstraint.constant = -90
+            moreStoreButtonBottomConstraint.constant = -90
+            mapView.mapView.logoMargin.bottom = 55
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }
+            present(storeListViewController, animated: true)
         }
     }
     
@@ -813,23 +833,8 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         }
     }
     
-    func presentStoreListView() {
-        if !(presentedViewController is StoreListViewController) {
-            if let sheet = storeListViewController.sheetPresentationController {
-                sheet.detents = [.smallStoreListViewDetent, .largeStoreListViewDetent]
-                sheet.largestUndimmedDetentIdentifier = .smallStoreListViewDetentIdentifier
-                sheet.prefersGrabberVisible = true
-                sheet.preferredCornerRadius = 15
-            }
-            refreshButtonBottomConstraint.constant = -90
-            locationButtonBottomConstraint.constant = -90
-            moreStoreButtonBottomConstraint.constant = -90
-            mapView.mapView.logoMargin.bottom = 55
-            UIView.animate(withDuration: 0.5) {
-                self.view.layoutIfNeeded()
-            }
-            present(storeListViewController, animated: true)
-        }
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        print("end move : \(mapView.cameraPosition)")
     }
     
 }
@@ -838,6 +843,7 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         storeInformationViewDismiss()
+        dump(mapView.cameraPosition)
     }
     
 }
