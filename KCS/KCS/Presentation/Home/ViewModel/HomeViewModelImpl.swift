@@ -12,9 +12,10 @@ import NMapsMap
 
 final class HomeViewModelImpl: HomeViewModel {
     
-    let fetchRefreshStoresUseCase: FetchRefreshStoresUseCase
-    let fetchStoresUseCase: FetchStoresUseCase
-    let getStoreInformationUseCase: GetStoreInformationUseCase
+    var getStoresUseCase: GetStoresUseCase
+    var getRefreshStoresUseCase: GetRefreshStoresUseCase
+    var getStoreInformationUseCase: GetStoreInformationUseCase
+    var getSearchStoresUseCase: GetSearchStoresUseCase
     
     let getStoreInformationOutput = PublishRelay<Store>()
     let refreshDoneOutput = PublishRelay<Bool>()
@@ -30,19 +31,24 @@ final class HomeViewModelImpl: HomeViewModel {
     let fetchCountOutput = PublishRelay<FetchCountContent>()
     let noMoreStoresOutput = PublishRelay<Void>()
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
+    let searchStoresOutput = PublishRelay<[Store]>()
+    let searchOneStoreOutput = PublishRelay<Store>()
+    let moreStoreButtonHiddenOutput = PublishRelay<Void>()
     
     var dependency: HomeDependency
     
     init(
         dependency: HomeDependency,
-        fetchRefreshStoresUseCase: FetchRefreshStoresUseCase,
-        fetchStoresUseCase: FetchStoresUseCase,
-        getStoreInformationUseCase: GetStoreInformationUseCase
+        getStoresUseCase: GetStoresUseCase,
+        getRefreshStoresUseCase: GetRefreshStoresUseCase,
+        getStoreInformationUseCase: GetStoreInformationUseCase,
+        getSearchStoresUseCase: GetSearchStoresUseCase
     ) {
         self.dependency = dependency
-        self.fetchRefreshStoresUseCase = fetchRefreshStoresUseCase
-        self.fetchStoresUseCase = fetchStoresUseCase
+        self.getStoresUseCase = getStoresUseCase
+        self.getRefreshStoresUseCase = getRefreshStoresUseCase
         self.getStoreInformationUseCase = getStoreInformationUseCase
+        self.getSearchStoresUseCase = getSearchStoresUseCase
     }
     
     func action(input: HomeViewModelInputCase) {
@@ -65,6 +71,17 @@ final class HomeViewModelImpl: HomeViewModel {
             checkLocationAuthorization(status: status)
         case .checkLocationAuthorizationWhenCameraDidChange(let status):
             checkLocationAuthorizationWhenCameraDidChange(status: status)
+        case .search(let location, let keyword):
+            search(location: location, keyword: keyword)
+        case .resetFilters:
+            resetFilters()
+        case .compareCameraPosition(let refreshCameraPosition, let endMoveCameraPosition, let refreshCameraPoint, let endMoveCameraPoint):
+            compareCameraPosition(
+                refreshCameraPosition: refreshCameraPosition,
+                endMoveCameraPosition: endMoveCameraPosition,
+                refreshCameraPoint: refreshCameraPoint,
+                endMoveCameraPoint: endMoveCameraPoint
+            )
         }
     }
     
@@ -76,7 +93,7 @@ private extension HomeViewModelImpl {
         requestLocation: RequestLocation,
         isEntire: Bool
     ) {
-        fetchRefreshStoresUseCase.execute(
+        getStoresUseCase.execute(
             requestLocation: requestLocation,
             isEntire: isEntire
         )
@@ -106,7 +123,7 @@ private extension HomeViewModelImpl {
     func moreStoreButtonTapped() {
         if dependency.fetchCount < dependency.maxFetchCount {
             dependency.fetchCount += 1
-            applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+            applyFilters(stores: getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
             fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount, fetchCount: dependency.fetchCount))
         }
         checkLastFetch()
@@ -124,7 +141,7 @@ private extension HomeViewModelImpl {
         } else {
             dependency.activatedFilter.append(filter)
         }
-        applyFilters(stores: fetchStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+        applyFilters(stores: getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
     }
     
     func getActivatedTypes() -> [CertificationType] {
@@ -249,6 +266,42 @@ private extension HomeViewModelImpl {
             locationButtonImageNameOutput.accept("LocationButtonNormal")
         default:
             break
+        }
+    }
+    
+    func search(location: Location, keyword: String) {
+        getSearchStoresUseCase.execute(location: location, keyword: keyword)
+            .subscribe(onNext: { [weak self] stores in
+                guard let self = self else { return }
+                dependency.resetFetchCount()
+                dependency.maxFetchCount = 1
+                if stores.count == 1 {
+                    guard let oneStore = stores.first else { return }
+                    searchOneStoreOutput.accept(oneStore)
+                } else {
+                    searchStoresOutput.accept(stores)
+                }
+            })
+            .disposed(by: dependency.disposeBag)
+    }
+    
+    func resetFilters() {
+        dependency.activatedFilter = []
+    }
+    
+    func compareCameraPosition(
+        refreshCameraPosition: NMFCameraPosition,
+        endMoveCameraPosition: NMFCameraPosition,
+        refreshCameraPoint: CGPoint,
+        endMoveCameraPoint: CGPoint
+    ) {
+        let zoomDifference = abs(refreshCameraPosition.zoom - endMoveCameraPosition.zoom)
+        let pointDifference = sqrt(
+            pow(refreshCameraPoint.x - endMoveCameraPoint.x, 2) +
+            pow(refreshCameraPoint.y - endMoveCameraPoint.y, 2)
+        )
+        if zoomDifference > 0.5 || pointDifference > 50 {
+            moreStoreButtonHiddenOutput.accept(())
         }
     }
     

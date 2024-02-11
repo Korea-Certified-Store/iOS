@@ -90,6 +90,10 @@ final class StoreListViewController: UIViewController {
         viewModel.action(input: .updateList(stores: stores))
     }
     
+    func scrollToPreviousCell(indexPath: IndexPath) {
+        storeTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+    }
+    
 }
 
 private extension StoreListViewController {

@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import NMapsMap
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -18,12 +19,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let repository = StoreRepositoryImpl()
+        let storeStorage = StoreStorage()
         let viewModel  = HomeViewModelImpl(
             dependency: HomeDependency(),
-            fetchRefreshStoresUseCase: FetchRefreshStoresUseCaseImpl(repository: repository),
-            fetchStoresUseCase: FetchStoresUseCaseImpl(repository: repository),
-            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(repository: repository)
+            getStoresUseCase: GetStoresUseCaseImpl(
+                repository: FetchStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            ),
+            getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
+                repository: GetStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            ),
+            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
+                repository: GetStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            ),
+            getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
+                repository: FetchSearchStoresRepositoryImpl(
+                    storeStorage: storeStorage
+                )
+            )
         )
         let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
         let listCellSelectedObserver = PublishRelay<Int>()
@@ -36,9 +54,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 )
             )
         )
+        let searchObserver = PublishRelay<String>()
+        let refreshCameraPositionObserver = BehaviorRelay<NMFCameraPosition>(value: NMFCameraPosition())
+        let searchKeywordRepository = SearchKeywordRepositoryImpl(
+            userDefaults: UserDefaults()
+        )
         let homeViewController = HomeViewController(
             viewModel: viewModel,
-            storeInformationViewController: storeInformationViewController,
             storeListViewController: StoreListViewController(
                 viewModel: StoreListViewModelImpl(
                     fetchImageUseCase: FetchImageUseCaseImpl(
@@ -47,18 +69,44 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 ),
                 listCellSelectedObserver: listCellSelectedObserver
             ),
+            storeInformationViewController: storeInformationViewController,
+            searchViewController: SearchViewController(
+                viewModel: SearchViewModelImpl(
+                    fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    )
+                ),
+                searchObserver: searchObserver
+            ), 
             summaryViewHeightObserver: summaryViewHeightObserver,
-            listCellSelectedObserver: listCellSelectedObserver
+            listCellSelectedObserver: listCellSelectedObserver,
+            searchObserver: searchObserver, 
+            refreshCameraPositionObserver: refreshCameraPositionObserver
         )
         
         var rootViewController: UIViewController
         
-        if Storage.isOnboarded() {
+        if OnboardStorage.isOnboarded() {
             rootViewController = OnboardingViewController(homeViewController: homeViewController)
         } else {
             rootViewController = homeViewController
         }
-        window?.rootViewController = rootViewController
+        
+        let splashViewController = SplashViewController(
+            viewModel: SplashViewModelImpl(
+                checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
+                    repository: NetworkRepositoryImpl()
+                )
+            ), rootViewController: rootViewController
+        )
+        
+        window?.rootViewController = splashViewController
         window?.makeKeyAndVisible()
     }
     

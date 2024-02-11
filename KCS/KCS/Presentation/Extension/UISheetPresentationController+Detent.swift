@@ -13,7 +13,8 @@ extension UISheetPresentationController.Detent.Identifier {
     static let largeSummaryDetentIdentifier = UISheetPresentationController.Detent.Identifier("LargeSummaryDetent")
     static let detailDetentIdentifier = UISheetPresentationController.Detent.Identifier("DetailDetent")
     static let smallStoreListViewDetentIdentifier = UISheetPresentationController.Detent.Identifier("SmallListDetent")
-    static let largeStoreListViewDetentIdentifier = UISheetPresentationController.Detent.Identifier("LargeListDetent")
+    static let largeStoreListViewDetentIdentifier = UISheetPresentationController.Detent.Identifier.large
+    
 }
             
 extension UISheetPresentationController.Detent {

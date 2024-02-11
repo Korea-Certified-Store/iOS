@@ -1,5 +1,5 @@
 //
-//  StoreRepositoryImpl.swift
+//  FetchStoresRepositoryImpl.swift
 //  KCS
 //
 //  Created by 조성민 on 1/11/24.
@@ -8,15 +8,15 @@
 import RxSwift
 import Alamofire
 
-final class StoreRepositoryImpl: StoreRepository {
+final class FetchStoresRepositoryImpl: FetchStoresRepository {
     
-    private var stores: [[Store]]
+    let storeStorage: StoreStorage
     
-    init(stores: [[Store]] = []) {
-        self.stores = stores
+    init(storeStorage: StoreStorage) {
+        self.storeStorage = storeStorage
     }
     
-    func fetchRefreshStores(
+    func fetchStores(
         requestLocation: RequestLocation,
         isEntire: Bool
     ) -> Observable<FetchStores> {
@@ -31,12 +31,12 @@ final class StoreRepositoryImpl: StoreRepository {
                 neLong: requestLocation.northEast.longitude,
                 neLat: requestLocation.northEast.latitude
             )))
-            .responseDecodable(of: StoreResponse.self) { [weak self] response in
+            .responseDecodable(of: RefreshStoreResponse.self) { [weak self] response in
                 do {
                     switch response.result {
                     case .success(let result):
                         let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
-                        self?.stores = resultStores
+                        self?.storeStorage.stores = resultStores.flatMap({ $0 })
                         if isEntire {
                             observer.onNext(FetchStores(
                                 fetchCountContent: FetchCountContent(),
@@ -69,22 +69,6 @@ final class StoreRepositoryImpl: StoreRepository {
             }
             return Disposables.create()
         }
-    }
-    
-    func fetchStores(count: Int) -> [Store] {
-        if stores.isEmpty { return [] }
-        var fetchResult: [Store] = []
-        for index in 0..<count {
-            fetchResult.append(contentsOf: stores[index])
-        }
-        return fetchResult
-    }
-    
-    func getStoreInformation(
-        tag: UInt
-    ) throws -> Store {
-        guard let store = stores.flatMap({ $0 }).first(where: { $0.id == tag }) else { throw StoreRepositoryError.wrongStoreId }
-        return store
     }
     
 }
