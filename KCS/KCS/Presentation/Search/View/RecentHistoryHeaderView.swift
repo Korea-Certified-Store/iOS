@@ -70,20 +70,20 @@ private extension RecentHistoryHeaderView {
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            titleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            clearAllButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            clearAllButton.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
+            clearAllButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            clearAllButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
         NSLayoutConstraint.activate([
             divideView.heightAnchor.constraint(equalToConstant: 1),
-            divideView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            divideView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            divideView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            divideView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            divideView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            divideView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
