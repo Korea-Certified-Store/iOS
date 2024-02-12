@@ -273,8 +273,7 @@ private extension HomeViewModelImpl {
         getSearchStoresUseCase.execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
-                dependency.resetFetchCount()
-                dependency.maxFetchCount = 1
+                dependency.fetchCount = stores.count
                 if stores.count == 1 {
                     guard let oneStore = stores.first else { return }
                     searchOneStoreOutput.accept(oneStore)
