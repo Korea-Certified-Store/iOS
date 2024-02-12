@@ -168,12 +168,10 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
-    // TODO: BackButton configuration 수정 필요
     private lazy var backStoreListButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .blue
-        button.setTitle("뒤로가기", for: .normal)
+        button.setImage(UIImage.backListButton, for: .normal)
         button.isHidden = true
         button.rx.tap
             .debounce(.milliseconds(100), scheduler: MainScheduler())
@@ -219,6 +217,10 @@ final class HomeViewController: UIViewController {
     
     private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
         equalTo: mapView.bottomAnchor, constant: -90
+    )
+    
+    private lazy var searchBarViewLeadingConstraint = searchBarView.leadingAnchor.constraint(
+        equalTo: mapView.leadingAnchor, constant: 16
     )
     
     private let viewModel: HomeViewModel
@@ -605,6 +607,7 @@ private extension HomeViewController {
     
     func storeInformationViewDismiss(changeMarker: Bool = false) {
         backStoreListButton.isHidden = true
+        searchBarViewLeadingConstraint.constant = 16
         clickedMarker?.deselect()
         clickedMarker = nil
         if !changeMarker {
@@ -671,6 +674,7 @@ private extension HomeViewController {
     func setBackStoreListButton(row: Int) {
         storeListViewController.scrollToPreviousCell(indexPath: IndexPath(row: row, section: 0))
         backStoreListButton.isHidden = false
+        searchBarViewLeadingConstraint.constant = 62
     }
     
     func presentSearchViewController() {
@@ -739,9 +743,9 @@ private extension HomeViewController {
         
         NSLayoutConstraint.activate([
             searchBarView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8),
-            searchBarView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             searchBarView.trailingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            searchBarView.heightAnchor.constraint(equalToConstant: 50)
+            searchBarView.heightAnchor.constraint(equalToConstant: 50),
+            searchBarViewLeadingConstraint
         ])
         
         NSLayoutConstraint.activate([
@@ -767,12 +771,11 @@ private extension HomeViewController {
             moreStoreButtonBottomConstraint
         ])
         
-        // TODO: BackButton AutoLayout 수정 필요
         NSLayoutConstraint.activate([
-            backStoreListButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
-            backStoreListButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -290),
-            backStoreListButton.widthAnchor.constraint(equalToConstant: 80),
-            backStoreListButton.heightAnchor.constraint(equalToConstant: 35)
+            backStoreListButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            backStoreListButton.centerYAnchor.constraint(equalTo: searchBarView.centerYAnchor),
+            backStoreListButton.widthAnchor.constraint(equalToConstant: 38),
+            backStoreListButton.heightAnchor.constraint(equalToConstant: 38)
         ])
     }
     
