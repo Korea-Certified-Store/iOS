@@ -18,6 +18,7 @@ final class SearchViewModelImpl: SearchViewModel {
     
     let generateDataOutput = PublishRelay<[String]>()
     let recentSearchKeywordsOutput = PublishRelay<[String]>()
+    let autoCompleteKeywordsOutput = PublishRelay<[String]>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
@@ -31,8 +32,6 @@ final class SearchViewModelImpl: SearchViewModel {
     
     func action(input: SearchViewModelInputCase) {
         switch input {
-        case .viewWillAppear:
-            viewWillAppear()
         case .textChanged(let text):
             textChanged(text: text)
         case .searchButtonTapped(let text):
@@ -46,23 +45,19 @@ final class SearchViewModelImpl: SearchViewModel {
 
 private extension SearchViewModelImpl {
     
-    func viewWillAppear() {
-        fetchRecentSearchKeywordUseCase.execute()
-            .bind { [weak self] keywords in
-                self?.recentSearchKeywordsOutput.accept(keywords)
-            }
-            .disposed(by: disposeBag)
-    }
-    
     func textChanged(text: String) {
         if text.isEmpty {
-            // TODO: recentHistory usecase 실행(debounce) 후 generateDataOutput.accept([])
+            fetchRecentSearchKeywordUseCase.execute()
+                .bind { [weak self] keywords in
+                    self?.recentSearchKeywordsOutput.accept(keywords)
+                }
+                .disposed(by: disposeBag)
         } else {
-            // TODO: autoCompletion usecase 실행(debounce) 후 generateDataOutput.accept([])
+            // TODO: autoCompletion usecase 실행(debounce) 후 generateDataOutput.accept([]) (자동완성으로 전환)
+            autoCompleteKeywordsOutput.accept([text])
         }
     }
-    
-    // TODO: Cell 선택시 UseCase 내부에서 최근 검색어에 있는지 확인 해야 한다. 
+     
     func searchButtonTapped(text: String) {
         saveRecentSearchKeywordUseCase.execute(
             recentSearchKeyword: text

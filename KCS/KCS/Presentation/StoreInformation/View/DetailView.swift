@@ -25,7 +25,7 @@ final class DetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
-        label.textColor = UIColor.grayLabel
+        label.textColor = UIColor.kcsGray1
         
         return label
     }()
@@ -43,7 +43,7 @@ final class DetailView: UIView {
     private let divideView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.divideView
+        view.backgroundColor = UIColor.kcsGray3
         
         return view
     }()
@@ -79,7 +79,7 @@ final class DetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 12, weight: .regular)
-        label.textColor = UIColor.grayLabel
+        label.textColor = UIColor.kcsGray1
         
         return label
     }()

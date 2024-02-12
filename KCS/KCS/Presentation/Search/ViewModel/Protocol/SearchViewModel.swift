@@ -23,7 +23,6 @@ protocol SearchViewModelInput {
 
 enum SearchViewModelInputCase {
     
-    case viewWillAppear
     case textChanged(text: String)
     case searchButtonTapped(text: String)
     case deleteSearchHistory(index: Int)
@@ -34,5 +33,6 @@ protocol SearchViewModelOutput {
     
     var generateDataOutput: PublishRelay<[String]> { get }
     var recentSearchKeywordsOutput: PublishRelay<[String]> { get }
+    var autoCompleteKeywordsOutput: PublishRelay<[String]> { get }
     
 }

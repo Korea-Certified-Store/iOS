@@ -34,7 +34,7 @@ final class StoreTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 11, weight: .regular)
-        label.textColor = UIColor.grayLabel
+        label.textColor = UIColor.kcsGray1
         
         return label
     }()
