@@ -92,13 +92,17 @@ final class SearchViewController: UIViewController {
     private lazy var recentHistoryDataSource: UITableViewDiffableDataSource<RecentHistorySection, String> = {
         let dataSource = UITableViewDiffableDataSource<RecentHistorySection, String>(
             tableView: recentHistoryTableView,
-            cellProvider: { (tableView, _, keyword) in
+            cellProvider: { (tableView, indexPath, keyword) in
                 guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: RecentHistoryTableViewCell.identifier
                 ) as? RecentHistoryTableViewCell else { return RecentHistoryTableViewCell() }
                 cell.setUIContents(keyword: keyword)
                 cell.selectionStyle = .none
-                // TODO: cell 삭제 바인딩
+                cell.rx.removeKeywordButtonTapped
+                    .bind { [weak self] in
+                        self?.viewModel.action(input: .deleteSearchHistory(index: indexPath.row))
+                    }
+                    .disposed(by: cell.disposedBag)
                 
                 return cell
             }
@@ -263,7 +267,7 @@ private extension SearchViewController {
         var snapshot = NSDiffableDataSourceSnapshot<RecentHistorySection, String>()
         snapshot.appendSections([.recentHistory])
         snapshot.appendItems(data)
-        recentHistoryDataSource.apply(snapshot, animatingDifferences: false)
+        recentHistoryDataSource.applySnapshotUsingReloadData(snapshot)
     }
     
     func generateAutoCompletionData(data: [String]) {
