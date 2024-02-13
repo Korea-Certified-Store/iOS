@@ -172,6 +172,7 @@ final class HomeViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage.backListButton, for: .normal)
+        button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
         button.isHidden = true
         button.rx.tap
             .debounce(.milliseconds(100), scheduler: MainScheduler())
