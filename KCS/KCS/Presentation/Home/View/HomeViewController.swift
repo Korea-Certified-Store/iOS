@@ -55,13 +55,17 @@ final class HomeViewController: UIViewController {
         let view = SearchBarView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.searchTextField.delegate = self
+        view.layer.borderColor = UIColor.placeholderText.cgColor
         
         view.xMarkImageView.rx
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 // TODO: 검색 초기화 처리
+                view.layer.borderWidth = 0
                 view.searchTextField.text = ""
+                self?.researchKeywordButton.isHidden = true
+                self?.refreshButton.isHidden = false
             })
             .disposed(by: disposeBag)
         
@@ -168,7 +172,7 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
-    private let researchKeywordButton: UIButton = {
+    private lazy var researchKeywordButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         var config = UIButton.Configuration.filled()
@@ -184,7 +188,14 @@ final class HomeViewController: UIViewController {
         config.cornerStyle = .capsule
         config.contentInsets = NSDirectionalEdgeInsets(top: 11, leading: 10, bottom: 11, trailing: 10)
         button.configuration = config
-//        button.isHidden = true
+        button.isHidden = true
+        button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
+        button.rx.tap
+            .bind { [weak self] in
+                guard let text = self?.searchBarView.searchTextField.text else { return }
+                self?.searchObserver.accept(text)
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
@@ -215,7 +226,6 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .clear
         view.isUserInteractionEnabled = false
         view.alpha = 0.4
-        
         view.rx.tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
@@ -548,6 +558,10 @@ private extension HomeViewController {
                 )
                 viewModel.action(input: .search(location: centerPosition, keyword: keyword))
                 searchBarView.searchTextField.text = keyword
+                searchBarView.layer.borderWidth = 1.5
+                researchKeywordButton.isHidden = false
+                refreshButton.isHidden = true
+                moreStoreButton.isHidden = true
             }
             .disposed(by: disposeBag)
         
@@ -788,7 +802,7 @@ private extension HomeViewController {
         
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
-            refreshButton.widthAnchor.constraint(equalToConstant: 110),
+            refreshButton.widthAnchor.constraint(equalToConstant: 119),
             refreshButton.heightAnchor.constraint(equalToConstant: 35),
             refreshButtonBottomConstraint
         ])
