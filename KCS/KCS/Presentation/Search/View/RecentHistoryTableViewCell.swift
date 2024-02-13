@@ -30,13 +30,29 @@ final class RecentHistoryTableViewCell: UITableViewCell {
         return label
     }()
     
-    var disposedBag = DisposeBag()
-    let removeKeywordButton = UIButton()
+    private lazy var removeKeywordButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(SystemImage.remove, for: .normal)
+        button.tintColor = .kcsGray2
+        button.rx.tap
+            .bind { [weak self] in
+                guard let self = self,
+                      let indexPath = indexPath else { return }
+                delegate?.removeKeywordButtonTapped(index: indexPath.row)
+            }
+            .disposed(by: disposedBag)
+        
+        return button
+    }()
+    
+    private let disposedBag = DisposeBag()
+    private var indexPath: IndexPath?
+    var delegate: RecentHistoryTableViewCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        setButtonConfiguration()
         addUIComponents()
         configureConstraints()
     }
@@ -49,20 +65,13 @@ final class RecentHistoryTableViewCell: UITableViewCell {
         keywordLabel.text = keyword
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        disposedBag = DisposeBag()
+    func setIndexPath(indexPath: IndexPath) {
+        self.indexPath = indexPath
     }
     
 }
 
 private extension RecentHistoryTableViewCell {
-    
-    func setButtonConfiguration() {
-        removeKeywordButton.translatesAutoresizingMaskIntoConstraints = false
-        removeKeywordButton.setImage(SystemImage.remove, for: .normal)
-        removeKeywordButton.tintColor = .kcsGray2
-    }
     
     func addUIComponents() {
         contentView.addSubview(iconImageView)
@@ -92,8 +101,4 @@ private extension RecentHistoryTableViewCell {
         ])
     }
     
-}
-
-extension Reactive where Base: RecentHistoryTableViewCell {
-    var removeKeywordButtonTapped: ControlEvent<Void> { base.removeKeywordButton.rx.tap }
 }

@@ -97,12 +97,9 @@ final class SearchViewController: UIViewController {
                     withIdentifier: RecentHistoryTableViewCell.identifier
                 ) as? RecentHistoryTableViewCell else { return RecentHistoryTableViewCell() }
                 cell.setUIContents(keyword: keyword)
+                cell.setIndexPath(indexPath: indexPath)
                 cell.selectionStyle = .none
-                cell.rx.removeKeywordButtonTapped
-                    .bind { [weak self] in
-                        self?.viewModel.action(input: .deleteSearchHistory(index: indexPath.row))
-                    }
-                    .disposed(by: cell.disposedBag)
+                cell.delegate = self
                 
                 return cell
             }
@@ -283,6 +280,14 @@ private extension SearchViewController {
         viewModel.action(input: .searchButtonTapped(text: text))
     }
 
+}
+
+extension SearchViewController: RecentHistoryTableViewCellDelegate {
+    
+    func removeKeywordButtonTapped(index: Int) {
+        viewModel.action(input: .deleteSearchHistory(index: index))
+    }
+    
 }
 
 extension SearchViewController: UITableViewDelegate {
