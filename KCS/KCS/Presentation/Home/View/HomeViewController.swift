@@ -839,7 +839,7 @@ private extension HomeViewController {
             refreshButtonBottomConstraint.constant = -283
             locationButtonBottomConstraint.constant = -283
             moreStoreButtonBottomConstraint.constant = -283
-            researchKeywordButtonBottomConstraint.constant = -260
+            researchKeywordButtonBottomConstraint.constant = -283
             mapView.mapView.logoMargin.bottom = 248
         }
         UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
