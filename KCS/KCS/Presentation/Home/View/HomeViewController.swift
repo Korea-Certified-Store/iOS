@@ -515,13 +515,14 @@ private extension HomeViewController {
     func bindSearch() {
         searchObserver
             .bind { [weak self] keyword in
-                guard let center = self?.view.center else { return }
+                guard let self = self else { return }
+                let center = mapView.mapView.projection.latlng(from: view.center)
                 let centerPosition = Location(
-                    longitude: Double(center.x),
-                    latitude: Double(center.y)
+                    longitude: center.lng,
+                    latitude: center.lat
                 )
-                self?.viewModel.action(input: .search(location: centerPosition, keyword: keyword))
-                self?.searchBarView.searchTextField.text = keyword
+                viewModel.action(input: .search(location: centerPosition, keyword: keyword))
+                searchBarView.searchTextField.text = keyword
             }
             .disposed(by: disposeBag)
         
