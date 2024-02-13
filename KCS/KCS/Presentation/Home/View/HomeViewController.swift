@@ -119,7 +119,7 @@ final class HomeViewController: UIViewController {
         map.showIndoorLevelPicker = false
         map.showLocationButton = false
         map.mapView.logoAlign = .rightBottom
-        map.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 55, right: 0)
+        map.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 69, right: 0)
         map.mapView.touchDelegate = self
         map.mapView.addCameraDelegate(delegate: self)
         
@@ -208,15 +208,15 @@ final class HomeViewController: UIViewController {
     }()
     
     private lazy var refreshButtonBottomConstraint = refreshButton.bottomAnchor.constraint(
-        equalTo: mapView.bottomAnchor, constant: -90
+        equalTo: mapView.bottomAnchor, constant: -104
     )
     
     private lazy var moreStoreButtonBottomConstraint = moreStoreButton.bottomAnchor.constraint(
-        equalTo: mapView.bottomAnchor, constant: -90
+        equalTo: mapView.bottomAnchor, constant: -104
     )
     
     private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
-        equalTo: mapView.bottomAnchor, constant: -90
+        equalTo: mapView.bottomAnchor, constant: -104
     )
     
     private lazy var searchBarViewLeadingConstraint = searchBarView.leadingAnchor.constraint(
@@ -345,6 +345,9 @@ private extension HomeViewController {
                 storeListViewController.updateList(stores: stores)
                 if stores.isEmpty {
                     showToast(message: "가게가 없습니다.")
+                    storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
+                } else {
+                    storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
                 }
             }
             .disposed(by: disposeBag)
@@ -692,10 +695,10 @@ private extension HomeViewController {
                 sheet.prefersGrabberVisible = true
                 sheet.preferredCornerRadius = 15
             }
-            refreshButtonBottomConstraint.constant = -90
-            locationButtonBottomConstraint.constant = -90
-            moreStoreButtonBottomConstraint.constant = -90
-            mapView.mapView.logoMargin.bottom = 55
+            refreshButtonBottomConstraint.constant = -104
+            locationButtonBottomConstraint.constant = -104
+            moreStoreButtonBottomConstraint.constant = -104
+            mapView.mapView.logoMargin.bottom = 69
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
             }
@@ -817,6 +820,9 @@ private extension HomeViewController {
         storeListViewController.updateList(stores: stores)
         if stores.isEmpty {
             showToast(message: "가게가 없습니다.")
+            storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
+        } else {
+            storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
         }
     }
     
