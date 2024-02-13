@@ -23,7 +23,16 @@ final class StoreListViewController: UIViewController {
         label.textColor = .black
         
         return label
-    }()    
+    }()
+    
+    private let storeCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.pretendard(size: 14, weight: .regular)
+        label.textColor = .kcsGray1
+        
+        return label
+    }()
     
     private let divideView: UIView = {
         let view = UIView()
@@ -90,6 +99,10 @@ final class StoreListViewController: UIViewController {
         viewModel.action(input: .updateList(stores: stores))
     }
     
+    func updateCountLabel(text: String) {
+        storeCountLabel.text = text
+    }
+    
     func scrollToPreviousCell(indexPath: IndexPath) {
         storeTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
@@ -107,17 +120,23 @@ private extension StoreListViewController {
     func addUIComponents() {
         view.addSubview(storeTableView)
         view.addSubview(titleLabel)
+        view.addSubview(storeCountLabel)
         view.addSubview(divideView)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25),
             titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            divideView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 27),
+            storeCountLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            storeCountLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            divideView.topAnchor.constraint(equalTo: storeCountLabel.bottomAnchor, constant: 23),
             divideView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             divideView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             divideView.heightAnchor.constraint(equalToConstant: 0.5)

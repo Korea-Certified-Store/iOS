@@ -345,6 +345,9 @@ private extension HomeViewController {
                 storeListViewController.updateList(stores: stores)
                 if stores.isEmpty {
                     showToast(message: "가게가 없습니다.")
+                    storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
+                } else {
+                    storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
                 }
             }
             .disposed(by: disposeBag)
@@ -817,6 +820,9 @@ private extension HomeViewController {
         storeListViewController.updateList(stores: stores)
         if stores.isEmpty {
             showToast(message: "가게가 없습니다.")
+            storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
+        } else {
+            storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
         }
     }
     
