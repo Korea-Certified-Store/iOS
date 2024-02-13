@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol RecentHistoryTableViewCellDelegate {
+protocol RecentHistoryTableViewCellDelegate: AnyObject {
     
     func removeKeywordButtonTapped(index: Int)
     
