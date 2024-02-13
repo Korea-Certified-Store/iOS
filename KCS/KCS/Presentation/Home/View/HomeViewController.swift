@@ -60,7 +60,13 @@ final class HomeViewController: UIViewController {
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                // TODO: 검색 초기화 처리
+                guard let self = self else { return }
+                viewModel.action(
+                    input: .refresh(
+                        requestLocation: makeRequestLocation(projection: mapView.mapView.projection)
+                    )
+                )
+                refreshCameraPositionObserver.accept(mapView.mapView.cameraPosition)
                 view.searchTextField.text = ""
             })
             .disposed(by: disposeBag)
