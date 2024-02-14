@@ -8,11 +8,9 @@
 import UIKit
 import RxRelay
 import RxSwift
+import RxCocoa
 
-// TODO: 전체삭제 기능 구현
 final class RecentHistoryHeaderView: UITableViewHeaderFooterView {
-    
-    private let disposeBag = DisposeBag()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -34,6 +32,11 @@ final class RecentHistoryHeaderView: UITableViewHeaderFooterView {
         config.baseForegroundColor = .placeholderText
         config.attributedTitle = attributedTitle
         button.configuration = config
+        button.rx.tap
+            .bind { [weak self] in
+                self?.delegate?.clearAllButtonButtonTapped()
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
@@ -45,6 +48,9 @@ final class RecentHistoryHeaderView: UITableViewHeaderFooterView {
         
         return view
     }()
+    
+    private let disposeBag = DisposeBag()
+    var delegate: RecentHistoryHeaderViewDelegate?
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)

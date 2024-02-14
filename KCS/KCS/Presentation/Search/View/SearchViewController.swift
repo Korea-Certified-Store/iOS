@@ -283,10 +283,14 @@ private extension SearchViewController {
 
 }
 
-extension SearchViewController: RecentHistoryTableViewCellDelegate {
+extension SearchViewController: RecentHistoryTableViewCellDelegate, RecentHistoryHeaderViewDelegate {
     
     func removeKeywordButtonTapped(index: Int) {
         viewModel.action(input: .deleteSearchHistory(index: index))
+    }
+    
+    func clearAllButtonButtonTapped() {
+        viewModel.action(input: .deleteAllHistory)
     }
     
 }
@@ -304,7 +308,9 @@ extension SearchViewController: UITableViewDelegate {
         if tableView == recentHistoryTableView {
             guard let headerView = tableView.dequeueReusableHeaderFooterView(
                 withIdentifier: RecentHistoryHeaderView.identifier
-            ) else { return nil }
+            ) as? RecentHistoryHeaderView else { return nil }
+            headerView.delegate = self
+            
             return headerView
         } else { return nil }
     }
