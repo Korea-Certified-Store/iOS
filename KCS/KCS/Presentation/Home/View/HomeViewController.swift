@@ -400,6 +400,9 @@ private extension HomeViewController {
                     storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
                     storeListViewController.updateList(stores: stores)
                 }
+                safeFilterButton.isEnabled = true
+                exemplaryFilterButton.isEnabled = true
+                goodPriceFilterButton.isEnabled = true
             }
             .disposed(by: disposeBag)
     }
@@ -518,6 +521,7 @@ private extension HomeViewController {
                 viewModel.action(
                     input: .filterButtonTapped(activatedFilter: type)
                 )
+                button.isEnabled = false
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
