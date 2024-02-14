@@ -63,32 +63,32 @@ final class RecentHistoryHeaderView: UITableViewHeaderFooterView {
 private extension RecentHistoryHeaderView {
     
     func addUIComponents() {
-        addSubview(titleLabel)
-        addSubview(clearAllButton)
-        addSubview(divideView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(clearAllButton)
+        contentView.addSubview(divideView)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            clearAllButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            clearAllButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+            clearAllButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            clearAllButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
         
         NSLayoutConstraint.activate([
             divideView.heightAnchor.constraint(equalToConstant: 1),
-            divideView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            divideView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            divideView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            divideView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            divideView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            divideView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
     func setup() {
-        backgroundColor = .white
+        contentView.backgroundColor = .white
     }
     
 }
