@@ -80,6 +80,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     ),
                     deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
                         repository: searchKeywordRepository
+                    ), 
+                    deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
+                        repository: searchKeywordRepository
                     )
                 ),
                 searchObserver: searchObserver
