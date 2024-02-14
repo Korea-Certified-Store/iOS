@@ -87,6 +87,7 @@ final class SearchViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorInset = .zero
+        tableView.keyboardDismissMode = .onDrag
         tableView.showsVerticalScrollIndicator = false
         
         return tableView
@@ -120,6 +121,7 @@ final class SearchViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorInset = .zero
+        tableView.keyboardDismissMode = .onDrag
         tableView.showsVerticalScrollIndicator = false
 
         return tableView
