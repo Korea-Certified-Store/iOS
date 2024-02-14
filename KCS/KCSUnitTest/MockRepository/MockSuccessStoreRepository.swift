@@ -87,7 +87,7 @@ struct MockSuccessStoreRepository: StoreRepository {
 
     // 임시 메소드
     func getStoreInformation(location: Location, keyword: String) -> RxSwift.Observable<[KCS.Store]> {
-        return Observable<[]>
+        return Observable<[KCS.Store]>
     }
         
 }
