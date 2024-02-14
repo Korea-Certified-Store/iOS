@@ -355,9 +355,13 @@ extension SearchViewController: UITableViewDelegate {
 extension SearchViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let text = textField.text {
-            search(text: text)
-            return true
+        if let text = textField.text?.trimmingCharacters(in: .whitespaces) {
+            if !text.isEmpty {
+                search(text: text)
+                return true
+            } else {
+                return false
+            }
         } else {
             return false
         }
