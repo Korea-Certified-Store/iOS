@@ -16,6 +16,7 @@ target 'KCS' do
   pod 'NMapsMap'
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
+  pod 'RxKeyboard'
 
 post_install do |installer|
     installer.pods_project.targets.each do |target|
