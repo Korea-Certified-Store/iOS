@@ -60,12 +60,26 @@ final class HomeViewController: UIViewController {
         view.xMarkImageView.rx
             .tapGesture()
             .when(.ended)
-            .subscribe(onNext: { [weak self] _ in
-                // TODO: 검색 초기화 처리
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .map { [weak self] _ -> RequestLocation? in
+                guard let self = self else { return nil }
+                refreshButton.animationFire()
                 view.layer.borderWidth = 0
                 view.searchTextField.text = ""
                 self?.researchKeywordButton.isHidden = true
                 self?.refreshButton.isHidden = false
+                return makeRequestLocation(projection: mapView.mapView.projection)
+            }
+            .observe(on: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
+            .subscribe(onNext: { [weak self] requestLocation in
+                guard let self = self,
+                      let location = requestLocation else { return }
+                viewModel.action(
+                    input: .refresh(
+                        requestLocation: location
+                    )
+                )
+                refreshCameraPositionObserver.accept(mapView.mapView.cameraPosition)
             })
             .disposed(by: disposeBag)
         
@@ -143,7 +157,8 @@ final class HomeViewController: UIViewController {
             }
             .observe(on: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
             .bind { [weak self] requestLocation in
-                guard let self = self, let location = requestLocation else { return }
+                guard let self = self,
+                      let location = requestLocation else { return }
                 viewModel.action(
                     input: .refresh(
                         requestLocation: location
