@@ -14,5 +14,6 @@ enum SystemImage {
     static let refresh = UIImage(systemName: "arrow.clockwise")
     static let remove = UIImage(systemName: "xmark.circle.fill")
     static let search = UIImage(systemName: "magnifyingglass")
+    static let exclamationmark = UIImage(systemName: "exclamationmark.circle")
     
 }
