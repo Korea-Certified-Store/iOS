@@ -58,9 +58,7 @@ final class SearchViewController: UIViewController {
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                if let text = view.searchTextField.text {
-                    self?.search(text: text)
-                }
+                view.searchTextField.becomeFirstResponder()
             })
             .disposed(by: disposeBag)
         
