@@ -13,7 +13,7 @@ final class RefreshButton: UIButton {
     
     private let originalTitle: AttributedString = {
         var titleAttribute = AttributedString("현 지도에서 검색")
-        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
+        titleAttribute.font = UIFont.pretendard(size: 11, weight: .medium)
         
         return titleAttribute
     }()
@@ -69,7 +69,7 @@ private extension RefreshButton {
         config.baseBackgroundColor = .white
         config.baseForegroundColor = .black
         config.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)
-        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 10)
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 11)
         config.imagePlacement = .leading
         config.imagePadding = 5
         config.cornerStyle = .capsule

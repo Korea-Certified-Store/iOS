@@ -55,13 +55,17 @@ final class HomeViewController: UIViewController {
         let view = SearchBarView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.searchTextField.delegate = self
+        view.layer.borderColor = UIColor.placeholderText.cgColor
         
         view.xMarkImageView.rx
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 // TODO: 검색 초기화 처리
+                view.layer.borderWidth = 0
                 view.searchTextField.text = ""
+                self?.researchKeywordButton.isHidden = true
+                self?.refreshButton.isHidden = false
             })
             .disposed(by: disposeBag)
         
@@ -168,6 +172,34 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    private lazy var researchKeywordButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        var config = UIButton.Configuration.filled()
+        var titleAttribute = AttributedString("현재 키워드로 재검색")
+        titleAttribute.font = UIFont.pretendard(size: 11, weight: .medium)
+        config.attributedTitle = titleAttribute
+        config.baseBackgroundColor = .white
+        config.baseForegroundColor = .black
+        config.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 11)
+        config.imagePlacement = .leading
+        config.imagePadding = 5
+        config.cornerStyle = .capsule
+        config.contentInsets = NSDirectionalEdgeInsets(top: 11, leading: 10, bottom: 11, trailing: 10)
+        button.configuration = config
+        button.isHidden = true
+        button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
+        button.rx.tap
+            .bind { [weak self] in
+                guard let text = self?.searchBarView.searchTextField.text else { return }
+                self?.searchObserver.accept(text)
+            }
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
     private lazy var backStoreListButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -194,7 +226,6 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .clear
         view.isUserInteractionEnabled = false
         view.alpha = 0.4
-        
         view.rx.tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
@@ -217,6 +248,10 @@ final class HomeViewController: UIViewController {
     
     private lazy var locationButtonBottomConstraint = locationButton.bottomAnchor.constraint(
         equalTo: mapView.bottomAnchor, constant: -104
+    )
+    
+    private lazy var researchKeywordButtonBottomConstraint = researchKeywordButton.bottomAnchor.constraint(
+        equalTo: mapView.bottomAnchor, constant: -90
     )
     
     private lazy var searchBarViewLeadingConstraint = searchBarView.leadingAnchor.constraint(
@@ -518,13 +553,18 @@ private extension HomeViewController {
     func bindSearch() {
         searchObserver
             .bind { [weak self] keyword in
-                guard let center = self?.view.center else { return }
+                guard let self = self else { return }
+                let center = mapView.mapView.projection.latlng(from: view.center)
                 let centerPosition = Location(
-                    longitude: Double(center.x),
-                    latitude: Double(center.y)
+                    longitude: center.lng,
+                    latitude: center.lat
                 )
-                self?.viewModel.action(input: .search(location: centerPosition, keyword: keyword))
-                self?.searchBarView.searchTextField.text = keyword
+                viewModel.action(input: .search(location: centerPosition, keyword: keyword))
+                searchBarView.searchTextField.text = keyword
+                searchBarView.layer.borderWidth = 1.5
+                researchKeywordButton.isHidden = false
+                refreshButton.isHidden = true
+                moreStoreButton.isHidden = true
             }
             .disposed(by: disposeBag)
         
@@ -718,6 +758,7 @@ private extension HomeViewController {
         mapView.addSubview(compassView)
         mapView.addSubview(refreshButton)
         mapView.addSubview(moreStoreButton)
+        mapView.addSubview(researchKeywordButton)
         mapView.addSubview(backStoreListButton)
         mapView.addSubview(dimView)
     }
@@ -763,7 +804,7 @@ private extension HomeViewController {
         
         NSLayoutConstraint.activate([
             refreshButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
-            refreshButton.widthAnchor.constraint(equalToConstant: 110),
+            refreshButton.widthAnchor.constraint(equalToConstant: 119),
             refreshButton.heightAnchor.constraint(equalToConstant: 35),
             refreshButtonBottomConstraint
         ])
@@ -772,6 +813,12 @@ private extension HomeViewController {
             moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             moreStoreButton.widthAnchor.constraint(equalToConstant: 97),
             moreStoreButtonBottomConstraint
+        ])
+        
+        NSLayoutConstraint.activate([
+            researchKeywordButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            researchKeywordButton.widthAnchor.constraint(equalToConstant: 140),
+            researchKeywordButtonBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
@@ -788,11 +835,13 @@ private extension HomeViewController {
             refreshButtonBottomConstraint.constant = -260
             locationButtonBottomConstraint.constant = -260
             moreStoreButtonBottomConstraint.constant = -260
+            researchKeywordButtonBottomConstraint.constant = -260
             mapView.mapView.logoMargin.bottom = 225
         } else {
             refreshButtonBottomConstraint.constant = -283
             locationButtonBottomConstraint.constant = -283
             moreStoreButtonBottomConstraint.constant = -283
+            researchKeywordButtonBottomConstraint.constant = -283
             mapView.mapView.logoMargin.bottom = 248
         }
         UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
