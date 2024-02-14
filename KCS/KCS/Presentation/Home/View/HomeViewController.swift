@@ -66,8 +66,8 @@ final class HomeViewController: UIViewController {
                 refreshButton.animationFire()
                 view.layer.borderWidth = 0
                 view.searchTextField.text = ""
-                self?.researchKeywordButton.isHidden = true
-                self?.refreshButton.isHidden = false
+                researchKeywordButton.isHidden = true
+                refreshButton.isHidden = false
                 return makeRequestLocation(projection: mapView.mapView.projection)
             }
             .observe(on: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
@@ -267,7 +267,7 @@ final class HomeViewController: UIViewController {
     )
     
     private lazy var researchKeywordButtonBottomConstraint = researchKeywordButton.bottomAnchor.constraint(
-        equalTo: mapView.bottomAnchor, constant: -90
+        equalTo: mapView.bottomAnchor, constant: -104
     )
     
     private lazy var searchBarViewLeadingConstraint = searchBarView.leadingAnchor.constraint(
@@ -754,6 +754,7 @@ private extension HomeViewController {
             refreshButtonBottomConstraint.constant = -104
             locationButtonBottomConstraint.constant = -104
             moreStoreButtonBottomConstraint.constant = -104
+            researchKeywordButtonBottomConstraint.constant = -104
             mapView.mapView.logoMargin.bottom = 69
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
