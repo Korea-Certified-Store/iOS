@@ -31,7 +31,7 @@ final class MoreStoreButton: UIButton {
     
     func setFetchCount(fetchCount: FetchCountContent) {
         var titleAttribute = AttributedString(String(format: "결과 더보기 %d/%d", fetchCount.fetchCount, fetchCount.maxFetchCount))
-        titleAttribute.font = UIFont.pretendard(size: 10, weight: .medium)
+        titleAttribute.font = UIFont.pretendard(size: 11, weight: .medium)
         configuration?.attributedTitle = titleAttribute
     }
     
