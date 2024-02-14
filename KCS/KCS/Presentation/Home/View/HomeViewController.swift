@@ -332,7 +332,6 @@ private extension HomeViewController {
                 status: locationManager.authorizationStatus
             )
         )
-        navigationController?.isNavigationBarHidden = true
     }
     
     func bind() {
@@ -428,12 +427,6 @@ private extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.locationButtonImageNameOutput
-            .bind { [weak self] imageName in
-                self?.locationButton.setImage(UIImage(named: imageName), for: .normal)
-            }
-            .disposed(by: disposeBag)
-        
         viewModel.requestLocationAuthorizationOutput
             .bind { [weak self] in
                 self?.presentLocationAlert()
@@ -512,6 +505,7 @@ private extension HomeViewController {
                 cameraUpdate.animation = .none
                 mapView.mapView.moveCamera(cameraUpdate)
                 mapView.mapView.positionMode = .direction
+                locationButton.setImage(UIImage.locationButtonNormal, for: .normal)
                 refresh()
             }
             .disposed(by: disposeBag)
@@ -603,6 +597,7 @@ private extension HomeViewController {
                     mapView.mapView.moveCamera(cameraUpdate)
                 }
                 mapView.mapView.positionMode = .normal
+                locationButton.setImage(UIImage.locationButtonNone, for: .normal)
             }
             .disposed(by: disposeBag)
         
@@ -621,6 +616,7 @@ private extension HomeViewController {
                 cameraUpdate.animationDuration = 0.5
                 mapView.mapView.moveCamera(cameraUpdate)
                 mapView.mapView.positionMode = .normal
+                locationButton.setImage(UIImage.locationButtonNone, for: .normal)
                 
                 guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
                 if let clickedMarker = clickedMarker {
@@ -913,16 +909,6 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
         if reason == NMFMapChangedByGesture {
             locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-        }
-    }
-    
-    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        if reason == NMFMapChangedByDeveloper {
-            viewModel.action(input:
-                    .checkLocationAuthorizationWhenCameraDidChange(
-                        status: locationManager.authorizationStatus
-                    )
-            )
         }
     }
     
