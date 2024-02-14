@@ -84,6 +84,8 @@
 		59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478BE2B5BEA08002FEF9E /* RequestLocation.swift */; };
 		59F478C12B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478C02B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift */; };
 		A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802D1F52B5277620091FDE7 /* CertificationLabel.swift */; };
+		A81B5A662B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81B5A652B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift */; };
+		A81B5A682B7C81DB0042307A /* DeleteAllHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81B5A672B7C81DB0042307A /* DeleteAllHistoryUseCase.swift */; };
 		A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */; };
 		A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */; };
 		A81EFBC02B5D597400D0C0D7 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A81EFBB72B5D597400D0C0D7 /* Pretendard-Medium.ttf */; };
@@ -137,7 +139,7 @@
 		A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */; };
 		A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */; };
 		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
-		A8CD526A2B7B7DFE00917786 /* RecentHistoryTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CD52692B7B7DFD00917786 /* RecentHistoryTableViewCellDelegate.swift */; };
+		A8CD526A2B7B7DFE00917786 /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CD52692B7B7DFD00917786 /* CellDelegate.swift */; };
 		A8E53C252B77DDF3003FCBA2 /* StoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */; };
 		A8E53C272B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */; };
 		A8E53C2B2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */; };
@@ -241,6 +243,8 @@
 		71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCSUnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96F7AFBA49BAE4D780F6D753 /* Pods-KCS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.debug.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.debug.xcconfig"; sourceTree = "<group>"; };
 		A802D1F52B5277620091FDE7 /* CertificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationLabel.swift; sourceTree = "<group>"; };
+		A81B5A652B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAllHistoryUseCaseImpl.swift; sourceTree = "<group>"; };
+		A81B5A672B7C81DB0042307A /* DeleteAllHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAllHistoryUseCase.swift; sourceTree = "<group>"; };
 		A81EFBB22B5BC57800D0C0D7 /* OpenClosedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClosedContent.swift; sourceTree = "<group>"; };
 		A81EFBB42B5D477600D0C0D7 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		A81EFBB72B5D597400D0C0D7 /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
@@ -294,7 +298,7 @@
 		A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCase.swift; sourceTree = "<group>"; };
 		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
-		A8CD52692B7B7DFD00917786 /* RecentHistoryTableViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentHistoryTableViewCellDelegate.swift; sourceTree = "<group>"; };
+		A8CD52692B7B7DFD00917786 /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
 		A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreStorage.swift; sourceTree = "<group>"; };
 		A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepositoryImpl.swift; sourceTree = "<group>"; };
 		A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchStoresRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -390,7 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				59503A512B751FCC0006CF35 /* SearchViewModel.swift */,
-				A8CD52692B7B7DFD00917786 /* RecentHistoryTableViewCellDelegate.swift */,
+				A8CD52692B7B7DFD00917786 /* CellDelegate.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -408,6 +412,7 @@
 				A8722EFF2B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift */,
 				A8722F012B764620001ED988 /* SaveRecentSearchKeywordUseCase.swift */,
 				A8722F052B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift */,
+				A81B5A672B7C81DB0042307A /* DeleteAllHistoryUseCase.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -427,6 +432,7 @@
 				A8722EFD2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift */,
 				A8722F032B764679001ED988 /* SaveRecentSearchKeywordUseCaseImpl.swift */,
 				A8722F072B7662F5001ED988 /* DeleteRecentSearchKeywordUseCaseImpl.swift */,
+				A81B5A652B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1179,7 +1185,7 @@
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A83367C32B72714C00E0A844 /* ThirdOnboardingView.swift in Sources */,
 				59503A562B756CCD0006CF35 /* SearchBarView.swift in Sources */,
-				A8CD526A2B7B7DFE00917786 /* RecentHistoryTableViewCellDelegate.swift in Sources */,
+				A8CD526A2B7B7DFE00917786 /* CellDelegate.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */,
 				A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */,
@@ -1194,6 +1200,7 @@
 				59C306B42B50015500862625 /* APIResponse.swift in Sources */,
 				A8722EFE2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift in Sources */,
 				59B8865A2B6E3B40005750EF /* StoreInformationViewController.swift in Sources */,
+				A81B5A682B7C81DB0042307A /* DeleteAllHistoryUseCase.swift in Sources */,
 				A8722F002B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift in Sources */,
 				A83367C12B726E2600E0A844 /* SecondOnboardingView.swift in Sources */,
 				A8A7E0622B652F0D00D015E5 /* MarkerContents.swift in Sources */,
@@ -1217,6 +1224,7 @@
 				5977BE982B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift in Sources */,
 				A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */,
 				591A887F2B384E600059E40F /* SceneDelegate.swift in Sources */,
+				A81B5A662B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift in Sources */,
 				A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */,
 				A8ACB7DD2B58E3DE00540BD1 /* OpenClosedType.swift in Sources */,
 				59503A5C2B75927F0006CF35 /* SearchStoreResponse.swift in Sources */,

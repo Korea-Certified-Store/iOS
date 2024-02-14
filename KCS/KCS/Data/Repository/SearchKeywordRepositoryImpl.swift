@@ -44,6 +44,10 @@ final class SearchKeywordRepositoryImpl: SearchKeywordsRepository {
         persist(keywords: keywords)
     }
     
+    func deleteAllHistory() {
+        persist(keywords: [])
+    }
+    
 }
 
 private extension SearchKeywordRepositoryImpl {

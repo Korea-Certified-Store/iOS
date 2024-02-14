@@ -299,10 +299,27 @@ private extension SearchViewController {
 
 }
 
-extension SearchViewController: RecentHistoryTableViewCellDelegate {
+extension SearchViewController: RecentHistoryTableViewCellDelegate, RecentHistoryHeaderViewDelegate {
     
     func removeKeywordButtonTapped(index: Int) {
         viewModel.action(input: .deleteSearchHistory(index: index))
+    }
+    
+    func clearAllButtonButtonTapped() {
+        if !recentHistoryDataSource.snapshot().itemIdentifiers.isEmpty {
+            let clearAllAlert = UIAlertController(
+                title: "삭제하기",
+                message: "최근 검색어를 모두 삭제하시겠습니까?",
+                preferredStyle: .alert
+            )
+            let delete = UIAlertAction(title: "삭제", style: .default) { [weak self] _ in
+                self?.viewModel.action(input: .deleteAllHistory)
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            clearAllAlert.addAction(delete)
+            clearAllAlert.addAction(cancel)
+            present(clearAllAlert, animated: true)
+        }
     }
     
 }
@@ -320,7 +337,9 @@ extension SearchViewController: UITableViewDelegate {
         if tableView == recentHistoryTableView {
             guard let headerView = tableView.dequeueReusableHeaderFooterView(
                 withIdentifier: RecentHistoryHeaderView.identifier
-            ) else { return nil }
+            ) as? RecentHistoryHeaderView else { return nil }
+            headerView.delegate = self
+            
             return headerView
         } else { return nil }
     }
