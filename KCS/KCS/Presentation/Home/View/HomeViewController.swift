@@ -576,6 +576,9 @@ private extension HomeViewController {
                 researchKeywordButton.isHidden = false
                 refreshButton.isHidden = true
                 moreStoreButton.isHidden = true
+                safeFilterButton.isEnabled = false
+                exemplaryFilterButton.isEnabled = false
+                goodPriceFilterButton.isEnabled = false
             }
             .disposed(by: disposeBag)
         
@@ -598,6 +601,9 @@ private extension HomeViewController {
                 }
                 mapView.mapView.positionMode = .normal
                 locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+                safeFilterButton.isEnabled = true
+                exemplaryFilterButton.isEnabled = true
+                goodPriceFilterButton.isEnabled = true
             }
             .disposed(by: disposeBag)
         
@@ -617,6 +623,9 @@ private extension HomeViewController {
                 mapView.mapView.moveCamera(cameraUpdate)
                 mapView.mapView.positionMode = .normal
                 locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+                safeFilterButton.isEnabled = true
+                exemplaryFilterButton.isEnabled = true
+                goodPriceFilterButton.isEnabled = true
                 
                 guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
                 if let clickedMarker = clickedMarker {
