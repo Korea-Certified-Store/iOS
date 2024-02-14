@@ -35,6 +35,7 @@ final class SearchViewController: UIViewController {
     private lazy var searchBarView: SearchBarView = {
         let view = SearchBarView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.searchTextField.enablesReturnKeyAutomatically = true
         view.searchTextField.delegate = self
         
         Observable.merge(
@@ -51,6 +52,7 @@ final class SearchViewController: UIViewController {
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 view.searchTextField.text = ""
+                view.searchTextField.becomeFirstResponder()
             })
             .disposed(by: disposeBag)
         
@@ -83,6 +85,12 @@ final class SearchViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorInset = .zero
+        tableView.rx.tapGesture()
+            .when(.ended)
+            .bind { [weak self] _ in
+                self?.searchBarView.searchTextField.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
         
         return tableView
     }()
@@ -115,7 +123,13 @@ final class SearchViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorInset = .zero
-        
+        tableView.rx.tapGesture()
+            .when(.ended)
+            .bind { [weak self] _ in
+                self?.searchBarView.searchTextField.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
+
         return tableView
     }()
     
@@ -262,6 +276,12 @@ private extension SearchViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.searchOutput
+            .bind { [weak self] keyword in
+                self?.search(text: keyword)
+            }
+            .disposed(by: disposeBag)
+        
         RxKeyboard.instance.visibleHeight
             .asObservable()
             .bind { [weak self] keyboardHeight in
@@ -354,11 +374,9 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = textField.text {
-            search(text: text)
-            return true
-        } else {
-            return false
+            viewModel.action(input: .returnKeyTapped(text: text))
         }
+        return false
     }
     
 }

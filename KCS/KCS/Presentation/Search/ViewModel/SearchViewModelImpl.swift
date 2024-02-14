@@ -17,9 +17,9 @@ final class SearchViewModelImpl: SearchViewModel {
     var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase
     var deleteAllHistoryUseCase: DeleteAllHistoryUseCase
     
-    let generateDataOutput = PublishRelay<[String]>()
     let recentSearchKeywordsOutput = PublishRelay<[String]>()
     let autoCompleteKeywordsOutput = PublishRelay<[String]>()
+    let searchOutput = PublishRelay<String>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
@@ -43,6 +43,8 @@ final class SearchViewModelImpl: SearchViewModel {
             deleteSearchHistory(index: index)
         case .deleteAllHistory:
             deleteAllHistory()
+        case .returnKeyTapped(let text):
+            returnKeyTapped(text: text)
         }
     }
     
@@ -81,6 +83,12 @@ private extension SearchViewModelImpl {
                 self?.recentSearchKeywordsOutput.accept(keywords)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func returnKeyTapped(text: String) {
+        if !text.trimmingCharacters(in: .whitespaces).isEmpty {
+            searchOutput.accept(text)
+        }
     }
     
 }
