@@ -52,6 +52,7 @@ final class SearchViewController: UIViewController {
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 view.searchTextField.text = ""
+                view.searchTextField.becomeFirstResponder()
             })
             .disposed(by: disposeBag)
         
@@ -86,6 +87,12 @@ final class SearchViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorInset = .zero
+        tableView.rx.tapGesture()
+            .when(.ended)
+            .bind { [weak self] _ in
+                self?.searchBarView.searchTextField.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
         
         return tableView
     }()
@@ -118,7 +125,13 @@ final class SearchViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorInset = .zero
-        
+        tableView.rx.tapGesture()
+            .when(.ended)
+            .bind { [weak self] _ in
+                self?.searchBarView.searchTextField.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
+
         return tableView
     }()
     
