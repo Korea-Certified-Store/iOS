@@ -42,45 +42,39 @@ extension UIViewController {
         }
     }
     
-    func showToast(message: String) {
+    func makeToastView(message: String) -> UIStackView {
+        let toastImageView = UIImageView(
+            image: SystemImage.toast?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        )
+        toastImageView.translatesAutoresizingMaskIntoConstraints = false
+        
         let toastLabel = UILabel()
-        toastLabel.translatesAutoresizingMaskIntoConstraints = false
-        toastLabel.backgroundColor = .black.withAlphaComponent(0.6)
+        toastLabel.backgroundColor = .clear
         toastLabel.textColor = .white
-        toastLabel.font = .pretendard(size: 14, weight: .medium)
-        toastLabel.textAlignment = .center
+        toastLabel.font = .pretendard(size: 14, weight: .regular)
         toastLabel.text = message
-        toastLabel.alpha = 0
-        toastLabel.setLayerCorner(cornerRadius: 12)
         toastLabel.clipsToBounds = true
-        view.addSubview(toastLabel)
+        
+        let toastView = UIStackView()
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        toastView.backgroundColor = .black.withAlphaComponent(0.65)
+        toastView.alpha = 0
+        toastView.setLayerCorner(cornerRadius: 20)
+        toastView.isLayoutMarginsRelativeArrangement = true
+        toastView.layoutMargins = UIEdgeInsets(top: 11, left: 15, bottom: 10, right: 13)
+        toastView.spacing = 8
+        toastView.alignment = .center
+        toastView.distribution = .fill
+        
+        toastView.addArrangedSubview(toastImageView)
+        toastView.addArrangedSubview(toastLabel)
+        
         NSLayoutConstraint.activate([
-            toastLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toastLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            toastLabel.widthAnchor.constraint(equalToConstant: 150),
-            toastLabel.heightAnchor.constraint(equalToConstant: 30)
+            toastImageView.widthAnchor.constraint(equalToConstant: 16),
+            toastImageView.heightAnchor.constraint(equalToConstant: 16)
         ])
         
-        UIView.animate(
-            withDuration: 0.4,
-            delay: 0,
-            options: .curveEaseIn,
-            animations: {
-                toastLabel.alpha = 1.0
-            },
-            completion: { _ in
-                UIView.animate(
-                    withDuration: 0.8,
-                    delay: 1.4,
-                    options: .curveEaseOut,
-                    animations: {
-                        toastLabel.alpha = 0.0
-                    }, completion: { _ in
-                        toastLabel.removeFromSuperview()
-                    }
-                )
-            }
-        )
+        return toastView
     }
     
 }

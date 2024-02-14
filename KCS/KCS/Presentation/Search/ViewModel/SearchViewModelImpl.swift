@@ -20,6 +20,7 @@ final class SearchViewModelImpl: SearchViewModel {
     let recentSearchKeywordsOutput = PublishRelay<[String]>()
     let autoCompleteKeywordsOutput = PublishRelay<[String]>()
     let searchOutput = PublishRelay<String>()
+    var noKeywordToastOutput = PublishRelay<Void>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
@@ -57,7 +58,7 @@ private extension SearchViewModelImpl {
             emitRecentHistory()
         } else {
             // TODO: autoCompletion usecase 실행(debounce) 후 generateDataOutput.accept([]) (자동완성으로 전환)
-            autoCompleteKeywordsOutput.accept([text])
+            emitRecentHistory()
         }
     }
      
@@ -88,6 +89,8 @@ private extension SearchViewModelImpl {
     func returnKeyTapped(text: String) {
         if !text.trimmingCharacters(in: .whitespaces).isEmpty {
             searchOutput.accept(text)
+        } else {
+            noKeywordToastOutput.accept(())
         }
     }
     

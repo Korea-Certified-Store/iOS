@@ -53,7 +53,7 @@ final class StoreListViewController: UIViewController {
     }()
     
     private let emptyListImageView: UIImageView = {
-        let imageView = UIImageView(image: SystemImage.exclamationmark)
+        let imageView = UIImageView(image: SystemImage.toast)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.tintColor = .placeholderText
         

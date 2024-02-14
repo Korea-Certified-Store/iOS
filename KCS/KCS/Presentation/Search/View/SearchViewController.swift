@@ -60,9 +60,7 @@ final class SearchViewController: UIViewController {
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                if let text = view.searchTextField.text {
-                    self?.search(text: text)
-                }
+                view.searchTextField.becomeFirstResponder()
             })
             .disposed(by: disposeBag)
         
@@ -284,6 +282,12 @@ private extension SearchViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.noKeywordToastOutput
+            .bind { [weak self] _ in
+                self?.showToast(message: "검색어를 입력하세요.")
+            }
+            .disposed(by: disposeBag)
+        
         RxKeyboard.instance.visibleHeight
             .asObservable()
             .bind { [weak self] keyboardHeight in
@@ -315,6 +319,42 @@ private extension SearchViewController {
         dismissViewController()
         searchObserver.accept(text)
         viewModel.action(input: .searchButtonTapped(text: text))
+    }
+    
+    func showToast(message: String) {
+        let toastView = makeToastView(message: message)
+        
+        view.addSubview(toastView)
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.centerXAnchor
+            ),
+            toastView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: -view.frame.maxY + recentHistoryTableView.frame.maxY - 24
+            )
+        ])
+        
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0,
+            options: .curveEaseIn,
+            animations: {
+                toastView.alpha = 1.0
+            },
+            completion: { _ in
+                UIView.animate(
+                    withDuration: 0.6,
+                    delay: 2.0,
+                    options: .curveEaseOut,
+                    animations: {
+                        toastView.alpha = 0.0
+                    }, completion: { _ in
+                        toastView.removeFromSuperview()
+                    }
+                )
+            }
+        )
     }
 
 }

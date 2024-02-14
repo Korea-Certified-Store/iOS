@@ -394,7 +394,7 @@ private extension HomeViewController {
                 }
                 storeInformationViewDismiss()
                 if stores.isEmpty {
-                    showToast(message: "가게가 없습니다.")
+                    showToast(message: "검색 결과가 존재하지 않습니다.")
                     storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
                     storeListViewController.emptyStoreList()
                 } else {
@@ -885,13 +885,48 @@ private extension HomeViewController {
             ))
         }
         if stores.isEmpty {
-            showToast(message: "가게가 없습니다.")
+            showToast(message: "검색 결과가 존재하지 않습니다.")
             storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
             storeListViewController.emptyStoreList()
         } else {
             storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
             storeListViewController.updateList(stores: stores)
         }
+    }
+    
+    func showToast(message: String) {
+        let toastView = makeToastView(message: message)
+        
+        let windows = UIApplication.shared.connectedScenes
+        let scene = windows.first { $0.activationState == .foregroundActive }
+        if let windowScene = scene as? UIWindowScene, let windowView = windowScene.windows.first {
+            windowView.addSubview(toastView)
+            NSLayoutConstraint.activate([
+                toastView.centerXAnchor.constraint(equalTo: windowView.safeAreaLayoutGuide.centerXAnchor),
+                toastView.bottomAnchor.constraint(equalTo: windowView.safeAreaLayoutGuide.bottomAnchor, constant: -61)
+            ])
+        }
+        
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0,
+            options: .curveEaseIn,
+            animations: {
+                toastView.alpha = 1.0
+            },
+            completion: { _ in
+                UIView.animate(
+                    withDuration: 0.6,
+                    delay: 2.0,
+                    options: .curveEaseOut,
+                    animations: {
+                        toastView.alpha = 0.0
+                    }, completion: { _ in
+                        toastView.removeFromSuperview()
+                    }
+                )
+            }
+        )
     }
     
 }
