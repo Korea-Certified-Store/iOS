@@ -28,13 +28,14 @@ enum SearchViewModelInputCase {
     case searchButtonTapped(text: String)
     case deleteSearchHistory(index: Int)
     case deleteAllHistory
+    case returnKeyTapped(text: String)
     
 }
 
 protocol SearchViewModelOutput {
     
-    var generateDataOutput: PublishRelay<[String]> { get }
     var recentSearchKeywordsOutput: PublishRelay<[String]> { get }
     var autoCompleteKeywordsOutput: PublishRelay<[String]> { get }
+    var searchOutput: PublishRelay<String> { get }
     
 }
