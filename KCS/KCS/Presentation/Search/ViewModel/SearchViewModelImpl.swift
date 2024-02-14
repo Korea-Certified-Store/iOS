@@ -58,7 +58,7 @@ private extension SearchViewModelImpl {
             emitRecentHistory()
         } else {
             // TODO: autoCompletion usecase 실행(debounce) 후 generateDataOutput.accept([]) (자동완성으로 전환)
-            autoCompleteKeywordsOutput.accept([text])
+            emitRecentHistory()
         }
     }
      

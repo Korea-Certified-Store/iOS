@@ -324,15 +324,16 @@ private extension SearchViewController {
     func showToast(message: String) {
         let toastView = makeToastView(message: message)
         
-        let windows = UIApplication.shared.connectedScenes
-        let scene = windows.first { $0.activationState == .foregroundActive }
-        if let windowScene = scene as? UIWindowScene, let windowView = windowScene.windows.first {
-            windowView.addSubview(toastView)
-            NSLayoutConstraint.activate([
-                toastView.centerXAnchor.constraint(equalTo: windowView.safeAreaLayoutGuide.centerXAnchor),
-                toastView.bottomAnchor.constraint(equalTo: windowView.safeAreaLayoutGuide.bottomAnchor, constant: -372)
-            ])
-        }
+        view.addSubview(toastView)
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.centerXAnchor
+            ),
+            toastView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: -view.frame.maxY + recentHistoryTableView.frame.maxY - 24
+            )
+        ])
         
         UIView.animate(
             withDuration: 0.4,
