@@ -26,4 +26,9 @@ struct MockFailStoreRepository: StoreRepository {
         throw StoreRepositoryError.wrongStoreId
     }
     
+    // 임시 메소드
+    func getStoreInformation(location: Location, keyword: String) -> RxSwift.Observable<[KCS.Store]> {
+        return Observable<[]>
+    }
+    
 }
