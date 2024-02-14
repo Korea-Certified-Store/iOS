@@ -695,10 +695,10 @@ private extension HomeViewController {
     }
     
     func makeRequestLocation(projection: NMFProjection) -> RequestLocation {
-        let northWestPoint = projection.latlng(from: CGPoint(x: 0, y: 0))
-        let southWestPoint = projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
-        let southEastPoint = projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-        let northEastPoint = projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+        let northWestPoint = projection.latlng(from: CGPoint(x: 0 + 10, y: filterButtonStackView.frame.maxY + 10))
+        let southWestPoint = projection.latlng(from: CGPoint(x: 0 + 10, y: locationButton.frame.minY - 10))
+        let southEastPoint = projection.latlng(from: CGPoint(x: view.frame.width - 10, y: locationButton.frame.minY - 10))
+        let northEastPoint = projection.latlng(from: CGPoint(x: view.frame.width - 10, y: filterButtonStackView.frame.maxY))
         
         return RequestLocation(
             northWest: Location(
