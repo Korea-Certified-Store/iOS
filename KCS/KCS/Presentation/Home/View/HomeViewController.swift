@@ -66,8 +66,8 @@ final class HomeViewController: UIViewController {
                 refreshButton.animationFire()
                 view.layer.borderWidth = 0
                 view.searchTextField.text = ""
-                self?.researchKeywordButton.isHidden = true
-                self?.refreshButton.isHidden = false
+                researchKeywordButton.isHidden = true
+                refreshButton.isHidden = false
                 return makeRequestLocation(projection: mapView.mapView.projection)
             }
             .observe(on: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
@@ -393,12 +393,13 @@ private extension HomeViewController {
                     }
                 }
                 storeInformationViewDismiss()
-                storeListViewController.updateList(stores: stores)
                 if stores.isEmpty {
                     showToast(message: "가게가 없습니다.")
                     storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
+                    storeListViewController.emptyStoreList()
                 } else {
                     storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
+                    storeListViewController.updateList(stores: stores)
                 }
             }
             .disposed(by: disposeBag)
@@ -882,12 +883,13 @@ private extension HomeViewController {
                 certificationType: certificationType
             ))
         }
-        storeListViewController.updateList(stores: stores)
         if stores.isEmpty {
             showToast(message: "가게가 없습니다.")
             storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
+            storeListViewController.emptyStoreList()
         } else {
             storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
+            storeListViewController.updateList(stores: stores)
         }
     }
     

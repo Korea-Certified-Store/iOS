@@ -52,6 +52,24 @@ final class StoreListViewController: UIViewController {
         return tableView
     }()
     
+    private let emptyListImageView: UIImageView = {
+        let imageView = UIImageView(image: SystemImage.exclamationmark)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.tintColor = .placeholderText
+        
+        return imageView
+    }()
+    
+    private let emptyListLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "주변 가게 정보를 찾을 수 없습니다"
+        label.font = UIFont.pretendard(size: 14, weight: .medium)
+        label.textColor = .placeholderText
+        
+        return label
+    }()
+    
     enum Section {
         case store
     }
@@ -97,10 +115,15 @@ final class StoreListViewController: UIViewController {
     
     func updateList(stores: [Store]) {
         viewModel.action(input: .updateList(stores: stores))
+        storeTableView.isHidden = false
     }
     
     func updateCountLabel(text: String) {
         storeCountLabel.text = text
+    }
+    
+    func emptyStoreList() {
+        storeTableView.isHidden = true
     }
     
     func scrollToPreviousCell(indexPath: IndexPath) {
@@ -118,6 +141,8 @@ private extension StoreListViewController {
     }
     
     func addUIComponents() {
+        view.addSubview(emptyListImageView)
+        view.addSubview(emptyListLabel)
         view.addSubview(storeTableView)
         view.addSubview(titleLabel)
         view.addSubview(storeCountLabel)
@@ -140,6 +165,18 @@ private extension StoreListViewController {
             divideView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             divideView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             divideView.heightAnchor.constraint(equalToConstant: 0.5)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emptyListImageView.topAnchor.constraint(equalTo: divideView.bottomAnchor, constant: 234),
+            emptyListImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyListImageView.widthAnchor.constraint(equalToConstant: 45),
+            emptyListImageView.heightAnchor.constraint(equalToConstant: 45)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emptyListLabel.topAnchor.constraint(equalTo: emptyListImageView.bottomAnchor, constant: 16),
+            emptyListLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
