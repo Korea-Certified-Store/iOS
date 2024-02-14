@@ -20,7 +20,6 @@ final class HomeViewModelImpl: HomeViewModel {
     let getStoreInformationOutput = PublishRelay<Store>()
     let refreshDoneOutput = PublishRelay<Bool>()
     let locationButtonOutput = PublishRelay<NMFMyPositionMode>()
-    let locationButtonImageNameOutput = PublishRelay<String>()
     let setMarkerOutput = PublishRelay<MarkerContents>()
     let locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
@@ -69,8 +68,6 @@ final class HomeViewModelImpl: HomeViewModel {
             setMarker(store: store, certificationType: certificationType)
         case .checkLocationAuthorization(let status):
             checkLocationAuthorization(status: status)
-        case .checkLocationAuthorizationWhenCameraDidChange(let status):
-            checkLocationAuthorizationWhenCameraDidChange(status: status)
         case .search(let location, let keyword):
             search(location: location, keyword: keyword)
         case .resetFilters:
@@ -255,17 +252,6 @@ private extension HomeViewModelImpl {
             locationStatusAuthorizedWhenInUseOutput.accept(())
         default:
             locationAuthorizationStatusDeniedOutput.accept(())
-        }
-    }
-    
-    func checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus) {
-        switch status {
-        case .denied, .restricted, .notDetermined:
-            locationButtonImageNameOutput.accept("LocationButtonNone")
-        case .authorizedWhenInUse:
-            locationButtonImageNameOutput.accept("LocationButtonNormal")
-        default:
-            break
         }
     }
     
