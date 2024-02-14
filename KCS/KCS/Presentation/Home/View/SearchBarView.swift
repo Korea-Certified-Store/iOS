@@ -32,6 +32,20 @@ final class SearchBarView: UIView {
         }
         .disposed(by: disposeBag)
         
+        let keyboardToolbar = UIToolbar()
+        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .close, target: nil, action: nil)
+        doneBarButton.rx.tap
+            .bind { _ in
+                textField.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
+        keyboardToolbar.items = [flexBarButton, doneBarButton]
+        keyboardToolbar.sizeToFit()
+        keyboardToolbar.tintColor = UIColor.systemGray
+        
+        textField.inputAccessoryView = keyboardToolbar
+        
         return textField
     }()
     
