@@ -290,7 +290,20 @@ extension SearchViewController: RecentHistoryTableViewCellDelegate, RecentHistor
     }
     
     func clearAllButtonButtonTapped() {
-        viewModel.action(input: .deleteAllHistory)
+        if !recentHistoryDataSource.snapshot().itemIdentifiers.isEmpty {
+            let clearAllAlert = UIAlertController(
+                title: "삭제하기",
+                message: "최근 검색어를 모두 삭제하시겠습니까?",
+                preferredStyle: .alert
+            )
+            let delete = UIAlertAction(title: "삭제", style: .default) { [weak self] _ in
+                self?.viewModel.action(input: .deleteAllHistory)
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            clearAllAlert.addAction(delete)
+            clearAllAlert.addAction(cancel)
+            present(clearAllAlert, animated: true)
+        }
     }
     
 }
