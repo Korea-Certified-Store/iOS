@@ -20,6 +20,7 @@ final class SearchViewModelImpl: SearchViewModel {
     let recentSearchKeywordsOutput = PublishRelay<[String]>()
     let autoCompleteKeywordsOutput = PublishRelay<[String]>()
     let searchOutput = PublishRelay<String>()
+    var noKeywordToastOutput = PublishRelay<Void>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
@@ -88,6 +89,8 @@ private extension SearchViewModelImpl {
     func returnKeyTapped(text: String) {
         if !text.trimmingCharacters(in: .whitespaces).isEmpty {
             searchOutput.accept(text)
+        } else {
+            noKeywordToastOutput.accept(())
         }
     }
     

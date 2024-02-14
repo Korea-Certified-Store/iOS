@@ -37,5 +37,6 @@ protocol SearchViewModelOutput {
     var recentSearchKeywordsOutput: PublishRelay<[String]> { get }
     var autoCompleteKeywordsOutput: PublishRelay<[String]> { get }
     var searchOutput: PublishRelay<String> { get }
+    var noKeywordToastOutput: PublishRelay<Void> { get }
     
 }
