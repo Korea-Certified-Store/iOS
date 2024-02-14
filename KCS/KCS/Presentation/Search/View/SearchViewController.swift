@@ -8,8 +8,8 @@
 import UIKit
 import RxSwift
 import RxRelay
+import RxKeyboard
 
-// TODO: 키보드 높이에 따른 레이아웃 수정
 final class SearchViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
@@ -146,6 +146,15 @@ final class SearchViewController: UIViewController {
         return view
     }()
     
+    private lazy var tableViewBottomConstraint = [
+        autoCompletionTableView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor
+        ),
+        recentHistoryTableView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor
+        )
+    ]
+    
     private let searchObserver: PublishRelay<String>
     private let viewModel: SearchViewModel
     
@@ -226,16 +235,16 @@ private extension SearchViewController {
         NSLayoutConstraint.activate([
             recentHistoryTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
             recentHistoryTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            recentHistoryTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            recentHistoryTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            recentHistoryTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([
             autoCompletionTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
             autoCompletionTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            autoCompletionTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            autoCompletionTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            autoCompletionTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
+        
+        NSLayoutConstraint.activate(tableViewBottomConstraint)
     }
     
     func bind() {
@@ -252,6 +261,13 @@ private extension SearchViewController {
                 self?.recentHistoryTableView.isHidden = true
                 self?.autoCompletionTableView.isHidden = false
                 self?.generateAutoCompletionData(data: keywords)
+            }
+            .disposed(by: disposeBag)
+        
+        RxKeyboard.instance.visibleHeight
+            .asObservable()
+            .bind { [weak self] keyboardHeight in
+                self?.tableViewBottomConstraint.forEach({ $0.constant = -keyboardHeight })
             }
             .disposed(by: disposeBag)
     }
