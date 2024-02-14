@@ -87,12 +87,6 @@ final class SearchViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorInset = .zero
-        tableView.rx.tapGesture()
-            .when(.ended)
-            .bind { [weak self] _ in
-                self?.searchBarView.searchTextField.resignFirstResponder()
-            }
-            .disposed(by: disposeBag)
         
         return tableView
     }()
@@ -125,12 +119,6 @@ final class SearchViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorInset = .zero
-        tableView.rx.tapGesture()
-            .when(.ended)
-            .bind { [weak self] _ in
-                self?.searchBarView.searchTextField.resignFirstResponder()
-            }
-            .disposed(by: disposeBag)
 
         return tableView
     }()
@@ -332,7 +320,7 @@ extension SearchViewController: RecentHistoryTableViewCellDelegate, RecentHistor
                 message: "최근 검색어를 모두 삭제하시겠습니까?",
                 preferredStyle: .alert
             )
-            let delete = UIAlertAction(title: "삭제", style: .default) { [weak self] _ in
+            let delete = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
                 self?.viewModel.action(input: .deleteAllHistory)
             }
             let cancel = UIAlertAction(title: "취소", style: .cancel)
