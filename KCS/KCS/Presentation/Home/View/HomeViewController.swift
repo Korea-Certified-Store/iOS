@@ -59,7 +59,7 @@ final class HomeViewController: UIViewController {
         view.xMarkImageView.rx
             .tapGesture()
             .when(.ended)
-            .debounce(.milliseconds(10), scheduler: MainScheduler())
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
                 refreshButton.animationFire()
