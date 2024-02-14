@@ -137,6 +137,7 @@
 		A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */; };
 		A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */; };
 		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
+		A8CD526A2B7B7DFE00917786 /* RecentHistoryTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CD52692B7B7DFD00917786 /* RecentHistoryTableViewCellDelegate.swift */; };
 		A8E53C252B77DDF3003FCBA2 /* StoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */; };
 		A8E53C272B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */; };
 		A8E53C2B2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */; };
@@ -293,6 +294,7 @@
 		A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCase.swift; sourceTree = "<group>"; };
 		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
+		A8CD52692B7B7DFD00917786 /* RecentHistoryTableViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentHistoryTableViewCellDelegate.swift; sourceTree = "<group>"; };
 		A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreStorage.swift; sourceTree = "<group>"; };
 		A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepositoryImpl.swift; sourceTree = "<group>"; };
 		A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchStoresRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				59503A512B751FCC0006CF35 /* SearchViewModel.swift */,
+				A8CD52692B7B7DFD00917786 /* RecentHistoryTableViewCellDelegate.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1176,6 +1179,7 @@
 				59C306CF2B50399C00862625 /* RequestLocationDTO.swift in Sources */,
 				A83367C32B72714C00E0A844 /* ThirdOnboardingView.swift in Sources */,
 				59503A562B756CCD0006CF35 /* SearchBarView.swift in Sources */,
+				A8CD526A2B7B7DFE00917786 /* RecentHistoryTableViewCellDelegate.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */,
 				A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */,
@@ -1393,7 +1397,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 7CQAR4CYZX;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCS/Resource/Info.plist;
@@ -1432,7 +1436,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7CQAR4CYZX;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCS/Resource/Info.plist;

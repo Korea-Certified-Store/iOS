@@ -47,11 +47,7 @@ private extension SearchViewModelImpl {
     
     func textChanged(text: String) {
         if text.isEmpty {
-            fetchRecentSearchKeywordUseCase.execute()
-                .bind { [weak self] keywords in
-                    self?.recentSearchKeywordsOutput.accept(keywords)
-                }
-                .disposed(by: disposeBag)
+            emitRecentHistory()
         } else {
             // TODO: autoCompletion usecase 실행(debounce) 후 generateDataOutput.accept([]) (자동완성으로 전환)
             autoCompleteKeywordsOutput.accept([text])
@@ -66,6 +62,15 @@ private extension SearchViewModelImpl {
     
     func deleteSearchHistory(index: Int) {
         deleteRecentSearchKeywordUseCase.execute(index: index)
+        emitRecentHistory()
+    }
+    
+    func emitRecentHistory() {
+        fetchRecentSearchKeywordUseCase.execute()
+            .bind { [weak self] keywords in
+                self?.recentSearchKeywordsOutput.accept(keywords)
+            }
+            .disposed(by: disposeBag)
     }
     
 }

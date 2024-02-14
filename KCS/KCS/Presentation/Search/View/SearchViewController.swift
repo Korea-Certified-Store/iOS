@@ -92,13 +92,14 @@ final class SearchViewController: UIViewController {
     private lazy var recentHistoryDataSource: UITableViewDiffableDataSource<RecentHistorySection, String> = {
         let dataSource = UITableViewDiffableDataSource<RecentHistorySection, String>(
             tableView: recentHistoryTableView,
-            cellProvider: { (tableView, _, keyword) in
+            cellProvider: { (tableView, indexPath, keyword) in
                 guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: RecentHistoryTableViewCell.identifier
                 ) as? RecentHistoryTableViewCell else { return RecentHistoryTableViewCell() }
                 cell.setUIContents(keyword: keyword)
+                cell.setIndexPath(indexPath: indexPath)
                 cell.selectionStyle = .none
-                // TODO: cell 삭제 바인딩
+                cell.delegate = self
                 
                 return cell
             }
@@ -259,11 +260,12 @@ private extension SearchViewController {
 
 private extension SearchViewController {
     
+    // TODO: Reload Data 수정 필요
     func generateRecentHistoryData(data: [String]) {
         var snapshot = NSDiffableDataSourceSnapshot<RecentHistorySection, String>()
         snapshot.appendSections([.recentHistory])
         snapshot.appendItems(data)
-        recentHistoryDataSource.apply(snapshot, animatingDifferences: false)
+        recentHistoryDataSource.applySnapshotUsingReloadData(snapshot)
     }
     
     func generateAutoCompletionData(data: [String]) {
@@ -279,6 +281,14 @@ private extension SearchViewController {
         viewModel.action(input: .searchButtonTapped(text: text))
     }
 
+}
+
+extension SearchViewController: RecentHistoryTableViewCellDelegate {
+    
+    func removeKeywordButtonTapped(index: Int) {
+        viewModel.action(input: .deleteSearchHistory(index: index))
+    }
+    
 }
 
 extension SearchViewController: UITableViewDelegate {
