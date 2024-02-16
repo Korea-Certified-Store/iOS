@@ -21,7 +21,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     var baseURL: String? {
         switch self {
         case .getStores, .getSearchStores:
-            return getURL(type: .develop)
+            return getURL(type: .product)
         case .getImage(let url):
             return url
         }
@@ -30,11 +30,11 @@ extension StoreAPI: Router, URLRequestConvertible {
     var path: String {
         switch self {
         case .getStores:
-            return "/v2/storecertification/byLocation"
+            return "/byLocation/v2"
         case .getImage:
             return ""
         case .getSearchStores:
-            return "/v1/storecertification/byLocationAndKeyword"
+            return "/byLocationAndKeyword/v1"
         }
     }
     
