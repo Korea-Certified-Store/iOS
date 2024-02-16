@@ -1,0 +1,73 @@
+name: test-ci
+
+# 트리거 조건 (push 하거나 PR 하면 하단의 jobs를 실행하겠다는 뜻)
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+# 작업 중복 실행 방지
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# 트리거 발생 시 실행할 작업들 
+jobs:
+  test:  
+    runs-on: macos-13  # iOS 플랫폼에서 실행
+    env:
+      DEVELOPER_DIR: "/Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer"
+    strategy:
+      matrix:
+        xcode:
+          # - "14.1"  # Swift 5.7
+          # - "14.3"  # Swift 5.8
+          - "15.0"  # Swift 5.9
+
+    steps:
+      - name: Runner Overview
+        run: system_profiler SPHardwareDataType SPSoftwareDataType SPDeveloperToolsDataType
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy secrets to github action
+        env:
+          ENV: ${{ secrets.ENV }}  # repository secrets 에서 가져옴
+          OCCUPY_SECRET_DIR: ./KCS  # 레포지토리 내 파일 의 위치
+          OCCUPY_SECRET_DIR_FILE_NAME: Secret.xcconfig  # 파일 이름
+
+        run: |
+          echo $ENV >> $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
+      
+      # CocoaPod 을 사용하므로 설치후 테스트 진행
+      - name: Install CocoaPods
+        run: |
+          pod install --repo-update --project-directory=KCS
+
+      - name: Build
+        env:
+          platform: ${{ 'iOS Simulator' }}
+        run: |
+          # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
+          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}' | sed -e "s/ Simulator$//"`
+          xcodebuild build-for-testing -workspace KCS/KCS.xcworkspace -scheme "KCS" -destination "platform=$platform,name=$device" -skipPackagePluginValidation -skipMacroValidation
+      
+      - name: Test
+        env:
+          platform: ${{ 'iOS Simulator' }}
+        run: |
+          # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
+          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}' | sed -e "s/ Simulator$//"`
+          xcodebuild test-without-building -workspace KCS/KCS.xcworkspace -scheme "KCS" -destination "platform=$platform,name=$device" -skipPackagePluginValidation -skipMacroValidation
+
+
+      # - name: Test
+      #   run: |          
+      #     xcodebuild clean test -workspace KCS/KCS.xcworkspace -scheme "KCS" -destination "platform=iOS Simulator,name=iPhone 14 Pro"
