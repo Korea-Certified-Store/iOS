@@ -35,7 +35,7 @@ final class SummaryView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
-        label.textColor = UIColor.grayLabel
+        label.textColor = UIColor.kcsGray1
         
         return label
     }()
@@ -53,7 +53,7 @@ final class SummaryView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 13, weight: .regular)
-        label.textColor = UIColor.grayLabel
+        label.textColor = UIColor.kcsGray1
         
         return label
     }()

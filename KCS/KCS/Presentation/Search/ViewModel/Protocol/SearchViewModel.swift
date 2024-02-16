@@ -12,6 +12,7 @@ protocol SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
     var fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase { get }
     var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase { get }
     var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase { get }
+    var deleteAllHistoryUseCase: DeleteAllHistoryUseCase { get }
     
 }
 
@@ -23,16 +24,19 @@ protocol SearchViewModelInput {
 
 enum SearchViewModelInputCase {
     
-    case viewWillAppear
     case textChanged(text: String)
     case searchButtonTapped(text: String)
     case deleteSearchHistory(index: Int)
+    case deleteAllHistory
+    case returnKeyTapped(text: String)
     
 }
 
 protocol SearchViewModelOutput {
     
-    var generateDataOutput: PublishRelay<[String]> { get }
     var recentSearchKeywordsOutput: PublishRelay<[String]> { get }
+    var autoCompleteKeywordsOutput: PublishRelay<[String]> { get }
+    var searchOutput: PublishRelay<String> { get }
+    var noKeywordToastOutput: PublishRelay<Void> { get }
     
 }

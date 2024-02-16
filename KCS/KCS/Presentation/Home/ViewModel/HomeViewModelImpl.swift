@@ -20,7 +20,6 @@ final class HomeViewModelImpl: HomeViewModel {
     let getStoreInformationOutput = PublishRelay<Store>()
     let refreshDoneOutput = PublishRelay<Bool>()
     let locationButtonOutput = PublishRelay<NMFMyPositionMode>()
-    let locationButtonImageNameOutput = PublishRelay<String>()
     let setMarkerOutput = PublishRelay<MarkerContents>()
     let locationAuthorizationStatusDeniedOutput = PublishRelay<Void>()
     let locationStatusNotDeterminedOutput = PublishRelay<Void>()
@@ -33,6 +32,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
     let searchStoresOutput = PublishRelay<[Store]>()
     let searchOneStoreOutput = PublishRelay<Store>()
+    let moreStoreButtonHiddenOutput = PublishRelay<Void>()
     
     var dependency: HomeDependency
     
@@ -68,12 +68,17 @@ final class HomeViewModelImpl: HomeViewModel {
             setMarker(store: store, certificationType: certificationType)
         case .checkLocationAuthorization(let status):
             checkLocationAuthorization(status: status)
-        case .checkLocationAuthorizationWhenCameraDidChange(let status):
-            checkLocationAuthorizationWhenCameraDidChange(status: status)
         case .search(let location, let keyword):
             search(location: location, keyword: keyword)
         case .resetFilters:
             resetFilters()
+        case .compareCameraPosition(let refreshCameraPosition, let endMoveCameraPosition, let refreshCameraPoint, let endMoveCameraPoint):
+            compareCameraPosition(
+                refreshCameraPosition: refreshCameraPosition,
+                endMoveCameraPosition: endMoveCameraPosition,
+                refreshCameraPoint: refreshCameraPoint,
+                endMoveCameraPoint: endMoveCameraPoint
+            )
         }
     }
     
@@ -250,23 +255,11 @@ private extension HomeViewModelImpl {
         }
     }
     
-    func checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus) {
-        switch status {
-        case .denied, .restricted, .notDetermined:
-            locationButtonImageNameOutput.accept("LocationButtonNone")
-        case .authorizedWhenInUse:
-            locationButtonImageNameOutput.accept("LocationButtonNormal")
-        default:
-            break
-        }
-    }
-    
     func search(location: Location, keyword: String) {
         getSearchStoresUseCase.execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
-                dependency.resetFetchCount()
-                dependency.maxFetchCount = 1
+                dependency.fetchCount = stores.count
                 if stores.count == 1 {
                     guard let oneStore = stores.first else { return }
                     searchOneStoreOutput.accept(oneStore)
@@ -279,6 +272,22 @@ private extension HomeViewModelImpl {
     
     func resetFilters() {
         dependency.activatedFilter = []
+    }
+    
+    func compareCameraPosition(
+        refreshCameraPosition: NMFCameraPosition,
+        endMoveCameraPosition: NMFCameraPosition,
+        refreshCameraPoint: CGPoint,
+        endMoveCameraPoint: CGPoint
+    ) {
+        let zoomDifference = abs(refreshCameraPosition.zoom - endMoveCameraPosition.zoom)
+        let pointDifference = sqrt(
+            pow(refreshCameraPoint.x - endMoveCameraPoint.x, 2) +
+            pow(refreshCameraPoint.y - endMoveCameraPoint.y, 2)
+        )
+        if zoomDifference > 0.5 || pointDifference > 50 {
+            moreStoreButtonHiddenOutput.accept(())
+        }
     }
     
 }

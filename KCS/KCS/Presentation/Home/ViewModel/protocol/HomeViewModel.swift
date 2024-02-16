@@ -37,9 +37,14 @@ enum HomeViewModelInputCase {
     case dimViewTapGestureEnded
     case setMarker(store: Store, certificationType: CertificationType)
     case checkLocationAuthorization(status: CLAuthorizationStatus)
-    case checkLocationAuthorizationWhenCameraDidChange(status: CLAuthorizationStatus)
     case search(location: Location, keyword: String)
     case resetFilters
+    case compareCameraPosition(
+        refreshCameraPosition: NMFCameraPosition,
+        endMoveCameraPosition: NMFCameraPosition,
+        refreshCameraPoint: CGPoint,
+        endMoveCameraPoint: CGPoint
+    )
     
 }
 
@@ -55,7 +60,6 @@ protocol HomeViewModelOutput {
     var refreshDoneOutput: PublishRelay<Bool> { get }
     var filteredStoresOutput: PublishRelay<[FilteredStores]> { get }
     var locationButtonOutput: PublishRelay<NMFMyPositionMode> { get }
-    var locationButtonImageNameOutput: PublishRelay<String> { get }
     var setMarkerOutput: PublishRelay<MarkerContents> { get }
     var locationAuthorizationStatusDeniedOutput: PublishRelay<Void> { get }
     var locationStatusNotDeterminedOutput: PublishRelay<Void> { get }
@@ -67,5 +71,6 @@ protocol HomeViewModelOutput {
     var dimViewTapGestureEndedOutput: PublishRelay<Void> { get }
     var searchStoresOutput: PublishRelay<[Store]> { get }
     var searchOneStoreOutput: PublishRelay<Store> { get }
+    var moreStoreButtonHiddenOutput: PublishRelay<Void> { get }
     
 }

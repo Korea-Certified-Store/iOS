@@ -44,7 +44,7 @@ final class OnboardingViewController: UIViewController {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.pageIndicatorTintColor = .swipeBar
+        pageControl.pageIndicatorTintColor = .kcsGray2
         pageControl.currentPageIndicatorTintColor = .primary1
         pageControl.numberOfPages = onboardingViews.count
         pageControl.currentPage = 0

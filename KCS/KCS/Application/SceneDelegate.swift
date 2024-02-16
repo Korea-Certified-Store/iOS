@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import NMapsMap
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -54,12 +55,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             )
         )
         let searchObserver = PublishRelay<String>()
+        let refreshCameraPositionObserver = BehaviorRelay<NMFCameraPosition>(value: NMFCameraPosition())
         let searchKeywordRepository = SearchKeywordRepositoryImpl(
             userDefaults: UserDefaults()
         )
         let homeViewController = HomeViewController(
             viewModel: viewModel,
-            storeInformationViewController: storeInformationViewController,
             storeListViewController: StoreListViewController(
                 viewModel: StoreListViewModelImpl(
                     fetchImageUseCase: FetchImageUseCaseImpl(
@@ -68,8 +69,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 ),
                 listCellSelectedObserver: listCellSelectedObserver
             ),
-            summaryViewHeightObserver: summaryViewHeightObserver,
-            listCellSelectedObserver: listCellSelectedObserver,
+            storeInformationViewController: storeInformationViewController,
             searchViewController: SearchViewController(
                 viewModel: SearchViewModelImpl(
                     fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
@@ -77,14 +77,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     ),
                     saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
                         repository: searchKeywordRepository
-                    ), 
+                    ),
                     deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ), 
+                    deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
                         repository: searchKeywordRepository
                     )
                 ),
                 searchObserver: searchObserver
-            ),
-            searchObserver: searchObserver
+            ), 
+            summaryViewHeightObserver: summaryViewHeightObserver,
+            listCellSelectedObserver: listCellSelectedObserver,
+            searchObserver: searchObserver, 
+            refreshCameraPositionObserver: refreshCameraPositionObserver
         )
         
         var rootViewController: UIViewController

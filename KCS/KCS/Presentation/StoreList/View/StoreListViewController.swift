@@ -23,12 +23,21 @@ final class StoreListViewController: UIViewController {
         label.textColor = .black
         
         return label
-    }()    
+    }()
+    
+    private let storeCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.pretendard(size: 14, weight: .regular)
+        label.textColor = .kcsGray1
+        
+        return label
+    }()
     
     private let divideView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = UIColor.kcsGray2
         
         return view
     }()
@@ -41,6 +50,24 @@ final class StoreListViewController: UIViewController {
         tableView.backgroundColor = .white
         
         return tableView
+    }()
+    
+    private let emptyListImageView: UIImageView = {
+        let imageView = UIImageView(image: SystemImage.toast)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.tintColor = .placeholderText
+        
+        return imageView
+    }()
+    
+    private let emptyListLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "주변 가게 정보를 찾을 수 없습니다"
+        label.font = UIFont.pretendard(size: 14, weight: .medium)
+        label.textColor = .placeholderText
+        
+        return label
     }()
     
     enum Section {
@@ -88,6 +115,15 @@ final class StoreListViewController: UIViewController {
     
     func updateList(stores: [Store]) {
         viewModel.action(input: .updateList(stores: stores))
+        storeTableView.isHidden = false
+    }
+    
+    func updateCountLabel(text: String) {
+        storeCountLabel.text = text
+    }
+    
+    func emptyStoreList() {
+        storeTableView.isHidden = true
     }
     
     func scrollToPreviousCell(indexPath: IndexPath) {
@@ -105,22 +141,42 @@ private extension StoreListViewController {
     }
     
     func addUIComponents() {
+        view.addSubview(emptyListImageView)
+        view.addSubview(emptyListLabel)
         view.addSubview(storeTableView)
         view.addSubview(titleLabel)
+        view.addSubview(storeCountLabel)
         view.addSubview(divideView)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25),
             titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            divideView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 27),
+            storeCountLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            storeCountLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            divideView.topAnchor.constraint(equalTo: storeCountLabel.bottomAnchor, constant: 23),
             divideView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             divideView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             divideView.heightAnchor.constraint(equalToConstant: 0.5)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emptyListImageView.topAnchor.constraint(equalTo: divideView.bottomAnchor, constant: 234),
+            emptyListImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyListImageView.widthAnchor.constraint(equalToConstant: 45),
+            emptyListImageView.heightAnchor.constraint(equalToConstant: 45)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emptyListLabel.topAnchor.constraint(equalTo: emptyListImageView.bottomAnchor, constant: 16),
+            emptyListLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([

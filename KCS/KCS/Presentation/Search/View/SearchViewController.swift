@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import RxKeyboard
 
 final class SearchViewController: UIViewController {
     
@@ -19,7 +20,7 @@ final class SearchViewController: UIViewController {
         
         var config = UIButton.Configuration.plain()
         config.image = .backButton
-        config.baseForegroundColor = .grayLabel
+        config.baseForegroundColor = .kcsGray1
         button.configuration = config
         
         button.rx.tap
@@ -34,6 +35,7 @@ final class SearchViewController: UIViewController {
     private lazy var searchBarView: SearchBarView = {
         let view = SearchBarView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.searchTextField.enablesReturnKeyAutomatically = true
         view.searchTextField.delegate = self
         
         Observable.merge(
@@ -50,6 +52,7 @@ final class SearchViewController: UIViewController {
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 view.searchTextField.text = ""
+                view.searchTextField.becomeFirstResponder()
             })
             .disposed(by: disposeBag)
         
@@ -57,48 +60,104 @@ final class SearchViewController: UIViewController {
             .tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                if let text = view.searchTextField.text {
-                    self?.searchObserver.accept(text)
-                }
+                view.searchTextField.becomeFirstResponder()
             })
             .disposed(by: disposeBag)
         
         return view
     }()
     
-    private lazy var searchTableView: UITableView = {
+    enum RecentHistorySection {
+        case recentHistory
+    }
+    
+    enum AutoCompletionSection {
+        case autoCompletion
+    }
+    
+    private lazy var recentHistoryTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(RecentHistoryTableViewCell.self, forCellReuseIdentifier: RecentHistoryTableViewCell.identifier)
+        tableView.register(RecentHistoryHeaderView.self, forHeaderFooterViewReuseIdentifier: RecentHistoryHeaderView.identifier)
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
-        tableView.backgroundColor = .white
-        tableView.rowHeight = 49
+        tableView.bounces = false
+        tableView.sectionHeaderTopPadding = 0
+        tableView.cellLayoutMarginsFollowReadableWidth = false
+        tableView.separatorInset = .zero
+        tableView.keyboardDismissMode = .onDrag
+        tableView.showsVerticalScrollIndicator = false
         
         return tableView
     }()
     
-    // TODO: Section 별로 layout 따로 구현
-    enum Section {
-        case autoCompleteKeyword
-        case recentSearchKeyword
-    }
-    
-    private lazy var dataSource: UITableViewDiffableDataSource<Section, String> = {
-        return UITableViewDiffableDataSource<Section, String>(
-            tableView: searchTableView
-        ) { (tableView, indexPath, keyword) in
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: UITableViewCell.identifier,
-                for: indexPath
-            )
-            cell.selectionStyle = .none
-            var configuration = cell.defaultContentConfiguration()
-            configuration.text = keyword
-            cell.contentConfiguration = configuration
-            
-            return cell
-        }
+    private lazy var recentHistoryDataSource: UITableViewDiffableDataSource<RecentHistorySection, String> = {
+        let dataSource = UITableViewDiffableDataSource<RecentHistorySection, String>(
+            tableView: recentHistoryTableView,
+            cellProvider: { (tableView, indexPath, keyword) in
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: RecentHistoryTableViewCell.identifier
+                ) as? RecentHistoryTableViewCell else { return RecentHistoryTableViewCell() }
+                cell.setUIContents(keyword: keyword)
+                cell.setIndexPath(indexPath: indexPath)
+                cell.selectionStyle = .none
+                cell.delegate = self
+                
+                return cell
+            }
+        )
+        
+        return dataSource
     }()
+    
+    private lazy var autoCompletionTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(AutoCompletionTableViewCell.self, forCellReuseIdentifier: AutoCompletionTableViewCell.identifier)
+        tableView.delegate = self
+        tableView.bounces = false
+        tableView.sectionHeaderTopPadding = 0
+        tableView.cellLayoutMarginsFollowReadableWidth = false
+        tableView.separatorInset = .zero
+        tableView.keyboardDismissMode = .onDrag
+        tableView.showsVerticalScrollIndicator = false
+
+        return tableView
+    }()
+    
+    private lazy var autoCompletionDataSource: UITableViewDiffableDataSource<AutoCompletionSection, String> = {
+        let dataSource = UITableViewDiffableDataSource<AutoCompletionSection, String>(
+            tableView: autoCompletionTableView,
+            cellProvider: { (tableView, _, keyword) in
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: AutoCompletionTableViewCell.identifier
+                ) as? AutoCompletionTableViewCell else { return AutoCompletionTableViewCell() }
+                cell.setUIContents(keyword: keyword)
+                cell.selectionStyle = .none
+                
+                return cell
+            }
+        )
+        
+        return dataSource
+    }()
+    
+    private let divideView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .kcsGray3
+        
+        return view
+    }()
+    
+    private lazy var tableViewBottomConstraint = [
+        autoCompletionTableView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor
+        ),
+        recentHistoryTableView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor
+        )
+    ]
     
     private let searchObserver: PublishRelay<String>
     private let viewModel: SearchViewModel
@@ -121,10 +180,6 @@ final class SearchViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         bind()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        viewModel.action(input: .viewWillAppear)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -154,7 +209,9 @@ private extension SearchViewController {
     func addUIComponents() {
         view.addSubview(backButton)
         view.addSubview(searchBarView)
-        view.addSubview(searchTableView)
+        view.addSubview(divideView)
+        view.addSubview(recentHistoryTableView)
+        view.addSubview(autoCompletionTableView)
     }
     
     func configureConstraints() {
@@ -173,26 +230,60 @@ private extension SearchViewController {
         ])
         
         NSLayoutConstraint.activate([
-            searchTableView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 10),
-            searchTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            searchTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            searchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            divideView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 16),
+            divideView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            divideView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            divideView.heightAnchor.constraint(equalToConstant: 6)
         ])
+        
+        NSLayoutConstraint.activate([
+            recentHistoryTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
+            recentHistoryTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            recentHistoryTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            autoCompletionTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
+            autoCompletionTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            autoCompletionTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate(tableViewBottomConstraint)
     }
     
     func bind() {
-        viewModel.generateDataOutput
-            .bind { [weak self] data in
-                self?.generateData(data: data)
+        viewModel.recentSearchKeywordsOutput
+            .bind { [weak self] keywords in
+                self?.recentHistoryTableView.isHidden = false
+                self?.autoCompletionTableView.isHidden = true
+                self?.generateRecentHistoryData(data: keywords)
             }
             .disposed(by: disposeBag)
         
-        viewModel.recentSearchKeywordsOutput
+        viewModel.autoCompleteKeywordsOutput
             .bind { [weak self] keywords in
-                var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
-                snapshot.appendSections([.recentSearchKeyword])
-                snapshot.appendItems(keywords)
-                self?.dataSource.apply(snapshot, animatingDifferences: false)
+                self?.recentHistoryTableView.isHidden = true
+                self?.autoCompletionTableView.isHidden = false
+                self?.generateAutoCompletionData(data: keywords)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.searchOutput
+            .bind { [weak self] keyword in
+                self?.search(text: keyword)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noKeywordToastOutput
+            .bind { [weak self] _ in
+                self?.showToast(message: "검색어를 입력하세요.")
+            }
+            .disposed(by: disposeBag)
+        
+        RxKeyboard.instance.visibleHeight
+            .asObservable()
+            .bind { [weak self] keyboardHeight in
+                self?.tableViewBottomConstraint.forEach({ $0.constant = -keyboardHeight })
             }
             .disposed(by: disposeBag)
     }
@@ -201,22 +292,114 @@ private extension SearchViewController {
 
 private extension SearchViewController {
     
-    func generateData(data: [String]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
-        snapshot.appendSections([.autoCompleteKeyword])
+    // TODO: Reload Data 수정 필요
+    func generateRecentHistoryData(data: [String]) {
+        var snapshot = NSDiffableDataSourceSnapshot<RecentHistorySection, String>()
+        snapshot.appendSections([.recentHistory])
         snapshot.appendItems(data)
-        dataSource.apply(snapshot, animatingDifferences: false)
+        recentHistoryDataSource.applySnapshotUsingReloadData(snapshot)
+    }
+    
+    func generateAutoCompletionData(data: [String]) {
+        var snapshot = NSDiffableDataSourceSnapshot<AutoCompletionSection, String>()
+        snapshot.appendSections([.autoCompletion])
+        snapshot.appendItems(data)
+        autoCompletionDataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    func search(text: String) {
+        dismissViewController()
+        searchObserver.accept(text)
+        viewModel.action(input: .searchButtonTapped(text: text))
+    }
+    
+    func showToast(message: String) {
+        let toastView = makeToastView(message: message)
+        
+        view.addSubview(toastView)
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.centerXAnchor
+            ),
+            toastView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: -view.frame.maxY + recentHistoryTableView.frame.maxY - 24
+            )
+        ])
+        
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0,
+            options: .curveEaseIn,
+            animations: {
+                toastView.alpha = 1.0
+            },
+            completion: { _ in
+                UIView.animate(
+                    withDuration: 0.6,
+                    delay: 2.0,
+                    options: .curveEaseOut,
+                    animations: {
+                        toastView.alpha = 0.0
+                    }, completion: { _ in
+                        toastView.removeFromSuperview()
+                    }
+                )
+            }
+        )
     }
 
 }
 
+extension SearchViewController: RecentHistoryTableViewCellDelegate, RecentHistoryHeaderViewDelegate {
+    
+    func removeKeywordButtonTapped(index: Int) {
+        viewModel.action(input: .deleteSearchHistory(index: index))
+    }
+    
+    func clearAllButtonButtonTapped() {
+        if !recentHistoryDataSource.snapshot().itemIdentifiers.isEmpty {
+            let clearAllAlert = UIAlertController(
+                title: "삭제하기",
+                message: "최근 검색어를 모두 삭제하시겠습니까?",
+                preferredStyle: .alert
+            )
+            let delete = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
+                self?.viewModel.action(input: .deleteAllHistory)
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            clearAllAlert.addAction(delete)
+            clearAllAlert.addAction(cancel)
+            present(clearAllAlert, animated: true)
+        }
+    }
+    
+}
+
 extension SearchViewController: UITableViewDelegate {
     
-    // TODO: 최근 검색어 삭제 action 필요
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let text = dataSource.itemIdentifier(for: indexPath) else { return }
-        dismissViewController()
-        searchObserver.accept(text)
+        if tableView == recentHistoryTableView {
+            guard let keyword = recentHistoryDataSource.itemIdentifier(for: indexPath) else { return }
+            search(text: keyword)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if tableView == recentHistoryTableView {
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(
+                withIdentifier: RecentHistoryHeaderView.identifier
+            ) as? RecentHistoryHeaderView else { return nil }
+            headerView.delegate = self
+            
+            return headerView
+        } else { return nil }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if tableView == recentHistoryTableView {
+            return 38
+        } else { return 0 }
     }
     
 }
@@ -225,12 +408,9 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = textField.text {
-            searchObserver.accept(text)
-            dismissViewController()
-            return true
-        } else {
-            return false
+            viewModel.action(input: .returnKeyTapped(text: text))
         }
+        return false
     }
     
 }
