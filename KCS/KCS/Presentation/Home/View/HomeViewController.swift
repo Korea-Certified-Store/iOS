@@ -435,6 +435,12 @@ private extension HomeViewController {
                 self?.presentLocationAlert()
             }
             .disposed(by: disposeBag)
+        
+        viewModel.requestLocationAuthorizationOutput
+            .bind { [weak self] in
+                self?.presentLocationAlert()
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindStoreInformationView() {
