@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import RxGesture
 
 final class NewStoreRequestViewController: UIViewController {
@@ -44,8 +45,9 @@ final class NewStoreRequestViewController: UIViewController {
         textField.placeholder = "가게명 입력하기"
         textField.rx.controlEvent([.editingDidBegin])
             .asObservable()
-            .bind { _ in
+            .bind { [weak self] _ in
                 textField.setSelectedUI()
+                self?.titleWarningLabel.isHidden = true
             }
             .disposed(by: disposeBag)
         
@@ -57,6 +59,17 @@ final class NewStoreRequestViewController: UIViewController {
             .disposed(by: disposeBag)
         
         return textField
+    }()
+    
+    private let titleWarningLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "가게명을 입력해 주세요."
+        label.font = .pretendard(size: 12, weight: .regular)
+        label.textColor = .uiTextFieldWarning
+        label.isHidden = true
+        
+        return label
     }()
     
     private let viewModel: NewStoreRequestViewModel
@@ -89,6 +102,7 @@ private extension NewStoreRequestViewController {
         scrollView.addSubview(scrollContentView)
         scrollContentView.addSubview(titleHeaderLabel)
         scrollContentView.addSubview(titleTextField)
+        scrollContentView.addSubview(titleWarningLabel)
     }
     
     func configureConstraints() {
@@ -125,6 +139,11 @@ private extension NewStoreRequestViewController {
             titleTextField.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor, constant: -16),
             titleTextField.heightAnchor.constraint(equalToConstant: 50)
         ])
+        
+        NSLayoutConstraint.activate([
+            titleWarningLabel.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 6),
+            titleWarningLabel.leadingAnchor.constraint(equalTo: titleTextField.leadingAnchor, constant: 16)
+        ])
     }
     
     func setup() {
@@ -132,8 +151,9 @@ private extension NewStoreRequestViewController {
     }
     
     func bind() {
-        view.rx.tapGesture()
-            .when(.ended)
+        scrollContentView.rx.tapGesture(configuration: { _, delegate in
+            delegate.simultaneousRecognitionPolicy = .never
+          }).when(.ended)
             .bind { [weak self] _ in
                 self?.view.endEditing(true)
             }
@@ -142,12 +162,14 @@ private extension NewStoreRequestViewController {
         viewModel.titleEditEndOutput
             .bind { [weak self] in
                 self?.titleTextField.setNormalUI()
+                self?.titleWarningLabel.isHidden = true
             }
             .disposed(by: disposeBag)
         
         viewModel.titleWarningOutput
             .bind { [weak self] in
                 self?.titleTextField.setWarningUI()
+                self?.titleWarningLabel.isHidden = false
             }
             .disposed(by: disposeBag)
     }

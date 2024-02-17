@@ -17,12 +17,14 @@ final class NewStoreTextField: UITextField {
             image: SystemImage.clear?
                 .withTintColor(.kcsGray1, renderingMode: .alwaysOriginal)
         )
-        imageView.rx.tapGesture()
-            .when(.ended)
+        imageView.rx.tapGesture(configuration: { _, delegate in
+            delegate.simultaneousRecognitionPolicy = .never
+        }).when(.ended)
             .bind { [weak self] _ in
                 self?.text = ""
             }
             .disposed(by: disposeBag)
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         let view = UIView()
