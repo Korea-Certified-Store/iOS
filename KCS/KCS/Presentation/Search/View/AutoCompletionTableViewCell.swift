@@ -23,6 +23,7 @@ final class AutoCompletionTableViewCell: UITableViewCell {
     private let keywordLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
         label.font = .pretendard(size: 16, weight: .medium)
         
         return label
