@@ -9,7 +9,7 @@ import RxSwift
 
 struct GetAutoCompletionUseCaseImpl: GetAutoCompletionUseCase {
     
-    var repository: FetchAutoCompletionRepository
+    let repository: FetchAutoCompletionRepository
     
     func execute(keyword: String) -> Observable<[String]> {
         return repository.fetchAutoCompletion(searchKeyword: keyword)
