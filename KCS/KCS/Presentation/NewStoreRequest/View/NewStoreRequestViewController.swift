@@ -155,7 +155,7 @@ private extension NewStoreRequestViewController {
             delegate.simultaneousRecognitionPolicy = .never
           }).when(.ended)
             .bind { [weak self] _ in
-                self?.view.endEditing(true)
+                self?.scrollContentView.endEditing(true)
             }
             .disposed(by: disposeBag)
         
