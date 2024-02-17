@@ -27,6 +27,10 @@
 		59503A682B79253B0006CF35 /* UITableViewCell+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A672B79253B0006CF35 /* UITableViewCell+Identifier.swift */; };
 		59503A6A2B7946D30006CF35 /* RecentHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A692B7946D30006CF35 /* RecentHistoryTableViewCell.swift */; };
 		59503A6C2B7980B80006CF35 /* AutoCompletionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A6B2B7980B80006CF35 /* AutoCompletionTableViewCell.swift */; };
+		59503A702B7FB3130006CF35 /* NewStoreRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A6F2B7FB3130006CF35 /* NewStoreRequestViewController.swift */; };
+		59503A722B7FB38E0006CF35 /* NewStoreTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A712B7FB38E0006CF35 /* NewStoreTextField.swift */; };
+		59503A752B80A2980006CF35 /* NewStoreRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A742B80A2980006CF35 /* NewStoreRequestViewModel.swift */; };
+		59503A782B80A2AF0006CF35 /* NewStoreRequestViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A772B80A2AF0006CF35 /* NewStoreRequestViewModelImpl.swift */; };
 		595EE2A52B693DE700CC01CE /* ErrorAlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595EE2A42B693DE700CC01CE /* ErrorAlertMessage.swift */; };
 		596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596DDC4C2B6416AB00A4BBC4 /* SummaryViewContents.swift */; };
 		5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE572B5524D500725C90 /* RefreshButton.swift */; };
@@ -187,6 +191,10 @@
 		59503A672B79253B0006CF35 /* UITableViewCell+Identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Identifier.swift"; sourceTree = "<group>"; };
 		59503A692B7946D30006CF35 /* RecentHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		59503A6B2B7980B80006CF35 /* AutoCompletionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionTableViewCell.swift; sourceTree = "<group>"; };
+		59503A6F2B7FB3130006CF35 /* NewStoreRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestViewController.swift; sourceTree = "<group>"; };
+		59503A712B7FB38E0006CF35 /* NewStoreTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreTextField.swift; sourceTree = "<group>"; };
+		59503A742B80A2980006CF35 /* NewStoreRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestViewModel.swift; sourceTree = "<group>"; };
+		59503A772B80A2AF0006CF35 /* NewStoreRequestViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestViewModelImpl.swift; sourceTree = "<group>"; };
 		595EE2A42B693DE700CC01CE /* ErrorAlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertMessage.swift; sourceTree = "<group>"; };
 		596DDC4C2B6416AB00A4BBC4 /* SummaryViewContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewContents.swift; sourceTree = "<group>"; };
 		5977BE572B5524D500725C90 /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
@@ -411,6 +419,41 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		59503A6D2B7FB2EB0006CF35 /* NewStoreRequest */ = {
+			isa = PBXGroup;
+			children = (
+				59503A732B80A2890006CF35 /* ViewModel */,
+				59503A6E2B7FB2FE0006CF35 /* View */,
+			);
+			path = NewStoreRequest;
+			sourceTree = "<group>";
+		};
+		59503A6E2B7FB2FE0006CF35 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				59503A6F2B7FB3130006CF35 /* NewStoreRequestViewController.swift */,
+				59503A712B7FB38E0006CF35 /* NewStoreTextField.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		59503A732B80A2890006CF35 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				59503A762B80A29B0006CF35 /* Protocol */,
+				59503A772B80A2AF0006CF35 /* NewStoreRequestViewModelImpl.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		59503A762B80A29B0006CF35 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				59503A742B80A2980006CF35 /* NewStoreRequestViewModel.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		5977BE592B55355D00725C90 /* protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,6 +561,7 @@
 		5986DCDF2B3892EB005AE43B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				59503A6D2B7FB2EB0006CF35 /* NewStoreRequest */,
 				A890870B2B4EF8F900767225 /* Extension */,
 				5986DCEA2B392996005AE43B /* Home */,
 				59B886242B6A39E9005750EF /* StoreList */,
@@ -1150,6 +1194,7 @@
 				A8AF06722B80BA5E00E73574 /* AutoCompletionResponse.swift in Sources */,
 				59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */,
 				A83367C72B72725700E0A844 /* FifthOnboardingView.swift in Sources */,
+				59503A782B80A2AF0006CF35 /* NewStoreRequestViewModelImpl.swift in Sources */,
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
 				595EE2A52B693DE700CC01CE /* ErrorAlertMessage.swift in Sources */,
 				A821A37A2B74BBE200089B8F /* CheckNetworkStatusUseCaseImpl.swift in Sources */,
@@ -1191,6 +1236,7 @@
 				A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */,
 				A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */,
 				A83367C52B7271B900E0A844 /* FourthOnboardingView.swift in Sources */,
+				59503A722B7FB38E0006CF35 /* NewStoreTextField.swift in Sources */,
 				5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */,
 				59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
@@ -1216,6 +1262,7 @@
 				A8E53C252B77DDF3003FCBA2 /* StoreStorage.swift in Sources */,
 				59C306CB2B50357900862625 /* Router.swift in Sources */,
 				A8ACB7E82B595A2100540BD1 /* GetOpenClosedUseCase.swift in Sources */,
+				59503A752B80A2980006CF35 /* NewStoreRequestViewModel.swift in Sources */,
 				A83367BF2B7246E700E0A844 /* FirstOnboardingView.swift in Sources */,
 				59503A5E2B7596990006CF35 /* GetSearchStoresUseCase.swift in Sources */,
 				59C306B62B50027300862625 /* Store.swift in Sources */,
@@ -1255,6 +1302,7 @@
 				59B886622B6E8484005750EF /* UISheetPresentationController+Detent.swift in Sources */,
 				59C306D82B50650D00862625 /* Encodable+.swift in Sources */,
 				59503A582B758DCE0006CF35 /* SearchDTO.swift in Sources */,
+				59503A702B7FB3130006CF35 /* NewStoreRequestViewController.swift in Sources */,
 				59B886602B6E7CF6005750EF /* UIViewController+Alert.swift in Sources */,
 				5977BE682B553C8300725C90 /* HomeDependency.swift in Sources */,
 			);
