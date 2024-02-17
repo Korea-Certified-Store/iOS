@@ -15,5 +15,6 @@ enum SystemImage {
     static let remove = UIImage(systemName: "xmark.circle.fill")
     static let search = UIImage(systemName: "magnifyingglass")
     static let toast = UIImage(systemName: "exclamationmark.circle")
+    static let clear = UIImage(systemName: "xmark")
     
 }
