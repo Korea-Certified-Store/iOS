@@ -14,6 +14,44 @@ final class NewStoreRequestViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
+    private lazy var leftBarButtonItem: UIBarButtonItem = {
+        let barButton = UIBarButtonItem()
+        barButton.target = self
+        barButton.image = UIImage(systemName: "chevron.backward")
+        barButton.tintColor = .black
+        barButton.rx.tap
+            .bind { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        return barButton
+    }()
+    
+    private lazy var rightBarButtonItem: UIBarButtonItem = {
+        let barButton = UIBarButtonItem()
+        barButton.target = self
+        barButton.title = "완료"
+        barButton.isEnabled = false
+        
+        return barButton
+    }()
+    
+    private lazy var navigationBar: UINavigationBar = {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let statusBarHeight = scene.windows.first?.safeAreaInsets.top else { return UINavigationBar() }
+        let navigationBar = UINavigationBar(frame: .init(x: 0, y: statusBarHeight, width: view.frame.width, height: statusBarHeight))
+        navigationBar.isTranslucent = false
+        navigationBar.backgroundColor = .white
+        
+        let navigationItem = UINavigationItem(title: "새로운 가게 추가")
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationBar.items = [navigationItem]
+        
+        return navigationBar
+    }()
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -98,6 +136,7 @@ final class NewStoreRequestViewController: UIViewController {
 private extension NewStoreRequestViewController {
     
     func addUIComponents() {
+        view.addSubview(navigationBar)
         view.addSubview(scrollView)
         scrollView.addSubview(scrollContentView)
         scrollContentView.addSubview(titleHeaderLabel)
@@ -107,14 +146,14 @@ private extension NewStoreRequestViewController {
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            scrollView.contentLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.contentLayoutGuide.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
             scrollView.contentLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.contentLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             scrollView.contentLayoutGuide.heightAnchor.constraint(equalToConstant: 600)
@@ -129,7 +168,7 @@ private extension NewStoreRequestViewController {
         ])
         
         NSLayoutConstraint.activate([
-            titleHeaderLabel.topAnchor.constraint(equalTo: scrollContentView.topAnchor, constant: 35),
+            titleHeaderLabel.topAnchor.constraint(equalTo: scrollContentView.topAnchor, constant: 0),
             titleHeaderLabel.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16)
         ])
         
