@@ -13,10 +13,10 @@ final class NewStoreTextField: UITextField {
     private let disposeBag = DisposeBag()
     
     private lazy var clearButtonView: UIView = {
-        let imageView = UIImageView(
-            image: SystemImage.clear?
-                .withTintColor(.kcsGray1, renderingMode: .alwaysOriginal)
-        )
+        let imageView = UIImageView()
+        imageView.image = .xMarkIcon
+        imageView.tintColor = .kcsGray1
+        
         imageView.rx.tapGesture(configuration: { _, delegate in
             delegate.simultaneousRecognitionPolicy = .never
         }).when(.ended)
