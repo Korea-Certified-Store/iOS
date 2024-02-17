@@ -152,7 +152,7 @@ final class SearchViewController: UIViewController {
         return view
     }()
     
-    private let emptyListLabel: UILabel = {
+    private let noHistoryLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "최근 검색 기록이 없습니다"
@@ -162,7 +162,7 @@ final class SearchViewController: UIViewController {
         return label
     }()
     
-    private lazy var emptyView: UIView = {
+    private lazy var noHistoryView: UIView = {
         let imageView = UIImageView(image: SystemImage.toast)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.tintColor = .placeholderText
@@ -171,7 +171,7 @@ final class SearchViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
         view.addSubview(imageView)
-        view.addSubview(emptyListLabel)
+        view.addSubview(noHistoryLabel)
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -181,8 +181,8 @@ final class SearchViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            emptyListLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
-            emptyListLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            noHistoryLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+            noHistoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         return view
@@ -252,7 +252,7 @@ private extension SearchViewController {
         view.addSubview(divideView)
         view.addSubview(recentHistoryTableView)
         view.addSubview(autoCompletionTableView)
-        recentHistoryTableView.addSubview(emptyView)
+        recentHistoryTableView.addSubview(noHistoryView)
     }
     
     func configureConstraints() {
@@ -278,8 +278,8 @@ private extension SearchViewController {
         ])
         
         NSLayoutConstraint.activate([
-            emptyView.topAnchor.constraint(equalTo: divideView.bottomAnchor, constant: 179),
-            emptyView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            noHistoryView.topAnchor.constraint(equalTo: divideView.bottomAnchor, constant: 179),
+            noHistoryView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -300,7 +300,7 @@ private extension SearchViewController {
     func bind() {
         viewModel.recentSearchKeywordsOutput
             .bind { [weak self] keywords in
-                self?.emptyView.isHidden = true
+                self?.noHistoryView.isHidden = true
                 self?.recentHistoryTableView.isHidden = false
                 self?.autoCompletionTableView.isHidden = true
                 self?.generateRecentHistoryData(data: keywords)
@@ -336,7 +336,7 @@ private extension SearchViewController {
         viewModel.noRecentHistoryOutput
             .bind { [weak self] in
                 guard let self = self else { return }
-                emptyView.isHidden = false
+                noHistoryView.isHidden = false
             }
             .disposed(by: disposeBag)
         
