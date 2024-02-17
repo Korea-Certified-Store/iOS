@@ -32,6 +32,8 @@ final class NewStoreRequestViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "가게명"
+        label.font = .pretendard(size: 14, weight: .medium)
+        label.textColor = .kcsGray1
         
         return label
     }()
@@ -39,16 +41,35 @@ final class NewStoreRequestViewController: UIViewController {
     private lazy var titleTextField: NewStoreTextField = {
         let textField = NewStoreTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.delegate = self
-        textField.rx.text
-            .bind { optionalText in
-                guard let text = optionalText else { return }
-                
+        textField.placeholder = "가게명 입력하기"
+        textField.rx.controlEvent([.editingDidBegin])
+            .asObservable()
+            .bind { _ in
+                textField.setSelectedUI()
+            }
+            .disposed(by: disposeBag)
+        
+        textField.rx.controlEvent([.editingDidEnd])
+            .asObservable()
+            .bind { [weak self] _ in
+                self?.viewModel.action(input: .titleEditEnd(text: textField.text ?? ""))
             }
             .disposed(by: disposeBag)
         
         return textField
     }()
+    
+    private let viewModel: NewStoreRequestViewModel
+    
+    init(viewModel: NewStoreRequestViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +77,7 @@ final class NewStoreRequestViewController: UIViewController {
         addUIComponents()
         configureConstraints()
         setup()
+        bind()
     }
     
 }
@@ -109,16 +131,25 @@ private extension NewStoreRequestViewController {
         view.backgroundColor = .white
     }
     
-}
-
-extension NewStoreRequestViewController: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.backgroundColor = .newStoreRequestTextFieldEdit
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.backgroundColor = .newStoreRequestTextFieldNormal
+    func bind() {
+        view.rx.tapGesture()
+            .when(.ended)
+            .bind { [weak self] _ in
+                self?.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.titleEditEndOutput
+            .bind { [weak self] in
+                self?.titleTextField.setNormalUI()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.titleWarningOutput
+            .bind { [weak self] in
+                self?.titleTextField.setWarningUI()
+            }
+            .disposed(by: disposeBag)
     }
     
 }

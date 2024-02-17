@@ -109,7 +109,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ), rootViewController: rootViewController
         )
         
-        window?.rootViewController = splashViewController
+        window?.rootViewController = NewStoreRequestViewController(viewModel: NewStoreRequestViewModelImpl())
         window?.makeKeyAndVisible()
     }
     

@@ -49,6 +49,24 @@ final class NewStoreTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setSelectedUI() {
+        backgroundColor = .newStoreRequestTextFieldEdit
+        layer.borderWidth = 1.5
+        layer.borderColor = UIColor.uiTextFieldBoldBorder.cgColor
+    }
+    
+    func setWarningUI() {
+        backgroundColor = .newStoreRequestTextFieldNormal
+        layer.borderWidth = 1.5
+        layer.borderColor = UIColor.uiTextFieldWarning.cgColor
+    }
+    
+    func setNormalUI() {
+        backgroundColor = .newStoreRequestTextFieldNormal
+        layer.borderWidth = 0.7
+        layer.borderColor = UIColor.uiTextFieldNormalBorder.cgColor
+    }
+    
 }
 
 private extension NewStoreTextField {
@@ -59,8 +77,8 @@ private extension NewStoreTextField {
         leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
         rightViewMode = .whileEditing
         rightView = clearButtonView
-        backgroundColor = .newStoreRequestTextFieldNormal
         setLayerCorner(cornerRadius: 10)
+        setNormalUI()
     }
     
 }
