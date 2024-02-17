@@ -16,22 +16,25 @@ final class SearchViewModelImpl: SearchViewModel {
     var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase
     var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase
     var deleteAllHistoryUseCase: DeleteAllHistoryUseCase
+    var getAutoCompletionUseCase: GetAutoCompletionUseCase
     
     let recentSearchKeywordsOutput = PublishRelay<[String]>()
     let autoCompleteKeywordsOutput = PublishRelay<[String]>()
     let searchOutput = PublishRelay<String>()
-    var noKeywordToastOutput = PublishRelay<Void>()
+    let noKeywordToastOutput = PublishRelay<Void>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
         saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase,
         deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase,
-        deleteAllHistoryUseCase: DeleteAllHistoryUseCase
+        deleteAllHistoryUseCase: DeleteAllHistoryUseCase,
+        getAutoCompletionUseCase: GetAutoCompletionUseCase
     ) {
         self.fetchRecentSearchKeywordUseCase = fetchRecentSearchKeywordUseCase
         self.saveRecentSearchKeywordUseCase = saveRecentSearchKeywordUseCase
         self.deleteRecentSearchKeywordUseCase = deleteRecentSearchKeywordUseCase
         self.deleteAllHistoryUseCase = deleteAllHistoryUseCase
+        self.getAutoCompletionUseCase = getAutoCompletionUseCase
     }
     
     func action(input: SearchViewModelInputCase) {
@@ -57,8 +60,11 @@ private extension SearchViewModelImpl {
         if text.isEmpty {
             emitRecentHistory()
         } else {
-            // TODO: autoCompletion usecase 실행(debounce) 후 generateDataOutput.accept([]) (자동완성으로 전환)
-            emitRecentHistory()
+            getAutoCompletionUseCase.execute(keyword: text)
+                .bind { [weak self] keywords in
+                    self?.autoCompleteKeywordsOutput.accept(keywords)
+                }
+                .disposed(by: disposeBag)
         }
     }
      

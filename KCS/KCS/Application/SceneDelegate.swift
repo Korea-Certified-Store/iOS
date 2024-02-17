@@ -83,6 +83,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     ), 
                     deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
                         repository: searchKeywordRepository
+                    ), 
+                    getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
+                        repository: FetchAutoCompletionRepositoryImpl()
                     )
                 ),
                 searchObserver: searchObserver

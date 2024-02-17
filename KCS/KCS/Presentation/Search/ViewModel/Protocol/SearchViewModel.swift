@@ -13,6 +13,7 @@ protocol SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
     var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase { get }
     var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase { get }
     var deleteAllHistoryUseCase: DeleteAllHistoryUseCase { get }
+    var getAutoCompletionUseCase: GetAutoCompletionUseCase { get }
     
 }
 
