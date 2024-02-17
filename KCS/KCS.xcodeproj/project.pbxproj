@@ -139,6 +139,12 @@
 		A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */; };
 		A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */; };
 		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
+		A8AF06702B80B7DC00E73574 /* AutoCompletionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */; };
+		A8AF06722B80BA5E00E73574 /* AutoCompletionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */; };
+		A8AF06742B80BB4200E73574 /* FetchAutoCompletionRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06732B80BB4200E73574 /* FetchAutoCompletionRepositoryImpl.swift */; };
+		A8AF06762B80BE1000E73574 /* FetchAutoCompletionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06752B80BE1000E73574 /* FetchAutoCompletionRepository.swift */; };
+		A8AF06782B80BE7200E73574 /* GetAutoCompletionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */; };
+		A8AF067A2B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */; };
 		A8CD526A2B7B7DFE00917786 /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CD52692B7B7DFD00917786 /* CellDelegate.swift */; };
 		A8E53C252B77DDF3003FCBA2 /* StoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */; };
 		A8E53C272B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */; };
@@ -298,6 +304,12 @@
 		A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCase.swift; sourceTree = "<group>"; };
 		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
+		A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionDTO.swift; sourceTree = "<group>"; };
+		A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionResponse.swift; sourceTree = "<group>"; };
+		A8AF06732B80BB4200E73574 /* FetchAutoCompletionRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAutoCompletionRepositoryImpl.swift; sourceTree = "<group>"; };
+		A8AF06752B80BE1000E73574 /* FetchAutoCompletionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAutoCompletionRepository.swift; sourceTree = "<group>"; };
+		A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAutoCompletionUseCase.swift; sourceTree = "<group>"; };
+		A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAutoCompletionUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8CD52692B7B7DFD00917786 /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
 		A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreStorage.swift; sourceTree = "<group>"; };
 		A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -413,6 +425,7 @@
 				A8722F012B764620001ED988 /* SaveRecentSearchKeywordUseCase.swift */,
 				A8722F052B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift */,
 				A81B5A672B7C81DB0042307A /* DeleteAllHistoryUseCase.swift */,
+				A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -433,6 +446,7 @@
 				A8722F032B764679001ED988 /* SaveRecentSearchKeywordUseCaseImpl.swift */,
 				A8722F072B7662F5001ED988 /* DeleteRecentSearchKeywordUseCaseImpl.swift */,
 				A81B5A652B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift */,
+				A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -634,6 +648,7 @@
 				5977BE992B59AC3300725C90 /* ImageRepository.swift */,
 				A821A3772B74BAA700089B8F /* NetworkRepository.swift */,
 				A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */,
+				A8AF06752B80BE1000E73574 /* FetchAutoCompletionRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -668,6 +683,7 @@
 				59C306AC2B4FFAC700862625 /* StoreDTO.swift */,
 				59C306CE2B50399C00862625 /* RequestLocationDTO.swift */,
 				59503A572B758DCE0006CF35 /* SearchDTO.swift */,
+				A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -691,6 +707,7 @@
 				59C306B82B50033A00862625 /* Protocol */,
 				59C306AF2B4FFE4400862625 /* RefreshStoreResponse.swift */,
 				59503A5B2B75927F0006CF35 /* SearchStoreResponse.swift */,
+				A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -827,6 +844,7 @@
 				5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */,
 				A821A3752B74B9F900089B8F /* NetworkRepositoryImpl.swift */,
 				A86D92102B760B74003B9FEE /* SearchKeywordRepositoryImpl.swift */,
+				A8AF06732B80BB4200E73574 /* FetchAutoCompletionRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1123,11 +1141,13 @@
 				59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */,
 				A8722F082B7662F5001ED988 /* DeleteRecentSearchKeywordUseCaseImpl.swift in Sources */,
 				A83367BD2B70A52900E0A844 /* OnboardStorage.swift in Sources */,
+				A8AF06782B80BE7200E73574 /* GetAutoCompletionUseCase.swift in Sources */,
 				A81EFBB52B5D477600D0C0D7 /* UILabel+.swift in Sources */,
 				59C306A62B4D966C00862625 /* CertificationType.swift in Sources */,
 				A890870F2B4F836C00767225 /* SummaryView.swift in Sources */,
 				A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */,
 				59503A662B791C940006CF35 /* RecentHistoryHeaderView.swift in Sources */,
+				A8AF06722B80BA5E00E73574 /* AutoCompletionResponse.swift in Sources */,
 				59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */,
 				A83367C72B72725700E0A844 /* FifthOnboardingView.swift in Sources */,
 				5977BE612B55374000725C90 /* HomeViewModel.swift in Sources */,
@@ -1140,6 +1160,7 @@
 				A821A3802B74BDA200089B8F /* SplashViewModelImpl.swift in Sources */,
 				59C306C92B501B9D00862625 /* RegularOpeningHours.swift in Sources */,
 				A83367B82B6FA0E700E0A844 /* FetchStores.swift in Sources */,
+				A8AF067A2B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift in Sources */,
 				59F478B52B59BE0B002FEF9E /* FetchImageUseCase.swift in Sources */,
 				A8722F042B764679001ED988 /* SaveRecentSearchKeywordUseCaseImpl.swift in Sources */,
 				59C306BF2B50109100862625 /* Location.swift in Sources */,
@@ -1156,6 +1177,7 @@
 				59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */,
 				A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */,
 				59503A542B751FD50006CF35 /* SearchViewModelImpl.swift in Sources */,
+				A8AF06742B80BB4200E73574 /* FetchAutoCompletionRepositoryImpl.swift in Sources */,
 				A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */,
 				59C306B02B4FFE4400862625 /* RefreshStoreResponse.swift in Sources */,
 				A8722F022B764620001ED988 /* SaveRecentSearchKeywordUseCase.swift in Sources */,
@@ -1216,6 +1238,7 @@
 				59503A6C2B7980B80006CF35 /* AutoCompletionTableViewCell.swift in Sources */,
 				5977BE9A2B59AC3300725C90 /* ImageRepository.swift in Sources */,
 				591A887D2B384E600059E40F /* AppDelegate.swift in Sources */,
+				A8AF06702B80B7DC00E73574 /* AutoCompletionDTO.swift in Sources */,
 				A86D92192B761EC7003B9FEE /* SearchKeywordsRepository.swift in Sources */,
 				59C306DC2B506F3D00862625 /* NetworkError.swift in Sources */,
 				59C306C32B50114100862625 /* Day.swift in Sources */,
@@ -1227,6 +1250,7 @@
 				A81B5A662B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift in Sources */,
 				A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */,
 				A8ACB7DD2B58E3DE00540BD1 /* OpenClosedType.swift in Sources */,
+				A8AF06762B80BE1000E73574 /* FetchAutoCompletionRepository.swift in Sources */,
 				59503A5C2B75927F0006CF35 /* SearchStoreResponse.swift in Sources */,
 				59B886622B6E8484005750EF /* UISheetPresentationController+Detent.swift in Sources */,
 				59C306D82B50650D00862625 /* Encodable+.swift in Sources */,
