@@ -31,6 +31,9 @@
 		59503A722B7FB38E0006CF35 /* NewStoreTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A712B7FB38E0006CF35 /* NewStoreTextField.swift */; };
 		59503A752B80A2980006CF35 /* NewStoreRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A742B80A2980006CF35 /* NewStoreRequestViewModel.swift */; };
 		59503A782B80A2AF0006CF35 /* NewStoreRequestViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A772B80A2AF0006CF35 /* NewStoreRequestViewModelImpl.swift */; };
+		59503A7C2B80E8650006CF35 /* StoreUpdateRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A7B2B80E8650006CF35 /* StoreUpdateRequestViewController.swift */; };
+		59503A802B80ED2C0006CF35 /* StoreUpdateRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A7F2B80ED2C0006CF35 /* StoreUpdateRequestViewModel.swift */; };
+		59503A822B80ED340006CF35 /* StoreUpdateRequestViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A812B80ED340006CF35 /* StoreUpdateRequestViewModelImpl.swift */; };
 		595EE2A52B693DE700CC01CE /* ErrorAlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595EE2A42B693DE700CC01CE /* ErrorAlertMessage.swift */; };
 		596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596DDC4C2B6416AB00A4BBC4 /* SummaryViewContents.swift */; };
 		5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE572B5524D500725C90 /* RefreshButton.swift */; };
@@ -195,6 +198,9 @@
 		59503A712B7FB38E0006CF35 /* NewStoreTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreTextField.swift; sourceTree = "<group>"; };
 		59503A742B80A2980006CF35 /* NewStoreRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestViewModel.swift; sourceTree = "<group>"; };
 		59503A772B80A2AF0006CF35 /* NewStoreRequestViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestViewModelImpl.swift; sourceTree = "<group>"; };
+		59503A7B2B80E8650006CF35 /* StoreUpdateRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestViewController.swift; sourceTree = "<group>"; };
+		59503A7F2B80ED2C0006CF35 /* StoreUpdateRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestViewModel.swift; sourceTree = "<group>"; };
+		59503A812B80ED340006CF35 /* StoreUpdateRequestViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestViewModelImpl.swift; sourceTree = "<group>"; };
 		595EE2A42B693DE700CC01CE /* ErrorAlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertMessage.swift; sourceTree = "<group>"; };
 		596DDC4C2B6416AB00A4BBC4 /* SummaryViewContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewContents.swift; sourceTree = "<group>"; };
 		5977BE572B5524D500725C90 /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
@@ -454,6 +460,40 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		59503A792B80E8260006CF35 /* StoreUpdateRequest */ = {
+			isa = PBXGroup;
+			children = (
+				59503A7D2B80ED160006CF35 /* ViewModel */,
+				59503A7A2B80E84A0006CF35 /* View */,
+			);
+			path = StoreUpdateRequest;
+			sourceTree = "<group>";
+		};
+		59503A7A2B80E84A0006CF35 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				59503A7B2B80E8650006CF35 /* StoreUpdateRequestViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		59503A7D2B80ED160006CF35 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				59503A7E2B80ED1E0006CF35 /* Protocol */,
+				59503A812B80ED340006CF35 /* StoreUpdateRequestViewModelImpl.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		59503A7E2B80ED1E0006CF35 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				59503A7F2B80ED2C0006CF35 /* StoreUpdateRequestViewModel.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		5977BE592B55355D00725C90 /* protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,6 +601,7 @@
 		5986DCDF2B3892EB005AE43B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				59503A792B80E8260006CF35 /* StoreUpdateRequest */,
 				59503A6D2B7FB2EB0006CF35 /* NewStoreRequest */,
 				A890870B2B4EF8F900767225 /* Extension */,
 				5986DCEA2B392996005AE43B /* Home */,
@@ -1240,6 +1281,7 @@
 				5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */,
 				59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
+				59503A802B80ED2C0006CF35 /* StoreUpdateRequestViewModel.swift in Sources */,
 				59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */,
 				A8E53C2B2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift in Sources */,
 				59B8865E2B6E4B98005750EF /* StoreInformationViewModelImpl.swift in Sources */,
@@ -1257,6 +1299,7 @@
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */,
 				A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */,
+				59503A7C2B80E8650006CF35 /* StoreUpdateRequestViewController.swift in Sources */,
 				59B8864A2B6A9CCB005750EF /* UIStackView+clear.swift in Sources */,
 				59C306C72B501B1E00862625 /* JSONContentsError.swift in Sources */,
 				A8E53C252B77DDF3003FCBA2 /* StoreStorage.swift in Sources */,
@@ -1268,6 +1311,7 @@
 				59C306B62B50027300862625 /* Store.swift in Sources */,
 				59C306B42B50015500862625 /* APIResponse.swift in Sources */,
 				A8722EFE2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift in Sources */,
+				59503A822B80ED340006CF35 /* StoreUpdateRequestViewModelImpl.swift in Sources */,
 				59B8865A2B6E3B40005750EF /* StoreInformationViewController.swift in Sources */,
 				A81B5A682B7C81DB0042307A /* DeleteAllHistoryUseCase.swift in Sources */,
 				A8722F002B7644E0001ED988 /* FetchRecentSearchKeywordUseCase.swift in Sources */,
