@@ -152,15 +152,10 @@ final class SearchViewController: UIViewController {
         return view
     }()
     
-    enum EmptyLabelText: String {
-        case autoCompletion = "에 대한 결과가 없습니다"
-        case recentHistory = "최근 검색 기록이 없습니다"
-    }
-    
     private let emptyListLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = EmptyLabelText.recentHistory.rawValue
+        label.text = "최근 검색 기록이 없습니다"
         label.font = UIFont.pretendard(size: 14, weight: .medium)
         label.textColor = .placeholderText
         
@@ -314,7 +309,6 @@ private extension SearchViewController {
         
         viewModel.autoCompleteKeywordsOutput
             .bind { [weak self] keywords in
-                self?.emptyView.isHidden = true
                 self?.recentHistoryTableView.isHidden = true
                 self?.autoCompletionTableView.isHidden = false
                 self?.generateAutoCompletionData(data: keywords)
@@ -342,19 +336,6 @@ private extension SearchViewController {
         viewModel.noRecentHistoryOutput
             .bind { [weak self] in
                 guard let self = self else { return }
-                recentHistoryTableView.addSubview(emptyView)
-                emptyListLabel.text = EmptyLabelText.recentHistory.rawValue
-                emptyListLabel.isHidden = false
-                emptyView.isHidden = false
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.noAutoCompletionOutput
-            .bind { [weak self] keyword in
-                guard let self = self else { return }
-                autoCompletionTableView.addSubview(emptyView)
-                emptyListLabel.text = "'\(keyword)'" + EmptyLabelText.autoCompletion.rawValue
-                emptyListLabel.isHidden = false
                 emptyView.isHidden = false
             }
             .disposed(by: disposeBag)

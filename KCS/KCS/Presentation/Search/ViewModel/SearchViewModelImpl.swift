@@ -24,7 +24,6 @@ final class SearchViewModelImpl: SearchViewModel {
     let searchOutput = PublishRelay<String>()
     let noKeywordToastOutput = PublishRelay<Void>()
     let noRecentHistoryOutput = PublishRelay<Void>()
-    let noAutoCompletionOutput = PublishRelay<String>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
@@ -67,9 +66,6 @@ private extension SearchViewModelImpl {
                 .bind { [weak self] keywords in
                     self?.autoCompleteKeywordsOutput.accept(keywords)
                     self?.changeTextColorOutput.accept(text)
-                    if keywords.isEmpty {
-                        self?.noAutoCompletionOutput.accept(text)
-                    }
                 }
                 .disposed(by: disposeBag)
         }
