@@ -150,6 +150,47 @@ final class SearchViewController: UIViewController {
         return view
     }()
     
+    enum EmptyLabelText: String {
+        case autoCompletion = "에 대한 결과가 없습니다"
+        case recentHistory = "최근 검색 기록이 없습니다"
+    }
+    
+    private let emptyListLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = EmptyLabelText.recentHistory.rawValue
+        label.font = UIFont.pretendard(size: 14, weight: .medium)
+        label.textColor = .placeholderText
+        
+        return label
+    }()
+    
+    private lazy var emptyView: UIView = {
+        let imageView = UIImageView(image: SystemImage.toast)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.tintColor = .placeholderText
+        
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        view.addSubview(imageView)
+        view.addSubview(emptyListLabel)
+        
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 45),
+            imageView.heightAnchor.constraint(equalToConstant: 45)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emptyListLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+            emptyListLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        return view
+    }()
+    
     private lazy var tableViewBottomConstraint = [
         autoCompletionTableView.bottomAnchor.constraint(
             equalTo: view.bottomAnchor
@@ -212,6 +253,7 @@ private extension SearchViewController {
         view.addSubview(divideView)
         view.addSubview(recentHistoryTableView)
         view.addSubview(autoCompletionTableView)
+        recentHistoryTableView.addSubview(emptyView)
     }
     
     func configureConstraints() {
@@ -237,6 +279,11 @@ private extension SearchViewController {
         ])
         
         NSLayoutConstraint.activate([
+            emptyView.topAnchor.constraint(equalTo: divideView.bottomAnchor, constant: 179),
+            emptyView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
             recentHistoryTableView.topAnchor.constraint(equalTo: divideView.bottomAnchor),
             recentHistoryTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             recentHistoryTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
@@ -254,6 +301,7 @@ private extension SearchViewController {
     func bind() {
         viewModel.recentSearchKeywordsOutput
             .bind { [weak self] keywords in
+                self?.emptyView.isHidden = true
                 self?.recentHistoryTableView.isHidden = false
                 self?.autoCompletionTableView.isHidden = true
                 self?.generateRecentHistoryData(data: keywords)
@@ -262,6 +310,7 @@ private extension SearchViewController {
         
         viewModel.autoCompleteKeywordsOutput
             .bind { [weak self] keywords in
+                self?.emptyView.isHidden = true
                 self?.recentHistoryTableView.isHidden = true
                 self?.autoCompletionTableView.isHidden = false
                 self?.generateAutoCompletionData(data: keywords)
@@ -277,6 +326,26 @@ private extension SearchViewController {
         viewModel.noKeywordToastOutput
             .bind { [weak self] _ in
                 self?.showToast(message: "검색어를 입력하세요.")
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noRecentHistoryOutput
+            .bind { [weak self] in
+                guard let self = self else { return }
+                recentHistoryTableView.addSubview(emptyView)
+                emptyListLabel.text = EmptyLabelText.recentHistory.rawValue
+                emptyListLabel.isHidden = false
+                emptyView.isHidden = false
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noAutoCompletionOutput
+            .bind { [weak self] keyword in
+                guard let self = self else { return }
+                autoCompletionTableView.addSubview(emptyView)
+                emptyListLabel.text = "'\(keyword)'" + EmptyLabelText.autoCompletion.rawValue
+                emptyListLabel.isHidden = false
+                emptyView.isHidden = false
             }
             .disposed(by: disposeBag)
         

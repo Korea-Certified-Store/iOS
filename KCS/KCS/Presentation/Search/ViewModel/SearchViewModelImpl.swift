@@ -22,6 +22,8 @@ final class SearchViewModelImpl: SearchViewModel {
     let autoCompleteKeywordsOutput = PublishRelay<[String]>()
     let searchOutput = PublishRelay<String>()
     let noKeywordToastOutput = PublishRelay<Void>()
+    let noRecentHistoryOutput = PublishRelay<Void>()
+    let noAutoCompletionOutput = PublishRelay<String>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
@@ -63,6 +65,9 @@ private extension SearchViewModelImpl {
             getAutoCompletionUseCase.execute(keyword: text)
                 .bind { [weak self] keywords in
                     self?.autoCompleteKeywordsOutput.accept(keywords)
+                    if keywords.isEmpty {
+                        self?.noAutoCompletionOutput.accept(text)
+                    }
                 }
                 .disposed(by: disposeBag)
         }
@@ -87,7 +92,11 @@ private extension SearchViewModelImpl {
     func emitRecentHistory() {
         fetchRecentSearchKeywordUseCase.execute()
             .bind { [weak self] keywords in
+                dump(keywords)
                 self?.recentSearchKeywordsOutput.accept(keywords)
+                if keywords.isEmpty {
+                    self?.noRecentHistoryOutput.accept(())
+                }
             }
             .disposed(by: disposeBag)
     }
