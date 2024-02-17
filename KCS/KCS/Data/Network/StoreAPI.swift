@@ -13,6 +13,7 @@ enum StoreAPI {
     case getStores(location: RequestLocationDTO)
     case getImage(url: String)
     case getSearchStores(searchDTO: SearchDTO)
+    case getAutoCompletion(autoCompletionDTO: AutoCompletionDTO)
     
 }
 
@@ -20,8 +21,8 @@ extension StoreAPI: Router, URLRequestConvertible {
     
     var baseURL: String? {
         switch self {
-        case .getStores, .getSearchStores:
-            return getURL(type: .product)
+        case .getStores, .getSearchStores, .getAutoCompletion:
+            return getURL(type: .develop)
         case .getImage(let url):
             return url
         }
@@ -30,24 +31,26 @@ extension StoreAPI: Router, URLRequestConvertible {
     var path: String {
         switch self {
         case .getStores:
-            return "/byLocation/v2"
+            return "/storecertification/byLocation/v2"
         case .getImage:
             return ""
         case .getSearchStores:
-            return "/byLocationAndKeyword/v1"
+            return "/storecertification/byLocationAndKeyword/v1"
+        case .getAutoCompletion:
+            return "/store/autocorrect/v1"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .getStores, .getImage, .getSearchStores:
+        case .getStores, .getImage, .getSearchStores, .getAutoCompletion:
             return .get
         }
     }
     
     var headers: [String: String] {
         switch self {
-        case .getStores, .getSearchStores:
+        case .getStores, .getSearchStores, .getAutoCompletion:
             return [
                 "Content-Type": "application/json"
             ]
@@ -65,6 +68,8 @@ extension StoreAPI: Router, URLRequestConvertible {
                 return [:]
             case let .getSearchStores(searchDTO):
                 return try searchDTO.asDictionary()
+            case let .getAutoCompletion(autoCompletionDTO):
+                return try autoCompletionDTO.asDictionary()
             }
         } catch {
             return nil
@@ -75,7 +80,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     /// 바디에 담아서 보내야할 것이 있다면, JSONEncoding.default
     var encoding: ParameterEncoding? {
         switch self {
-        case .getStores, .getSearchStores:
+        case .getStores, .getSearchStores, .getAutoCompletion:
             return URLEncoding.default
         case .getImage:
             return nil
