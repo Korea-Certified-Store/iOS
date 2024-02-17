@@ -20,7 +20,8 @@ protocol StoreUpdateRequestViewModelInput {
 enum StoreUpdateRequestViewModelInputCase {
     
     case typeInput(text: String)
-    case contentInput(text: String)
+    case contentEndEditing(text: String)
+    case contentWhileEditing(text: String)
     
 }
 
@@ -30,5 +31,7 @@ protocol StoreUpdateRequestViewModelOutput {
     var typeEditEndOutput: PublishRelay<Void> { get }
     var contentWarningOutput: PublishRelay<Void> { get }
     var contentEditEndOutput: PublishRelay<Void> { get }
+    var contentErasePlaceHolder: PublishRelay<Void> { get }
+    var contentFillPlaceHolder: PublishRelay<Void> { get }
     
 }
