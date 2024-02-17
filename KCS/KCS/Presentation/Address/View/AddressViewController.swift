@@ -10,28 +10,20 @@ import WebKit
 final class AddressViewController: UIViewController {
     
     private let loadIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .medium)
+        let indicator = UIActivityIndicatorView(style: .large)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         
         return indicator
     }()
     
-    private lazy var addressContentController: WKUserContentController = {
+    private lazy var addressWebView: WKWebView = {
         let contentController = WKUserContentController()
         contentController.add(self, name: "callBackHandler")
         
-        return contentController
-    }()
-    
-    private lazy var addressConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
-        configuration.userContentController = addressContentController
+        configuration.userContentController = contentController
         
-        return configuration
-    }()
-    
-    private lazy var addressWebView: WKWebView = {
-        let webView = WKWebView(frame: .zero, configuration: addressConfiguration)
+        let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.navigationDelegate = self
         
