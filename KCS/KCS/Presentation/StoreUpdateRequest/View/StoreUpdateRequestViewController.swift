@@ -40,16 +40,20 @@ final class StoreUpdateRequestViewController: UIViewController {
         )
         selectButton.rx.tap
             .bind { [weak self] _ in
-                // TODO: 확인 버튼 눌렀을 때 동작 구현
+                textField.endEditing(true)
             }
             .disposed(by: disposeBag)
         
         let flexibleButton = UIBarButtonItem(systemItem: .flexibleSpace)
         toolBar.setItems([flexibleButton, selectButton], animated: true)
         
+        textField.delegate = self
+        textField.tintColor = .clear
         textField.rightViewMode = .never
         textField.inputAccessoryView = toolBar
         textField.inputView = pickerView
+        textField.placeholder = "신고 유형 선택하기"
+        textField.font = .pretendard(size: 15, weight: .medium)
         
         textField.rx.controlEvent([.editingDidBegin])
             .bind { [weak self] _ in
@@ -94,9 +98,8 @@ final class StoreUpdateRequestViewController: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.setLayerCorner(cornerRadius: 10)
         textView.font = .pretendard(size: 15, weight: .medium)
-        textView.layer.borderWidth = 1.5
-        textView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        textView.delegate = self
+        textView.contentInset = UIEdgeInsets(top: 12, left: 13, bottom: 12, right: 13)
+        
         textView.rx.didBeginEditing
             .bind { [weak self] _ in
                 self?.setSelectedUI()
@@ -106,11 +109,29 @@ final class StoreUpdateRequestViewController: UIViewController {
         textView.rx.didEndEditing
             .bind { [weak self] _ in
                 guard let text = textView.text else { return }
-                self?.viewModel.action(input: .contentInput(text: text))
+                self?.viewModel.action(input: .contentEndEditing(text: text))
+            }
+            .disposed(by: disposeBag)
+        
+        textView.rx.didChange
+            .bind { [weak self] _ in
+                guard let text = textView.text else { return }
+                self?.viewModel.action(input: .contentWhileEditing(text: text))
             }
             .disposed(by: disposeBag)
         
         return textView
+    }()
+    
+    private let textViewPlaceHolderLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "신고 내용을 작성해주세요."
+        label.font = .pretendard(size: 15, weight: .medium)
+        label.textColor = .placeholderText
+        label.isUserInteractionEnabled = false
+        
+        return label
     }()
     
     private let contentWarningLabel: UILabel = {
@@ -156,6 +177,7 @@ private extension StoreUpdateRequestViewController {
         view.addSubview(contentHeaderLabel)
         view.addSubview(contentTextView)
         view.addSubview(contentWarningLabel)
+        contentTextView.addSubview(textViewPlaceHolderLabel)
     }
     
     func configureConstraints() {
@@ -183,9 +205,14 @@ private extension StoreUpdateRequestViewController {
         
         NSLayoutConstraint.activate([
             contentTextView.topAnchor.constraint(equalTo: contentHeaderLabel.bottomAnchor, constant: 8),
-            contentTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            contentTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            contentTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            contentTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             contentTextView.heightAnchor.constraint(equalToConstant: 200)
+        ])
+        
+        NSLayoutConstraint.activate([
+            textViewPlaceHolderLabel.topAnchor.constraint(equalTo: contentTextView.topAnchor, constant: 8),
+            textViewPlaceHolderLabel.leadingAnchor.constraint(equalTo: contentTextView.leadingAnchor, constant: 6)
         ])
         
         NSLayoutConstraint.activate([
@@ -200,6 +227,14 @@ private extension StoreUpdateRequestViewController {
     }
     
     func bind() {
+        view.rx.tapGesture { _, delegate in
+            delegate.simultaneousRecognitionPolicy = .never
+        }
+        .bind { [weak self] _ in
+            self?.view.endEditing(true)
+        }
+        .disposed(by: disposeBag)
+        
         viewModel.typeEditEndOutput
             .bind { [weak self] in
                 self?.typeTextField.setNormalUI()
@@ -216,7 +251,7 @@ private extension StoreUpdateRequestViewController {
         
         viewModel.contentEditEndOutput
             .bind { [weak self] in
-                self?.setSelectedUI()
+                self?.setNormalUI()
             }
             .disposed(by: disposeBag)
         
@@ -225,6 +260,19 @@ private extension StoreUpdateRequestViewController {
                 self?.setWarningUI()
             }
             .disposed(by: disposeBag)
+        
+        viewModel.contentFillPlaceHolder
+            .bind { [weak self] in
+                self?.textViewPlaceHolderLabel.isHidden = false
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.contentErasePlaceHolder
+            .bind { [weak self] in
+                self?.textViewPlaceHolderLabel.isHidden = true
+            }
+            .disposed(by: disposeBag)
+        
     }
     
 }
@@ -253,10 +301,6 @@ private extension StoreUpdateRequestViewController {
     }
 }
 
-extension StoreUpdateRequestViewController: UITextViewDelegate {
-    
-}
-
 extension StoreUpdateRequestViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -270,18 +314,37 @@ extension StoreUpdateRequestViewController: UIPickerViewDelegate, UIPickerViewDa
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch row {
         case 0:
-            return "수정"
+            return "신고 유형 선택하기"
         case 1:
-            return "삭제"
+            return "수정"
         case 2:
-            return "기타"
+            return "삭제"
         default:
             return nil
         }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        // TODO: 선택했을때 동작
+        switch row {
+        case 1:
+            typeTextField.text = "수정"
+        case 2:
+            typeTextField.text = "삭제"
+        default:
+            typeTextField.text = ""
+        }
+    }
+    
+}
+
+extension StoreUpdateRequestViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == typeTextField {
+            return false
+        } else {
+            return true
+        }
     }
     
 }
