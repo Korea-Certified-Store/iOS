@@ -37,6 +37,7 @@ protocol SearchViewModelOutput {
     
     var recentSearchKeywordsOutput: PublishRelay<[String]> { get }
     var autoCompleteKeywordsOutput: PublishRelay<[String]> { get }
+    var changeTextColorOutput: PublishRelay<String> { get }
     var searchOutput: PublishRelay<String> { get }
     var noKeywordToastOutput: PublishRelay<Void> { get }
     var noRecentHistoryOutput: PublishRelay<Void> { get }

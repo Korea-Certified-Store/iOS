@@ -100,8 +100,8 @@ final class SearchViewController: UIViewController {
                 ) as? RecentHistoryTableViewCell else { return RecentHistoryTableViewCell() }
                 cell.setUIContents(keyword: keyword)
                 cell.setIndexPath(indexPath: indexPath)
-                cell.selectionStyle = .none
                 cell.delegate = self
+                cell.selectionStyle = .none
                 
                 return cell
             }
@@ -128,11 +128,13 @@ final class SearchViewController: UIViewController {
     private lazy var autoCompletionDataSource: UITableViewDiffableDataSource<AutoCompletionSection, String> = {
         let dataSource = UITableViewDiffableDataSource<AutoCompletionSection, String>(
             tableView: autoCompletionTableView,
-            cellProvider: { (tableView, _, keyword) in
-                guard let cell = tableView.dequeueReusableCell(
+            cellProvider: { [weak self] (tableView, _, keyword) in
+                guard let self = self,
+                      let cell = tableView.dequeueReusableCell(
                     withIdentifier: AutoCompletionTableViewCell.identifier
                 ) as? AutoCompletionTableViewCell else { return AutoCompletionTableViewCell() }
                 cell.setUIContents(keyword: keyword)
+                cell.setObserver(textObserver: textObserver)
                 cell.selectionStyle = .none
                 
                 return cell
@@ -201,11 +203,13 @@ final class SearchViewController: UIViewController {
     ]
     
     private let searchObserver: PublishRelay<String>
+    private let textObserver: PublishRelay<String>
     private let viewModel: SearchViewModel
     
-    init(viewModel: SearchViewModel, searchObserver: PublishRelay<String>) {
+    init(viewModel: SearchViewModel, searchObserver: PublishRelay<String>, textObserver: PublishRelay<String>) {
         self.viewModel = viewModel
         self.searchObserver = searchObserver
+        self.textObserver = textObserver
         
         super.init(nibName: nil, bundle: nil)
         setup()
@@ -314,6 +318,12 @@ private extension SearchViewController {
                 self?.recentHistoryTableView.isHidden = true
                 self?.autoCompletionTableView.isHidden = false
                 self?.generateAutoCompletionData(data: keywords)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.changeTextColorOutput
+            .bind { [weak self] text in
+                self?.textObserver.accept(text)
             }
             .disposed(by: disposeBag)
         
