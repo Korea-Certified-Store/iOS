@@ -55,6 +55,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             )
         )
         let searchObserver = PublishRelay<String>()
+        let textObserver = PublishRelay<String>()
         let refreshCameraPositionObserver = BehaviorRelay<NMFCameraPosition>(value: NMFCameraPosition())
         let searchKeywordRepository = SearchKeywordRepositoryImpl(
             userDefaults: UserDefaults()
@@ -83,10 +84,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     ), 
                     deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
                         repository: searchKeywordRepository
+                    ), 
+                    getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
+                        repository: FetchAutoCompletionRepositoryImpl()
                     )
                 ),
-                searchObserver: searchObserver
-            ), 
+                searchObserver: searchObserver, 
+                textObserver: textObserver
+            ),
             summaryViewHeightObserver: summaryViewHeightObserver,
             listCellSelectedObserver: listCellSelectedObserver,
             searchObserver: searchObserver, 

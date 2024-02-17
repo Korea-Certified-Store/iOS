@@ -16,22 +16,27 @@ final class SearchViewModelImpl: SearchViewModel {
     var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase
     var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase
     var deleteAllHistoryUseCase: DeleteAllHistoryUseCase
+    var getAutoCompletionUseCase: GetAutoCompletionUseCase
     
     let recentSearchKeywordsOutput = PublishRelay<[String]>()
     let autoCompleteKeywordsOutput = PublishRelay<[String]>()
+    let changeTextColorOutput = PublishRelay<String>()
     let searchOutput = PublishRelay<String>()
-    var noKeywordToastOutput = PublishRelay<Void>()
+    let noKeywordToastOutput = PublishRelay<Void>()
+    let noRecentHistoryOutput = PublishRelay<Void>()
     
     init(
         fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
         saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase,
         deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase,
-        deleteAllHistoryUseCase: DeleteAllHistoryUseCase
+        deleteAllHistoryUseCase: DeleteAllHistoryUseCase,
+        getAutoCompletionUseCase: GetAutoCompletionUseCase
     ) {
         self.fetchRecentSearchKeywordUseCase = fetchRecentSearchKeywordUseCase
         self.saveRecentSearchKeywordUseCase = saveRecentSearchKeywordUseCase
         self.deleteRecentSearchKeywordUseCase = deleteRecentSearchKeywordUseCase
         self.deleteAllHistoryUseCase = deleteAllHistoryUseCase
+        self.getAutoCompletionUseCase = getAutoCompletionUseCase
     }
     
     func action(input: SearchViewModelInputCase) {
@@ -57,8 +62,12 @@ private extension SearchViewModelImpl {
         if text.isEmpty {
             emitRecentHistory()
         } else {
-            // TODO: autoCompletion usecase 실행(debounce) 후 generateDataOutput.accept([]) (자동완성으로 전환)
-            emitRecentHistory()
+            getAutoCompletionUseCase.execute(keyword: text)
+                .bind { [weak self] keywords in
+                    self?.autoCompleteKeywordsOutput.accept(keywords)
+                    self?.changeTextColorOutput.accept(text)
+                }
+                .disposed(by: disposeBag)
         }
     }
      
@@ -82,6 +91,9 @@ private extension SearchViewModelImpl {
         fetchRecentSearchKeywordUseCase.execute()
             .bind { [weak self] keywords in
                 self?.recentSearchKeywordsOutput.accept(keywords)
+                if keywords.isEmpty {
+                    self?.noRecentHistoryOutput.accept(())
+                }
             }
             .disposed(by: disposeBag)
     }
