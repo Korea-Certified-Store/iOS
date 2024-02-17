@@ -452,6 +452,10 @@ extension SearchViewController: UITableViewDelegate {
             guard let keyword = recentHistoryDataSource.itemIdentifier(for: indexPath) else { return }
             search(text: keyword)
         }
+        if tableView == autoCompletionTableView {
+            guard let keyword = autoCompletionDataSource.itemIdentifier(for: indexPath) else { return }
+            search(text: keyword)
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
