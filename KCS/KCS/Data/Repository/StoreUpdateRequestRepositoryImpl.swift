@@ -1,5 +1,5 @@
 //
-//  PostUpdateRequestRepositoryImpl.swift
+//  StoreUpdateRequestRepositoryImpl.swift
 //  KCS
 //
 //  Created by 조성민 on 2/18/24.
@@ -8,11 +8,11 @@
 import RxSwift
 import Alamofire
 
-final class PostUpdateRequestRepositoryImpl: PostUpdateRequestRepository {
+final class StoreUpdateRequestRepositoryImpl: StoreUpdateRequestRepository {
     
-    func postUpdateReqeust(type: String, storeID: Int, content: String) -> Observable<Void> {
+    func storeUpdateReqeust(type: String, storeID: Int, content: String) -> Observable<Void> {
         return Observable<Void>.create { observer -> Disposable in
-            AF.request(StoreAPI.postUpdateRequest(
+            AF.request(StoreAPI.storeUpdateRequest(
                 updateRequestDTO:
                     UpdateRequestDTO(
                         dtype: type,

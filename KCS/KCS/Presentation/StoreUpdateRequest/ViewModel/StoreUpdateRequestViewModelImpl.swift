@@ -40,8 +40,8 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
             contentWhileEditing(text: text)
         case .completeButtonIsEnable(let type, let content):
             completeButtonIsEnable(type: type, content: content)
-        case .postUpdateRequest(let type, let content):
-            postUpdateRequest(type: type, content: content)
+        case .storeUpdateRequest(let type, let content):
+            storeUpdateRequest(type: type, content: content)
         }
     }
     
@@ -92,14 +92,14 @@ private extension StoreUpdateRequestViewModelImpl {
         }
     }
     
-    func postUpdateRequest(type: String, content: String) {
+    func storeUpdateRequest(type: String, content: String) {
         let type = type == "수정" ? "fix" : "del"
         // TODO: StoreID를 지니고 있고, 그걸 아래에 넣어줘야 함.
         guard let storeID = dependency.fetchStoreIDUseCase.execute() else {
             // TODO: 에러 알러트 보내는 output
             return
         }
-        dependency.postUpdateRequestUseCase.execute(
+        dependency.storeUpdateRequestUseCase.execute(
             type: type, storeID: storeID, content: content
         )
         .subscribe(

@@ -36,7 +36,7 @@ final class StoreUpdateRequestViewController: UIViewController {
             .bind { [weak self] _ in
                 guard let type = self?.typeTextField.text,
                       let content = self?.contentTextView.text else { return }
-                self?.viewModel.action(input: .postUpdateRequest(
+                self?.viewModel.action(input: .storeUpdateRequest(
                     type: type, content: content
                 ))
             }

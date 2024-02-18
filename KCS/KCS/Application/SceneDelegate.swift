@@ -47,8 +47,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let storeUpdateRequestViewController = StoreUpdateRequestViewController(
             viewModel: StoreUpdateRequestViewModelImpl(
                 dependency: StoreUpdateRequestDepenency(
-                    postUpdateRequestUseCase: PostUpdateRequestUseCaseImpl(
-                        repository: PostUpdateRequestRepositoryImpl()
+                    storeUpdateRequestUseCase: StoreUpdateRequestUseCaseImpl(
+                        repository: StoreUpdateRequestRepositoryImpl()
                     ), fetchStoreIDUseCase: FetchStoreIDUseCaseImpl(
                         repository: FetchStoreIDRepositoryImpl(storage: storeIDStorage)
                     ), setStoreIDUseCase: SetStoreIDUseCaseImpl(

@@ -27,7 +27,7 @@ enum StoreUpdateRequestViewModelInputCase {
     case contentEndEditing(text: String)
     case contentWhileEditing(text: String)
     case completeButtonIsEnable(type: String, content: String)
-    case postUpdateRequest(type: String, content: String)
+    case storeUpdateRequest(type: String, content: String)
     
 }
 
@@ -49,7 +49,7 @@ protocol StoreUpdateRequestViewModelOutput {
 
 struct StoreUpdateRequestDepenency {
     
-    let postUpdateRequestUseCase: PostUpdateRequestUseCase
+    let storeUpdateRequestUseCase: StoreUpdateRequestUseCase
     let fetchStoreIDUseCase: FetchStoreIDUseCase
     let setStoreIDUseCase: SetStoreIDUseCase
     let disposeBag = DisposeBag()
