@@ -42,6 +42,8 @@ protocol StoreUpdateRequestViewModelOutput {
     var contentLengthWarningOutput: PublishRelay<Void> { get }
     var contentLengthNormalOutput: PublishRelay<Void> { get }
     var completeButtonIsEnabledOutput: PublishRelay<Bool> { get }
+    var completeRequestOutput: PublishRelay<Void> { get }
+    var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
     
 }
 

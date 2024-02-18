@@ -25,7 +25,6 @@ final class PostUpdateRequestRepositoryImpl: PostUpdateRequestRepository {
                 case .success:
                     observer.onNext(())
                 case .failure(let error):
-                    print(error)
                     if let underlyingError = error.underlyingError as? NSError {
                         switch underlyingError.code {
                         case URLError.notConnectedToInternet.rawValue:

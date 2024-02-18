@@ -21,6 +21,8 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
     let contentLengthWarningOutput = PublishRelay<Void>()
     let contentLengthNormalOutput = PublishRelay<Void>()
     let completeButtonIsEnabledOutput = PublishRelay<Bool>()
+    let completeRequestOutput = PublishRelay<Void>()
+    let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     
     init(dependency: StoreUpdateRequestDepenency) {
         self.dependency = dependency
@@ -102,12 +104,11 @@ private extension StoreUpdateRequestViewModelImpl {
         )
         .subscribe(
             onNext: { [weak self] in
-                // TODO: 완료 알러트 보내는 output
-                print("완료")
+                self?.completeRequestOutput.accept(())
             },
             onError: { [weak self] error in
-                // TODO: 에러 알러트 보내는 output
-                print(error)
+                guard let error = error as? ErrorAlertMessage else { return }
+                self?.errorAlertOutput.accept(error)
             }
         )
         .disposed(by: dependency.disposeBag)

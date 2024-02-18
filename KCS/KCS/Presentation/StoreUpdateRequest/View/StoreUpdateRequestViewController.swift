@@ -305,6 +305,7 @@ private extension StoreUpdateRequestViewController {
         bindType()
         bindContent()
         bindComplete()
+        bindAlert()
     }
     
     func bindKeyboard() {
@@ -375,6 +376,29 @@ private extension StoreUpdateRequestViewController {
         viewModel.completeButtonIsEnabledOutput
             .bind { [weak self] bool in
                 self?.completeButton.isEnabled = bool
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindAlert() {
+        viewModel.errorAlertOutput
+            .bind { [weak self] error in
+                self?.presentErrorAlert(error: error)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.completeRequestOutput
+            .bind { [weak self] _ in
+                let alertController = UIAlertController(
+                    title: "",
+                    message: "정보 수정 요청이 완료되었습니다.\n제보 내용은 검토 후에 조치하겠습니다.",
+                    preferredStyle: .alert
+                )
+                let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+                    self?.dismiss(animated: true)
+                }
+                alertController.addAction(alertAction)
+                self?.present(alertController, animated: true)
             }
             .disposed(by: disposeBag)
     }
