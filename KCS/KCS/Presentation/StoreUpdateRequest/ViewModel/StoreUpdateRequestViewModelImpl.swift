@@ -6,8 +6,11 @@
 //
 
 import RxRelay
+import RxSwift
 
 final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
+    
+    let dependency: StoreUpdateRequestDepenency
     
     let typeWarningOutput = PublishRelay<Void>()
     let typeEditEndOutput = PublishRelay<Void>()
@@ -15,21 +18,40 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
     let contentEditEndOutput = PublishRelay<Void>()
     let contentErasePlaceHolder = PublishRelay<Void>()
     let contentFillPlaceHolder = PublishRelay<Void>()
+    let contentLengthWarningOutput = PublishRelay<Void>()
+    let contentLengthNormalOutput = PublishRelay<Void>()
+    let completeButtonIsEnabledOutput = PublishRelay<Bool>()
+    let completeRequestOutput = PublishRelay<Void>()
+    let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
+    
+    init(dependency: StoreUpdateRequestDepenency) {
+        self.dependency = dependency
+    }
     
     func action(input: StoreUpdateRequestViewModelInputCase) {
         switch input {
+        case .setStoreID(let id):
+            setStoreID(id: id)
         case .typeInput(let text):
             typeInput(text: text)
         case .contentEndEditing(let text):
             contentEndEditing(text: text)
-        case .contentWhileEditing(text: let text):
+        case .contentWhileEditing(let text):
             contentWhileEditing(text: text)
+        case .completeButtonIsEnable(let type, let content):
+            completeButtonIsEnable(type: type, content: content)
+        case .storeUpdateRequest(let type, let content):
+            storeUpdateRequest(type: type, content: content)
         }
     }
     
 }
 
 private extension StoreUpdateRequestViewModelImpl {
+    
+    func setStoreID(id: Int) {
+        dependency.setStoreIDUseCase.execute(id: id)
+    }
     
     func typeInput(text: String) {
         if text.isEmpty {
@@ -40,10 +62,12 @@ private extension StoreUpdateRequestViewModelImpl {
     }
     
     func contentEndEditing(text: String) {
-        if text.isEmpty {
+        if text.isEmpty || text.count > 300 {
             contentWarningOutput.accept(())
+            contentLengthWarningOutput.accept(())
         } else {
             contentEditEndOutput.accept(())
+            contentLengthNormalOutput.accept(())
         }
     }
     
@@ -53,6 +77,40 @@ private extension StoreUpdateRequestViewModelImpl {
         } else {
             contentErasePlaceHolder.accept(())
         }
+        if text.isEmpty || text.count > 300 {
+            contentLengthWarningOutput.accept(())
+        } else {
+            contentLengthNormalOutput.accept(())
+        }
+    }
+    
+    func completeButtonIsEnable(type: String, content: String) {
+        if type.isEmpty || content.isEmpty {
+            completeButtonIsEnabledOutput.accept(false)
+        } else {
+            completeButtonIsEnabledOutput.accept(true)
+        }
+    }
+    
+    func storeUpdateRequest(type: String, content: String) {
+        let type: StoreUpdateRequestType = type == "수정" ? .fix : .delete
+        guard let storeID = dependency.fetchStoreIDUseCase.execute() else {
+            errorAlertOutput.accept(.client)
+            return
+        }
+        dependency.storeUpdateRequestUseCase.execute(
+            type: type, storeID: storeID, content: content
+        )
+        .subscribe(
+            onNext: { [weak self] in
+                self?.completeRequestOutput.accept(())
+            },
+            onError: { [weak self] error in
+                guard let error = error as? ErrorAlertMessage else { return }
+                self?.errorAlertOutput.accept(error)
+            }
+        )
+        .disposed(by: dependency.disposeBag)
     }
     
 }

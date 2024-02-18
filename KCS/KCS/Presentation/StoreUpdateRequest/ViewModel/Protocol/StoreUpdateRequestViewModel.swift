@@ -6,8 +6,11 @@
 //
 
 import RxRelay
+import RxSwift
 
 protocol StoreUpdateRequestViewModel: StoreUpdateRequestViewModelInput, StoreUpdateRequestViewModelOutput {
+    
+    var dependency: StoreUpdateRequestDepenency { get }
     
 }
 
@@ -19,9 +22,12 @@ protocol StoreUpdateRequestViewModelInput {
 
 enum StoreUpdateRequestViewModelInputCase {
     
+    case setStoreID(id: Int)
     case typeInput(text: String)
     case contentEndEditing(text: String)
     case contentWhileEditing(text: String)
+    case completeButtonIsEnable(type: String, content: String)
+    case storeUpdateRequest(type: String, content: String)
     
 }
 
@@ -33,5 +39,19 @@ protocol StoreUpdateRequestViewModelOutput {
     var contentEditEndOutput: PublishRelay<Void> { get }
     var contentErasePlaceHolder: PublishRelay<Void> { get }
     var contentFillPlaceHolder: PublishRelay<Void> { get }
+    var contentLengthWarningOutput: PublishRelay<Void> { get }
+    var contentLengthNormalOutput: PublishRelay<Void> { get }
+    var completeButtonIsEnabledOutput: PublishRelay<Bool> { get }
+    var completeRequestOutput: PublishRelay<Void> { get }
+    var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
+    
+}
+
+struct StoreUpdateRequestDepenency {
+    
+    let storeUpdateRequestUseCase: StoreUpdateRequestUseCase
+    let fetchStoreIDUseCase: FetchStoreIDUseCase
+    let setStoreIDUseCase: SetStoreIDUseCase
+    let disposeBag = DisposeBag()
     
 }
