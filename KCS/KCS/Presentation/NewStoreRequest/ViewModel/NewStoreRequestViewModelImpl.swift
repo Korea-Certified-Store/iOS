@@ -15,6 +15,8 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     let addressEditEndOutput = PublishRelay<Void>()
     let detailAddressWarningOutput = PublishRelay<Void>()
     let detailAddressEditEndOutput = PublishRelay<Void>()
+    let certificationWarningOutput = PublishRelay<Void>()
+    let certificationEditEndOutput = PublishRelay<Void>()
     
     func action(input: NewStoreRequestViewModelInputCase) {
         switch input {
@@ -24,6 +26,8 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
             editEnd(text: text, inputCase: .address)
         case .detailAddressEditEnd(let text):
             editEnd(text: text, inputCase: .detailAddress)
+        case .certificationEditEnd(let requestNewStoreCertificationIsSelected):
+            certificationEditEnd(requestNewStoreCertificationIsSelected: requestNewStoreCertificationIsSelected)
         }
     }
     
@@ -56,6 +60,16 @@ private extension NewStoreRequestViewModelImpl {
             case .detailAddress:
                 detailAddressEditEndOutput.accept(())
             }
+        }
+    }
+    
+    func certificationEditEnd(requestNewStoreCertificationIsSelected: RequestNewStoreCertificationIsSelected) {
+        if requestNewStoreCertificationIsSelected.goodPrice == true || 
+            requestNewStoreCertificationIsSelected.exemplary == true ||
+            requestNewStoreCertificationIsSelected.safe == true {
+            certificationEditEndOutput.accept(())
+        } else {
+            certificationWarningOutput.accept(())
         }
     }
     

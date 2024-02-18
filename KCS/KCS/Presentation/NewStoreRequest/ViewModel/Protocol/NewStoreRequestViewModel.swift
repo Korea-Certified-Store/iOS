@@ -22,6 +22,7 @@ enum NewStoreRequestViewModelInputCase {
     case titleEditEnd(text: String)
     case addressEditEnd(text: String)
     case detailAddressEditEnd(text: String)
+    case certificationEditEnd(requestNewStoreCertificationIsSelected: RequestNewStoreCertificationIsSelected)
     
 }
 
@@ -33,5 +34,7 @@ protocol NewStoreRequestViewModelOutput {
     var addressEditEndOutput: PublishRelay<Void> { get }
     var detailAddressWarningOutput: PublishRelay<Void> { get }
     var detailAddressEditEndOutput: PublishRelay<Void> { get }
+    var certificationWarningOutput: PublishRelay<Void> { get }
+    var certificationEditEndOutput: PublishRelay<Void> { get }
     
 }

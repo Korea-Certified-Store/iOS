@@ -212,7 +212,13 @@ final class NewStoreRequestViewController: UIViewController {
         let button = makeToggleButton()
         button.rx.tap
             .bind { [weak self] in
-                self?.requestNewStoreCertificationIsSelected.goodPrice = button.isSelected
+                guard let self = self else { return }
+                requestNewStoreCertificationIsSelected.goodPrice = button.isSelected
+                viewModel.action(
+                    input: .certificationEditEnd(
+                        requestNewStoreCertificationIsSelected: requestNewStoreCertificationIsSelected
+                    )
+                )
             }
             .disposed(by: disposeBag)
         
@@ -223,7 +229,13 @@ final class NewStoreRequestViewController: UIViewController {
         let button = makeToggleButton()
         button.rx.tap
             .bind { [weak self] in
-                self?.requestNewStoreCertificationIsSelected.exemplary = button.isSelected
+                guard let self = self else { return }
+                requestNewStoreCertificationIsSelected.exemplary = button.isSelected
+                viewModel.action(
+                    input: .certificationEditEnd(
+                        requestNewStoreCertificationIsSelected: requestNewStoreCertificationIsSelected
+                    )
+                )
             }
             .disposed(by: disposeBag)
         
@@ -234,7 +246,13 @@ final class NewStoreRequestViewController: UIViewController {
         let button = makeToggleButton()
         button.rx.tap
             .bind { [weak self] in
-                self?.requestNewStoreCertificationIsSelected.safe = button.isSelected
+                guard let self = self else { return }
+                requestNewStoreCertificationIsSelected.safe = button.isSelected
+                viewModel.action(
+                    input: .certificationEditEnd(
+                        requestNewStoreCertificationIsSelected: requestNewStoreCertificationIsSelected
+                    )
+                )
             }
             .disposed(by: disposeBag)
         
@@ -381,6 +399,18 @@ private extension NewStoreRequestViewController {
             .bind { [weak self] in
                 self?.detailAddressTextField.setWarningUI()
                 self?.addressWarningLabel.isHidden = false
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.certificationEditEndOutput
+            .bind { [weak self] in
+                self?.certificationWarningLabel.isHidden = true
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.certificationWarningOutput
+            .bind { [weak self] in
+                self?.certificationWarningLabel.isHidden = false
             }
             .disposed(by: disposeBag)
     }
@@ -534,7 +564,7 @@ private extension NewStoreRequestViewController {
         
         NSLayoutConstraint.activate([
             certificationWarningLabel.topAnchor.constraint(equalTo: safeButton.bottomAnchor, constant: 6),
-            certificationWarningLabel.leadingAnchor.constraint(equalTo: certificationLabel.leadingAnchor)
+            certificationWarningLabel.leadingAnchor.constraint(equalTo: certificationLabel.leadingAnchor, constant: 16)
         ])
     }
     
