@@ -41,10 +41,10 @@ final class NewStoreTextField: UITextField {
         return view
     }()
     
-    init() {
+    init(xmark: Bool = true) {
         super.init(frame: .zero)
         
-        setup()
+        setup(xmark: xmark)
     }
     
     required init?(coder: NSCoder) {
@@ -73,11 +73,17 @@ final class NewStoreTextField: UITextField {
 
 private extension NewStoreTextField {
     
-    func setup() {
+    func setup(xmark: Bool) {
+        if xmark {
+            rightViewMode = .whileEditing
+            rightView = clearButtonView
+        } else {
+            rightViewMode = .never
+        }
         leftViewMode = .always
         leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
-        rightViewMode = .whileEditing
-        rightView = clearButtonView
+        font = UIFont.pretendard(size: 15, weight: .medium)
+        textColor = .black
         setLayerCorner(cornerRadius: 10)
         setNormalUI()
     }
