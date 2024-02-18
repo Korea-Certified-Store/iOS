@@ -10,7 +10,7 @@ import RxSwift
 protocol StoreUpdateRequestRepository {
     
     func storeUpdateReqeust(
-        type: String,
+        type: StoreUpdateRequestType,
         storeID: Int,
         content: String
     ) -> Observable<Void>

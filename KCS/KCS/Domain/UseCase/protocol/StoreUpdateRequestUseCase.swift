@@ -13,6 +13,6 @@ protocol StoreUpdateRequestUseCase {
     
     init(repository: StoreUpdateRequestRepository)
     
-    func execute(type: String, storeID: Int, content: String) -> Observable<Void>
+    func execute(type: StoreUpdateRequestType, storeID: Int, content: String) -> Observable<Void>
     
 }

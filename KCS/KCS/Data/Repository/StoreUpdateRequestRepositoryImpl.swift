@@ -10,12 +10,12 @@ import Alamofire
 
 final class StoreUpdateRequestRepositoryImpl: StoreUpdateRequestRepository {
     
-    func storeUpdateReqeust(type: String, storeID: Int, content: String) -> Observable<Void> {
+    func storeUpdateReqeust(type: StoreUpdateRequestType, storeID: Int, content: String) -> Observable<Void> {
         return Observable<Void>.create { observer -> Disposable in
             AF.request(StoreAPI.storeUpdateRequest(
                 updateRequestDTO:
                     UpdateRequestDTO(
-                        dtype: type,
+                        dtype: type.rawValue,
                         storeId: storeID,
                         contents: content
                     )

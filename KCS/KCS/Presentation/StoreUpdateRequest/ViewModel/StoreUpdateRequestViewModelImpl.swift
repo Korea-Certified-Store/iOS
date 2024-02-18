@@ -93,10 +93,9 @@ private extension StoreUpdateRequestViewModelImpl {
     }
     
     func storeUpdateRequest(type: String, content: String) {
-        let type = type == "수정" ? "fix" : "del"
-        // TODO: StoreID를 지니고 있고, 그걸 아래에 넣어줘야 함.
+        let type: StoreUpdateRequestType = type == "수정" ? .fix : .delete
         guard let storeID = dependency.fetchStoreIDUseCase.execute() else {
-            // TODO: 에러 알러트 보내는 output
+            errorAlertOutput.accept(.client)
             return
         }
         dependency.storeUpdateRequestUseCase.execute(

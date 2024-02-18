@@ -26,6 +26,7 @@
 		5943764A2B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376492B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift */; };
 		5943764C2B821CB2005B97B2 /* SetStoreIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764B2B821CB2005B97B2 /* SetStoreIDUseCase.swift */; };
 		5943764E2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764D2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift */; };
+		594376502B82437C005B97B2 /* StoreUpdateRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
 		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
 		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
@@ -206,6 +207,7 @@
 		594376492B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDUseCaseImpl.swift; sourceTree = "<group>"; };
 		5943764B2B821CB2005B97B2 /* SetStoreIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDUseCase.swift; sourceTree = "<group>"; };
 		5943764D2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDUseCaseImpl.swift; sourceTree = "<group>"; };
+		5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestType.swift; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -793,6 +795,7 @@
 				59B8864F2B6AB9F7005750EF /* StoreTableViewCellContents.swift */,
 				59B886632B6EC816005750EF /* SummaryViewHeightCase.swift */,
 				A83367B72B6FA0E700E0A844 /* FetchStores.swift */,
+				5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1355,6 +1358,7 @@
 				59B886292B6A3F1E005750EF /* StoreTableViewCell.swift in Sources */,
 				592262242B61203000CA5A11 /* DetailView.swift in Sources */,
 				A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */,
+				594376502B82437C005B97B2 /* StoreUpdateRequestType.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* GetStoresUseCaseImpl.swift in Sources */,
 				A821A3742B74B84700089B8F /* SplashViewController.swift in Sources */,
 				59503A602B75970E0006CF35 /* GetSearchStoresUseCaseImpl.swift in Sources */,
