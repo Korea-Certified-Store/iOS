@@ -23,9 +23,10 @@ final class StoreInformationViewController: UIViewController {
     }()
     
     private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
+    private let updateReqeustButtonObserver = PublishRelay<Void>()
     
     private lazy var detailView: DetailView = {
-        let view = DetailView()
+        let view = DetailView(updateReqeustButtonObserver: updateReqeustButtonObserver)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -100,6 +101,13 @@ extension StoreInformationViewController {
         viewModel.setDetailUIContentsOutput
             .bind { [weak self] contents in
                 self?.detailView.setUIContents(contents: contents)
+            }
+            .disposed(by: disposeBag)
+        
+        updateReqeustButtonObserver
+            .bind { [weak self] _ in
+                guard let self = self else { return }
+                present(storeUpdateRequestViewController, animated: true)
             }
             .disposed(by: disposeBag)
     }

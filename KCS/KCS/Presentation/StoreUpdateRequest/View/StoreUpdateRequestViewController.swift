@@ -212,6 +212,8 @@ final class StoreUpdateRequestViewController: UIViewController {
         self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
+        
+        setup()
     }
     
     required init?(coder: NSCoder) {
@@ -223,7 +225,6 @@ final class StoreUpdateRequestViewController: UIViewController {
         
         addUIComponents()
         configureConstraints()
-        setup()
         bind()
     }
     
@@ -295,6 +296,7 @@ private extension StoreUpdateRequestViewController {
     
     func setup() {
         view.backgroundColor = .white
+        modalPresentationStyle = .fullScreen
         setNormalUI()
     }
     
