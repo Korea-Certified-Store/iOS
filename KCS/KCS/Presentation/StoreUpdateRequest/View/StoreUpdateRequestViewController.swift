@@ -70,13 +70,18 @@ final class StoreUpdateRequestViewController: UIViewController {
         return label
     }()
     
-    private lazy var typeTextField: NewStoreTextField = {
-        let textField = NewStoreTextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
+    private lazy var typePickerView: UIPickerView = {
         let pickerView = UIPickerView()
         pickerView.dataSource = self
         pickerView.delegate = self
+        typeTextField.inputView = pickerView
+        
+        return pickerView
+    }()
+    
+    private lazy var typeTextField: NewStoreTextField = {
+        let textField = NewStoreTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
         let selectButton = UIBarButtonItem(
@@ -98,7 +103,6 @@ final class StoreUpdateRequestViewController: UIViewController {
         textField.tintColor = .clear
         textField.rightViewMode = .never
         textField.inputAccessoryView = toolBar
-        textField.inputView = pickerView
         textField.placeholder = "신고 유형 선택하기"
         textField.font = .pretendard(size: 15, weight: .medium)
         
@@ -441,11 +445,11 @@ private extension StoreUpdateRequestViewController {
         typeTextField.text = ""
         contentTextView.text = ""
         contentLengthLabel.text = "0/300"
+        contentLengthLabel.textColor = .kcsGray1
         typeWarningLabel.isHidden = true
         textViewPlaceHolderLabel.isHidden = false
         completeButton.isEnabled = false
-        typeTextField.reloadInputViews()
-        contentTextView.reloadInputViews()
+        typePickerView.selectRow(0, inComponent: 0, animated: false)
     }
     
 }
