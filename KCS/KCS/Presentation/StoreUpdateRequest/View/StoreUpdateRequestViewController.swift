@@ -117,6 +117,7 @@ final class StoreUpdateRequestViewController: UIViewController {
             .bind { [weak self] _ in
                 guard let text = textView.text else { return }
                 self?.viewModel.action(input: .contentWhileEditing(text: text))
+                self?.contentLengthLabel.text = "\(text.count)/300"
             }
             .disposed(by: disposeBag)
         
@@ -137,10 +138,20 @@ final class StoreUpdateRequestViewController: UIViewController {
     private let contentWarningLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "신고 내용을 작성해 주세요."
+        label.text = "신고 내용을 수정해 주세요."
         label.font = .pretendard(size: 12, weight: .regular)
         label.textColor = .uiTextFieldWarning
         label.isHidden = true
+        
+        return label
+    }()
+    
+    private let contentLengthLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "0/300"
+        label.font = .pretendard(size: 12, weight: .regular)
+        label.textColor = .kcsGray1
         
         return label
     }()
@@ -177,6 +188,7 @@ private extension StoreUpdateRequestViewController {
         view.addSubview(contentHeaderLabel)
         view.addSubview(contentTextView)
         view.addSubview(contentWarningLabel)
+        view.addSubview(contentLengthLabel)
         contentTextView.addSubview(textViewPlaceHolderLabel)
     }
     
@@ -218,6 +230,11 @@ private extension StoreUpdateRequestViewController {
         NSLayoutConstraint.activate([
             contentWarningLabel.topAnchor.constraint(equalTo: contentTextView.bottomAnchor, constant: 6),
             contentWarningLabel.leadingAnchor.constraint(equalTo: contentTextView.leadingAnchor, constant: 16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            contentLengthLabel.topAnchor.constraint(equalTo: contentTextView.bottomAnchor, constant: 8),
+            contentLengthLabel.trailingAnchor.constraint(equalTo: contentTextView.trailingAnchor)
         ])
     }
     
@@ -273,6 +290,17 @@ private extension StoreUpdateRequestViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.contentLengthNormalOutput
+            .bind { [weak self] in
+                self?.contentLengthLabel.textColor = .kcsGray1
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.contentLengthWarningOutput
+            .bind { [weak self] in
+                self?.contentLengthLabel.textColor = .uiTextFieldWarning
+            }
+            .disposed(by: disposeBag)
     }
     
 }
@@ -291,6 +319,7 @@ private extension StoreUpdateRequestViewController {
         contentTextView.layer.borderWidth = 1.5
         contentTextView.layer.borderColor = UIColor.uiTextFieldWarning.cgColor
         contentWarningLabel.isHidden = false
+        contentLengthLabel.textColor = .uiTextFieldWarning
     }
     
     func setNormalUI() {

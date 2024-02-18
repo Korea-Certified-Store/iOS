@@ -33,5 +33,7 @@ protocol StoreUpdateRequestViewModelOutput {
     var contentEditEndOutput: PublishRelay<Void> { get }
     var contentErasePlaceHolder: PublishRelay<Void> { get }
     var contentFillPlaceHolder: PublishRelay<Void> { get }
+    var contentLengthWarningOutput: PublishRelay<Void> { get }
+    var contentLengthNormalOutput: PublishRelay<Void> { get }
     
 }

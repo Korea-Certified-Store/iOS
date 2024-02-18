@@ -15,6 +15,8 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
     let contentEditEndOutput = PublishRelay<Void>()
     let contentErasePlaceHolder = PublishRelay<Void>()
     let contentFillPlaceHolder = PublishRelay<Void>()
+    let contentLengthWarningOutput = PublishRelay<Void>()
+    let contentLengthNormalOutput = PublishRelay<Void>()
     
     func action(input: StoreUpdateRequestViewModelInputCase) {
         switch input {
@@ -40,10 +42,12 @@ private extension StoreUpdateRequestViewModelImpl {
     }
     
     func contentEndEditing(text: String) {
-        if text.isEmpty {
+        if text.isEmpty || text.count > 300 {
             contentWarningOutput.accept(())
+            contentLengthWarningOutput.accept(())
         } else {
             contentEditEndOutput.accept(())
+            contentLengthNormalOutput.accept(())
         }
     }
     
@@ -52,6 +56,11 @@ private extension StoreUpdateRequestViewModelImpl {
             contentFillPlaceHolder.accept(())
         } else {
             contentErasePlaceHolder.accept(())
+        }
+        if text.isEmpty || text.count > 300 {
+            contentLengthWarningOutput.accept(())
+        } else {
+            contentLengthNormalOutput.accept(())
         }
     }
     
