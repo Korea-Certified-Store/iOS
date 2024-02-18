@@ -125,14 +125,13 @@ final class NewStoreRequestViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "주소를 검색해 주세요."
         textField.tintColor = .clear
-        textField.delegate = self
         textField.rx.tapGesture()
             .when(.ended)
+            .asObservable()
             .bind { [weak self] _ in
                 textField.setSelectedUI()
-                guard let self = self else { return }
-                let addressViewController = AddressViewController(addressObserver: addressObserver)
-                present(addressViewController, animated: true)
+                textField.endEditing(true)
+                self?.presentAddressView()
             }
             .disposed(by: disposeBag)
         
@@ -151,9 +150,7 @@ final class NewStoreRequestViewController: UIViewController {
         button.setLayerCorner(cornerRadius: 10)
         button.rx.tap
             .bind { [weak self] in
-                guard let self = self else { return }
-                let addressViewController = AddressViewController(addressObserver: addressObserver)
-                present(addressViewController, animated: true)
+                self?.presentAddressView()
             }
             .disposed(by: disposeBag)
         
@@ -168,14 +165,14 @@ final class NewStoreRequestViewController: UIViewController {
             .asObservable()
             .bind { [weak self] _ in
                 textField.setSelectedUI()
-                self?.titleWarningLabel.isHidden = true
+                self?.addressWarningLabel.isHidden = true
             }
             .disposed(by: disposeBag)
         
         textField.rx.controlEvent([.editingDidEnd])
             .asObservable()
             .bind { [weak self] _ in
-                self?.viewModel.action(input: .titleEditEnd(text: textField.text ?? ""))
+                self?.viewModel.action(input: .detailAddressEditEnd(text: textField.text ?? ""))
             }
             .disposed(by: disposeBag)
         
@@ -227,15 +224,78 @@ final class NewStoreRequestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addUIComponents()
-        configureConstraints()
         setup()
         bind()
+        addUIComponents()
+        configureConstraints()
     }
     
 }
 
 private extension NewStoreRequestViewController {
+    
+    func setup() {
+        view.backgroundColor = .white
+    }
+    
+    func bind() {
+        scrollContentView.rx.tapGesture(configuration: { _, delegate in
+            delegate.simultaneousRecognitionPolicy = .never
+          }).when(.ended)
+            .bind { [weak self] _ in
+                self?.scrollContentView.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
+        addressObserver
+            .bind { [weak self] address in
+                self?.addressTextField.text = address
+                self?.viewModel.action(input: .addressEditEnd(text: address))
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.titleEditEndOutput
+            .bind { [weak self] in
+                self?.titleTextField.setNormalUI()
+                self?.titleWarningLabel.isHidden = true
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.titleWarningOutput
+            .bind { [weak self] in
+                self?.titleTextField.setWarningUI()
+                self?.titleWarningLabel.isHidden = false
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.addressEditEndOutput
+            .bind { [weak self] in
+                self?.addressTextField.setNormalUI()
+                self?.addressWarningLabel.isHidden = true
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.addressWarningOutput
+            .bind { [weak self] in
+                self?.addressTextField.setWarningUI()
+                self?.addressWarningLabel.isHidden = false
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.detailAddressEditEndOutput
+            .bind { [weak self] in
+                self?.detailAddressTextField.setNormalUI()
+                self?.addressWarningLabel.isHidden = true
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.detailAddressWarningOutput
+            .bind { [weak self] in
+                self?.detailAddressTextField.setWarningUI()
+                self?.addressWarningLabel.isHidden = false
+            }
+            .disposed(by: disposeBag)
+    }
     
     func addUIComponents() {
         view.addSubview(navigationBar)
@@ -323,47 +383,15 @@ private extension NewStoreRequestViewController {
         ])
     }
     
-    func setup() {
-        view.backgroundColor = .white
-    }
-    
-    func bind() {
-        scrollContentView.rx.tapGesture(configuration: { _, delegate in
-            delegate.simultaneousRecognitionPolicy = .never
-          }).when(.ended)
-            .bind { [weak self] _ in
-                self?.scrollContentView.endEditing(true)
-            }
-            .disposed(by: disposeBag)
-        
-        addressObserver
-            .bind { [weak self] address in
-                self?.addressTextField.text = address
-                self?.addressTextField.setNormalUI()
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.titleEditEndOutput
-            .bind { [weak self] in
-                self?.titleTextField.setNormalUI()
-                self?.titleWarningLabel.isHidden = true
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.titleWarningOutput
-            .bind { [weak self] in
-                self?.titleTextField.setWarningUI()
-                self?.titleWarningLabel.isHidden = false
-            }
-            .disposed(by: disposeBag)
-    }
-    
 }
 
-extension NewStoreRequestViewController: UITextFieldDelegate {
+private extension NewStoreRequestViewController {
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return false
+    func presentAddressView() {
+        let addressViewController = AddressViewController(addressObserver: addressObserver)
+        present(addressViewController, animated: true) { [weak self] in
+            self?.viewModel.action(input: .addressEditEnd(text: self?.addressTextField.text ?? ""))
+        }
     }
     
 }

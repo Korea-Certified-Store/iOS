@@ -20,6 +20,8 @@ protocol NewStoreRequestViewModelInput {
 enum NewStoreRequestViewModelInputCase {
     
     case titleEditEnd(text: String)
+    case addressEditEnd(text: String)
+    case detailAddressEditEnd(text: String)
     
 }
 
@@ -27,5 +29,9 @@ protocol NewStoreRequestViewModelOutput {
     
     var titleWarningOutput: PublishRelay<Void> { get }
     var titleEditEndOutput: PublishRelay<Void> { get }
+    var addressWarningOutput: PublishRelay<Void> { get }
+    var addressEditEndOutput: PublishRelay<Void> { get }
+    var detailAddressWarningOutput: PublishRelay<Void> { get }
+    var detailAddressEditEndOutput: PublishRelay<Void> { get }
     
 }
