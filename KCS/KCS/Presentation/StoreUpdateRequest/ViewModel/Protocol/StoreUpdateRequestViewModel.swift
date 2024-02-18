@@ -9,7 +9,7 @@ import RxRelay
 
 protocol StoreUpdateRequestViewModel: StoreUpdateRequestViewModelInput, StoreUpdateRequestViewModelOutput {
     
-    var postUpdateRequestUseCase: PostUpdateRequestUseCase { get }
+    var dependency: StoreUpdateRequestDepenency { get }
     
 }
 
@@ -40,5 +40,12 @@ protocol StoreUpdateRequestViewModelOutput {
     var contentLengthWarningOutput: PublishRelay<Void> { get }
     var contentLengthNormalOutput: PublishRelay<Void> { get }
     var completeButtonIsEnabledOutput: PublishRelay<Bool> { get }
+    
+}
+
+struct StoreUpdateRequestDepenency {
+    
+    let postUpdateRequestUseCase: PostUpdateRequestUseCase
+    let fetchStoreIDUseCase: FetchStoreIDUseCase
     
 }

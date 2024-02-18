@@ -19,6 +19,11 @@
 		594376382B820272005B97B2 /* PostUpdateRequestRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376372B820272005B97B2 /* PostUpdateRequestRepositoryImpl.swift */; };
 		5943763A2B82051A005B97B2 /* PostUpdateRequestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376392B82051A005B97B2 /* PostUpdateRequestUseCase.swift */; };
 		5943763C2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943763B2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift */; };
+		594376402B821679005B97B2 /* FetchStoreIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943763F2B821679005B97B2 /* FetchStoreIDUseCase.swift */; };
+		594376422B8216C2005B97B2 /* FetchStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376412B8216C1005B97B2 /* FetchStoreIDRepository.swift */; };
+		594376442B8216F7005B97B2 /* StoreIDStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376432B8216F7005B97B2 /* StoreIDStorage.swift */; };
+		594376462B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376452B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift */; };
+		5943764A2B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376492B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
 		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
 		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
@@ -192,6 +197,11 @@
 		594376372B820272005B97B2 /* PostUpdateRequestRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateRequestRepositoryImpl.swift; sourceTree = "<group>"; };
 		594376392B82051A005B97B2 /* PostUpdateRequestUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateRequestUseCase.swift; sourceTree = "<group>"; };
 		5943763B2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostUpdateRequestUseCaseImpl.swift; path = ../../../../../../../../Applications/PostUpdateRequestUseCaseImpl.swift; sourceTree = "<group>"; };
+		5943763F2B821679005B97B2 /* FetchStoreIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDUseCase.swift; sourceTree = "<group>"; };
+		594376412B8216C1005B97B2 /* FetchStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDRepository.swift; sourceTree = "<group>"; };
+		594376432B8216F7005B97B2 /* StoreIDStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreIDStorage.swift; sourceTree = "<group>"; };
+		594376452B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDRepositoryImpl.swift; sourceTree = "<group>"; };
+		594376492B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDUseCaseImpl.swift; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -522,6 +532,7 @@
 				A81B5A672B7C81DB0042307A /* DeleteAllHistoryUseCase.swift */,
 				A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */,
 				594376392B82051A005B97B2 /* PostUpdateRequestUseCase.swift */,
+				5943763F2B821679005B97B2 /* FetchStoreIDUseCase.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -544,6 +555,7 @@
 				A81B5A652B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift */,
 				A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */,
 				5943763B2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift */,
+				594376492B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -750,6 +762,7 @@
 				A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */,
 				A8AF06752B80BE1000E73574 /* FetchAutoCompletionRepository.swift */,
 				594376352B8201FB005B97B2 /* PostUpdateRequestRepository.swift */,
+				594376412B8216C1005B97B2 /* FetchStoreIDRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -908,6 +921,7 @@
 				A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */,
 				5977BE9D2B59ACE800725C90 /* ImageCache.swift */,
 				A83367BC2B70A52900E0A844 /* OnboardStorage.swift */,
+				594376432B8216F7005B97B2 /* StoreIDStorage.swift */,
 			);
 			path = PersistentStorage;
 			sourceTree = "<group>";
@@ -948,6 +962,7 @@
 				A86D92102B760B74003B9FEE /* SearchKeywordRepositoryImpl.swift */,
 				A8AF06732B80BB4200E73574 /* FetchAutoCompletionRepositoryImpl.swift */,
 				594376372B820272005B97B2 /* PostUpdateRequestRepositoryImpl.swift */,
+				594376452B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1301,6 +1316,7 @@
 				5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */,
 				A821A37C2B74BC4B00089B8F /* CheckNetworkStatusUseCase.swift in Sources */,
 				A8A7E05D2B64AF1300D015E5 /* StoreInformationViewConstraints.swift in Sources */,
+				594376422B8216C2005B97B2 /* FetchStoreIDRepository.swift in Sources */,
 				5977BE5E2B5535C700725C90 /* GetStoresUseCase.swift in Sources */,
 				59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */,
 				A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */,
@@ -1367,16 +1383,20 @@
 				5977BE942B59738800725C90 /* GetRefreshStoresUseCase.swift in Sources */,
 				59B886502B6AB9F7005750EF /* StoreTableViewCellContents.swift in Sources */,
 				59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */,
+				5943764A2B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift in Sources */,
 				596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */,
 				59C306B22B50001F00862625 /* FetchStoresRepositoryImpl.swift in Sources */,
 				59503A6C2B7980B80006CF35 /* AutoCompletionTableViewCell.swift in Sources */,
 				5977BE9A2B59AC3300725C90 /* ImageRepository.swift in Sources */,
 				591A887D2B384E600059E40F /* AppDelegate.swift in Sources */,
 				A8AF06702B80B7DC00E73574 /* AutoCompletionDTO.swift in Sources */,
+				594376442B8216F7005B97B2 /* StoreIDStorage.swift in Sources */,
 				A86D92192B761EC7003B9FEE /* SearchKeywordsRepository.swift in Sources */,
 				59C306DC2B506F3D00862625 /* NetworkError.swift in Sources */,
 				59C306C32B50114100862625 /* Day.swift in Sources */,
 				A8AF067F2B8121F300E73574 /* AddressViewController.swift in Sources */,
+				594376462B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift in Sources */,
+				594376402B821679005B97B2 /* FetchStoreIDUseCase.swift in Sources */,
 				59C306AD2B4FFAC700862625 /* StoreDTO.swift in Sources */,
 				59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */,
 				594376362B8201FB005B97B2 /* PostUpdateRequestRepository.swift in Sources */,
