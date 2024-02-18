@@ -13,6 +13,50 @@ final class StoreUpdateRequestViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
+    private lazy var backButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            title: "",
+            image: .backButton.withTintColor(.black, renderingMode: .alwaysOriginal),
+            target: self,
+            action: nil
+        )
+        button.rx.tap
+            .bind { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
+    private lazy var completeButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "완료", style: .done, target: self, action: nil)
+        button.isEnabled = false
+        button.rx.tap
+            .bind { [weak self] _ in
+                // TODO: API 연결
+//                self?.viewModel.action(input: <#T##StoreUpdateRequestViewModelInputCase#>)
+            }
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
+    private lazy var customNavigationBar: UINavigationBar = {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let statusBarHeight = scene.windows.first?.safeAreaInsets.top else { return UINavigationBar() }
+        let navigationBar = UINavigationBar(frame: .init(x: 0, y: statusBarHeight, width: view.frame.width, height: statusBarHeight))
+        navigationBar.isTranslucent = false
+        navigationBar.backgroundColor = .white
+
+        let navigationItem = UINavigationItem(title: "정보 수정 요청")
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.rightBarButtonItem = completeButton
+        navigationBar.items = [navigationItem]
+
+        return navigationBar
+    }()
+    
     private let typeHeaderLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -118,6 +162,9 @@ final class StoreUpdateRequestViewController: UIViewController {
                 guard let text = textView.text else { return }
                 self?.viewModel.action(input: .contentWhileEditing(text: text))
                 self?.contentLengthLabel.text = "\(text.count)/300"
+                self?.viewModel.action(
+                    input: .completeButtonIsEnable(type: self?.typeTextField.text ?? "", content: self?.contentTextView.text ?? "")
+                )
             }
             .disposed(by: disposeBag)
         
@@ -182,6 +229,7 @@ final class StoreUpdateRequestViewController: UIViewController {
 private extension StoreUpdateRequestViewController {
     
     func addUIComponents() {
+        view.addSubview(customNavigationBar)
         view.addSubview(typeHeaderLabel)
         view.addSubview(typeTextField)
         view.addSubview(typeWarningLabel)
@@ -195,7 +243,7 @@ private extension StoreUpdateRequestViewController {
     func configureConstraints() {
         NSLayoutConstraint.activate([
             typeHeaderLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            typeHeaderLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 35)
+            typeHeaderLabel.topAnchor.constraint(equalTo: customNavigationBar.bottomAnchor, constant: 35)
         ])
         
         NSLayoutConstraint.activate([
@@ -244,6 +292,14 @@ private extension StoreUpdateRequestViewController {
     }
     
     func bind() {
+        bindKeyboard()
+        bindType()
+        bindContent()
+        
+    }
+    
+    
+    func bindKeyboard() {
         view.rx.tapGesture { _, delegate in
             delegate.simultaneousRecognitionPolicy = .never
         }
@@ -251,7 +307,9 @@ private extension StoreUpdateRequestViewController {
             self?.view.endEditing(true)
         }
         .disposed(by: disposeBag)
-        
+    }
+    
+    func bindType() {
         viewModel.typeEditEndOutput
             .bind { [weak self] in
                 self?.typeTextField.setNormalUI()
@@ -265,7 +323,9 @@ private extension StoreUpdateRequestViewController {
                 self?.typeWarningLabel.isHidden = false
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindContent() {
         viewModel.contentEditEndOutput
             .bind { [weak self] in
                 self?.setNormalUI()
@@ -299,6 +359,14 @@ private extension StoreUpdateRequestViewController {
         viewModel.contentLengthWarningOutput
             .bind { [weak self] in
                 self?.contentLengthLabel.textColor = .uiTextFieldWarning
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindComplete() {
+        viewModel.completeButtonIsEnabledOutput
+            .bind { [weak self] bool in
+                self?.completeButton.isEnabled = bool
             }
             .disposed(by: disposeBag)
     }
@@ -362,6 +430,7 @@ extension StoreUpdateRequestViewController: UIPickerViewDelegate, UIPickerViewDa
         default:
             typeTextField.text = ""
         }
+        viewModel.action(input: .completeButtonIsEnable(type: typeTextField.text ?? "", content: contentTextView.text ?? ""))
     }
     
 }

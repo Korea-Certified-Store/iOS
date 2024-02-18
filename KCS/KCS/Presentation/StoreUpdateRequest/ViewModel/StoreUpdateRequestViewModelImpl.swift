@@ -17,6 +17,7 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
     let contentFillPlaceHolder = PublishRelay<Void>()
     let contentLengthWarningOutput = PublishRelay<Void>()
     let contentLengthNormalOutput = PublishRelay<Void>()
+    let completeButtonIsEnabledOutput = PublishRelay<Bool>()
     
     func action(input: StoreUpdateRequestViewModelInputCase) {
         switch input {
@@ -26,6 +27,8 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
             contentEndEditing(text: text)
         case .contentWhileEditing(text: let text):
             contentWhileEditing(text: text)
+        case .completeButtonIsEnable(let type, let content):
+            completeButtonIsEnable(type: type, content: content)
         }
     }
     
@@ -61,6 +64,14 @@ private extension StoreUpdateRequestViewModelImpl {
             contentLengthWarningOutput.accept(())
         } else {
             contentLengthNormalOutput.accept(())
+        }
+    }
+    
+    func completeButtonIsEnable(type: String, content: String) {
+        if type.isEmpty || content.isEmpty {
+            completeButtonIsEnabledOutput.accept(false)
+        } else {
+            completeButtonIsEnabledOutput.accept(true)
         }
     }
     

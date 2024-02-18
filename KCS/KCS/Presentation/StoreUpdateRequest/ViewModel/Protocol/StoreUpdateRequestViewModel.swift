@@ -22,6 +22,7 @@ enum StoreUpdateRequestViewModelInputCase {
     case typeInput(text: String)
     case contentEndEditing(text: String)
     case contentWhileEditing(text: String)
+    case completeButtonIsEnable(type: String, content: String)
     
 }
 
@@ -35,5 +36,6 @@ protocol StoreUpdateRequestViewModelOutput {
     var contentFillPlaceHolder: PublishRelay<Void> { get }
     var contentLengthWarningOutput: PublishRelay<Void> { get }
     var contentLengthNormalOutput: PublishRelay<Void> { get }
+    var completeButtonIsEnabledOutput: PublishRelay<Bool> { get }
     
 }
