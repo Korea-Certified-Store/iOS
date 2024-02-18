@@ -12,10 +12,10 @@ import NMapsMap
 
 final class HomeViewModelImpl: HomeViewModel {
     
-    var getStoresUseCase: GetStoresUseCase
-    var getRefreshStoresUseCase: GetRefreshStoresUseCase
-    var getStoreInformationUseCase: GetStoreInformationUseCase
-    var getSearchStoresUseCase: GetSearchStoresUseCase
+    let getStoresUseCase: GetStoresUseCase
+    let getRefreshStoresUseCase: GetRefreshStoresUseCase
+    let getStoreInformationUseCase: GetStoreInformationUseCase
+    let getSearchStoresUseCase: GetSearchStoresUseCase
     
     let getStoreInformationOutput = PublishRelay<Store>()
     let refreshDoneOutput = PublishRelay<Bool>()

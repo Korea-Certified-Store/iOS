@@ -12,11 +12,11 @@ final class SearchViewModelImpl: SearchViewModel {
     
     let disposeBag = DisposeBag()
     
-    var fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase
-    var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase
-    var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase
-    var deleteAllHistoryUseCase: DeleteAllHistoryUseCase
-    var getAutoCompletionUseCase: GetAutoCompletionUseCase
+    let fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase
+    let saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase
+    let deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase
+    let deleteAllHistoryUseCase: DeleteAllHistoryUseCase
+    let getAutoCompletionUseCase: GetAutoCompletionUseCase
     
     let recentSearchKeywordsOutput = PublishRelay<[String]>()
     let autoCompleteKeywordsOutput = PublishRelay<[String]>()

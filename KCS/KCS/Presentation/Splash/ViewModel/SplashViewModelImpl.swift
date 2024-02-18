@@ -13,8 +13,8 @@ final class SplashViewModelImpl: SplashViewModel {
     
     let networkEnableOutput = PublishRelay<Void>()
     let networkDisableOutput = PublishRelay<Void>()
-    var needToUpdateOutput = PublishRelay<Void>()
-    var noNeedToUpdateOutput = PublishRelay<Void>()
+    let needToUpdateOutput = PublishRelay<Void>()
+    let noNeedToUpdateOutput = PublishRelay<Void>()
     
     init(checkNetworkStatusUseCase: CheckNetworkStatusUseCase) {
         self.checkNetworkStatusUseCase = checkNetworkStatusUseCase

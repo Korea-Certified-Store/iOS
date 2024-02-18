@@ -9,7 +9,7 @@ import RxSwift
 
 struct FetchRecentSearchKeywordUseCaseImpl: FetchRecentSearchKeywordUseCase {
     
-    var repository: SearchKeywordsRepository
+    let repository: SearchKeywordsRepository
     
     func execute() -> Observable<[String]> {
         return repository.fetchRecentSearchKeywords()

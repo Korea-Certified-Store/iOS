@@ -10,7 +10,7 @@ import Alamofire
 
 struct ImageRepositoryImpl: ImageRepository {
     
-    var cache: ImageCache
+    let cache: ImageCache
     
     init(cache: ImageCache = ImageCache.shared) {
         self.cache = cache
