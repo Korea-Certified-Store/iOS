@@ -108,7 +108,7 @@ extension StoreInformationViewController {
         summaryView.resetUIContents()
         detailView.resetUIContents()
         viewModel.action(input: .setUIContents(store: store))
-//        storeUpdateRequestViewController
+        storeUpdateRequestViewController.setStoreID(id: store.id)
     }
     
     func changeToSummary() {

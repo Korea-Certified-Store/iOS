@@ -227,6 +227,10 @@ final class StoreUpdateRequestViewController: UIViewController {
         bind()
     }
     
+    func setStoreID(id: Int) {
+        viewModel.action(input: .setStoreID(id: id))
+    }
+    
 }
 
 private extension StoreUpdateRequestViewController {
@@ -292,10 +296,6 @@ private extension StoreUpdateRequestViewController {
     func setup() {
         view.backgroundColor = .white
         setNormalUI()
-    }
-    
-    func setStoreID(id: Int) {
-        viewModel.action(input: .setStoreID(id: id))
     }
     
     func bind() {
