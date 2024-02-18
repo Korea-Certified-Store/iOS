@@ -92,7 +92,19 @@ final class StoreUpdateRequestViewController: UIViewController {
         )
         selectButton.rx.tap
             .bind { [weak self] _ in
+                switch self?.typePickerView.selectedRow(inComponent: 0) {
+                case 1:
+                    textField.text = "수정"
+                case 2:
+                    textField.text = "삭제"
+                default:
+                    textField.text = ""
+                }
                 textField.endEditing(true)
+                self?.viewModel.action(input: .completeButtonIsEnable(
+                    type: self?.typeTextField.text ?? "",
+                    content: self?.contentTextView.text ?? ""
+                ))
             }
             .disposed(by: disposeBag)
         
@@ -477,17 +489,17 @@ extension StoreUpdateRequestViewController: UIPickerViewDelegate, UIPickerViewDa
         }
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        switch row {
-        case 1:
-            typeTextField.text = "수정"
-        case 2:
-            typeTextField.text = "삭제"
-        default:
-            typeTextField.text = ""
-        }
-        viewModel.action(input: .completeButtonIsEnable(type: typeTextField.text ?? "", content: contentTextView.text ?? ""))
-    }
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        switch row {
+//        case 1:
+//            typeTextField.text = "수정"
+//        case 2:
+//            typeTextField.text = "삭제"
+//        default:
+//            typeTextField.text = ""
+//        }
+//        viewModel.action(input: .completeButtonIsEnable(type: typeTextField.text ?? "", content: contentTextView.text ?? ""))
+//    }
     
 }
 
