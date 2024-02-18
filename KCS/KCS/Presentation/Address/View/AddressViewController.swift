@@ -6,6 +6,7 @@
 //
 
 import WebKit
+import RxRelay
 
 final class AddressViewController: UIViewController {
     
@@ -30,6 +31,18 @@ final class AddressViewController: UIViewController {
         return webView
     }()
     
+    private let addressObserver: PublishRelay<String>
+    
+    init(addressObserver: PublishRelay<String>) {
+        self.addressObserver = addressObserver
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +50,7 @@ final class AddressViewController: UIViewController {
         configureConstraints()
         setWebView()
     }
+    
 }
 
 private extension AddressViewController {
@@ -73,8 +87,8 @@ extension AddressViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let data = message.body as? [String: Any],
               let address = data["roadAddress"] as? String else { return }
-        
-        // TODO: address 주소 사용 코드 작성 필요
+        addressObserver.accept(address)
+        self.dismiss(animated: true)
     }
     
 }

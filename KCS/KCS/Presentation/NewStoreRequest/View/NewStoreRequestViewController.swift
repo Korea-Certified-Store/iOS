@@ -120,19 +120,45 @@ final class NewStoreRequestViewController: UIViewController {
         return label
     }()
     
-    private lazy var addressTextField: NewStoreTextField = {
-        let textField = NewStoreTextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "주소를 검색해 주세요."
-        textField.rx.controlEvent([.editingDidBegin])
-            .asObservable()
+    private lazy var addressTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.setLayerCorner(cornerRadius: 10)
+        textView.tintColor = .clear
+        textView.font = .pretendard(size: 15, weight: .medium)
+        textView.contentInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        
+        textView.rx.tapGesture()
+            .when(.ended)
             .bind { [weak self] _ in
-                textField.setSelectedUI()
-                self?.titleWarningLabel.isHidden = true
+                self?.setSelectedUI()
+                guard let self = self else { return }
+                let addressViewController = AddressViewController(addressObserver: addressObserver)
+                present(addressViewController, animated: true)
             }
             .disposed(by: disposeBag)
+//        textView.rx.didBeginEditing
+//            .bind { [weak self] _ in
+//                self?.setSelectedUI()
+//                guard let self = self else { return }
+//                let addressViewController = AddressViewController(addressObserver: addressObserver)
+//                present(addressViewController, animated: true)
+//            }
+//            .disposed(by: disposeBag)
         
-        return textField
+        return textView
+    }()
+    
+    private let addressTextViewPlaceHolderLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "주소를 검색해 주세요."
+        label.font = .pretendard(size: 17, weight: .regular)
+        label.textColor = .placeholderText
+        label.isUserInteractionEnabled = false
+//        label.isHidden = true
+        
+        return label
     }()
     
     private lazy var searchAddressButton: UIButton = {
@@ -147,9 +173,9 @@ final class NewStoreRequestViewController: UIViewController {
         button.setLayerCorner(cornerRadius: 10)
         button.rx.tap
             .bind { [weak self] in
-                let addressViewController = AddressViewController(nibName: nil, bundle: nil)
-                addressViewController.modalPresentationStyle = .fullScreen
-                self?.present(addressViewController, animated: true)
+                guard let self = self else { return }
+                let addressViewController = AddressViewController(addressObserver: addressObserver)
+                present(addressViewController, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -189,10 +215,29 @@ final class NewStoreRequestViewController: UIViewController {
         return label
     }()
     
-    private let viewModel: NewStoreRequestViewModel
+    private let certificationLabel: UILabel = {
+        let text = "인증제 (중복선택 가능)"
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(
+            .font,
+            value: UIFont.pretendard(size: 12, weight: .regular),
+            range: (text as NSString).range(of: "(중복선택 가능)")
+        )
+        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.pretendard(size: 14, weight: .medium)
+        label.attributedText = attributedString
+        
+        return label
+    }()
     
-    init(viewModel: NewStoreRequestViewModel) {
+    private let viewModel: NewStoreRequestViewModel
+    private let addressObserver: PublishRelay<String>
+    
+    init(viewModel: NewStoreRequestViewModel, addressObserver: PublishRelay<String>) {
         self.viewModel = viewModel
+        self.addressObserver = addressObserver
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -222,10 +267,11 @@ private extension NewStoreRequestViewController {
         scrollContentView.addSubview(titleTextField)
         scrollContentView.addSubview(titleWarningLabel)
         scrollContentView.addSubview(addressHeaderLabel)
-        scrollContentView.addSubview(addressTextField)
+        scrollContentView.addSubview(addressTextView)
         scrollContentView.addSubview(searchAddressButton)
         scrollContentView.addSubview(detailAddressTextField)
         scrollContentView.addSubview(addressWarningLabel)
+        addressTextView.addSubview(addressTextViewPlaceHolderLabel)
     }
     
     func configureConstraints() {
@@ -274,21 +320,21 @@ private extension NewStoreRequestViewController {
         ])
         
         NSLayoutConstraint.activate([
-            addressTextField.topAnchor.constraint(equalTo: addressHeaderLabel.bottomAnchor, constant: 8),
-            addressTextField.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16),
-            addressTextField.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor, constant: -113),
-            addressTextField.heightAnchor.constraint(equalToConstant: 50)
+            addressTextView.topAnchor.constraint(equalTo: addressHeaderLabel.bottomAnchor, constant: 8),
+            addressTextView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16),
+            addressTextView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor, constant: -113),
+            addressTextView.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         NSLayoutConstraint.activate([
-            searchAddressButton.centerYAnchor.constraint(equalTo: addressTextField.centerYAnchor),
-            searchAddressButton.leadingAnchor.constraint(equalTo: addressTextField.trailingAnchor, constant: 9),
+            searchAddressButton.centerYAnchor.constraint(equalTo: addressTextView.centerYAnchor),
+            searchAddressButton.leadingAnchor.constraint(equalTo: addressTextView.trailingAnchor, constant: 9),
             searchAddressButton.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor, constant: -16),
             searchAddressButton.heightAnchor.constraint(equalToConstant: 42)
         ])
         
         NSLayoutConstraint.activate([
-            detailAddressTextField.topAnchor.constraint(equalTo: addressTextField.bottomAnchor, constant: 12),
+            detailAddressTextField.topAnchor.constraint(equalTo: addressTextView.bottomAnchor, constant: 12),
             detailAddressTextField.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16),
             detailAddressTextField.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor, constant: -16),
             detailAddressTextField.heightAnchor.constraint(equalToConstant: 50)
@@ -298,10 +344,16 @@ private extension NewStoreRequestViewController {
             addressWarningLabel.topAnchor.constraint(equalTo: detailAddressTextField.bottomAnchor, constant: 6),
             addressWarningLabel.leadingAnchor.constraint(equalTo: detailAddressTextField.leadingAnchor, constant: 16)
         ])
+        
+        NSLayoutConstraint.activate([
+            addressTextViewPlaceHolderLabel.topAnchor.constraint(equalTo: addressTextView.topAnchor, constant: 7),
+            addressTextViewPlaceHolderLabel.leadingAnchor.constraint(equalTo: addressTextView.leadingAnchor, constant: 8)
+        ])
     }
     
     func setup() {
         view.backgroundColor = .white
+        setNormalUI()
     }
     
     func bind() {
@@ -310,6 +362,14 @@ private extension NewStoreRequestViewController {
           }).when(.ended)
             .bind { [weak self] _ in
                 self?.scrollContentView.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
+        addressObserver
+            .bind { [weak self] address in
+                self?.addressTextView.text = address
+                self?.addressTextViewPlaceHolderLabel.isHidden = true
+                self?.setNormalUI()
             }
             .disposed(by: disposeBag)
         
@@ -326,6 +386,31 @@ private extension NewStoreRequestViewController {
                 self?.titleWarningLabel.isHidden = false
             }
             .disposed(by: disposeBag)
+    }
+    
+}
+
+private extension NewStoreRequestViewController {
+    
+    func setSelectedUI() {
+        addressTextView.backgroundColor = .newStoreRequestTextFieldEdit
+        addressTextView.layer.borderWidth = 1.5
+        addressTextView.layer.borderColor = UIColor.uiTextFieldBoldBorder.cgColor
+        addressWarningLabel.isHidden = true
+    }
+    
+    func setWarningUI() {
+        addressTextView.backgroundColor = .newStoreRequestTextFieldNormal
+        addressTextView.layer.borderWidth = 1.5
+        addressTextView.layer.borderColor = UIColor.uiTextFieldWarning.cgColor
+        addressWarningLabel.isHidden = false
+    }
+    
+    func setNormalUI() {
+        addressTextView.backgroundColor = .newStoreRequestTextFieldNormal
+        addressTextView.layer.borderWidth = 0.7
+        addressTextView.layer.borderColor = UIColor.uiTextFieldNormalBorder.cgColor
+        addressWarningLabel.isHidden = true
     }
     
 }
