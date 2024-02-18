@@ -107,12 +107,19 @@ final class HomeViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                viewModel.action(
-                    input: .locationButtonTapped(
-                        locationAuthorizationStatus: locationManager.authorizationStatus,
-                        positionMode: mapView.mapView.positionMode
-                    )
+                dismiss(animated: true)
+                let vc = NewStoreRequestViewController(
+                    viewModel: NewStoreRequestViewModelImpl(),
+                    addressObserver: PublishRelay<String>()
                 )
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+//                viewModel.action(
+//                    input: .locationButtonTapped(
+//                        locationAuthorizationStatus: locationManager.authorizationStatus,
+//                        positionMode: mapView.mapView.positionMode
+//                    )
+//                )
             }
             .disposed(by: self.disposeBag)
         button.setImage(UIImage.locationButtonNone, for: .normal)

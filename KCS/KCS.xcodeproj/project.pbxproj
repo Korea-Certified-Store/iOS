@@ -153,7 +153,7 @@
 		A8AF06782B80BE7200E73574 /* GetAutoCompletionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */; };
 		A8AF067A2B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */; };
 		A8AF067F2B8121F300E73574 /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF067E2B8121F300E73574 /* AddressViewController.swift */; };
-		A8AF06812B8237A800E73574 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06802B8237A800E73574 /* ToggleButton.swift */; };
+		A8AF06832B8281C200E73574 /* RequestNewStoreCertificationIsSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06822B8281C200E73574 /* RequestNewStoreCertificationIsSelected.swift */; };
 		A8CD526A2B7B7DFE00917786 /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CD52692B7B7DFD00917786 /* CellDelegate.swift */; };
 		A8E53C252B77DDF3003FCBA2 /* StoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */; };
 		A8E53C272B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */; };
@@ -327,7 +327,7 @@
 		A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAutoCompletionUseCase.swift; sourceTree = "<group>"; };
 		A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAutoCompletionUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8AF067E2B8121F300E73574 /* AddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
-		A8AF06802B8237A800E73574 /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
+		A8AF06822B8281C200E73574 /* RequestNewStoreCertificationIsSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestNewStoreCertificationIsSelected.swift; sourceTree = "<group>"; };
 		A8CD52692B7B7DFD00917786 /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
 		A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreStorage.swift; sourceTree = "<group>"; };
 		A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -443,7 +443,6 @@
 			children = (
 				59503A6F2B7FB3130006CF35 /* NewStoreRequestViewController.swift */,
 				59503A712B7FB38E0006CF35 /* NewStoreTextField.swift */,
-				A8AF06802B8237A800E73574 /* ToggleButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -764,6 +763,7 @@
 				59B8864F2B6AB9F7005750EF /* StoreTableViewCellContents.swift */,
 				59B886632B6EC816005750EF /* SummaryViewHeightCase.swift */,
 				A83367B72B6FA0E700E0A844 /* FetchStores.swift */,
+				A8AF06822B8281C200E73574 /* RequestNewStoreCertificationIsSelected.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1284,7 +1284,6 @@
 				5977BE5E2B5535C700725C90 /* GetStoresUseCase.swift in Sources */,
 				59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */,
 				A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */,
-				A8AF06812B8237A800E73574 /* ToggleButton.swift in Sources */,
 				59503A542B751FD50006CF35 /* SearchViewModelImpl.swift in Sources */,
 				A8AF06742B80BB4200E73574 /* FetchAutoCompletionRepositoryImpl.swift in Sources */,
 				A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */,
@@ -1304,6 +1303,7 @@
 				5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */,
 				59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */,
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
+				A8AF06832B8281C200E73574 /* RequestNewStoreCertificationIsSelected.swift in Sources */,
 				59503A802B80ED2C0006CF35 /* StoreUpdateRequestViewModel.swift in Sources */,
 				59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */,
 				A8E53C2B2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift in Sources */,

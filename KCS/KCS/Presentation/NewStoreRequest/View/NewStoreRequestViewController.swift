@@ -208,44 +208,61 @@ final class NewStoreRequestViewController: UIViewController {
         return label
     }()
     
-    private lazy var certificationStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [goodPriceButton, exemplaryButton, safeButton])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        stackView.distribution = .equalSpacing
-        
-        return stackView
-    }()
-    
-    private let goodPriceButton: ToggleButton = {
-        let button = ToggleButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setToggleLabel(type: .goodPrice)
+    private lazy var goodPriceButton: UIButton = {
+        let button = makeToggleButton()
+        button.rx.tap
+            .bind { [weak self] in
+                self?.requestNewStoreCertificationIsSelected.goodPrice = button.isSelected
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
     
-    private let exemplaryButton: ToggleButton = {
-        let button = ToggleButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setToggleLabel(type: .exemplary)
+    private lazy var exemplaryButton: UIButton = {
+        let button = makeToggleButton()
+        button.rx.tap
+            .bind { [weak self] in
+                self?.requestNewStoreCertificationIsSelected.exemplary = button.isSelected
+            }
+            .disposed(by: disposeBag)
         
         return button
     }()
     
-    private let safeButton: ToggleButton = {
-        let button = ToggleButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setToggleLabel(type: .safe)
+    private lazy var safeButton: UIButton = {
+        let button = makeToggleButton()
+        button.rx.tap
+            .bind { [weak self] in
+                self?.requestNewStoreCertificationIsSelected.safe = button.isSelected
+            }
+            .disposed(by: disposeBag)
         
         return button
+    }()
+    
+    private lazy var goodPriceLabel = makeToggleLabel(type: .goodPrice)
+    private lazy var exemplaryLabel = makeToggleLabel(type: .exemplary)
+    private lazy var safeLabel = makeToggleLabel(type: .safe)
+        
+    private let certificationWarningLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "인증제를 선택해 주세요."
+        label.font = .pretendard(size: 12, weight: .regular)
+        label.textColor = .uiTextFieldWarning
+        label.isHidden = true
+        
+        return label
     }()
     
     private let viewModel: NewStoreRequestViewModel
     private let addressObserver: PublishRelay<String>
+    private var requestNewStoreCertificationIsSelected = RequestNewStoreCertificationIsSelected()
     
-    init(viewModel: NewStoreRequestViewModel, addressObserver: PublishRelay<String>) {
+    init(viewModel: NewStoreRequestViewModel, 
+         addressObserver: PublishRelay<String>
+    ) {
         self.viewModel = viewModel
         self.addressObserver = addressObserver
         
@@ -269,6 +286,42 @@ final class NewStoreRequestViewController: UIViewController {
 
 private extension NewStoreRequestViewController {
     
+    func makeToggleButton() -> UIButton {
+        var config = UIButton.Configuration.filled()
+        config.baseBackgroundColor = UIColor.newStoreRequestTextFieldNormal
+        
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.changesSelectionAsPrimaryAction = true
+        button.layer.borderColor = UIColor.uiTextFieldNormalBorder.cgColor
+        button.layer.borderWidth = 0.7
+        button.setLayerCorner(cornerRadius: 3)
+        button.configuration = config
+        button.configurationUpdateHandler = { button in
+            var config = button.configuration
+            config?.image = button.isSelected
+            ? UIImage.checkbox
+            : nil
+            button.configuration = config
+        }
+        
+        return button
+    }
+    
+    func makeToggleLabel(type: CertificationType) -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.pretendard(size: 15, weight: .medium)
+        label.text = type.rawValue
+        label.textColor = .black
+        
+        return label
+    }
+    
+}
+
+private extension NewStoreRequestViewController {
+    
     func setup() {
         view.backgroundColor = .white
     }
@@ -276,7 +329,7 @@ private extension NewStoreRequestViewController {
     func bind() {
         scrollContentView.rx.tapGesture(configuration: { _, delegate in
             delegate.simultaneousRecognitionPolicy = .never
-          }).when(.ended)
+        }).when(.ended)
             .bind { [weak self] _ in
                 self?.scrollContentView.endEditing(true)
             }
@@ -345,10 +398,23 @@ private extension NewStoreRequestViewController {
         scrollContentView.addSubview(detailAddressTextField)
         scrollContentView.addSubview(addressWarningLabel)
         scrollContentView.addSubview(certificationLabel)
-        scrollContentView.addSubview(certificationStackView)
+        scrollContentView.addSubview(goodPriceButton)
+        scrollContentView.addSubview(goodPriceLabel)
+        scrollContentView.addSubview(exemplaryButton)
+        scrollContentView.addSubview(exemplaryLabel)
+        scrollContentView.addSubview(safeButton)
+        scrollContentView.addSubview(safeLabel)
+        scrollContentView.addSubview(certificationWarningLabel)
     }
     
     func configureConstraints() {
+        scrollViewConstraints()
+        titleConstraints()
+        addressConstraints()
+        certificationConstraints()
+    }
+    
+    func scrollViewConstraints() {
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -370,7 +436,9 @@ private extension NewStoreRequestViewController {
             scrollContentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             scrollContentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
-        
+    }
+    
+    func titleConstraints() {
         NSLayoutConstraint.activate([
             titleHeaderLabel.topAnchor.constraint(equalTo: scrollContentView.topAnchor, constant: 25),
             titleHeaderLabel.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16)
@@ -387,7 +455,9 @@ private extension NewStoreRequestViewController {
             titleWarningLabel.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 6),
             titleWarningLabel.leadingAnchor.constraint(equalTo: titleTextField.leadingAnchor, constant: 16)
         ])
-        
+    }
+    
+    func addressConstraints() {
         NSLayoutConstraint.activate([
             addressHeaderLabel.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 48),
             addressHeaderLabel.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16)
@@ -418,30 +488,53 @@ private extension NewStoreRequestViewController {
             addressWarningLabel.topAnchor.constraint(equalTo: detailAddressTextField.bottomAnchor, constant: 6),
             addressWarningLabel.leadingAnchor.constraint(equalTo: detailAddressTextField.leadingAnchor, constant: 16)
         ])
-        
+    }
+    
+    func certificationConstraints() {
         NSLayoutConstraint.activate([
             certificationLabel.topAnchor.constraint(equalTo: detailAddressTextField.bottomAnchor, constant: 48),
             certificationLabel.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16)
         ])
         
         NSLayoutConstraint.activate([
-            certificationStackView.topAnchor.constraint(equalTo: certificationLabel.bottomAnchor, constant: 8),
-            certificationStackView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16)
+            goodPriceButton.topAnchor.constraint(equalTo: certificationLabel.bottomAnchor, constant: 8),
+            goodPriceButton.leadingAnchor.constraint(equalTo: certificationLabel.leadingAnchor),
+            goodPriceButton.widthAnchor.constraint(equalToConstant: 25),
+            goodPriceButton.heightAnchor.constraint(equalToConstant: 25)
         ])
         
         NSLayoutConstraint.activate([
-            goodPriceButton.widthAnchor.constraint(equalToConstant: 120),
-            goodPriceButton.heightAnchor.constraint(equalToConstant: 25),
+            goodPriceLabel.leadingAnchor.constraint(equalTo: goodPriceButton.trailingAnchor, constant: 8),
+            goodPriceLabel.centerYAnchor.constraint(equalTo: goodPriceButton.centerYAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            exemplaryButton.widthAnchor.constraint(equalToConstant: 120),
-            exemplaryButton.heightAnchor.constraint(equalToConstant: 25),
+            exemplaryButton.topAnchor.constraint(equalTo: goodPriceButton.bottomAnchor, constant: 16),
+            exemplaryButton.leadingAnchor.constraint(equalTo: certificationLabel.leadingAnchor),
+            exemplaryButton.widthAnchor.constraint(equalToConstant: 25),
+            exemplaryButton.heightAnchor.constraint(equalToConstant: 25)
         ])
         
         NSLayoutConstraint.activate([
-            safeButton.widthAnchor.constraint(equalToConstant: 120),
+            exemplaryLabel.leadingAnchor.constraint(equalTo: exemplaryButton.trailingAnchor, constant: 8),
+            exemplaryLabel.centerYAnchor.constraint(equalTo: exemplaryButton.centerYAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            safeButton.topAnchor.constraint(equalTo: exemplaryButton.bottomAnchor, constant: 16),
+            safeButton.leadingAnchor.constraint(equalTo: certificationLabel.leadingAnchor),
+            safeButton.widthAnchor.constraint(equalToConstant: 25),
             safeButton.heightAnchor.constraint(equalToConstant: 25)
+        ])
+        
+        NSLayoutConstraint.activate([
+            safeLabel.leadingAnchor.constraint(equalTo: safeButton.trailingAnchor, constant: 8),
+            safeLabel.centerYAnchor.constraint(equalTo: safeButton.centerYAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            certificationWarningLabel.topAnchor.constraint(equalTo: safeButton.bottomAnchor, constant: 6),
+            certificationWarningLabel.leadingAnchor.constraint(equalTo: certificationLabel.leadingAnchor)
         ])
     }
     
