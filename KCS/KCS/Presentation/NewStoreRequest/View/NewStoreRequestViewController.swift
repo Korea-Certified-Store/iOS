@@ -345,6 +345,14 @@ private extension NewStoreRequestViewController {
     }
     
     func bind() {
+        observerBind()
+        titleBind()
+        addressBind()
+        certificationBind()
+        completeBind()
+    }
+    
+    func observerBind() {
         scrollContentView.rx.tapGesture(configuration: { _, delegate in
             delegate.simultaneousRecognitionPolicy = .never
         }).when(.ended)
@@ -359,7 +367,9 @@ private extension NewStoreRequestViewController {
                 self?.viewModel.action(input: .addressEditEnd(text: address))
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func titleBind() {
         viewModel.titleEditEndOutput
             .bind { [weak self] in
                 self?.titleTextField.setNormalUI()
@@ -373,7 +383,9 @@ private extension NewStoreRequestViewController {
                 self?.titleWarningLabel.isHidden = false
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func addressBind() {
         viewModel.addressEditEndOutput
             .bind { [weak self] in
                 self?.addressTextField.setNormalUI()
@@ -401,7 +413,9 @@ private extension NewStoreRequestViewController {
                 self?.addressWarningLabel.isHidden = false
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func certificationBind() {
         viewModel.certificationEditEndOutput
             .bind { [weak self] in
                 self?.certificationWarningLabel.isHidden = true
@@ -413,7 +427,9 @@ private extension NewStoreRequestViewController {
                 self?.certificationWarningLabel.isHidden = false
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func completeBind() {
         viewModel.completeEditOutput
             .bind { [weak self] in
                 self?.rightBarButtonItem.isEnabled = true
