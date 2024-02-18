@@ -43,10 +43,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 )
             )
         )
+        let storeIDStorage = StoreIDStorage()
+        let storeUpdateRequestViewController = StoreUpdateRequestViewController(
+            viewModel: StoreUpdateRequestViewModelImpl(
+                dependency: StoreUpdateRequestDepenency(
+                    storeUpdateRequestUseCase: StoreUpdateRequestUseCaseImpl(
+                        repository: StoreUpdateRequestRepositoryImpl()
+                    ), fetchStoreIDUseCase: FetchStoreIDUseCaseImpl(
+                        repository: FetchStoreIDRepositoryImpl(storage: storeIDStorage)
+                    ), setStoreIDUseCase: SetStoreIDUseCaseImpl(
+                        storage: storeIDStorage
+                    )
+                )
+            )
+        )
+        
         let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
         let listCellSelectedObserver = PublishRelay<Int>()
         let storeInformationViewController = StoreInformationViewController(
-            summaryViewHeightObserver: summaryViewHeightObserver,
+            storeUpdateRequestViewController: storeUpdateRequestViewController, summaryViewHeightObserver: summaryViewHeightObserver,
             viewModel: StoreInformationViewModelImpl(
                 getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
                 fetchImageUseCase: FetchImageUseCaseImpl(
