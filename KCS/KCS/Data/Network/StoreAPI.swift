@@ -14,6 +14,7 @@ enum StoreAPI {
     case getImage(url: String)
     case getSearchStores(searchDTO: SearchDTO)
     case getAutoCompletion(autoCompletionDTO: AutoCompletionDTO)
+    case postUpdateRequest(UpdateRequestDTO: UpdateRequestDTO)
     
 }
 
@@ -21,7 +22,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     
     var baseURL: String? {
         switch self {
-        case .getStores, .getSearchStores, .getAutoCompletion:
+        case .getStores, .getSearchStores, .getAutoCompletion, .postUpdateRequest:
             return getURL(type: .develop)
         case .getImage(let url):
             return url
@@ -38,6 +39,8 @@ extension StoreAPI: Router, URLRequestConvertible {
             return "/storecertification/byLocationAndKeyword/v1"
         case .getAutoCompletion:
             return "/store/autocorrect/v1"
+        case .postUpdateRequest:
+            return "/report/specificStore/v1"
         }
     }
     
@@ -45,12 +48,14 @@ extension StoreAPI: Router, URLRequestConvertible {
         switch self {
         case .getStores, .getImage, .getSearchStores, .getAutoCompletion:
             return .get
+        case .postUpdateRequest:
+            return .post
         }
     }
     
     var headers: [String: String] {
         switch self {
-        case .getStores, .getSearchStores, .getAutoCompletion:
+        case .getStores, .getSearchStores, .getAutoCompletion, .postUpdateRequest:
             return [
                 "Content-Type": "application/json"
             ]
@@ -70,6 +75,8 @@ extension StoreAPI: Router, URLRequestConvertible {
                 return try searchDTO.asDictionary()
             case let .getAutoCompletion(autoCompletionDTO):
                 return try autoCompletionDTO.asDictionary()
+            case let .postUpdateRequest(updateRequestDTO):
+                return try updateRequestDTO.asDictionary()
             }
         } catch {
             return nil
@@ -80,7 +87,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     /// 바디에 담아서 보내야할 것이 있다면, JSONEncoding.default
     var encoding: ParameterEncoding? {
         switch self {
-        case .getStores, .getSearchStores, .getAutoCompletion:
+        case .getStores, .getSearchStores, .getAutoCompletion, .postUpdateRequest:
             return URLEncoding.default
         case .getImage:
             return nil
