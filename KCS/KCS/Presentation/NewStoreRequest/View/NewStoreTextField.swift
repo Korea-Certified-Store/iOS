@@ -74,7 +74,6 @@ final class NewStoreTextField: UITextField {
 private extension NewStoreTextField {
     
     func setup() {
-        clearButtonMode = .whileEditing
         leftViewMode = .always
         leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
         rightViewMode = .whileEditing
