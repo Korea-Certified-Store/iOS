@@ -444,6 +444,8 @@ private extension StoreUpdateRequestViewController {
         typeWarningLabel.isHidden = true
         textViewPlaceHolderLabel.isHidden = false
         completeButton.isEnabled = false
+        typeTextField.reloadInputViews()
+        contentTextView.reloadInputViews()
     }
     
 }
