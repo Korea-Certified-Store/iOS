@@ -489,18 +489,6 @@ extension StoreUpdateRequestViewController: UIPickerViewDelegate, UIPickerViewDa
         }
     }
     
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        switch row {
-//        case 1:
-//            typeTextField.text = "수정"
-//        case 2:
-//            typeTextField.text = "삭제"
-//        default:
-//            typeTextField.text = ""
-//        }
-//        viewModel.action(input: .completeButtonIsEnable(type: typeTextField.text ?? "", content: contentTextView.text ?? ""))
-//    }
-    
 }
 
 extension StoreUpdateRequestViewController: UITextFieldDelegate {
