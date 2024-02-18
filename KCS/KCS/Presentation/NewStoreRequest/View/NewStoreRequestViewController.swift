@@ -203,8 +203,43 @@ final class NewStoreRequestViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.pretendard(size: 14, weight: .medium)
         label.attributedText = attributedString
+        label.textColor = .kcsGray1
         
         return label
+    }()
+    
+    private lazy var certificationStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [goodPriceButton, exemplaryButton, safeButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.distribution = .equalSpacing
+        
+        return stackView
+    }()
+    
+    private let goodPriceButton: ToggleButton = {
+        let button = ToggleButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setToggleLabel(type: .goodPrice)
+        
+        return button
+    }()
+    
+    private let exemplaryButton: ToggleButton = {
+        let button = ToggleButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setToggleLabel(type: .exemplary)
+        
+        return button
+    }()
+    
+    private let safeButton: ToggleButton = {
+        let button = ToggleButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setToggleLabel(type: .safe)
+        
+        return button
     }()
     
     private let viewModel: NewStoreRequestViewModel
@@ -309,6 +344,8 @@ private extension NewStoreRequestViewController {
         scrollContentView.addSubview(searchAddressButton)
         scrollContentView.addSubview(detailAddressTextField)
         scrollContentView.addSubview(addressWarningLabel)
+        scrollContentView.addSubview(certificationLabel)
+        scrollContentView.addSubview(certificationStackView)
     }
     
     func configureConstraints() {
@@ -380,6 +417,31 @@ private extension NewStoreRequestViewController {
         NSLayoutConstraint.activate([
             addressWarningLabel.topAnchor.constraint(equalTo: detailAddressTextField.bottomAnchor, constant: 6),
             addressWarningLabel.leadingAnchor.constraint(equalTo: detailAddressTextField.leadingAnchor, constant: 16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            certificationLabel.topAnchor.constraint(equalTo: detailAddressTextField.bottomAnchor, constant: 48),
+            certificationLabel.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            certificationStackView.topAnchor.constraint(equalTo: certificationLabel.bottomAnchor, constant: 8),
+            certificationStackView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            goodPriceButton.widthAnchor.constraint(equalToConstant: 120),
+            goodPriceButton.heightAnchor.constraint(equalToConstant: 25),
+        ])
+        
+        NSLayoutConstraint.activate([
+            exemplaryButton.widthAnchor.constraint(equalToConstant: 120),
+            exemplaryButton.heightAnchor.constraint(equalToConstant: 25),
+        ])
+        
+        NSLayoutConstraint.activate([
+            safeButton.widthAnchor.constraint(equalToConstant: 120),
+            safeButton.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
     
