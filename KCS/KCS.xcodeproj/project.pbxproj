@@ -152,6 +152,7 @@
 		A8AF06762B80BE1000E73574 /* FetchAutoCompletionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06752B80BE1000E73574 /* FetchAutoCompletionRepository.swift */; };
 		A8AF06782B80BE7200E73574 /* GetAutoCompletionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */; };
 		A8AF067A2B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */; };
+		A8AF067F2B8121F300E73574 /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF067E2B8121F300E73574 /* AddressViewController.swift */; };
 		A8CD526A2B7B7DFE00917786 /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CD52692B7B7DFD00917786 /* CellDelegate.swift */; };
 		A8E53C252B77DDF3003FCBA2 /* StoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */; };
 		A8E53C272B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */; };
@@ -324,6 +325,7 @@
 		A8AF06752B80BE1000E73574 /* FetchAutoCompletionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAutoCompletionRepository.swift; sourceTree = "<group>"; };
 		A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAutoCompletionUseCase.swift; sourceTree = "<group>"; };
 		A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAutoCompletionUseCaseImpl.swift; sourceTree = "<group>"; };
+		A8AF067E2B8121F300E73574 /* AddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
 		A8CD52692B7B7DFD00917786 /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
 		A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreStorage.swift; sourceTree = "<group>"; };
 		A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 				59B886242B6A39E9005750EF /* StoreList */,
 				59B886552B6E3A59005750EF /* StoreInformation */,
 				59503A4B2B751AEE0006CF35 /* Search */,
+				A8AF067B2B8121B800E73574 /* Address */,
 				A83367B92B709BE900E0A844 /* OnBoarding */,
 				A821A3722B74B82600089B8F /* Splash */,
 			);
@@ -957,6 +960,30 @@
 				A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		A8AF067B2B8121B800E73574 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				A8AF067C2B8121DB00E73574 /* View */,
+				A8AF067D2B8121E000E73574 /* VIewModel */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		A8AF067C2B8121DB00E73574 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A8AF067E2B8121F300E73574 /* AddressViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A8AF067D2B8121E000E73574 /* VIewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VIewModel;
 			sourceTree = "<group>";
 		};
 		E99F20FF9A30DCF9C51285A2 /* Frameworks */ = {
@@ -1333,6 +1360,7 @@
 				A86D92192B761EC7003B9FEE /* SearchKeywordsRepository.swift in Sources */,
 				59C306DC2B506F3D00862625 /* NetworkError.swift in Sources */,
 				59C306C32B50114100862625 /* Day.swift in Sources */,
+				A8AF067F2B8121F300E73574 /* AddressViewController.swift in Sources */,
 				59C306AD2B4FFAC700862625 /* StoreDTO.swift in Sources */,
 				59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */,
 				5977BE982B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift in Sources */,
