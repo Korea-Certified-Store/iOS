@@ -966,7 +966,6 @@
 			isa = PBXGroup;
 			children = (
 				A8AF067C2B8121DB00E73574 /* View */,
-				A8AF067D2B8121E000E73574 /* VIewModel */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -977,13 +976,6 @@
 				A8AF067E2B8121F300E73574 /* AddressViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		A8AF067D2B8121E000E73574 /* VIewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = VIewModel;
 			sourceTree = "<group>";
 		};
 		E99F20FF9A30DCF9C51285A2 /* Frameworks */ = {
