@@ -28,11 +28,13 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
     
     func action(input: StoreUpdateRequestViewModelInputCase) {
         switch input {
+        case .setStoreID(let id):
+            setStoreID(id: id)
         case .typeInput(let text):
             typeInput(text: text)
         case .contentEndEditing(let text):
             contentEndEditing(text: text)
-        case .contentWhileEditing(text: let text):
+        case .contentWhileEditing(let text):
             contentWhileEditing(text: text)
         case .completeButtonIsEnable(let type, let content):
             completeButtonIsEnable(type: type, content: content)
@@ -44,6 +46,10 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
 }
 
 private extension StoreUpdateRequestViewModelImpl {
+    
+    func setStoreID(id: Int) {
+        dependency.setStoreIDUseCase.execute(id: id)
+    }
     
     func typeInput(text: String) {
         if text.isEmpty {

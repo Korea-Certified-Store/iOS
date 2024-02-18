@@ -31,14 +31,19 @@ final class StoreInformationViewController: UIViewController {
         return view
     }()
     
+    private let storeUpdateRequestViewController: StoreUpdateRequestViewController
+    
     private let viewModel: StoreInformationViewModel
     
     init(
+        storeUpdateRequestViewController: StoreUpdateRequestViewController,
         summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
         viewModel: StoreInformationViewModel
     ) {
+        self.storeUpdateRequestViewController = storeUpdateRequestViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
         bind()
     }
@@ -103,6 +108,7 @@ extension StoreInformationViewController {
         summaryView.resetUIContents()
         detailView.resetUIContents()
         viewModel.action(input: .setUIContents(store: store))
+//        storeUpdateRequestViewController
     }
     
     func changeToSummary() {

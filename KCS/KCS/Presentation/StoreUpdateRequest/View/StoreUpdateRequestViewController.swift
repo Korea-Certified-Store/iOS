@@ -294,6 +294,10 @@ private extension StoreUpdateRequestViewController {
         setNormalUI()
     }
     
+    func setStoreID(id: Int) {
+        viewModel.action(input: .setStoreID(id: id))
+    }
+    
     func bind() {
         bindKeyboard()
         bindType()
@@ -398,6 +402,7 @@ private extension StoreUpdateRequestViewController {
         contentTextView.layer.borderColor = UIColor.uiTextFieldNormalBorder.cgColor
         contentWarningLabel.isHidden = true
     }
+    
 }
 
 extension StoreUpdateRequestViewController: UIPickerViewDelegate, UIPickerViewDataSource {

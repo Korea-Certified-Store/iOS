@@ -24,6 +24,8 @@
 		594376442B8216F7005B97B2 /* StoreIDStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376432B8216F7005B97B2 /* StoreIDStorage.swift */; };
 		594376462B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376452B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift */; };
 		5943764A2B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376492B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift */; };
+		5943764C2B821CB2005B97B2 /* SetStoreIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764B2B821CB2005B97B2 /* SetStoreIDUseCase.swift */; };
+		5943764E2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764D2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
 		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
 		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
@@ -202,6 +204,8 @@
 		594376432B8216F7005B97B2 /* StoreIDStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreIDStorage.swift; sourceTree = "<group>"; };
 		594376452B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDRepositoryImpl.swift; sourceTree = "<group>"; };
 		594376492B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDUseCaseImpl.swift; sourceTree = "<group>"; };
+		5943764B2B821CB2005B97B2 /* SetStoreIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDUseCase.swift; sourceTree = "<group>"; };
+		5943764D2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDUseCaseImpl.swift; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -533,6 +537,7 @@
 				A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */,
 				594376392B82051A005B97B2 /* PostUpdateRequestUseCase.swift */,
 				5943763F2B821679005B97B2 /* FetchStoreIDUseCase.swift */,
+				5943764B2B821CB2005B97B2 /* SetStoreIDUseCase.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -556,6 +561,7 @@
 				A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */,
 				5943763B2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift */,
 				594376492B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift */,
+				5943764D2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1336,6 +1342,7 @@
 				A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */,
 				A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */,
 				A83367C52B7271B900E0A844 /* FourthOnboardingView.swift in Sources */,
+				5943764C2B821CB2005B97B2 /* SetStoreIDUseCase.swift in Sources */,
 				59503A722B7FB38E0006CF35 /* NewStoreTextField.swift in Sources */,
 				5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */,
 				59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */,
@@ -1401,6 +1408,7 @@
 				59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */,
 				594376362B8201FB005B97B2 /* PostUpdateRequestRepository.swift in Sources */,
 				5977BE982B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift in Sources */,
+				5943764E2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift in Sources */,
 				A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */,
 				594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */,
 				591A887F2B384E600059E40F /* SceneDelegate.swift in Sources */,

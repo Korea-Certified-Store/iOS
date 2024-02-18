@@ -22,6 +22,7 @@ protocol StoreUpdateRequestViewModelInput {
 
 enum StoreUpdateRequestViewModelInputCase {
     
+    case setStoreID(id: Int)
     case typeInput(text: String)
     case contentEndEditing(text: String)
     case contentWhileEditing(text: String)
@@ -48,6 +49,7 @@ struct StoreUpdateRequestDepenency {
     
     let postUpdateRequestUseCase: PostUpdateRequestUseCase
     let fetchStoreIDUseCase: FetchStoreIDUseCase
+    let setStoreIDUseCase: SetStoreIDUseCase
     let disposeBag = DisposeBag()
     
 }
