@@ -14,7 +14,7 @@ enum StoreAPI {
     case getImage(url: String)
     case getSearchStores(searchDTO: SearchDTO)
     case getAutoCompletion(autoCompletionDTO: AutoCompletionDTO)
-    case postUpdateRequest(UpdateRequestDTO: UpdateRequestDTO)
+    case postUpdateRequest(updateRequestDTO: UpdateRequestDTO)
     
 }
 
@@ -87,8 +87,10 @@ extension StoreAPI: Router, URLRequestConvertible {
     /// 바디에 담아서 보내야할 것이 있다면, JSONEncoding.default
     var encoding: ParameterEncoding? {
         switch self {
-        case .getStores, .getSearchStores, .getAutoCompletion, .postUpdateRequest:
+        case .getStores, .getSearchStores, .getAutoCompletion:
             return URLEncoding.default
+        case .postUpdateRequest:
+            return JSONEncoding.default
         case .getImage:
             return nil
         }

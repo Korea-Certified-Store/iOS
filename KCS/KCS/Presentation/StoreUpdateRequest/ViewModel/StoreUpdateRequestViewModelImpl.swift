@@ -6,8 +6,13 @@
 //
 
 import RxRelay
+import RxSwift
 
 final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
+    
+    private let disposeBag = DisposeBag()
+    
+    let postUpdateRequestUseCase: PostUpdateRequestUseCase
     
     let typeWarningOutput = PublishRelay<Void>()
     let typeEditEndOutput = PublishRelay<Void>()
@@ -19,6 +24,10 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
     let contentLengthNormalOutput = PublishRelay<Void>()
     let completeButtonIsEnabledOutput = PublishRelay<Bool>()
     
+    init(postUpdateRequestUseCase: PostUpdateRequestUseCase) {
+        self.postUpdateRequestUseCase = postUpdateRequestUseCase
+    }
+    
     func action(input: StoreUpdateRequestViewModelInputCase) {
         switch input {
         case .typeInput(let text):
@@ -29,6 +38,8 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
             contentWhileEditing(text: text)
         case .completeButtonIsEnable(let type, let content):
             completeButtonIsEnable(type: type, content: content)
+        case .postUpdateRequest(let type, let content):
+            postUpdateRequest(type: type, content: content)
         }
     }
     
@@ -73,6 +84,25 @@ private extension StoreUpdateRequestViewModelImpl {
         } else {
             completeButtonIsEnabledOutput.accept(true)
         }
+    }
+    
+    func postUpdateRequest(type: String, content: String) {
+        let type = type == "수정" ? "fix" : "del"
+        // TODO: StoreID를 지니고 있고, 그걸 아래에 넣어줘야 함.
+        postUpdateRequestUseCase.execute(
+            type: type, storeID: 0, content: content
+        )
+        .subscribe(
+            onNext: { [weak self] in
+                // TODO: 완료 알러트 보내는 output
+                print("완료")
+            },
+            onError: { [weak self] error in
+                // TODO: 에러 알러트 보내는 output
+                print(error)
+            }
+        )
+        .disposed(by: disposeBag)
     }
     
 }

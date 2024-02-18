@@ -34,7 +34,11 @@ final class StoreUpdateRequestViewController: UIViewController {
         button.isEnabled = false
         button.rx.tap
             .bind { [weak self] _ in
-//                self?.viewModel.action(input: <#T##StoreUpdateRequestViewModelInputCase#>)
+                guard let type = self?.typeTextField.text,
+                      let content = self?.contentTextView.text else { return }
+                self?.viewModel.action(input: .postUpdateRequest(
+                    type: type, content: content
+                ))
             }
             .disposed(by: disposeBag)
         
@@ -294,9 +298,8 @@ private extension StoreUpdateRequestViewController {
         bindKeyboard()
         bindType()
         bindContent()
-        
+        bindComplete()
     }
-    
     
     func bindKeyboard() {
         view.rx.tapGesture { _, delegate in

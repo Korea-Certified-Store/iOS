@@ -9,9 +9,9 @@ import RxSwift
 
 protocol PostUpdateRequestUseCase {
     
-    var repository: PostUpdateReqeustRepository { get }
+    var repository: PostUpdateRequestRepository { get }
     
-    init(repository: PostUpdateReqeustRepository)
+    init(repository: PostUpdateRequestRepository)
     
     func execute(type: String, storeID: Int, content: String) -> Observable<Void>
     

@@ -9,6 +9,8 @@ import RxRelay
 
 protocol StoreUpdateRequestViewModel: StoreUpdateRequestViewModelInput, StoreUpdateRequestViewModelOutput {
     
+    var postUpdateRequestUseCase: PostUpdateRequestUseCase { get }
+    
 }
 
 protocol StoreUpdateRequestViewModelInput {
@@ -23,6 +25,7 @@ enum StoreUpdateRequestViewModelInputCase {
     case contentEndEditing(text: String)
     case contentWhileEditing(text: String)
     case completeButtonIsEnable(type: String, content: String)
+    case postUpdateRequest(type: String, content: String)
     
 }
 

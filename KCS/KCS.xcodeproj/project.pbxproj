@@ -15,8 +15,8 @@
 		591A88892B384E610059E40F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591A88872B384E610059E40F /* LaunchScreen.storyboard */; };
 		592262242B61203000CA5A11 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592262232B61203000CA5A11 /* DetailView.swift */; };
 		594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376332B81F071005B97B2 /* UpdateRequestDTO.swift */; };
-		594376362B8201FB005B97B2 /* PostUpdateReqeustRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376352B8201FB005B97B2 /* PostUpdateReqeustRepository.swift */; };
-		594376382B820272005B97B2 /* PostUpdateReqeustRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376372B820272005B97B2 /* PostUpdateReqeustRepositoryImpl.swift */; };
+		594376362B8201FB005B97B2 /* PostUpdateRequestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376352B8201FB005B97B2 /* PostUpdateRequestRepository.swift */; };
+		594376382B820272005B97B2 /* PostUpdateRequestRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376372B820272005B97B2 /* PostUpdateRequestRepositoryImpl.swift */; };
 		5943763A2B82051A005B97B2 /* PostUpdateRequestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376392B82051A005B97B2 /* PostUpdateRequestUseCase.swift */; };
 		5943763C2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943763B2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
@@ -188,8 +188,8 @@
 		591A888A2B384E610059E40F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		592262232B61203000CA5A11 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		594376332B81F071005B97B2 /* UpdateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequestDTO.swift; sourceTree = "<group>"; };
-		594376352B8201FB005B97B2 /* PostUpdateReqeustRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateReqeustRepository.swift; sourceTree = "<group>"; };
-		594376372B820272005B97B2 /* PostUpdateReqeustRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateReqeustRepositoryImpl.swift; sourceTree = "<group>"; };
+		594376352B8201FB005B97B2 /* PostUpdateRequestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateRequestRepository.swift; sourceTree = "<group>"; };
+		594376372B820272005B97B2 /* PostUpdateRequestRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateRequestRepositoryImpl.swift; sourceTree = "<group>"; };
 		594376392B82051A005B97B2 /* PostUpdateRequestUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateRequestUseCase.swift; sourceTree = "<group>"; };
 		5943763B2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostUpdateRequestUseCaseImpl.swift; path = ../../../../../../../../Applications/PostUpdateRequestUseCaseImpl.swift; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
@@ -749,7 +749,7 @@
 				A821A3772B74BAA700089B8F /* NetworkRepository.swift */,
 				A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */,
 				A8AF06752B80BE1000E73574 /* FetchAutoCompletionRepository.swift */,
-				594376352B8201FB005B97B2 /* PostUpdateReqeustRepository.swift */,
+				594376352B8201FB005B97B2 /* PostUpdateRequestRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -947,7 +947,7 @@
 				A821A3752B74B9F900089B8F /* NetworkRepositoryImpl.swift */,
 				A86D92102B760B74003B9FEE /* SearchKeywordRepositoryImpl.swift */,
 				A8AF06732B80BB4200E73574 /* FetchAutoCompletionRepositoryImpl.swift */,
-				594376372B820272005B97B2 /* PostUpdateReqeustRepositoryImpl.swift */,
+				594376372B820272005B97B2 /* PostUpdateRequestRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1379,7 +1379,7 @@
 				A8AF067F2B8121F300E73574 /* AddressViewController.swift in Sources */,
 				59C306AD2B4FFAC700862625 /* StoreDTO.swift in Sources */,
 				59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */,
-				594376362B8201FB005B97B2 /* PostUpdateReqeustRepository.swift in Sources */,
+				594376362B8201FB005B97B2 /* PostUpdateRequestRepository.swift in Sources */,
 				5977BE982B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift in Sources */,
 				A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */,
 				594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */,
@@ -1388,7 +1388,7 @@
 				5943763A2B82051A005B97B2 /* PostUpdateRequestUseCase.swift in Sources */,
 				A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */,
 				A8ACB7DD2B58E3DE00540BD1 /* OpenClosedType.swift in Sources */,
-				594376382B820272005B97B2 /* PostUpdateReqeustRepositoryImpl.swift in Sources */,
+				594376382B820272005B97B2 /* PostUpdateRequestRepositoryImpl.swift in Sources */,
 				A8AF06762B80BE1000E73574 /* FetchAutoCompletionRepository.swift in Sources */,
 				59503A5C2B75927F0006CF35 /* SearchStoreResponse.swift in Sources */,
 				59B886622B6E8484005750EF /* UISheetPresentationController+Detent.swift in Sources */,
