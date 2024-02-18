@@ -228,6 +228,12 @@ final class StoreUpdateRequestViewController: UIViewController {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        resetView()
+    }
+    
     func setStoreID(id: Int) {
         viewModel.action(input: .setStoreID(id: id))
     }
@@ -427,6 +433,17 @@ private extension StoreUpdateRequestViewController {
         contentTextView.layer.borderWidth = 0.7
         contentTextView.layer.borderColor = UIColor.uiTextFieldNormalBorder.cgColor
         contentWarningLabel.isHidden = true
+    }
+    
+    func resetView() {
+        typeTextField.setNormalUI()
+        setNormalUI()
+        typeTextField.text = ""
+        contentTextView.text = ""
+        contentLengthLabel.text = "0/300"
+        typeWarningLabel.isHidden = true
+        textViewPlaceHolderLabel.isHidden = false
+        completeButton.isEnabled = false
     }
     
 }
