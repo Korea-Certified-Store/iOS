@@ -413,6 +413,18 @@ private extension NewStoreRequestViewController {
                 self?.certificationWarningLabel.isHidden = false
             }
             .disposed(by: disposeBag)
+        
+        viewModel.completeEditOutput
+            .bind { [weak self] in
+                self?.rightBarButtonItem.isEnabled = true
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noCompleteEditOutput
+            .bind { [weak self] in
+                self?.rightBarButtonItem.isEnabled = false
+            }
+            .disposed(by: disposeBag)
     }
     
     func addUIComponents() {
