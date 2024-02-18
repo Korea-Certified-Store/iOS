@@ -137,14 +137,6 @@ final class NewStoreRequestViewController: UIViewController {
                 present(addressViewController, animated: true)
             }
             .disposed(by: disposeBag)
-//        textView.rx.didBeginEditing
-//            .bind { [weak self] _ in
-//                self?.setSelectedUI()
-//                guard let self = self else { return }
-//                let addressViewController = AddressViewController(addressObserver: addressObserver)
-//                present(addressViewController, animated: true)
-//            }
-//            .disposed(by: disposeBag)
         
         return textView
     }()
@@ -156,7 +148,6 @@ final class NewStoreRequestViewController: UIViewController {
         label.font = .pretendard(size: 17, weight: .regular)
         label.textColor = .placeholderText
         label.isUserInteractionEnabled = false
-//        label.isHidden = true
         
         return label
     }()
