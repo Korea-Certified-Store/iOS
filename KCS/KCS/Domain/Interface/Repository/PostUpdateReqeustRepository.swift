@@ -10,7 +10,9 @@ import RxSwift
 protocol PostUpdateReqeustRepository {
     
     func PostUpdateReqeust(
-        updateReqeustDTO: UpdateRequestDTO
+        type: String,
+        storeID: Int,
+        content: String
     ) -> Observable<Void>
     
 }

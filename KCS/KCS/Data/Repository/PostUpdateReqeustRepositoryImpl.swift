@@ -10,9 +10,17 @@ import Alamofire
 
 final class PostUpdateReqeustRepositoryImpl: PostUpdateReqeustRepository {
     
-    func PostUpdateReqeust(updateReqeustDTO: UpdateRequestDTO) -> Observable<Void> {
+    func PostUpdateReqeust(type: String, storeID: Int, content: String) -> Observable<Void> {
         return Observable<Void>.create { observer -> Disposable in
-            AF.request(StoreAPI.postUpdateRequest(UpdateRequestDTO: updateReqeustDTO))            .responseDecodable(of: AutoCompletionResponse.self) { response in
+            AF.request(StoreAPI.postUpdateRequest(
+                UpdateRequestDTO:
+                    UpdateRequestDTO(
+                        dtype: type,
+                        storeId: storeID,
+                        contents: content
+                    )
+            ))
+            .responseDecodable(of: AutoCompletionResponse.self) { response in
                 switch response.result {
                 case .success:
                     observer.onNext(())

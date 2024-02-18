@@ -34,7 +34,6 @@ final class StoreUpdateRequestViewController: UIViewController {
         button.isEnabled = false
         button.rx.tap
             .bind { [weak self] _ in
-                // TODO: API 연결
 //                self?.viewModel.action(input: <#T##StoreUpdateRequestViewModelInputCase#>)
             }
             .disposed(by: disposeBag)

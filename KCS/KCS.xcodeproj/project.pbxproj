@@ -17,6 +17,8 @@
 		594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376332B81F071005B97B2 /* UpdateRequestDTO.swift */; };
 		594376362B8201FB005B97B2 /* PostUpdateReqeustRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376352B8201FB005B97B2 /* PostUpdateReqeustRepository.swift */; };
 		594376382B820272005B97B2 /* PostUpdateReqeustRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376372B820272005B97B2 /* PostUpdateReqeustRepositoryImpl.swift */; };
+		5943763A2B82051A005B97B2 /* PostUpdateRequestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376392B82051A005B97B2 /* PostUpdateRequestUseCase.swift */; };
+		5943763C2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943763B2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
 		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
 		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
@@ -188,6 +190,8 @@
 		594376332B81F071005B97B2 /* UpdateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequestDTO.swift; sourceTree = "<group>"; };
 		594376352B8201FB005B97B2 /* PostUpdateReqeustRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateReqeustRepository.swift; sourceTree = "<group>"; };
 		594376372B820272005B97B2 /* PostUpdateReqeustRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateReqeustRepositoryImpl.swift; sourceTree = "<group>"; };
+		594376392B82051A005B97B2 /* PostUpdateRequestUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpdateRequestUseCase.swift; sourceTree = "<group>"; };
+		5943763B2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostUpdateRequestUseCaseImpl.swift; path = ../../../../../../../../Applications/PostUpdateRequestUseCaseImpl.swift; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -517,6 +521,7 @@
 				A8722F052B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift */,
 				A81B5A672B7C81DB0042307A /* DeleteAllHistoryUseCase.swift */,
 				A8AF06772B80BE7200E73574 /* GetAutoCompletionUseCase.swift */,
+				594376392B82051A005B97B2 /* PostUpdateRequestUseCase.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -538,6 +543,7 @@
 				A8722F072B7662F5001ED988 /* DeleteRecentSearchKeywordUseCaseImpl.swift */,
 				A81B5A652B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift */,
 				A8AF06792B80BEE300E73574 /* GetAutoCompletionUseCaseImpl.swift */,
+				5943763B2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1302,6 +1308,7 @@
 				A8AF06742B80BB4200E73574 /* FetchAutoCompletionRepositoryImpl.swift in Sources */,
 				A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */,
 				59C306B02B4FFE4400862625 /* RefreshStoreResponse.swift in Sources */,
+				5943763C2B8205F7005B97B2 /* PostUpdateRequestUseCaseImpl.swift in Sources */,
 				A8722F022B764620001ED988 /* SaveRecentSearchKeywordUseCase.swift in Sources */,
 				A8A7E0602B64E62200D015E5 /* NMFMyPosition+.swift in Sources */,
 				59503A682B79253B0006CF35 /* UITableViewCell+Identifier.swift in Sources */,
@@ -1378,6 +1385,7 @@
 				594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */,
 				591A887F2B384E600059E40F /* SceneDelegate.swift in Sources */,
 				A81B5A662B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift in Sources */,
+				5943763A2B82051A005B97B2 /* PostUpdateRequestUseCase.swift in Sources */,
 				A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */,
 				A8ACB7DD2B58E3DE00540BD1 /* OpenClosedType.swift in Sources */,
 				594376382B820272005B97B2 /* PostUpdateReqeustRepositoryImpl.swift in Sources */,
