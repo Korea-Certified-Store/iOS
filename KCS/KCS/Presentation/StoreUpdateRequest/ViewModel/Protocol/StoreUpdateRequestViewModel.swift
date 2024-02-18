@@ -6,6 +6,7 @@
 //
 
 import RxRelay
+import RxSwift
 
 protocol StoreUpdateRequestViewModel: StoreUpdateRequestViewModelInput, StoreUpdateRequestViewModelOutput {
     
@@ -47,5 +48,6 @@ struct StoreUpdateRequestDepenency {
     
     let postUpdateRequestUseCase: PostUpdateRequestUseCase
     let fetchStoreIDUseCase: FetchStoreIDUseCase
+    let disposeBag = DisposeBag()
     
 }

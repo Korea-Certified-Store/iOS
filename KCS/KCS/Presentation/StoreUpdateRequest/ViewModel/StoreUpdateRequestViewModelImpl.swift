@@ -10,9 +10,7 @@ import RxSwift
 
 final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
     
-    private let disposeBag = DisposeBag()
-    
-    let postUpdateRequestUseCase: PostUpdateRequestUseCase
+    let dependency: StoreUpdateRequestDepenency
     
     let typeWarningOutput = PublishRelay<Void>()
     let typeEditEndOutput = PublishRelay<Void>()
@@ -24,8 +22,8 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
     let contentLengthNormalOutput = PublishRelay<Void>()
     let completeButtonIsEnabledOutput = PublishRelay<Bool>()
     
-    init(postUpdateRequestUseCase: PostUpdateRequestUseCase) {
-        self.postUpdateRequestUseCase = postUpdateRequestUseCase
+    init(dependency: StoreUpdateRequestDepenency) {
+        self.dependency = dependency
     }
     
     func action(input: StoreUpdateRequestViewModelInputCase) {
@@ -89,8 +87,12 @@ private extension StoreUpdateRequestViewModelImpl {
     func postUpdateRequest(type: String, content: String) {
         let type = type == "수정" ? "fix" : "del"
         // TODO: StoreID를 지니고 있고, 그걸 아래에 넣어줘야 함.
-        postUpdateRequestUseCase.execute(
-            type: type, storeID: 0, content: content
+        guard let storeID = dependency.fetchStoreIDUseCase.execute() else {
+            // TODO: 에러 알러트 보내는 output
+            return
+        }
+        dependency.postUpdateRequestUseCase.execute(
+            type: type, storeID: storeID, content: content
         )
         .subscribe(
             onNext: { [weak self] in
@@ -102,7 +104,7 @@ private extension StoreUpdateRequestViewModelImpl {
                 print(error)
             }
         )
-        .disposed(by: disposeBag)
+        .disposed(by: dependency.disposeBag)
     }
     
 }
