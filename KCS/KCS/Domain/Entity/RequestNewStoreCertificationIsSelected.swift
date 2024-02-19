@@ -13,4 +13,13 @@ struct RequestNewStoreCertificationIsSelected {
     var exemplary: Bool = false
     var safe: Bool = false
     
+    func toArray() -> [CertificationType] {
+        var certifications: [CertificationType] = []
+        if goodPrice { certifications.append(.goodPrice) }
+        if exemplary { certifications.append(.exemplary) }
+        if safe { certifications.append(.safe) }
+        
+        return certifications
+    }
+    
 }

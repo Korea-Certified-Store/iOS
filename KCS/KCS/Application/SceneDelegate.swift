@@ -60,6 +60,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
         let listCellSelectedObserver = PublishRelay<Int>()
+        let searchObserver = PublishRelay<String>()
+        let textObserver = PublishRelay<String>()
+        let addressObserver = PublishRelay<String>()
+        let refreshCameraPositionObserver = BehaviorRelay<NMFCameraPosition>(value: NMFCameraPosition())
+        let searchKeywordRepository = SearchKeywordRepositoryImpl(
+            userDefaults: UserDefaults()
+        )
         let storeInformationViewController = StoreInformationViewController(
             storeUpdateRequestViewController: storeUpdateRequestViewController, summaryViewHeightObserver: summaryViewHeightObserver,
             viewModel: StoreInformationViewModelImpl(
@@ -69,11 +76,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 )
             )
         )
-        let searchObserver = PublishRelay<String>()
-        let textObserver = PublishRelay<String>()
-        let refreshCameraPositionObserver = BehaviorRelay<NMFCameraPosition>(value: NMFCameraPosition())
-        let searchKeywordRepository = SearchKeywordRepositoryImpl(
-            userDefaults: UserDefaults()
+        let searchViewController = SearchViewController(
+            viewModel: SearchViewModelImpl(
+                fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
+                    repository: searchKeywordRepository
+                ),
+                saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
+                    repository: searchKeywordRepository
+                ),
+                deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
+                    repository: searchKeywordRepository
+                ),
+                deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
+                    repository: searchKeywordRepository
+                ),
+                getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
+                    repository: FetchAutoCompletionRepositoryImpl()
+                )
+            ),
+            searchObserver: searchObserver,
+            textObserver: textObserver
+        )
+        let newStoreRequestViewController = NewStoreRequestViewController(
+            viewModel: NewStoreRequestViewModelImpl(
+                dependency: NewStoreRequestDepenency(
+                    postNewStoreUseCase: PostNewStoreUseCaseImpl(
+                        repository: PostNewStoreRepositoryImpl()
+                    )
+                )
+            ),
+            addressObserver: addressObserver
         )
         let homeViewController = HomeViewController(
             viewModel: viewModel,
@@ -86,27 +118,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 listCellSelectedObserver: listCellSelectedObserver
             ),
             storeInformationViewController: storeInformationViewController,
-            searchViewController: SearchViewController(
-                viewModel: SearchViewModelImpl(
-                    fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
-                        repository: searchKeywordRepository
-                    ),
-                    saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
-                        repository: searchKeywordRepository
-                    ),
-                    deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
-                        repository: searchKeywordRepository
-                    ), 
-                    deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
-                        repository: searchKeywordRepository
-                    ), 
-                    getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
-                        repository: FetchAutoCompletionRepositoryImpl()
-                    )
-                ),
-                searchObserver: searchObserver, 
-                textObserver: textObserver
-            ),
+            searchViewController: searchViewController,
+            newStoreRequestViewController: newStoreRequestViewController,
             summaryViewHeightObserver: summaryViewHeightObserver,
             listCellSelectedObserver: listCellSelectedObserver,
             searchObserver: searchObserver, 
