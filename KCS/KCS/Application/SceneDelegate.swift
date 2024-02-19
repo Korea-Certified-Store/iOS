@@ -143,8 +143,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let splashViewController = SplashViewController(
             viewModel: SplashViewModelImpl(
-                checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
-                    repository: NetworkRepositoryImpl()
+                dependency: SplashDependency(
+                    checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
+                        repository: NetworkRepositoryImpl()
+                    )
                 )
             ), rootViewController: rootViewController
         )
