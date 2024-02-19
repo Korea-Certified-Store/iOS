@@ -9,7 +9,7 @@ import RxSwift
 
 struct SaveRecentSearchKeywordUseCaseImpl: SaveRecentSearchKeywordUseCase {
     
-    var repository: SearchKeywordsRepository
+    let repository: SearchKeywordsRepository
     
     func execute(recentSearchKeyword: String) {
         return repository.saveRecentSearchKeywords(recentSearchKeyword: recentSearchKeyword)

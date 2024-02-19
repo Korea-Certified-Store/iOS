@@ -10,9 +10,9 @@ import RxSwift
 
 final class StoreListViewModelImpl: StoreListViewModel {
     
-    var fetchImageUseCase: FetchImageUseCase
+    let fetchImageUseCase: FetchImageUseCase
     
-    var updateListOutput = BehaviorRelay<[StoreTableViewCellContents]>(value: [])
+    let updateListOutput = BehaviorRelay<[StoreTableViewCellContents]>(value: [])
     
     private let disposeBag = DisposeBag()
     
