@@ -9,11 +9,7 @@ import RxRelay
 
 protocol SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
     
-    var fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase { get }
-    var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase { get }
-    var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase { get }
-    var deleteAllHistoryUseCase: DeleteAllHistoryUseCase { get }
-    var getAutoCompletionUseCase: GetAutoCompletionUseCase { get }
+    var dependency: SearchDependency { get }
     
 }
 

@@ -21,25 +21,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let storeStorage = StoreStorage()
         let viewModel  = HomeViewModelImpl(
-            dependency: HomeDependency(),
-            getStoresUseCase: GetStoresUseCaseImpl(
-                repository: FetchStoresRepositoryImpl(
-                    storeStorage: storeStorage
-                )
-            ),
-            getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
-                repository: GetStoresRepositoryImpl(
-                    storeStorage: storeStorage
-                )
-            ),
-            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
-                repository: GetStoresRepositoryImpl(
-                    storeStorage: storeStorage
-                )
-            ),
-            getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
-                repository: FetchSearchStoresRepositoryImpl(
-                    storeStorage: storeStorage
+            dependency: HomeDependency(
+                getStoresUseCase: GetStoresUseCaseImpl(
+                    repository: FetchStoresRepositoryImpl(
+                        storeStorage: storeStorage
+                    )
+                ),
+                getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
+                    repository: GetStoresRepositoryImpl(
+                        storeStorage: storeStorage
+                    )
+                ),
+                getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
+                    repository: GetStoresRepositoryImpl(
+                        storeStorage: storeStorage
+                    )
+                ),
+                getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
+                    repository: FetchSearchStoresRepositoryImpl(
+                        storeStorage: storeStorage
+                    )
                 )
             )
         )
@@ -70,28 +71,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let storeInformationViewController = StoreInformationViewController(
             storeUpdateRequestViewController: storeUpdateRequestViewController, summaryViewHeightObserver: summaryViewHeightObserver,
             viewModel: StoreInformationViewModelImpl(
-                getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-                fetchImageUseCase: FetchImageUseCaseImpl(
-                    repository: ImageRepositoryImpl(cache: ImageCache())
+                dependency: StoreInformationDependency(
+                    getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
+                    fetchImageUseCase: FetchImageUseCaseImpl(
+                        repository: ImageRepositoryImpl(cache: ImageCache())
+                    )
                 )
             )
         )
         let searchViewController = SearchViewController(
             viewModel: SearchViewModelImpl(
-                fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
-                    repository: searchKeywordRepository
-                ),
-                saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
-                    repository: searchKeywordRepository
-                ),
-                deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
-                    repository: searchKeywordRepository
-                ),
-                deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
-                    repository: searchKeywordRepository
-                ),
-                getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
-                    repository: FetchAutoCompletionRepositoryImpl()
+                dependency: SearchDependency(
+                    fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
+                        repository: FetchAutoCompletionRepositoryImpl()
+                    )
                 )
             ),
             searchObserver: searchObserver,
@@ -111,8 +116,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             viewModel: viewModel,
             storeListViewController: StoreListViewController(
                 viewModel: StoreListViewModelImpl(
-                    fetchImageUseCase: FetchImageUseCaseImpl(
-                        repository: ImageRepositoryImpl(cache: ImageCache())
+                    dependency: StoreListDependency(
+                        fetchImageUseCase: FetchImageUseCaseImpl(
+                            repository: ImageRepositoryImpl(cache: ImageCache())
+                        )
                     )
                 ),
                 listCellSelectedObserver: listCellSelectedObserver
@@ -136,8 +143,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let splashViewController = SplashViewController(
             viewModel: SplashViewModelImpl(
-                checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
-                    repository: NetworkRepositoryImpl()
+                dependency: SplashDependency(
+                    checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
+                        repository: NetworkRepositoryImpl()
+                    )
                 )
             ), rootViewController: rootViewController
         )

@@ -140,6 +140,12 @@
 		A85659482B83280F00775C78 /* PostNewStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85659472B83280F00775C78 /* PostNewStoreRepository.swift */; };
 		A856594A2B83290200775C78 /* PostNewStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85659492B83290200775C78 /* PostNewStoreUseCase.swift */; };
 		A856594C2B832AF100775C78 /* PostNewStoreUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A856594B2B832AF100775C78 /* PostNewStoreUseCaseImpl.swift */; };
+		A856594E2B83C4E700775C78 /* NewStoreRequestDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A856594D2B83C4E700775C78 /* NewStoreRequestDependency.swift */; };
+		A85659502B83C54600775C78 /* StoreUpdateRequestDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A856594F2B83C54600775C78 /* StoreUpdateRequestDependency.swift */; };
+		A85659522B83C6DC00775C78 /* StoreListDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85659512B83C6DC00775C78 /* StoreListDependency.swift */; };
+		A85659542B83C7E100775C78 /* StoreInformationDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85659532B83C7E100775C78 /* StoreInformationDependency.swift */; };
+		A85659562B83C8BE00775C78 /* SearchDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85659552B83C8BE00775C78 /* SearchDependency.swift */; };
+		A85659582B83CA5F00775C78 /* SplashDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85659572B83CA5F00775C78 /* SplashDependency.swift */; };
 		A86D92112B760B75003B9FEE /* SearchKeywordRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86D92102B760B74003B9FEE /* SearchKeywordRepositoryImpl.swift */; };
 		A86D92192B761EC7003B9FEE /* SearchKeywordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */; };
 		A8722EFE2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8722EFD2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift */; };
@@ -333,6 +339,12 @@
 		A85659472B83280F00775C78 /* PostNewStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNewStoreRepository.swift; sourceTree = "<group>"; };
 		A85659492B83290200775C78 /* PostNewStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNewStoreUseCase.swift; sourceTree = "<group>"; };
 		A856594B2B832AF100775C78 /* PostNewStoreUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNewStoreUseCaseImpl.swift; sourceTree = "<group>"; };
+		A856594D2B83C4E700775C78 /* NewStoreRequestDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestDependency.swift; sourceTree = "<group>"; };
+		A856594F2B83C54600775C78 /* StoreUpdateRequestDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestDependency.swift; sourceTree = "<group>"; };
+		A85659512B83C6DC00775C78 /* StoreListDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListDependency.swift; sourceTree = "<group>"; };
+		A85659532B83C7E100775C78 /* StoreInformationDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInformationDependency.swift; sourceTree = "<group>"; };
+		A85659552B83C8BE00775C78 /* SearchDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDependency.swift; sourceTree = "<group>"; };
+		A85659572B83CA5F00775C78 /* SplashDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashDependency.swift; sourceTree = "<group>"; };
 		A86D92102B760B74003B9FEE /* SearchKeywordRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeywordRepositoryImpl.swift; sourceTree = "<group>"; };
 		A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeywordsRepository.swift; sourceTree = "<group>"; };
 		A8722EFD2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRecentSearchKeywordUseCaseImpl.swift; sourceTree = "<group>"; };
@@ -462,6 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				59503A512B751FCC0006CF35 /* SearchViewModel.swift */,
+				A85659552B83C8BE00775C78 /* SearchDependency.swift */,
 				A8CD52692B7B7DFD00917786 /* CellDelegate.swift */,
 			);
 			path = Protocol;
@@ -481,6 +494,7 @@
 			children = (
 				59503A6F2B7FB3130006CF35 /* NewStoreRequestViewController.swift */,
 				59503A712B7FB38E0006CF35 /* NewStoreTextField.swift */,
+				A8AF067E2B8121F300E73574 /* AddressViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -498,6 +512,7 @@
 			isa = PBXGroup;
 			children = (
 				59503A742B80A2980006CF35 /* NewStoreRequestViewModel.swift */,
+				A856594D2B83C4E700775C78 /* NewStoreRequestDependency.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -532,6 +547,7 @@
 			isa = PBXGroup;
 			children = (
 				59503A7F2B80ED2C0006CF35 /* StoreUpdateRequestViewModel.swift */,
+				A856594F2B83C54600775C78 /* StoreUpdateRequestDependency.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -589,7 +605,6 @@
 			children = (
 				A8ACB7E02B594F5F00540BD1 /* protocol */,
 				5977BE652B553BA800725C90 /* HomeViewModelImpl.swift */,
-				5977BE672B553C8300725C90 /* HomeDependency.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -651,14 +666,13 @@
 		5986DCDF2B3892EB005AE43B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				59503A792B80E8260006CF35 /* StoreUpdateRequest */,
-				59503A6D2B7FB2EB0006CF35 /* NewStoreRequest */,
 				A890870B2B4EF8F900767225 /* Extension */,
 				5986DCEA2B392996005AE43B /* Home */,
+				59503A4B2B751AEE0006CF35 /* Search */,
 				59B886242B6A39E9005750EF /* StoreList */,
 				59B886552B6E3A59005750EF /* StoreInformation */,
-				59503A4B2B751AEE0006CF35 /* Search */,
-				A8AF067B2B8121B800E73574 /* Address */,
+				59503A6D2B7FB2EB0006CF35 /* NewStoreRequest */,
+				59503A792B80E8260006CF35 /* StoreUpdateRequest */,
 				A83367B92B709BE900E0A844 /* OnBoarding */,
 				A821A3722B74B82600089B8F /* Splash */,
 			);
@@ -735,6 +749,7 @@
 			isa = PBXGroup;
 			children = (
 				59B886452B6A5CDC005750EF /* StoreListViewModel.swift */,
+				A85659512B83C6DC00775C78 /* StoreListDependency.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -773,6 +788,7 @@
 			isa = PBXGroup;
 			children = (
 				59B8865B2B6E4B8B005750EF /* StoreInformationViewModel.swift */,
+				A85659532B83C7E100775C78 /* StoreInformationDependency.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -926,6 +942,7 @@
 			isa = PBXGroup;
 			children = (
 				A821A3822B74C08600089B8F /* SplashViewModel.swift */,
+				A85659572B83CA5F00775C78 /* SplashDependency.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -1010,6 +1027,7 @@
 			isa = PBXGroup;
 			children = (
 				5977BE602B55374000725C90 /* HomeViewModel.swift */,
+				5977BE672B553C8300725C90 /* HomeDependency.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -1020,22 +1038,6 @@
 				A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */,
 			);
 			path = Error;
-			sourceTree = "<group>";
-		};
-		A8AF067B2B8121B800E73574 /* Address */ = {
-			isa = PBXGroup;
-			children = (
-				A8AF067C2B8121DB00E73574 /* View */,
-			);
-			path = Address;
-			sourceTree = "<group>";
-		};
-		A8AF067C2B8121DB00E73574 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				A8AF067E2B8121F300E73574 /* AddressViewController.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		E99F20FF9A30DCF9C51285A2 /* Frameworks */ = {
@@ -1332,7 +1334,9 @@
 				59503A6A2B7946D30006CF35 /* RecentHistoryTableViewCell.swift in Sources */,
 				A8A7E05B2B642EC900D015E5 /* DetailViewContents.swift in Sources */,
 				591A88812B384E600059E40F /* HomeViewController.swift in Sources */,
+				A85659502B83C54600775C78 /* StoreUpdateRequestDependency.swift in Sources */,
 				5977BE9C2B59AC8D00725C90 /* ImageRepositoryImpl.swift in Sources */,
+				A85659582B83CA5F00775C78 /* SplashDependency.swift in Sources */,
 				59F478B32B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift in Sources */,
 				A8ACB7ED2B59647400540BD1 /* OpeningHourError.swift in Sources */,
 				5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */,
@@ -1350,6 +1354,7 @@
 				A8A7E0602B64E62200D015E5 /* NMFMyPosition+.swift in Sources */,
 				59503A682B79253B0006CF35 /* UITableViewCell+Identifier.swift in Sources */,
 				A8E53C272B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift in Sources */,
+				A85659542B83C7E100775C78 /* StoreInformationDependency.swift in Sources */,
 				A8ACB7EA2B595A3E00540BD1 /* GetOpenClosedUseCaseImpl.swift in Sources */,
 				A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */,
 				59C306CD2B5035B100862625 /* StoreAPI.swift in Sources */,
@@ -1366,6 +1371,7 @@
 				59C306A42B4D7EBA00862625 /* Marker.swift in Sources */,
 				A8AF06832B8281C200E73574 /* RequestNewStoreCertificationIsSelected.swift in Sources */,
 				59503A802B80ED2C0006CF35 /* StoreUpdateRequestViewModel.swift in Sources */,
+				A856594E2B83C4E700775C78 /* NewStoreRequestDependency.swift in Sources */,
 				59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */,
 				A8E53C2B2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift in Sources */,
 				59B8865E2B6E4B98005750EF /* StoreInformationViewModelImpl.swift in Sources */,
@@ -1373,6 +1379,7 @@
 				59B886292B6A3F1E005750EF /* StoreTableViewCell.swift in Sources */,
 				592262242B61203000CA5A11 /* DetailView.swift in Sources */,
 				A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */,
+				A85659562B83C8BE00775C78 /* SearchDependency.swift in Sources */,
 				594376502B82437C005B97B2 /* StoreUpdateRequestType.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* GetStoresUseCaseImpl.swift in Sources */,
 				A821A3742B74B84700089B8F /* SplashViewController.swift in Sources */,
@@ -1395,6 +1402,7 @@
 				59503A5E2B7596990006CF35 /* GetSearchStoresUseCase.swift in Sources */,
 				59C306B62B50027300862625 /* Store.swift in Sources */,
 				59C306B42B50015500862625 /* APIResponse.swift in Sources */,
+				A85659522B83C6DC00775C78 /* StoreListDependency.swift in Sources */,
 				A8722EFE2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift in Sources */,
 				59503A822B80ED340006CF35 /* StoreUpdateRequestViewModelImpl.swift in Sources */,
 				59B8865A2B6E3B40005750EF /* StoreInformationViewController.swift in Sources */,

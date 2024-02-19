@@ -12,19 +12,6 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     var dependency: HomeDependency { get }
     
-    var getStoresUseCase: GetStoresUseCase { get }
-    var getRefreshStoresUseCase: GetRefreshStoresUseCase { get }
-    var getStoreInformationUseCase: GetStoreInformationUseCase { get }
-    var getSearchStoresUseCase: GetSearchStoresUseCase { get }
-    
-    init(
-        dependency: HomeDependency,
-        getStoresUseCase: GetStoresUseCase,
-        getRefreshStoresUseCase: GetRefreshStoresUseCase,
-        getStoreInformationUseCase: GetStoreInformationUseCase,
-        getSearchStoresUseCase: GetSearchStoresUseCase
-    )
-    
 }
 
 enum HomeViewModelInputCase {

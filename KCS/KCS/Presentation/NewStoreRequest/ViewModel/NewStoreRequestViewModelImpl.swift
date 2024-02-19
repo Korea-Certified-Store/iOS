@@ -24,6 +24,12 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     let completePostNewStoreOutput = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     
+    private let disposeBag = DisposeBag()
+    private let titleEditState = PublishRelay<Bool>()
+    private let addressEditState = PublishRelay<Bool>()
+    private let detailAddressEditState = PublishRelay<Bool>()
+    private let certificationEditState = PublishRelay<Bool>()
+    
     init(dependency: NewStoreRequestDependency) {
         self.dependency = dependency
         checkEditDone()
@@ -59,25 +65,25 @@ private extension NewStoreRequestViewModelImpl {
             switch inputCase {
             case .title:
                 titleWarningOutput.accept(())
-                dependency.titleEditState.accept(false)
+                titleEditState.accept(false)
             case .address:
                 addressWarningOutput.accept(())
-                dependency.addressEditState.accept(false)
+                addressEditState.accept(false)
             case .detailAddress:
                 detailAddressWarningOutput.accept(())
-                dependency.detailAddressEditState.accept(false)
+                detailAddressEditState.accept(false)
             }
         } else {
             switch inputCase {
             case .title:
                 titleEditEndOutput.accept(())
-                dependency.titleEditState.accept(true)
+                titleEditState.accept(true)
             case .address:
                 addressEditEndOutput.accept(())
-                dependency.addressEditState.accept(true)
+                addressEditState.accept(true)
             case .detailAddress:
                 detailAddressEditEndOutput.accept(())
-                dependency.detailAddressEditState.accept(true)
+                detailAddressEditState.accept(true)
             }
         }
     }
@@ -87,10 +93,10 @@ private extension NewStoreRequestViewModelImpl {
             requestNewStoreCertificationIsSelected.exemplary == true ||
             requestNewStoreCertificationIsSelected.safe == true {
             certificationEditEndOutput.accept(())
-            dependency.certificationEditState.accept(true)
+            certificationEditState.accept(true)
         } else {
             certificationWarningOutput.accept(())
-            dependency.certificationEditState.accept(false)
+            certificationEditState.accept(false)
         }
     }
     
@@ -102,22 +108,22 @@ private extension NewStoreRequestViewModelImpl {
                 guard let error = error as? ErrorAlertMessage else { return }
                 self?.errorAlertOutput.accept(error)
             }
-            .disposed(by: dependency.disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func checkEditDone() {
         Observable.combineLatest(
-            dependency.titleEditState,
-            dependency.addressEditState,
-            dependency.detailAddressEditState,
-            dependency.certificationEditState)
+            titleEditState,
+            addressEditState,
+            detailAddressEditState,
+            certificationEditState)
         .compactMap { title, address, detailAddress, certification in
                 return title && address && detailAddress && certification
         }
         .bind { [weak self] result in
             self?.completeButtonIsEnabledOutput.accept(result)
         }
-        .disposed(by: dependency.disposeBag)
+        .disposed(by: disposeBag)
     }
     
 }

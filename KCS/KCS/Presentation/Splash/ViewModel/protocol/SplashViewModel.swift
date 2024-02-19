@@ -9,7 +9,7 @@ import RxRelay
 
 protocol SplashViewModel: SplashViewModelInput, SplashViewModelOutput {
     
-    var checkNetworkStatusUseCase: CheckNetworkStatusUseCase { get }
+    var dependency: SplashDependency { get }
     
 }
 

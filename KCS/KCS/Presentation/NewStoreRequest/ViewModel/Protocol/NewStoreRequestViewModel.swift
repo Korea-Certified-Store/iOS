@@ -10,6 +10,8 @@ import RxRelay
 
 protocol NewStoreRequestViewModel: NewStoreRequestViewModelInput, NewStoreRequestViewModelOutput {
     
+    var dependency: NewStoreRequestDependency { get }
+    
 }
 
 protocol NewStoreRequestViewModelInput {
@@ -41,16 +43,5 @@ protocol NewStoreRequestViewModelOutput {
     var completeButtonIsEnabledOutput: PublishRelay<Bool> { get }
     var completePostNewStoreOutput: PublishRelay<Void> { get }
     var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
-    
-}
-
-struct NewStoreRequestDependency {
-    
-    let postNewStoreUseCase: PostNewStoreUseCase
-    let disposeBag = DisposeBag()
-    let titleEditState = PublishRelay<Bool>()
-    let addressEditState = PublishRelay<Bool>()
-    let detailAddressEditState = PublishRelay<Bool>()
-    let certificationEditState = PublishRelay<Bool>()
     
 }
