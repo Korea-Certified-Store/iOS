@@ -10,7 +10,7 @@ import RxRelay
 
 final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     
-    let dependency: NewStoreRequestDepenency
+    let dependency: NewStoreRequestDependency
     
     let titleWarningOutput = PublishRelay<Void>()
     let titleEditEndOutput = PublishRelay<Void>()
@@ -24,7 +24,7 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     let completePostNewStoreOutput = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     
-    init(dependency: NewStoreRequestDepenency) {
+    init(dependency: NewStoreRequestDependency) {
         self.dependency = dependency
         checkEditDone()
     }

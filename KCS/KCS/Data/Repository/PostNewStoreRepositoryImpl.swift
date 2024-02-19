@@ -12,7 +12,7 @@ final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
     
     func postNewStore(storeName: String, formattedAddress: String, certifications: [CertificationType]) -> Observable<Void> {
         return Observable<Void>.create { observer -> Disposable in
-            AF.request(StoreAPI.postNewStore(
+            AF.request(StoreAPI.postNewStoreRequest(
                 newStoreRequestDTO: NewStoreRequestDTO(
                     storeName: storeName,
                     formattedAddress: formattedAddress,

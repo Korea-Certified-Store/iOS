@@ -14,7 +14,7 @@ enum StoreAPI {
     case getImage(url: String)
     case getSearchStores(searchDTO: SearchDTO)
     case getAutoCompletion(autoCompletionDTO: AutoCompletionDTO)
-    case postNewStore(newStoreRequestDTO: NewStoreRequestDTO)
+    case postNewStoreRequest(newStoreRequestDTO: NewStoreRequestDTO)
     case storeUpdateRequest(updateRequestDTO: UpdateRequestDTO)
     
 }
@@ -23,7 +23,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     
     var baseURL: String? {
         switch self {
-        case .getStores, .getSearchStores, .getAutoCompletion, .postNewStore, .storeUpdateRequest:
+        case .getStores, .getSearchStores, .getAutoCompletion, .postNewStoreRequest, .storeUpdateRequest:
             return getURL(type: .develop)
         case .getImage(let url):
             return url
@@ -40,7 +40,7 @@ extension StoreAPI: Router, URLRequestConvertible {
             return "/storecertification/byLocationAndKeyword/v1"
         case .getAutoCompletion:
             return "/store/autocorrect/v1"
-        case .postNewStore:
+        case .postNewStoreRequest:
             return "/report/newStore/v1"
         case .storeUpdateRequest:
             return "/report/specificStore/v1"
@@ -51,14 +51,14 @@ extension StoreAPI: Router, URLRequestConvertible {
         switch self {
         case .getStores, .getImage, .getSearchStores, .getAutoCompletion:
             return .get
-        case .postNewStore, .storeUpdateRequest:
+        case .postNewStoreRequest, .storeUpdateRequest:
             return .post
         }
     }
     
     var headers: [String: String] {
         switch self {
-        case .getStores, .getSearchStores, .getAutoCompletion, .postNewStore, .storeUpdateRequest:
+        case .getStores, .getSearchStores, .getAutoCompletion, .postNewStoreRequest, .storeUpdateRequest:
             return [
                 "Content-Type": "application/json"
             ]
@@ -78,7 +78,7 @@ extension StoreAPI: Router, URLRequestConvertible {
                 return try searchDTO.asDictionary()
             case let .getAutoCompletion(autoCompletionDTO):
                 return try autoCompletionDTO.asDictionary()
-            case let .postNewStore(newStoreRequestDTO):
+            case let .postNewStoreRequest(newStoreRequestDTO):
                 return try newStoreRequestDTO.asDictionary()
             case let .storeUpdateRequest(updateRequestDTO):
                 return try updateRequestDTO.asDictionary()
@@ -94,7 +94,7 @@ extension StoreAPI: Router, URLRequestConvertible {
         switch self {
         case .getStores, .getSearchStores, .getAutoCompletion:
             return URLEncoding.default
-        case .postNewStore, .storeUpdateRequest:
+        case .postNewStoreRequest, .storeUpdateRequest:
             return JSONEncoding.default
         case .getImage:
             return nil

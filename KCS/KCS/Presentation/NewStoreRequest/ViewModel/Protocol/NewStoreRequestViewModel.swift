@@ -44,7 +44,7 @@ protocol NewStoreRequestViewModelOutput {
     
 }
 
-struct NewStoreRequestDepenency {
+struct NewStoreRequestDependency {
     
     let postNewStoreUseCase: PostNewStoreUseCase
     let disposeBag = DisposeBag()

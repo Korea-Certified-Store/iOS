@@ -99,7 +99,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         )
         let newStoreRequestViewController = NewStoreRequestViewController(
             viewModel: NewStoreRequestViewModelImpl(
-                dependency: NewStoreRequestDepenency(
+                dependency: NewStoreRequestDependency(
                     postNewStoreUseCase: PostNewStoreUseCaseImpl(
                         repository: PostNewStoreRepositoryImpl()
                     )
