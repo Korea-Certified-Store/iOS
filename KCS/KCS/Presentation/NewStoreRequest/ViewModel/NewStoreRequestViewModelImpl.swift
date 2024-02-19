@@ -26,6 +26,10 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     private let certificationEditState = PublishRelay<Bool>()
     private let disposeBag = DisposeBag()
     
+    init() {
+        checkEditDone()
+    }
+    
     func action(input: NewStoreRequestViewModelInputCase) {
         switch input {
         case .titleEditEnd(let text):
@@ -75,7 +79,6 @@ private extension NewStoreRequestViewModelImpl {
                 detailAddressEditState.accept(true)
             }
         }
-        checkEditDone()
     }
     
     func certificationEditEnd(requestNewStoreCertificationIsSelected: RequestNewStoreCertificationIsSelected) {
@@ -88,7 +91,6 @@ private extension NewStoreRequestViewModelImpl {
             certificationWarningOutput.accept(())
             certificationEditState.accept(false)
         }
-        checkEditDone()
     }
     
     func checkEditDone() {
