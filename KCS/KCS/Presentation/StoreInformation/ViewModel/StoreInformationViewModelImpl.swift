@@ -11,13 +11,14 @@ import RxSwift
 final class StoreInformationViewModelImpl: StoreInformationViewModel {
     
     let dependency: StoreInformationDependency
-    private let disposeBag = DisposeBag()
     
     let setDetailUIContentsOutput = PublishRelay<DetailViewContents>()
     let setSummaryUIContentsOutput = PublishRelay<SummaryViewContents>()
     let thumbnailImageOutput = PublishRelay<Data>()
     let summaryCallButtonOutput = PublishRelay<String>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
+    
+    private let disposeBag = DisposeBag()
     
     init(dependency: StoreInformationDependency) {
         self.dependency = dependency

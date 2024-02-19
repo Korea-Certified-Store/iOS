@@ -81,20 +81,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         )
         let searchViewController = SearchViewController(
             viewModel: SearchViewModelImpl(
-                fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
-                    repository: searchKeywordRepository
-                ),
-                saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
-                    repository: searchKeywordRepository
-                ),
-                deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
-                    repository: searchKeywordRepository
-                ),
-                deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
-                    repository: searchKeywordRepository
-                ),
-                getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
-                    repository: FetchAutoCompletionRepositoryImpl()
+                dependency: SearchDependency(
+                    fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
+                        repository: searchKeywordRepository
+                    ),
+                    getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
+                        repository: FetchAutoCompletionRepositoryImpl()
+                    )
                 )
             ),
             searchObserver: searchObserver,

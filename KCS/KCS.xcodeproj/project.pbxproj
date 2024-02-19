@@ -144,6 +144,7 @@
 		A85659502B83C54600775C78 /* StoreUpdateRequestDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A856594F2B83C54600775C78 /* StoreUpdateRequestDependency.swift */; };
 		A85659522B83C6DC00775C78 /* StoreListDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85659512B83C6DC00775C78 /* StoreListDependency.swift */; };
 		A85659542B83C7E100775C78 /* StoreInformationDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85659532B83C7E100775C78 /* StoreInformationDependency.swift */; };
+		A85659562B83C8BE00775C78 /* SearchDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85659552B83C8BE00775C78 /* SearchDependency.swift */; };
 		A86D92112B760B75003B9FEE /* SearchKeywordRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86D92102B760B74003B9FEE /* SearchKeywordRepositoryImpl.swift */; };
 		A86D92192B761EC7003B9FEE /* SearchKeywordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */; };
 		A8722EFE2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8722EFD2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift */; };
@@ -341,6 +342,7 @@
 		A856594F2B83C54600775C78 /* StoreUpdateRequestDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestDependency.swift; sourceTree = "<group>"; };
 		A85659512B83C6DC00775C78 /* StoreListDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListDependency.swift; sourceTree = "<group>"; };
 		A85659532B83C7E100775C78 /* StoreInformationDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInformationDependency.swift; sourceTree = "<group>"; };
+		A85659552B83C8BE00775C78 /* SearchDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDependency.swift; sourceTree = "<group>"; };
 		A86D92102B760B74003B9FEE /* SearchKeywordRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeywordRepositoryImpl.swift; sourceTree = "<group>"; };
 		A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeywordsRepository.swift; sourceTree = "<group>"; };
 		A8722EFD2B7644D7001ED988 /* FetchRecentSearchKeywordUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRecentSearchKeywordUseCaseImpl.swift; sourceTree = "<group>"; };
@@ -470,6 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				59503A512B751FCC0006CF35 /* SearchViewModel.swift */,
+				A85659552B83C8BE00775C78 /* SearchDependency.swift */,
 				A8CD52692B7B7DFD00917786 /* CellDelegate.swift */,
 			);
 			path = Protocol;
@@ -1388,6 +1391,7 @@
 				59B886292B6A3F1E005750EF /* StoreTableViewCell.swift in Sources */,
 				592262242B61203000CA5A11 /* DetailView.swift in Sources */,
 				A81EFBB32B5BC57800D0C0D7 /* OpenClosedContent.swift in Sources */,
+				A85659562B83C8BE00775C78 /* SearchDependency.swift in Sources */,
 				594376502B82437C005B97B2 /* StoreUpdateRequestType.swift in Sources */,
 				5977BE5C2B5535A100725C90 /* GetStoresUseCaseImpl.swift in Sources */,
 				A821A3742B74B84700089B8F /* SplashViewController.swift in Sources */,
