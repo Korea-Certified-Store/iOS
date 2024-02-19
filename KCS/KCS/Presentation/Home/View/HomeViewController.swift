@@ -60,9 +60,11 @@ final class HomeViewController: UIViewController {
         view.xMarkImageView.rx
             .tapGesture()
             .when(.ended)
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .debounce(.milliseconds(500), scheduler: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
+                if view.isUserInteractionEnabled == false { return nil }
+                disableAllWhileLoading()
                 refreshButton.animationFire()
                 view.layer.borderWidth = 0
                 view.searchTextField.text = ""
@@ -86,7 +88,12 @@ final class HomeViewController: UIViewController {
         view.searchImageView.rx
             .tapGesture()
             .when(.ended)
+            .debounce(.milliseconds(500), scheduler: MainScheduler())
             .subscribe(onNext: { [weak self] _ in
+                if view.isUserInteractionEnabled == false {
+                    return
+                }
+                self?.disableAllWhileLoading()
                 self?.presentSearchViewController()
             })
             .disposed(by: disposeBag)
@@ -107,6 +114,7 @@ final class HomeViewController: UIViewController {
         button.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
+                disableAllWhileLoading()
                 viewModel.action(
                     input: .locationButtonTapped(
                         locationAuthorizationStatus: locationManager.authorizationStatus,
@@ -148,10 +156,12 @@ final class HomeViewController: UIViewController {
         let button = RefreshButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
-            .debounce(.milliseconds(10), scheduler: MainScheduler())
+            .debounce(.milliseconds(500), scheduler: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
+                if button.isUserInteractionEnabled == false { return nil }
                 button.animationFire()
+                disableAllWhileLoading()
                 
                 return makeRequestLocation(projection: mapView.mapView.projection)
             }
@@ -176,8 +186,10 @@ final class HomeViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         button.rx.tap
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .debounce(.milliseconds(500), scheduler: MainScheduler())
             .bind { [weak self] in
+                if button.isUserInteractionEnabled == false { return }
+                self?.disableAllWhileLoading()
                 self?.viewModel.action(
                     input: .moreStoreButtonTapped
                 )
@@ -206,8 +218,11 @@ final class HomeViewController: UIViewController {
         button.isHidden = true
         button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
         button.rx.tap
+            .debounce(.milliseconds(500), scheduler: MainScheduler())
             .bind { [weak self] in
+                if button.isUserInteractionEnabled == false { return }
                 guard let text = self?.searchBarView.searchTextField.text else { return }
+                self?.disableAllWhileLoading()
                 self?.searchObserver.accept(text)
             }
             .disposed(by: disposeBag)
@@ -222,8 +237,10 @@ final class HomeViewController: UIViewController {
         button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
         button.isHidden = true
         button.rx.tap
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .debounce(.milliseconds(500), scheduler: MainScheduler())
             .bind { [weak self] in
+                if button.isUserInteractionEnabled == false { return }
+                self?.disableAllWhileLoading()
                 self?.storeInformationViewDismiss()
                 if let sheet = self?.storeListViewController.sheetPresentationController {
                     sheet.animateChanges {
@@ -356,18 +373,21 @@ private extension HomeViewController {
                 self?.moreStoreButton.isEnabled = true
                 self?.mapView.mapView.positionMode = .normal
                 self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+                self?.enableAllWhileLoading()
             }
             .disposed(by: disposeBag)
         
         viewModel.fetchCountOutput
             .bind { [weak self] fetchCount in
                 self?.moreStoreButton.setFetchCount(fetchCount: fetchCount)
+                self?.enableAllWhileLoading()
             }
             .disposed(by: disposeBag)
         
         viewModel.noMoreStoresOutput
             .bind { [weak self] in
                 self?.moreStoreButton.isEnabled = false
+                self?.enableAllWhileLoading()
             }
             .disposed(by: disposeBag)
     }
@@ -391,7 +411,6 @@ private extension HomeViewController {
                         stores.append(store)
                     }
                 }
-                storeInformationViewDismiss()
                 if stores.isEmpty {
                     showToast(message: "검색 결과가 존재하지 않습니다.")
                     storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
@@ -400,6 +419,7 @@ private extension HomeViewController {
                     storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
                     storeListViewController.updateList(stores: stores)
                 }
+                storeInformationViewDismiss()
             }
             .disposed(by: disposeBag)
     }
@@ -424,18 +444,21 @@ private extension HomeViewController {
                 guard let imageName = positionMode.getImageName() else { return }
                 self?.locationButton.setImage(UIImage(named: imageName), for: .normal)
                 self?.mapView.mapView.positionMode = positionMode
+                self?.enableAllWhileLoading()
             }
             .disposed(by: disposeBag)
         
         viewModel.requestLocationAuthorizationOutput
             .bind { [weak self] in
                 self?.presentLocationAlert()
+                self?.enableAllWhileLoading()
             }
             .disposed(by: disposeBag)
         
         viewModel.requestLocationAuthorizationOutput
             .bind { [weak self] in
                 self?.presentLocationAlert()
+                self?.enableAllWhileLoading()
             }
             .disposed(by: disposeBag)
     }
@@ -477,7 +500,11 @@ private extension HomeViewController {
             if !(presentedViewController is StoreInformationViewController) {
                 dismiss(animated: true)
                 changeButtonsConstraints(delay: true)
-                present(storeInformationViewController, animated: true)
+                present(storeInformationViewController, animated: true) { [weak self] in
+                    self?.enableAllWhileLoading()
+                }
+            } else {
+                enableAllWhileLoading()
             }
         }
         .disposed(by: disposeBag)
@@ -519,8 +546,13 @@ private extension HomeViewController {
     
     func bindFilterButton(button: FilterButton, type: CertificationType) {
         button.rx.tap
+            .debounce(.milliseconds(500), scheduler: MainScheduler())
             .scan(false) { [weak self] (lastState, _) in
                 guard let self = self else { return lastState }
+                if button.isUserInteractionEnabled == false {
+                    return lastState
+                }
+                disableAllWhileLoading()
                 viewModel.action(
                     input: .filterButtonTapped(activatedFilter: type)
                 )
@@ -626,7 +658,10 @@ private extension HomeViewController {
                 
                 guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
                 if let clickedMarker = clickedMarker {
-                    if clickedMarker == marker { return }
+                    if clickedMarker == marker { 
+                        enableAllWhileLoading()
+                        return
+                    }
                     storeInformationViewDismiss(changeMarker: true)
                 }
                 storeInformationViewController.setUIContents(store: store)
@@ -651,7 +686,7 @@ private extension HomeViewController {
     
     func markerTouchHandler(marker: Marker) {
         marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            
+            self?.disableAllWhileLoading()
             if let clickedMarker = self?.clickedMarker {
                 if clickedMarker == marker { return true }
                 self?.storeInformationViewDismiss(changeMarker: true)
@@ -673,8 +708,9 @@ private extension HomeViewController {
         clickedMarker?.deselect()
         clickedMarker = nil
         if !changeMarker {
-            storeInformationViewController.dismiss(animated: true)
-            presentStoreListView()
+            storeInformationViewController.dismiss(animated: true) { [weak self] in
+                self?.presentStoreListView()
+            }
         }
     }
     
@@ -724,6 +760,7 @@ private extension HomeViewController {
     }
     
     func refresh() {
+        disableAllWhileLoading()
         refreshButton.animationFire()
         viewModel.action(
             input: .refresh(
@@ -742,7 +779,9 @@ private extension HomeViewController {
     func presentSearchViewController() {
         searchViewController.setSearchKeyword(keyword: searchBarView.searchTextField.text)
         if let presentedViewController = presentedViewController {
-            presentedViewController.present(searchViewController, animated: false)
+            presentedViewController.present(searchViewController, animated: false) { [weak self] in
+                self?.enableAllWhileLoading()
+            }
         }
     }
     
@@ -762,7 +801,17 @@ private extension HomeViewController {
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
             }
-            present(storeListViewController, animated: true)
+            if let presentedViewController = presentedViewController {
+                presentedViewController.present(storeListViewController, animated: true) { [weak self] in
+                    self?.enableAllWhileLoading()
+                }
+            } else {
+                present(storeListViewController, animated: true) { [weak self] in
+                    self?.enableAllWhileLoading()
+                }
+            }
+        } else {
+            enableAllWhileLoading()
         }
     }
     
@@ -864,8 +913,8 @@ private extension HomeViewController {
             researchKeywordButtonBottomConstraint.constant = -283
             mapView.mapView.logoMargin.bottom = 248
         }
-        UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
-            self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) { [weak self] in
+            self?.view.layoutIfNeeded()
         }
     }
     
@@ -967,6 +1016,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             )
         }
         .disposed(by: disposeBag)
+        enableAllWhileLoading()
     }
     
     func disableAllWhileLoading() {
@@ -998,6 +1048,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
 extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        disableAllWhileLoading()
         storeInformationViewDismiss()
     }
     
@@ -1027,6 +1078,7 @@ extension HomeViewController: UISheetPresentationControllerDelegate {
 extension HomeViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        disableAllWhileLoading()
         presentSearchViewController()
         return false
     }
