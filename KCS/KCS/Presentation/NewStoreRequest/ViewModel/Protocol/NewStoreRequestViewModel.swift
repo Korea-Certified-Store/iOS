@@ -36,6 +36,6 @@ protocol NewStoreRequestViewModelOutput {
     var detailAddressEditEndOutput: PublishRelay<Void> { get }
     var certificationWarningOutput: PublishRelay<Void> { get }
     var certificationEditEndOutput: PublishRelay<Void> { get }
-    var completeEditOutput: PublishRelay<Bool> { get }
+    var completeButtonIsEnabledOutput: PublishRelay<Bool> { get }
     
 }

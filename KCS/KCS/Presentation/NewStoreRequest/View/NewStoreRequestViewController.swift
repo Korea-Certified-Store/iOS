@@ -431,7 +431,7 @@ private extension NewStoreRequestViewController {
     }
     
     func completeBind() {
-        viewModel.completeEditOutput
+        viewModel.completeButtonIsEnabledOutput
             .bind { [weak self] result in
                 self?.completeBarButtonItem.isEnabled = result
             }

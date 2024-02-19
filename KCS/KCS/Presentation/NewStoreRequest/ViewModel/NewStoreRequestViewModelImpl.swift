@@ -18,7 +18,7 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     let detailAddressEditEndOutput = PublishRelay<Void>()
     let certificationWarningOutput = PublishRelay<Void>()
     let certificationEditEndOutput = PublishRelay<Void>()
-    let completeEditOutput = PublishRelay<Bool>()
+    let completeButtonIsEnabledOutput = PublishRelay<Bool>()
     
     private let titleEditState = PublishRelay<Bool>()
     private let addressEditState = PublishRelay<Bool>()
@@ -103,7 +103,7 @@ private extension NewStoreRequestViewModelImpl {
                 return title && address && detailAddress && certification
         }
         .bind { [weak self] result in
-            self?.completeEditOutput.accept(result)
+            self?.completeButtonIsEnabledOutput.accept(result)
         }
         .disposed(by: disposeBag)
     }
