@@ -32,6 +32,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let moreStoreButtonHiddenOutput = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
+    // TODO: activatedFilter 수정 필요
     private var activatedFilter: [CertificationType] = []
     private var fetchCount: Int = 1
     private var maxFetchCount: Int = 1
