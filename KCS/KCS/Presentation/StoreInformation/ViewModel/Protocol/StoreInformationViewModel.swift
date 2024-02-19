@@ -9,8 +9,7 @@ import RxRelay
 
 protocol StoreInformationViewModel: StoreInformationViewModelInput, StoreInformationViewModelOutput {
     
-    var getOpenClosedUseCase: GetOpenClosedUseCase { get }
-    var fetchImageUseCase: FetchImageUseCase { get }
+    var dependency: StoreInformationDependency { get }
     
 }
 

@@ -71,9 +71,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let storeInformationViewController = StoreInformationViewController(
             storeUpdateRequestViewController: storeUpdateRequestViewController, summaryViewHeightObserver: summaryViewHeightObserver,
             viewModel: StoreInformationViewModelImpl(
-                getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-                fetchImageUseCase: FetchImageUseCaseImpl(
-                    repository: ImageRepositoryImpl(cache: ImageCache())
+                dependency: StoreInformationDependency(
+                    getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
+                    fetchImageUseCase: FetchImageUseCaseImpl(
+                        repository: ImageRepositoryImpl(cache: ImageCache())
+                    )
                 )
             )
         )

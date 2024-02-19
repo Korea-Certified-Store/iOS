@@ -10,10 +10,8 @@ import RxSwift
 
 final class StoreInformationViewModelImpl: StoreInformationViewModel {
     
+    let dependency: StoreInformationDependency
     private let disposeBag = DisposeBag()
-    
-    let getOpenClosedUseCase: GetOpenClosedUseCase
-    let fetchImageUseCase: FetchImageUseCase
     
     let setDetailUIContentsOutput = PublishRelay<DetailViewContents>()
     let setSummaryUIContentsOutput = PublishRelay<SummaryViewContents>()
@@ -21,9 +19,8 @@ final class StoreInformationViewModelImpl: StoreInformationViewModel {
     let summaryCallButtonOutput = PublishRelay<String>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     
-    init(getOpenClosedUseCase: GetOpenClosedUseCase, fetchImageUseCase: FetchImageUseCase) {
-        self.getOpenClosedUseCase = getOpenClosedUseCase
-        self.fetchImageUseCase = fetchImageUseCase
+    init(dependency: StoreInformationDependency) {
+        self.dependency = dependency
     }
     
     func action(input: StoreInformationViewModelInputCase) {
@@ -45,7 +42,7 @@ private extension StoreInformationViewModelImpl {
         }
         
         do {
-            let openClosedContent = try getOpenClosedUseCase.execute(openingHours: store.openingHour)
+            let openClosedContent = try dependency.getOpenClosedUseCase.execute(openingHours: store.openingHour)
             setSummaryUIContentsOutput.accept(
                 SummaryViewContents(
                     storeTitle: store.title,
@@ -72,7 +69,7 @@ private extension StoreInformationViewModelImpl {
     
     func fetchThumbnailImage(localPhotos: [String]) {
         guard let url = localPhotos.first else { return }
-        fetchImageUseCase.execute(url: url)
+        dependency.fetchImageUseCase.execute(url: url)
             .subscribe(
                 onNext: { [weak self] imageData in
                     self?.thumbnailImageOutput.accept(imageData)
