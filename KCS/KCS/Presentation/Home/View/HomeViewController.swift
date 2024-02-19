@@ -215,6 +215,22 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    private lazy var addStoreButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage.addStoreButton, for: .normal)
+        button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
+        button.rx.tap
+            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .bind { [weak self] in
+                guard let self = self else { return }
+                presentNewStoreRequestView(newStoreRequeestViewController: newStoreRequeestViewController)
+            }
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
     private lazy var backStoreListButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -270,6 +286,10 @@ final class HomeViewController: UIViewController {
         equalTo: mapView.bottomAnchor, constant: -104
     )
     
+    private lazy var addStoreButtonBottomConstraint = addStoreButton.bottomAnchor.constraint(
+        equalTo: mapView.bottomAnchor, constant: -128
+    )
+    
     private lazy var searchBarViewLeadingConstraint = searchBarView.leadingAnchor.constraint(
         equalTo: mapView.leadingAnchor, constant: 16
     )
@@ -278,6 +298,7 @@ final class HomeViewController: UIViewController {
     private let storeListViewController: StoreListViewController
     private let storeInformationViewController: StoreInformationViewController
     private let searchViewController: SearchViewController
+    private let newStoreRequeestViewController: NewStoreRequestViewController
     private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     private let listCellSelectedObserver: PublishRelay<Int>
     private let searchObserver: PublishRelay<String>
@@ -291,6 +312,7 @@ final class HomeViewController: UIViewController {
         storeListViewController: StoreListViewController,
         storeInformationViewController: StoreInformationViewController,
         searchViewController: SearchViewController,
+        newStoreRequestViewController: NewStoreRequestViewController,
         summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
         listCellSelectedObserver: PublishRelay<Int>,
         searchObserver: PublishRelay<String>,
@@ -300,6 +322,7 @@ final class HomeViewController: UIViewController {
         self.storeListViewController = storeListViewController
         self.storeInformationViewController = storeInformationViewController
         self.searchViewController = searchViewController
+        self.newStoreRequeestViewController = newStoreRequestViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.listCellSelectedObserver = listCellSelectedObserver
         self.searchObserver = searchObserver
@@ -771,6 +794,7 @@ private extension HomeViewController {
             locationButtonBottomConstraint.constant = -104
             moreStoreButtonBottomConstraint.constant = -104
             researchKeywordButtonBottomConstraint.constant = -104
+            addStoreButtonBottomConstraint.constant = -128
             mapView.mapView.logoMargin.bottom = 69
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
@@ -793,6 +817,7 @@ private extension HomeViewController {
         mapView.addSubview(moreStoreButton)
         mapView.addSubview(researchKeywordButton)
         mapView.addSubview(backStoreListButton)
+        mapView.addSubview(addStoreButton)
         mapView.addSubview(dimView)
     }
     
@@ -860,6 +885,13 @@ private extension HomeViewController {
             backStoreListButton.widthAnchor.constraint(equalToConstant: 38),
             backStoreListButton.heightAnchor.constraint(equalToConstant: 38)
         ])
+        
+        NSLayoutConstraint.activate([
+            addStoreButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -16),
+            addStoreButton.widthAnchor.constraint(equalToConstant: 34),
+            addStoreButton.heightAnchor.constraint(equalToConstant: 34),
+            addStoreButtonBottomConstraint
+        ])
     }
     
     func changeButtonsConstraints(delay: Bool) {
@@ -869,12 +901,14 @@ private extension HomeViewController {
             locationButtonBottomConstraint.constant = -260
             moreStoreButtonBottomConstraint.constant = -260
             researchKeywordButtonBottomConstraint.constant = -260
+            addStoreButtonBottomConstraint.constant = -284
             mapView.mapView.logoMargin.bottom = 225
         } else {
             refreshButtonBottomConstraint.constant = -283
             locationButtonBottomConstraint.constant = -283
             moreStoreButtonBottomConstraint.constant = -283
             researchKeywordButtonBottomConstraint.constant = -283
+            addStoreButtonBottomConstraint.constant = -307
             mapView.mapView.logoMargin.bottom = 248
         }
         UIView.animate(withDuration: 0.3, delay: delay ? 0.5 : 0) {
