@@ -46,12 +46,3 @@ protocol StoreUpdateRequestViewModelOutput {
     var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
     
 }
-
-struct StoreUpdateRequestDepenency {
-    
-    let storeUpdateRequestUseCase: StoreUpdateRequestUseCase
-    let fetchStoreIDUseCase: FetchStoreIDUseCase
-    let setStoreIDUseCase: SetStoreIDUseCase
-    let disposeBag = DisposeBag()
-    
-}
