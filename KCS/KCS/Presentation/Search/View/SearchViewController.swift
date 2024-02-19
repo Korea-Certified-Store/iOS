@@ -386,27 +386,7 @@ private extension SearchViewController {
                 constant: -view.frame.maxY + recentHistoryTableView.frame.maxY - 24
             )
         ])
-        
-        UIView.animate(
-            withDuration: 0.4,
-            delay: 0,
-            options: .curveEaseIn,
-            animations: {
-                toastView.alpha = 1.0
-            },
-            completion: { _ in
-                UIView.animate(
-                    withDuration: 0.6,
-                    delay: 2.0,
-                    options: .curveEaseOut,
-                    animations: {
-                        toastView.alpha = 0.0
-                    }, completion: { _ in
-                        toastView.removeFromSuperview()
-                    }
-                )
-            }
-        )
+        toastView.removeFromSuperviewWithAnimation()
     }
 
 }
