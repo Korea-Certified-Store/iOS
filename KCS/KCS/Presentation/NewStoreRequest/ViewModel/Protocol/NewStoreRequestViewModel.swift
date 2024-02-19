@@ -5,6 +5,7 @@
 //  Created by 조성민 on 2/17/24.
 //
 
+import RxSwift
 import RxRelay
 
 protocol NewStoreRequestViewModel: NewStoreRequestViewModelInput, NewStoreRequestViewModelOutput {
@@ -23,6 +24,7 @@ enum NewStoreRequestViewModelInputCase {
     case addressEditEnd(text: String)
     case detailAddressEditEnd(text: String)
     case certificationEditEnd(requestNewStoreCertificationIsSelected: RequestNewStoreCertificationIsSelected)
+    case completeButtonTapped(storeName: String, address: String, certifications: RequestNewStoreCertificationIsSelected)
     
 }
 
@@ -37,5 +39,18 @@ protocol NewStoreRequestViewModelOutput {
     var certificationWarningOutput: PublishRelay<Void> { get }
     var certificationEditEndOutput: PublishRelay<Void> { get }
     var completeButtonIsEnabledOutput: PublishRelay<Bool> { get }
+    var completePostNewStoreOutput: PublishRelay<Void> { get }
+    var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
+    
+}
+
+struct NewStoreRequestDependency {
+    
+    let postNewStoreUseCase: PostNewStoreUseCase
+    let disposeBag = DisposeBag()
+    let titleEditState = PublishRelay<Bool>()
+    let addressEditState = PublishRelay<Bool>()
+    let detailAddressEditState = PublishRelay<Bool>()
+    let certificationEditState = PublishRelay<Bool>()
     
 }

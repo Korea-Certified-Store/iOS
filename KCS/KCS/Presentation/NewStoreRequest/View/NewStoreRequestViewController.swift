@@ -33,6 +33,21 @@ final class NewStoreRequestViewController: UIViewController {
         barButton.target = self
         barButton.title = "완료"
         barButton.isEnabled = false
+        barButton.rx.tap
+            .bind { [weak self] in
+                guard let storeName = self?.titleTextField.text,
+                      let address = self?.addressTextField.text,
+                      let detailAddress = self?.detailAddressTextField.text,
+                      let certifications = self?.requestNewStoreCertificationIsSelected else { return }
+                self?.viewModel.action(
+                    input: .completeButtonTapped(
+                        storeName: storeName,
+                        address: address + " " + detailAddress,
+                        certifications: certifications
+                    )
+                )
+            }
+            .disposed(by: disposeBag)
         
         return barButton
     }()
@@ -301,6 +316,10 @@ final class NewStoreRequestViewController: UIViewController {
         configureConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        resetUI()
+    }
+    
 }
 
 private extension NewStoreRequestViewController {
@@ -434,6 +453,27 @@ private extension NewStoreRequestViewController {
         viewModel.completeButtonIsEnabledOutput
             .bind { [weak self] result in
                 self?.completeBarButtonItem.isEnabled = result
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.completePostNewStoreOutput
+            .bind { [weak self] in
+                let alertController = UIAlertController(
+                    title: "",
+                    message: "새로운 가게 추가 요청이 완료되었습니다.",
+                    preferredStyle: .alert
+                )
+                let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+                    self?.dismiss(animated: true)
+                }
+                alertController.addAction(alertAction)
+                self?.present(alertController, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.errorAlertOutput
+            .bind { [weak self] error in
+                self?.presentErrorAlert(error: error)
             }
             .disposed(by: disposeBag)
     }
@@ -594,6 +634,18 @@ private extension NewStoreRequestViewController {
 }
 
 private extension NewStoreRequestViewController {
+    
+    func resetUI() {
+        titleTextField.setNormalUI()
+        titleTextField.text = ""
+        addressTextField.setNormalUI()
+        addressTextField.text = ""
+        detailAddressTextField.setNormalUI()
+        detailAddressTextField.text = ""
+        goodPriceButton.isSelected = false
+        exemplaryButton.isSelected = false
+        safeButton.isSelected = false
+    }
     
     func presentAddressView() {
         let addressViewController = AddressViewController(addressObserver: addressObserver)
