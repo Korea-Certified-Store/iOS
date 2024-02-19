@@ -13,7 +13,6 @@ struct HomeDependency {
     let getRefreshStoresUseCase: GetRefreshStoresUseCase
     let getStoreInformationUseCase: GetStoreInformationUseCase
     let getSearchStoresUseCase: GetSearchStoresUseCase
-    let disposeBag = DisposeBag()
     var activatedFilter: [CertificationType] = []
     var fetchCount: Int = 1
     var maxFetchCount: Int = 1

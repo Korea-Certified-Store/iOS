@@ -31,6 +31,8 @@ final class HomeViewModelImpl: HomeViewModel {
     let searchOneStoreOutput = PublishRelay<Store>()
     let moreStoreButtonHiddenOutput = PublishRelay<Void>()
     
+    private let disposeBag = DisposeBag()
+    
     init(dependency: HomeDependency) {
         self.dependency = dependency
     }
@@ -99,13 +101,16 @@ private extension HomeViewModelImpl {
                 }
             }
         )
-        .disposed(by: dependency.disposeBag)
+        .disposed(by: disposeBag)
     }
     
     func moreStoreButtonTapped() {
         if dependency.fetchCount < dependency.maxFetchCount {
             dependency.fetchCount += 1
-            applyFilters(stores: dependency.getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+            applyFilters(
+                stores: dependency.getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount),
+                filters: getActivatedTypes()
+            )
             fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount, fetchCount: dependency.fetchCount))
         }
         checkLastFetch()
@@ -253,7 +258,7 @@ private extension HomeViewModelImpl {
                     searchStoresOutput.accept(stores)
                 }
             })
-            .disposed(by: dependency.disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func resetFilters() {
