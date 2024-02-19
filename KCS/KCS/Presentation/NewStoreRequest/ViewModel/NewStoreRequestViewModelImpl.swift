@@ -18,8 +18,7 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     let detailAddressEditEndOutput = PublishRelay<Void>()
     let certificationWarningOutput = PublishRelay<Void>()
     let certificationEditEndOutput = PublishRelay<Void>()
-    let completeEditOutput = PublishRelay<Void>()
-    let noCompleteEditOutput = PublishRelay<Void>()
+    let completeEditOutput = PublishRelay<Bool>()
     
     private let titleEditState = PublishRelay<Bool>()
     private let addressEditState = PublishRelay<Bool>()
@@ -98,13 +97,12 @@ private extension NewStoreRequestViewModelImpl {
             addressEditState,
             detailAddressEditState,
             certificationEditState)
-        .bind(onNext: { [weak self] title, address, detailAddress, certification in
-            if title && address && detailAddress && certification {
-                self?.completeEditOutput.accept(())
-            } else {
-                self?.noCompleteEditOutput.accept(())
-            }
-        })
+        .compactMap { title, address, detailAddress, certification in
+                return title && address && detailAddress && certification
+        }
+        .bind { [weak self] result in
+            self?.completeEditOutput.accept(result)
+        }
         .disposed(by: disposeBag)
     }
     

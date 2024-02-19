@@ -431,14 +431,8 @@ private extension NewStoreRequestViewController {
     
     func completeBind() {
         viewModel.completeEditOutput
-            .bind { [weak self] in
-                self?.completeBarButtonItem.isEnabled = true
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.noCompleteEditOutput
-            .bind { [weak self] in
-                self?.completeBarButtonItem.isEnabled = false
+            .bind { [weak self] result in
+                self?.completeBarButtonItem.isEnabled = result
             }
             .disposed(by: disposeBag)
     }
