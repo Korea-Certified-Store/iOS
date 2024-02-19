@@ -14,10 +14,10 @@ final class NewStoreRequestViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private lazy var leftBarButtonItem: UIBarButtonItem = {
+    private lazy var backBarButtonItem: UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         barButton.target = self
-        barButton.image = UIImage(systemName: "chevron.backward")
+        barButton.image = UIImage.backButton
         barButton.tintColor = .black
         barButton.rx.tap
             .bind { [weak self] in
@@ -28,7 +28,7 @@ final class NewStoreRequestViewController: UIViewController {
         return barButton
     }()
     
-    private lazy var rightBarButtonItem: UIBarButtonItem = {
+    private lazy var completeBarButtonItem: UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         barButton.target = self
         barButton.title = "완료"
@@ -45,8 +45,8 @@ final class NewStoreRequestViewController: UIViewController {
         navigationBar.backgroundColor = .white
         
         let navigationItem = UINavigationItem(title: "새로운 가게 추가")
-        navigationItem.leftBarButtonItem = leftBarButtonItem
-        navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.leftBarButtonItem = backBarButtonItem
+        navigationItem.rightBarButtonItem = completeBarButtonItem
         navigationBar.items = [navigationItem]
         
         return navigationBar
@@ -432,13 +432,13 @@ private extension NewStoreRequestViewController {
     func completeBind() {
         viewModel.completeEditOutput
             .bind { [weak self] in
-                self?.rightBarButtonItem.isEnabled = true
+                self?.completeBarButtonItem.isEnabled = true
             }
             .disposed(by: disposeBag)
         
         viewModel.noCompleteEditOutput
             .bind { [weak self] in
-                self?.rightBarButtonItem.isEnabled = false
+                self?.completeBarButtonItem.isEnabled = false
             }
             .disposed(by: disposeBag)
     }
