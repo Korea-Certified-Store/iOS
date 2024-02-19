@@ -494,6 +494,7 @@
 			children = (
 				59503A6F2B7FB3130006CF35 /* NewStoreRequestViewController.swift */,
 				59503A712B7FB38E0006CF35 /* NewStoreTextField.swift */,
+				A8AF067E2B8121F300E73574 /* AddressViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -666,13 +667,12 @@
 			isa = PBXGroup;
 			children = (
 				A890870B2B4EF8F900767225 /* Extension */,
-				59503A792B80E8260006CF35 /* StoreUpdateRequest */,
-				59503A6D2B7FB2EB0006CF35 /* NewStoreRequest */,
 				5986DCEA2B392996005AE43B /* Home */,
+				59503A4B2B751AEE0006CF35 /* Search */,
 				59B886242B6A39E9005750EF /* StoreList */,
 				59B886552B6E3A59005750EF /* StoreInformation */,
-				59503A4B2B751AEE0006CF35 /* Search */,
-				A8AF067B2B8121B800E73574 /* Address */,
+				59503A6D2B7FB2EB0006CF35 /* NewStoreRequest */,
+				59503A792B80E8260006CF35 /* StoreUpdateRequest */,
 				A83367B92B709BE900E0A844 /* OnBoarding */,
 				A821A3722B74B82600089B8F /* Splash */,
 			);
@@ -1038,22 +1038,6 @@
 				A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */,
 			);
 			path = Error;
-			sourceTree = "<group>";
-		};
-		A8AF067B2B8121B800E73574 /* Address */ = {
-			isa = PBXGroup;
-			children = (
-				A8AF067C2B8121DB00E73574 /* View */,
-			);
-			path = Address;
-			sourceTree = "<group>";
-		};
-		A8AF067C2B8121DB00E73574 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				A8AF067E2B8121F300E73574 /* AddressViewController.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		E99F20FF9A30DCF9C51285A2 /* Frameworks */ = {
