@@ -24,6 +24,8 @@ final class StoreUpdateRequestViewModelImpl: StoreUpdateRequestViewModel {
     let completeRequestOutput = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     
+    private let disposeBag = DisposeBag()
+    
     init(dependency: StoreUpdateRequestDepenency) {
         self.dependency = dependency
     }
@@ -110,7 +112,7 @@ private extension StoreUpdateRequestViewModelImpl {
                 self?.errorAlertOutput.accept(error)
             }
         )
-        .disposed(by: dependency.disposeBag)
+        .disposed(by: disposeBag)
     }
     
 }

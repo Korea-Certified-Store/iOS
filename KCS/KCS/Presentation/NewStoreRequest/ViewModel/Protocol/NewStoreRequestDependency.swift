@@ -11,10 +11,5 @@ import RxRelay
 struct NewStoreRequestDependency {
     
     let postNewStoreUseCase: PostNewStoreUseCase
-    let disposeBag = DisposeBag()
-    let titleEditState = PublishRelay<Bool>()
-    let addressEditState = PublishRelay<Bool>()
-    let detailAddressEditState = PublishRelay<Bool>()
-    let certificationEditState = PublishRelay<Bool>()
     
 }

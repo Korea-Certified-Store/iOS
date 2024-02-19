@@ -12,6 +12,5 @@ struct StoreUpdateRequestDepenency {
     let storeUpdateRequestUseCase: StoreUpdateRequestUseCase
     let fetchStoreIDUseCase: FetchStoreIDUseCase
     let setStoreIDUseCase: SetStoreIDUseCase
-    let disposeBag = DisposeBag()
     
 }

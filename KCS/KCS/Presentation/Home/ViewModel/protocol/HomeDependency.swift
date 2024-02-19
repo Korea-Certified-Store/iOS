@@ -13,12 +13,5 @@ struct HomeDependency {
     let getRefreshStoresUseCase: GetRefreshStoresUseCase
     let getStoreInformationUseCase: GetStoreInformationUseCase
     let getSearchStoresUseCase: GetSearchStoresUseCase
-    var activatedFilter: [CertificationType] = []
-    var fetchCount: Int = 1
-    var maxFetchCount: Int = 1
-    
-    mutating func resetFetchCount() {
-        fetchCount = 1
-    }
     
 }

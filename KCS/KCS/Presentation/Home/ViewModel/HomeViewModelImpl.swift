@@ -12,7 +12,7 @@ import NMapsMap
 
 final class HomeViewModelImpl: HomeViewModel {
     
-    var dependency: HomeDependency
+    let dependency: HomeDependency
     
     let getStoreInformationOutput = PublishRelay<Store>()
     let refreshDoneOutput = PublishRelay<Bool>()
@@ -32,6 +32,9 @@ final class HomeViewModelImpl: HomeViewModel {
     let moreStoreButtonHiddenOutput = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
+    private var activatedFilter: [CertificationType] = []
+    private var fetchCount: Int = 1
+    private var maxFetchCount: Int = 1
     
     init(dependency: HomeDependency) {
         self.dependency = dependency
@@ -84,10 +87,10 @@ private extension HomeViewModelImpl {
         .subscribe(
             onNext: { [weak self] refreshContent in
                 guard let self = self else { return }
-                dependency.resetFetchCount()
-                dependency.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
+                resetFetchCount()
+                maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
                 applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
-                fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount))
+                fetchCountOutput.accept(FetchCountContent(maxFetchCount: maxFetchCount))
                 refreshDoneOutput.accept(isEntire)
                 checkLastFetch()
             },
@@ -105,38 +108,38 @@ private extension HomeViewModelImpl {
     }
     
     func moreStoreButtonTapped() {
-        if dependency.fetchCount < dependency.maxFetchCount {
-            dependency.fetchCount += 1
+        if fetchCount < maxFetchCount {
+            fetchCount += 1
             applyFilters(
-                stores: dependency.getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount),
+                stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchCount),
                 filters: getActivatedTypes()
             )
-            fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount, fetchCount: dependency.fetchCount))
+            fetchCountOutput.accept(FetchCountContent(maxFetchCount: maxFetchCount, fetchCount: fetchCount))
         }
         checkLastFetch()
     }
     
     func checkLastFetch() {
-        if dependency.fetchCount == dependency.maxFetchCount {
+        if fetchCount == maxFetchCount {
             noMoreStoresOutput.accept(())
         }
     }
     
     func filterButtonTapped(filter: CertificationType) {
-        if let lastIndex = dependency.activatedFilter.lastIndex(of: filter) {
-            dependency.activatedFilter.remove(at: lastIndex)
+        if let lastIndex = activatedFilter.lastIndex(of: filter) {
+            activatedFilter.remove(at: lastIndex)
         } else {
-            dependency.activatedFilter.append(filter)
+            activatedFilter.append(filter)
         }
-        applyFilters(stores: dependency.getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+        applyFilters(stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchCount), filters: getActivatedTypes())
     }
     
     func getActivatedTypes() -> [CertificationType] {
-        if dependency.activatedFilter.isEmpty {
+        if activatedFilter.isEmpty {
             return [.safe, .exemplary, .goodPrice]
         }
         
-        return dependency.activatedFilter
+        return activatedFilter
     }
     
     func applyFilters(stores: [Store], filters: [CertificationType]) {
@@ -250,7 +253,7 @@ private extension HomeViewModelImpl {
             .execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
-                dependency.fetchCount = stores.count
+                fetchCount = stores.count
                 if stores.count == 1 {
                     guard let oneStore = stores.first else { return }
                     searchOneStoreOutput.accept(oneStore)
@@ -259,10 +262,6 @@ private extension HomeViewModelImpl {
                 }
             })
             .disposed(by: disposeBag)
-    }
-    
-    func resetFilters() {
-        dependency.activatedFilter = []
     }
     
     func compareCameraPosition(
@@ -279,6 +278,14 @@ private extension HomeViewModelImpl {
         if zoomDifference > 0.5 || pointDifference > 50 {
             moreStoreButtonHiddenOutput.accept(())
         }
+    }
+    
+    func resetFilters() {
+        activatedFilter = []
+    }
+    
+    func resetFetchCount() {
+        fetchCount = 1
     }
     
 }
