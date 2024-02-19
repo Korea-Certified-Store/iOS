@@ -400,9 +400,6 @@ private extension HomeViewController {
                     storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
                     storeListViewController.updateList(stores: stores)
                 }
-                safeFilterButton.isUserInteractionEnabled = true
-                exemplaryFilterButton.isUserInteractionEnabled = true
-                goodPriceFilterButton.isUserInteractionEnabled = true
             }
             .disposed(by: disposeBag)
     }
@@ -527,7 +524,6 @@ private extension HomeViewController {
                 viewModel.action(
                     input: .filterButtonTapped(activatedFilter: type)
                 )
-                button.isUserInteractionEnabled = false
                 return !lastState
             }
             .bind(to: button.rx.isSelected)
@@ -586,9 +582,6 @@ private extension HomeViewController {
                 researchKeywordButton.isHidden = false
                 refreshButton.isHidden = true
                 moreStoreButton.isHidden = true
-                safeFilterButton.isUserInteractionEnabled = false
-                exemplaryFilterButton.isUserInteractionEnabled = false
-                goodPriceFilterButton.isUserInteractionEnabled = false
             }
             .disposed(by: disposeBag)
         
@@ -611,9 +604,6 @@ private extension HomeViewController {
                 }
                 mapView.mapView.positionMode = .normal
                 locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-                safeFilterButton.isUserInteractionEnabled = true
-                exemplaryFilterButton.isUserInteractionEnabled = true
-                goodPriceFilterButton.isUserInteractionEnabled = true
             }
             .disposed(by: disposeBag)
         
@@ -633,9 +623,6 @@ private extension HomeViewController {
                 mapView.mapView.moveCamera(cameraUpdate)
                 mapView.mapView.positionMode = .normal
                 locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-                safeFilterButton.isUserInteractionEnabled = true
-                exemplaryFilterButton.isUserInteractionEnabled = true
-                goodPriceFilterButton.isUserInteractionEnabled = true
                 
                 guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
                 if let clickedMarker = clickedMarker {
@@ -980,6 +967,30 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             )
         }
         .disposed(by: disposeBag)
+    }
+    
+    func disableAllWhileLoading() {
+        goodPriceFilterButton.isUserInteractionEnabled = false
+        exemplaryFilterButton.isUserInteractionEnabled = false
+        safeFilterButton.isUserInteractionEnabled = false
+        searchBarView.isUserInteractionEnabled = false
+        mapView.isUserInteractionEnabled = false
+        refreshButton.isUserInteractionEnabled = false
+        moreStoreButton.isUserInteractionEnabled = false
+        researchKeywordButton.isUserInteractionEnabled = false
+        backStoreListButton.isUserInteractionEnabled = false
+    }
+    
+    func enableAllWhileLoading() {
+        goodPriceFilterButton.isUserInteractionEnabled = true
+        exemplaryFilterButton.isUserInteractionEnabled = true
+        safeFilterButton.isUserInteractionEnabled = true
+        searchBarView.isUserInteractionEnabled = true
+        mapView.isUserInteractionEnabled = true
+        refreshButton.isUserInteractionEnabled = true
+        moreStoreButton.isUserInteractionEnabled = true
+        researchKeywordButton.isUserInteractionEnabled = true
+        backStoreListButton.isUserInteractionEnabled = true
     }
     
 }
