@@ -26,6 +26,7 @@
 		5943764C2B821CB2005B97B2 /* SetStoreIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764B2B821CB2005B97B2 /* SetStoreIDUseCase.swift */; };
 		5943764E2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764D2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift */; };
 		594376502B82437C005B97B2 /* StoreUpdateRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */; };
+		594376522B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376512B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
 		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
 		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
@@ -208,6 +209,7 @@
 		5943764B2B821CB2005B97B2 /* SetStoreIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDUseCase.swift; sourceTree = "<group>"; };
 		5943764D2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDUseCaseImpl.swift; sourceTree = "<group>"; };
 		5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestType.swift; sourceTree = "<group>"; };
+		594376512B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+removeFromSuperviewWithAnimation.swift"; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -950,6 +952,7 @@
 				59B886492B6A9CCB005750EF /* UIStackView+clear.swift */,
 				59B8865F2B6E7CF6005750EF /* UIViewController+Alert.swift */,
 				59B886612B6E8484005750EF /* UISheetPresentationController+Detent.swift */,
+				594376512B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1389,6 +1392,7 @@
 				A8722F062B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift in Sources */,
 				5977BE942B59738800725C90 /* GetRefreshStoresUseCase.swift in Sources */,
 				59B886502B6AB9F7005750EF /* StoreTableViewCellContents.swift in Sources */,
+				594376522B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift in Sources */,
 				59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */,
 				5943764A2B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift in Sources */,
 				596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */,
