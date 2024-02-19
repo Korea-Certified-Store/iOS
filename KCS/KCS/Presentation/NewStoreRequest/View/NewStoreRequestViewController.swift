@@ -316,6 +316,10 @@ final class NewStoreRequestViewController: UIViewController {
         configureConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        resetUI()
+    }
+    
 }
 
 private extension NewStoreRequestViewController {
@@ -630,6 +634,18 @@ private extension NewStoreRequestViewController {
 }
 
 private extension NewStoreRequestViewController {
+    
+    func resetUI() {
+        titleTextField.setNormalUI()
+        titleTextField.text = ""
+        addressTextField.setNormalUI()
+        addressTextField.text = ""
+        detailAddressTextField.setNormalUI()
+        detailAddressTextField.text = ""
+        goodPriceButton.isSelected = false
+        exemplaryButton.isSelected = false
+        safeButton.isSelected = false
+    }
     
     func presentAddressView() {
         let addressViewController = AddressViewController(addressObserver: addressObserver)
