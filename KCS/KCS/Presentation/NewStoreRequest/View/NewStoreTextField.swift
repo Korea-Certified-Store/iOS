@@ -83,3 +83,22 @@ private extension NewStoreTextField {
     }
     
 }
+
+extension NewStoreTextField {
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return false
+    }
+    
+    override func buildMenu(with builder: UIMenuBuilder) {
+        if #available(iOS 17.0, *) {
+            builder.remove(menu: .autoFill)
+        }
+        super.buildMenu(with: builder)
+    }
+    
+    override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
+        return []
+    }
+    
+}
