@@ -121,10 +121,11 @@ final class NewStoreRequestViewController: UIViewController {
     }()
     
     private lazy var addressTextField: NewStoreTextField = {
-        let textField = NewStoreTextField(xmark: false)
+        let textField = NewStoreTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "주소를 검색해 주세요."
         textField.tintColor = .clear
+        textField.rightViewMode = .never
         textField.rx.tapGesture()
             .when(.ended)
             .asObservable()
