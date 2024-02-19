@@ -9,6 +9,10 @@ import RxSwift
 
 struct HomeDependency {
     
+    let getStoresUseCase: GetStoresUseCase
+    let getRefreshStoresUseCase: GetRefreshStoresUseCase
+    let getStoreInformationUseCase: GetStoreInformationUseCase
+    let getSearchStoresUseCase: GetSearchStoresUseCase
     let disposeBag = DisposeBag()
     var activatedFilter: [CertificationType] = []
     var fetchCount: Int = 1

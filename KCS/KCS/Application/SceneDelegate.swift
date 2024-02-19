@@ -21,25 +21,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let storeStorage = StoreStorage()
         let viewModel  = HomeViewModelImpl(
-            dependency: HomeDependency(),
-            getStoresUseCase: GetStoresUseCaseImpl(
-                repository: FetchStoresRepositoryImpl(
-                    storeStorage: storeStorage
-                )
-            ),
-            getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
-                repository: GetStoresRepositoryImpl(
-                    storeStorage: storeStorage
-                )
-            ),
-            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
-                repository: GetStoresRepositoryImpl(
-                    storeStorage: storeStorage
-                )
-            ),
-            getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
-                repository: FetchSearchStoresRepositoryImpl(
-                    storeStorage: storeStorage
+            dependency: HomeDependency(
+                getStoresUseCase: GetStoresUseCaseImpl(
+                    repository: FetchStoresRepositoryImpl(
+                        storeStorage: storeStorage
+                    )
+                ),
+                getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
+                    repository: GetStoresRepositoryImpl(
+                        storeStorage: storeStorage
+                    )
+                ),
+                getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
+                    repository: GetStoresRepositoryImpl(
+                        storeStorage: storeStorage
+                    )
+                ),
+                getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
+                    repository: FetchSearchStoresRepositoryImpl(
+                        storeStorage: storeStorage
+                    )
                 )
             )
         )

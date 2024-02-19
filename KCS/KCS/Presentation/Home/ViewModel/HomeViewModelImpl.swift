@@ -12,10 +12,7 @@ import NMapsMap
 
 final class HomeViewModelImpl: HomeViewModel {
     
-    let getStoresUseCase: GetStoresUseCase
-    let getRefreshStoresUseCase: GetRefreshStoresUseCase
-    let getStoreInformationUseCase: GetStoreInformationUseCase
-    let getSearchStoresUseCase: GetSearchStoresUseCase
+    var dependency: HomeDependency
     
     let getStoreInformationOutput = PublishRelay<Store>()
     let refreshDoneOutput = PublishRelay<Bool>()
@@ -34,20 +31,8 @@ final class HomeViewModelImpl: HomeViewModel {
     let searchOneStoreOutput = PublishRelay<Store>()
     let moreStoreButtonHiddenOutput = PublishRelay<Void>()
     
-    var dependency: HomeDependency
-    
-    init(
-        dependency: HomeDependency,
-        getStoresUseCase: GetStoresUseCase,
-        getRefreshStoresUseCase: GetRefreshStoresUseCase,
-        getStoreInformationUseCase: GetStoreInformationUseCase,
-        getSearchStoresUseCase: GetSearchStoresUseCase
-    ) {
+    init(dependency: HomeDependency) {
         self.dependency = dependency
-        self.getStoresUseCase = getStoresUseCase
-        self.getRefreshStoresUseCase = getRefreshStoresUseCase
-        self.getStoreInformationUseCase = getStoreInformationUseCase
-        self.getSearchStoresUseCase = getSearchStoresUseCase
     }
     
     func action(input: HomeViewModelInputCase) {
@@ -90,7 +75,7 @@ private extension HomeViewModelImpl {
         requestLocation: RequestLocation,
         isEntire: Bool
     ) {
-        getStoresUseCase.execute(
+        dependency.getStoresUseCase.execute(
             requestLocation: requestLocation,
             isEntire: isEntire
         )
@@ -120,7 +105,7 @@ private extension HomeViewModelImpl {
     func moreStoreButtonTapped() {
         if dependency.fetchCount < dependency.maxFetchCount {
             dependency.fetchCount += 1
-            applyFilters(stores: getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+            applyFilters(stores: dependency.getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
             fetchCountOutput.accept(FetchCountContent(maxFetchCount: dependency.maxFetchCount, fetchCount: dependency.fetchCount))
         }
         checkLastFetch()
@@ -138,7 +123,7 @@ private extension HomeViewModelImpl {
         } else {
             dependency.activatedFilter.append(filter)
         }
-        applyFilters(stores: getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
+        applyFilters(stores: dependency.getRefreshStoresUseCase.execute(fetchCount: dependency.fetchCount), filters: getActivatedTypes())
     }
     
     func getActivatedTypes() -> [CertificationType] {
@@ -187,7 +172,7 @@ private extension HomeViewModelImpl {
     func markerTapped(tag: UInt) {
         do {
             getStoreInformationOutput.accept(
-                try getStoreInformationUseCase.execute(tag: tag)
+                try dependency.getStoreInformationUseCase.execute(tag: tag)
             )
         } catch {
             errorAlertOutput.accept(.client)
@@ -256,7 +241,8 @@ private extension HomeViewModelImpl {
     }
     
     func search(location: Location, keyword: String) {
-        getSearchStoresUseCase.execute(location: location, keyword: keyword)
+        dependency.getSearchStoresUseCase
+            .execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
                 dependency.fetchCount = stores.count
