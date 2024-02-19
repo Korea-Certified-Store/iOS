@@ -112,8 +112,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             viewModel: viewModel,
             storeListViewController: StoreListViewController(
                 viewModel: StoreListViewModelImpl(
-                    fetchImageUseCase: FetchImageUseCaseImpl(
-                        repository: ImageRepositoryImpl(cache: ImageCache())
+                    dependency: StoreListDependency(
+                        fetchImageUseCase: FetchImageUseCaseImpl(
+                            repository: ImageRepositoryImpl(cache: ImageCache())
+                        )
                     )
                 ),
                 listCellSelectedObserver: listCellSelectedObserver
