@@ -27,6 +27,7 @@
 		5943764E2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764D2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift */; };
 		594376502B82437C005B97B2 /* StoreUpdateRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */; };
 		594376522B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376512B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift */; };
+		594376552B84CDA3005B97B2 /* RefreshAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376542B84CDA3005B97B2 /* RefreshAnimation.json */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
 		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
 		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
@@ -221,6 +222,7 @@
 		5943764D2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDUseCaseImpl.swift; sourceTree = "<group>"; };
 		5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestType.swift; sourceTree = "<group>"; };
 		594376512B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+removeFromSuperviewWithAnimation.swift"; sourceTree = "<group>"; };
+		594376542B84CDA3005B97B2 /* RefreshAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RefreshAnimation.json; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -441,6 +443,14 @@
 			path = KCS;
 			sourceTree = "<group>";
 		};
+		594376532B84CD85005B97B2 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				594376542B84CDA3005B97B2 /* RefreshAnimation.json */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		59503A4B2B751AEE0006CF35 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,6 +644,7 @@
 		5986DCDC2B389252005AE43B /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				594376532B84CD85005B97B2 /* Animation */,
 				A81EFBB62B5D597400D0C0D7 /* font */,
 				59C306BC2B500D3D00862625 /* MockStoreResponse.json */,
 				591A888A2B384E610059E40F /* Info.plist */,
@@ -1159,6 +1170,7 @@
 				A81EFBC82B5D597400D0C0D7 /* Pretendard-Light.ttf in Resources */,
 				A81EFBC42B5D597400D0C0D7 /* Pretendard-ExtraLight.ttf in Resources */,
 				591A88862B384E610059E40F /* Assets.xcassets in Resources */,
+				594376552B84CDA3005B97B2 /* RefreshAnimation.json in Resources */,
 				A81EFBC72B5D597400D0C0D7 /* Pretendard-Bold.ttf in Resources */,
 				A81EFBC12B5D597400D0C0D7 /* Pretendard-Black.ttf in Resources */,
 				59EC53802B69E5E2004DB2F9 /* GoogleService-Info.plist in Resources */,
