@@ -116,14 +116,13 @@ final class StoreListViewController: UIViewController {
     func updateList(stores: [Store]) {
         viewModel.action(input: .updateList(stores: stores))
         storeTableView.isHidden = false
-    }
-    
-    func updateCountLabel(text: String) {
-        storeCountLabel.text = text
+        storeCountLabel.text = "총 \(stores.count)개의 가게가 있습니다"
     }
     
     func emptyStoreList() {
+        viewModel.action(input: .updateList(stores: []))
         storeTableView.isHidden = true
+        storeCountLabel.text = "검색 결과가 존재하지 않습니다"
     }
     
     func scrollToPreviousCell(indexPath: IndexPath) {

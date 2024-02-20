@@ -63,7 +63,7 @@ final class HomeViewController: UIViewController {
             .debounce(.milliseconds(500), scheduler: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
-                if view.isUserInteractionEnabled == false { return nil }
+                if view.xMarkImageView.isUserInteractionEnabled == false { return nil }
                 disableAllWhileLoading()
                 refreshButton.animationFire()
                 view.layer.borderWidth = 0
@@ -85,18 +85,21 @@ final class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        view.searchImageView.rx
-            .tapGesture()
-            .when(.ended)
-            .debounce(.milliseconds(500), scheduler: MainScheduler())
-            .subscribe(onNext: { [weak self] _ in
-                if view.isUserInteractionEnabled == false {
-                    return
-                }
-                self?.disableAllWhileLoading()
-                self?.presentSearchViewController()
-            })
-            .disposed(by: disposeBag)
+        Observable.merge(
+            view.searchImageView.rx
+                .tapGesture()
+                .when(.ended),
+            view.searchTextField.rx
+                .tapGesture()
+                .when(.ended)
+        )
+        .debounce(.milliseconds(500), scheduler: MainScheduler())
+        .subscribe(onNext: { [weak self] _ in
+            if view.searchTextField.isUserInteractionEnabled == false { return }
+            self?.disableAllWhileLoading()
+            self?.presentSearchViewController()
+        })
+        .disposed(by: disposeBag)
         
         return view
     }()
@@ -194,6 +197,7 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    // TODO: 서버 작동 안 하는 경우 애니메이션이 끝나지 않는 현상 해결
     private lazy var researchKeywordButton: RefreshButton = {
         var titleAttribute = AttributedString("현재 키워드로 재검색")
         titleAttribute.font = UIFont.pretendard(size: 11, weight: .medium)
@@ -221,10 +225,20 @@ final class HomeViewController: UIViewController {
         button.setImage(UIImage.addStoreButton, for: .normal)
         button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
         button.rx.tap
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .debounce(.milliseconds(500), scheduler: MainScheduler())
             .bind { [weak self] in
                 guard let self = self else { return }
-                presentNewStoreRequestView(newStoreRequeestViewController: newStoreRequeestViewController)
+                if addStoreButton.isUserInteractionEnabled == false { return }
+                disableAllWhileLoading()
+                if let presentController = presentedViewController {
+                    presentController.present(newStoreRequeestViewController, animated: true) { [weak self] in
+                        self?.enableAllWhileLoading()
+                    }
+                } else {
+                    present(newStoreRequeestViewController, animated: true) { [weak self] in
+                        self?.enableAllWhileLoading()
+                    }
+                }
             }
             .disposed(by: disposeBag)
         
@@ -242,7 +256,13 @@ final class HomeViewController: UIViewController {
             .bind { [weak self] in
                 if button.isUserInteractionEnabled == false { return }
                 self?.disableAllWhileLoading()
-                self?.storeInformationViewDismiss()
+                self?.backStoreListButton.isHidden = true
+                self?.searchBarViewLeadingConstraint.constant = 16
+                self?.clickedMarker?.deselect()
+                self?.clickedMarker = nil
+                self?.storeInformationViewController.dismiss(animated: true) { [weak self] in
+                    self?.presentStoreListView()
+                }
                 if let sheet = self?.storeListViewController.sheetPresentationController {
                     sheet.animateChanges {
                         sheet.selectedDetentIdentifier = .largeStoreListViewDetentIdentifier
@@ -342,21 +362,28 @@ final class HomeViewController: UIViewController {
         
         addUIComponents()
         configureConstraints()
-        setup()
         bind()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setup()
     }
     
 }
 
 private extension HomeViewController {
     
-    func setup() {        
+    func setup() {
         unDimmedView()
         viewModel.action(
             input: .checkLocationAuthorization(
                 status: locationManager.authorizationStatus
             )
         )
+        storeListViewController.emptyStoreList()
+        presentStoreListView()
     }
     
     func bind() {
@@ -388,6 +415,7 @@ private extension HomeViewController {
         viewModel.fetchCountOutput
             .bind { [weak self] fetchCount in
                 self?.moreStoreButton.setFetchCount(fetchCount: fetchCount)
+                self?.researchKeywordButton.animationInvalidate()
                 self?.enableAllWhileLoading()
             }
             .disposed(by: disposeBag)
@@ -421,13 +449,17 @@ private extension HomeViewController {
                 }
                 if stores.isEmpty {
                     showToast(message: "검색 결과가 존재하지 않습니다.")
-                    storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
                     storeListViewController.emptyStoreList()
                 } else {
-                    storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
                     storeListViewController.updateList(stores: stores)
                 }
-                storeInformationViewDismiss()
+                backStoreListButton.isHidden = true
+                searchBarViewLeadingConstraint.constant = 16
+                clickedMarker?.deselect()
+                clickedMarker = nil
+                storeInformationViewController.dismiss(animated: true) { [weak self] in
+                    self?.presentStoreListView()
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -452,13 +484,6 @@ private extension HomeViewController {
                 guard let imageName = positionMode.getImageName() else { return }
                 self?.locationButton.setImage(UIImage(named: imageName), for: .normal)
                 self?.mapView.mapView.positionMode = positionMode
-                self?.enableAllWhileLoading()
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.requestLocationAuthorizationOutput
-            .bind { [weak self] in
-                self?.presentLocationAlert()
                 self?.enableAllWhileLoading()
             }
             .disposed(by: disposeBag)
@@ -629,7 +654,13 @@ private extension HomeViewController {
             .bind { [weak self] stores in
                 guard let self = self else { return }
                 resetFilters()
-                storeInformationViewDismiss()
+                backStoreListButton.isHidden = true
+                searchBarViewLeadingConstraint.constant = 16
+                clickedMarker?.deselect()
+                clickedMarker = nil
+                storeInformationViewController.dismiss(animated: true) { [weak self] in
+                    self?.presentStoreListView()
+                }
                 setSearchStoresMarker(stores: stores)
                 
                 mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
@@ -671,7 +702,10 @@ private extension HomeViewController {
                         enableAllWhileLoading()
                         return
                     }
-                    storeInformationViewDismiss(changeMarker: true)
+                    backStoreListButton.isHidden = true
+                    searchBarViewLeadingConstraint.constant = 16
+                    self.clickedMarker?.deselect()
+                    self.clickedMarker = nil
                 }
                 storeInformationViewController.setUIContents(store: store)
                 marker.select()
@@ -703,7 +737,10 @@ private extension HomeViewController {
                     self?.enableAllWhileLoading()
                     return true
                 }
-                self?.storeInformationViewDismiss(changeMarker: true)
+                self?.backStoreListButton.isHidden = true
+                self?.searchBarViewLeadingConstraint.constant = 16
+                self?.clickedMarker?.deselect()
+                self?.clickedMarker = nil
             }
             
             self?.viewModel.action(
@@ -713,18 +750,6 @@ private extension HomeViewController {
             self?.clickedMarker = marker
             
             return true
-        }
-    }
-    
-    func storeInformationViewDismiss(changeMarker: Bool = false) {
-        backStoreListButton.isHidden = true
-        searchBarViewLeadingConstraint.constant = 16
-        clickedMarker?.deselect()
-        clickedMarker = nil
-        if !changeMarker {
-            storeInformationViewController.dismiss(animated: true) { [weak self] in
-                self?.presentStoreListView()
-            }
         }
     }
     
@@ -793,9 +818,11 @@ private extension HomeViewController {
     func presentSearchViewController() {
         searchViewController.setSearchKeyword(keyword: searchBarView.searchTextField.text)
         if let presentedViewController = presentedViewController {
-            presentedViewController.present(searchViewController, animated: false) { [weak self] in
+            presentedViewController.present(searchViewController, animated: true) { [weak self] in
                 self?.enableAllWhileLoading()
             }
+        } else {
+            enableAllWhileLoading()
         }
     }
     
@@ -816,14 +843,8 @@ private extension HomeViewController {
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
             }
-            if let presentedViewController = presentedViewController {
-                presentedViewController.present(storeListViewController, animated: true) { [weak self] in
-                    self?.enableAllWhileLoading()
-                }
-            } else {
-                present(storeListViewController, animated: true) { [weak self] in
-                    self?.enableAllWhileLoading()
-                }
+            present(storeListViewController, animated: true) { [weak self] in
+                self?.enableAllWhileLoading()
             }
         } else {
             enableAllWhileLoading()
@@ -956,12 +977,11 @@ private extension HomeViewController {
                 certificationType: certificationType
             ))
         }
+        // TODO: 로직 ViewModel로 이동
         if stores.isEmpty {
             showToast(message: "검색 결과가 존재하지 않습니다.")
-            storeListViewController.updateCountLabel(text: "검색 결과가 존재하지 않습니다")
             storeListViewController.emptyStoreList()
         } else {
-            storeListViewController.updateCountLabel(text: "총 \(stores.count)개의 가게가 있습니다")
             storeListViewController.updateList(stores: stores)
         }
     }
@@ -1004,6 +1024,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
+        // TODO: 바인드 중복
         refreshCameraPositionObserver
             .observe(on: MainScheduler())
             .bind { [weak self] cameraPosition in
@@ -1024,24 +1045,30 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         goodPriceFilterButton.isUserInteractionEnabled = false
         exemplaryFilterButton.isUserInteractionEnabled = false
         safeFilterButton.isUserInteractionEnabled = false
-        searchBarView.isUserInteractionEnabled = false
+        searchBarView.searchTextField.isUserInteractionEnabled = false
+        searchBarView.searchImageView.isUserInteractionEnabled = false
+        searchBarView.xMarkImageView.isUserInteractionEnabled = false
         mapView.isUserInteractionEnabled = false
         refreshButton.isUserInteractionEnabled = false
         moreStoreButton.isUserInteractionEnabled = false
         researchKeywordButton.isUserInteractionEnabled = false
         backStoreListButton.isUserInteractionEnabled = false
+        addStoreButton.isUserInteractionEnabled = false
     }
     
     func enableAllWhileLoading() {
         goodPriceFilterButton.isUserInteractionEnabled = true
         exemplaryFilterButton.isUserInteractionEnabled = true
         safeFilterButton.isUserInteractionEnabled = true
-        searchBarView.isUserInteractionEnabled = true
+        searchBarView.searchTextField.isUserInteractionEnabled = true
+        searchBarView.searchImageView.isUserInteractionEnabled = true
+        searchBarView.xMarkImageView.isUserInteractionEnabled = true
         mapView.isUserInteractionEnabled = true
         refreshButton.isUserInteractionEnabled = true
         moreStoreButton.isUserInteractionEnabled = true
         researchKeywordButton.isUserInteractionEnabled = true
         backStoreListButton.isUserInteractionEnabled = true
+        addStoreButton.isUserInteractionEnabled = true
     }
     
 }
@@ -1050,7 +1077,14 @@ extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         disableAllWhileLoading()
-        storeInformationViewDismiss()
+        backStoreListButton.isHidden = true
+        searchBarViewLeadingConstraint.constant = 16
+        clickedMarker?.deselect()
+        clickedMarker = nil
+        storeInformationViewController.dismiss(animated: true) { [weak self] in
+            self?.presentStoreListView()
+        }
+        
     }
     
 }
@@ -1079,8 +1113,6 @@ extension HomeViewController: UISheetPresentationControllerDelegate {
 extension HomeViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        disableAllWhileLoading()
-        presentSearchViewController()
         return false
     }
     

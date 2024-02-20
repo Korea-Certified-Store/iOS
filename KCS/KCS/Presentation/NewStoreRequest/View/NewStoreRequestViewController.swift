@@ -301,6 +301,7 @@ final class NewStoreRequestViewController: UIViewController {
         self.addressObserver = addressObserver
         
         super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .fullScreen
     }
     
     required init?(coder: NSCoder) {

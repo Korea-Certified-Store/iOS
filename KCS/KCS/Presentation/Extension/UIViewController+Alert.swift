@@ -77,13 +77,4 @@ extension UIViewController {
         return toastView
     }
     
-    func presentNewStoreRequestView(newStoreRequeestViewController: NewStoreRequestViewController) {
-        if let presentController = presentedViewController {
-            presentController.presentNewStoreRequestView(newStoreRequeestViewController: newStoreRequeestViewController)
-        } else {
-            newStoreRequeestViewController.modalPresentationStyle = .fullScreen
-            present(newStoreRequeestViewController, animated: true)
-        }
-    }
-    
 }
