@@ -261,7 +261,7 @@ private extension HomeViewModelImpl {
                 } else {
                     searchStoresOutput.accept(stores)
                 }
-            })
+            }) // TODO: onError 처리
             .disposed(by: disposeBag)
     }
     

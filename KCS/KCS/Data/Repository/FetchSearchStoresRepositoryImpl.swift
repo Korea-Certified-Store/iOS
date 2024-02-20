@@ -38,6 +38,7 @@ final class FetchSearchStoresRepositoryImpl: FetchSearchStoresRepository {
                             default:
                                 observer.onError(ErrorAlertMessage.server)
                             }
+                            // TODO: else로 알 수 없는 에러 onError, 디버깅용 Error 처리
                         }
                     }
                 } catch {
