@@ -688,7 +688,10 @@ private extension HomeViewController {
         marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
             self?.disableAllWhileLoading()
             if let clickedMarker = self?.clickedMarker {
-                if clickedMarker == marker { return true }
+                if clickedMarker == marker { 
+                    self?.enableAllWhileLoading()
+                    return true
+                }
                 self?.storeInformationViewDismiss(changeMarker: true)
             }
             
