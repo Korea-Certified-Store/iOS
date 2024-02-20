@@ -12,12 +12,7 @@ final class RefreshButton: UIButton {
 
     private var animationTimer: Timer?
     
-    private let originalTitle: AttributedString = {
-        var titleAttribute = AttributedString("현 지도에서 검색")
-        titleAttribute.font = UIFont.pretendard(size: 11, weight: .medium)
-        
-        return titleAttribute
-    }()
+    private let originalTitle: AttributedString
     
     private lazy var animationView: LottieAnimationView = {
         let animationView = LottieAnimationView(name: "RefreshAnimation")
@@ -28,7 +23,8 @@ final class RefreshButton: UIButton {
         return animationView
     }()
     
-    init() {
+    init(attributedTitle: AttributedString) {
+        self.originalTitle = attributedTitle
         super.init(frame: .zero)
         
         addUIComponents()
@@ -51,7 +47,6 @@ final class RefreshButton: UIButton {
     
     func animationInvalidate() {
         isUserInteractionEnabled = true
-        isHidden = true
         animationView.stop()
         animationView.isHidden = true
         configuration?.attributedTitle = originalTitle

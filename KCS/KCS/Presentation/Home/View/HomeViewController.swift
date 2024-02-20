@@ -153,7 +153,10 @@ final class HomeViewController: UIViewController {
     }()
     
     private lazy var refreshButton: RefreshButton = {
-        let button = RefreshButton()
+        var attributedString = AttributedString("현 지도에서 검색")
+        attributedString.font = UIFont.pretendard(size: 11, weight: .medium)
+        
+        let button = RefreshButton(attributedTitle: attributedString)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
             .debounce(.milliseconds(500), scheduler: MainScheduler())
@@ -199,30 +202,20 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
-    private lazy var researchKeywordButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        var config = UIButton.Configuration.filled()
+    private lazy var researchKeywordButton: RefreshButton = {
         var titleAttribute = AttributedString("현재 키워드로 재검색")
         titleAttribute.font = UIFont.pretendard(size: 11, weight: .medium)
-        config.attributedTitle = titleAttribute
-        config.baseBackgroundColor = .white
-        config.baseForegroundColor = .black
-        config.image = SystemImage.refresh?.withTintColor(.primary3, renderingMode: .alwaysOriginal)
-        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 11)
-        config.imagePlacement = .leading
-        config.imagePadding = 5
-        config.cornerStyle = .capsule
-        config.contentInsets = NSDirectionalEdgeInsets(top: 11, leading: 10, bottom: 11, trailing: 10)
-        button.configuration = config
+        
+        let button = RefreshButton(attributedTitle: titleAttribute)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
-        button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
         button.rx.tap
             .debounce(.milliseconds(500), scheduler: MainScheduler())
             .bind { [weak self] in
                 if button.isUserInteractionEnabled == false { return }
                 guard let text = self?.searchBarView.searchTextField.text else { return }
                 self?.disableAllWhileLoading()
+                button.animationFire()
                 self?.searchObserver.accept(text)
             }
             .disposed(by: disposeBag)
@@ -659,6 +652,7 @@ private extension HomeViewController {
                 }
                 mapView.mapView.positionMode = .normal
                 locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+                researchKeywordButton.animationInvalidate()
             }
             .disposed(by: disposeBag)
         
@@ -697,8 +691,10 @@ private extension HomeViewController {
     func bindMoreStoreButton() {
         viewModel.moreStoreButtonHiddenOutput
             .bind { [weak self] in
-                self?.refreshButton.isHidden = false
-                self?.moreStoreButton.isHidden = true
+                if self?.researchKeywordButton.isHidden == true {
+                    self?.refreshButton.isHidden = false
+                    self?.moreStoreButton.isHidden = true
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -909,12 +905,14 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             moreStoreButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             moreStoreButton.widthAnchor.constraint(equalToConstant: 97),
+            moreStoreButton.heightAnchor.constraint(equalToConstant: 35),
             moreStoreButtonBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
             researchKeywordButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             researchKeywordButton.widthAnchor.constraint(equalToConstant: 140),
+            researchKeywordButton.heightAnchor.constraint(equalToConstant: 35),
             researchKeywordButtonBottomConstraint
         ])
         
