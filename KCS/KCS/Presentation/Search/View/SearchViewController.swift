@@ -259,13 +259,13 @@ private extension SearchViewController {
         NSLayoutConstraint.activate([
             backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             backButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            backButton.widthAnchor.constraint(equalToConstant: 10),
-            backButton.heightAnchor.constraint(equalToConstant: 16)
+            backButton.widthAnchor.constraint(equalToConstant: 13),
+            backButton.heightAnchor.constraint(equalToConstant: 24)
         ])
         
         NSLayoutConstraint.activate([
             searchBarView.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
-            searchBarView.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 16),
+            searchBarView.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 13),
             searchBarView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             searchBarView.heightAnchor.constraint(equalToConstant: 50)
         ])
