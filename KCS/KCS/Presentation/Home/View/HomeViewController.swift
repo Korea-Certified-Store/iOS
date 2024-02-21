@@ -60,7 +60,7 @@ final class HomeViewController: UIViewController {
         view.xMarkImageView.rx
             .tapGesture()
             .when(.ended)
-            .debounce(.milliseconds(500), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
                 if view.xMarkImageView.isUserInteractionEnabled == false { return nil }
@@ -93,7 +93,7 @@ final class HomeViewController: UIViewController {
                 .tapGesture()
                 .when(.ended)
         )
-        .debounce(.milliseconds(500), scheduler: MainScheduler())
+        .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
         .subscribe(onNext: { [weak self] _ in
             if view.searchTextField.isUserInteractionEnabled == false { return }
             self?.disableAllWhileLoading()
@@ -154,7 +154,7 @@ final class HomeViewController: UIViewController {
         let button = RefreshButton(attributedTitle: attributedString)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rx.tap
-            .debounce(.milliseconds(500), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .map { [weak self] _ -> RequestLocation? in
                 guard let self = self else { return nil }
                 if button.isUserInteractionEnabled == false { return nil }
@@ -184,7 +184,7 @@ final class HomeViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         button.rx.tap
-            .debounce(.milliseconds(500), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] in
                 if button.isUserInteractionEnabled == false { return }
                 self?.disableAllWhileLoading()
@@ -205,7 +205,7 @@ final class HomeViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         button.rx.tap
-            .debounce(.milliseconds(500), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] in
                 if button.isUserInteractionEnabled == false { return }
                 guard let text = self?.searchBarView.searchTextField.text else { return }
@@ -224,7 +224,7 @@ final class HomeViewController: UIViewController {
         button.setImage(UIImage.addStoreButton, for: .normal)
         button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
         button.rx.tap
-            .debounce(.milliseconds(500), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] in
                 guard let self = self else { return }
                 if addStoreButton.isUserInteractionEnabled == false { return }
@@ -251,7 +251,7 @@ final class HomeViewController: UIViewController {
         button.setLayerShadow(shadowOffset: CGSize(width: 0, height: 2))
         button.isHidden = true
         button.rx.tap
-            .debounce(.milliseconds(500), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] in
                 if button.isUserInteractionEnabled == false { return }
                 self?.disableAllWhileLoading()
@@ -433,7 +433,7 @@ private extension HomeViewController {
     
     func bindApplyFilters() {
         viewModel.filteredStoresOutput
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
                 self.markers.forEach { $0.mapView = nil }
@@ -561,7 +561,7 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
         
         viewModel.locationStatusAuthorizedWhenInUseOutput
-            .debounce(.milliseconds(10), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] in
                 guard let self = self else { return }
                 guard let location = locationManager.location else { return }
@@ -582,7 +582,7 @@ private extension HomeViewController {
     
     func bindFilterButton(button: FilterButton, type: CertificationType) {
         button.rx.tap
-            .debounce(.milliseconds(500), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .scan(false) { [weak self] (lastState, _) in
                 guard let self = self else { return lastState }
                 if button.isUserInteractionEnabled == false {
@@ -600,7 +600,7 @@ private extension HomeViewController {
     
     func bindErrorAlert() {
         viewModel.errorAlertOutput
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] error in
                 self?.presentErrorAlert(error: error, completion: { [weak self] in
                     self?.enableAllWhileLoading()
@@ -613,7 +613,7 @@ private extension HomeViewController {
     
     func bindListCellSelected() {
         listCellSelectedObserver
-            .debounce(.milliseconds(10), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] index in
                 guard let self = self else { return }
                 if markers.indices ~= index {
@@ -705,7 +705,7 @@ private extension HomeViewController {
                 
                 guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
                 if let clickedMarker = clickedMarker {
-                    if clickedMarker == marker { 
+                    if clickedMarker == marker {
                         enableAllWhileLoading()
                         return
                     }
@@ -755,25 +755,30 @@ private extension HomeViewController {
     
     func markerTouchHandler(marker: Marker) {
         marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            self?.disableAllWhileLoading()
-            if let clickedMarker = self?.clickedMarker {
-                if clickedMarker == marker { 
-                    self?.enableAllWhileLoading()
-                    return true
+            // TODO: enable 확인
+            if self?.mapView.isUserInteractionEnabled == true {
+                self?.disableAllWhileLoading()
+                if let clickedMarker = self?.clickedMarker {
+                    if clickedMarker == marker {
+                        self?.enableAllWhileLoading()
+                        return true
+                    }
+                    self?.backStoreListButton.isHidden = true
+                    self?.searchBarViewLeadingConstraint.constant = 16
+                    self?.clickedMarker?.deselect()
+                    self?.clickedMarker = nil
                 }
-                self?.backStoreListButton.isHidden = true
-                self?.searchBarViewLeadingConstraint.constant = 16
-                self?.clickedMarker?.deselect()
-                self?.clickedMarker = nil
+                
+                self?.viewModel.action(
+                    input: .markerTapped(tag: marker.tag)
+                )
+                marker.select()
+                self?.clickedMarker = marker
+                
+                return true
+            } else {
+                return false
             }
-            
-            self?.viewModel.action(
-                input: .markerTapped(tag: marker.tag)
-            )
-            marker.select()
-            self?.clickedMarker = marker
-            
-            return true
         }
     }
     
@@ -842,7 +847,7 @@ private extension HomeViewController {
     func presentSearchViewController() {
         searchViewController.setSearchKeyword(keyword: searchBarView.searchTextField.text)
         if let presentedViewController = presentedViewController {
-            presentedViewController.present(searchViewController, animated: true) { [weak self] in
+            presentedViewController.present(searchViewController, animated: false) { [weak self] in
                 self?.enableAllWhileLoading()
             }
         } else {
@@ -1087,15 +1092,16 @@ extension HomeViewController: NMFMapViewCameraDelegate {
 extension HomeViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        disableAllWhileLoading()
-        backStoreListButton.isHidden = true
-        searchBarViewLeadingConstraint.constant = 16
-        clickedMarker?.deselect()
-        clickedMarker = nil
-        storeInformationViewController.dismiss(animated: true) { [weak self] in
-            self?.presentStoreListView()
+        if self.mapView.isUserInteractionEnabled == true {
+            disableAllWhileLoading()
+            backStoreListButton.isHidden = true
+            searchBarViewLeadingConstraint.constant = 16
+            clickedMarker?.deselect()
+            clickedMarker = nil
+            storeInformationViewController.dismiss(animated: true) { [weak self] in
+                self?.presentStoreListView()
+            }
         }
-        
     }
     
 }

@@ -63,7 +63,7 @@ final class OnboardingViewController: UIViewController {
         button.backgroundColor = .primary1
         button.isHidden = true
         button.rx.tap
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] in
                 guard let self = self else { return }
                 UserDefaults.standard.set(false, forKey: "executeOnboarding")

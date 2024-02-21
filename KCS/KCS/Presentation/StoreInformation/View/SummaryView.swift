@@ -196,7 +196,7 @@ extension SummaryView {
     func setCallButton(phoneNumber: String) {
         storeCallButton.isHidden = false
         callDisposable = storeCallButton.rx.tap
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] _ in
                 self?.callButtonTapped(phoneNum: phoneNumber)
             }
