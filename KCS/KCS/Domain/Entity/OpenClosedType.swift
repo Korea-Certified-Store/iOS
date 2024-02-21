@@ -12,8 +12,9 @@ enum OpenClosedType: String {
     case open = "영업 중"
     case closed = "영업 종료"
     case breakTime = "브레이크 타임"
-    case dayOff, none = ""
+    case dayOff = "휴무일"
     case alwaysOpen = "24시간 영업"
+    case none = ""
     
     var description: String {
         switch self {
@@ -24,9 +25,9 @@ enum OpenClosedType: String {
         case .breakTime:
             return OpenClosedType.breakTime.rawValue
         case .dayOff:
-            return "휴무일"
+            return OpenClosedType.dayOff.rawValue
         case .none:
-            return ""
+            return OpenClosedType.none.rawValue
         }
     }
     
