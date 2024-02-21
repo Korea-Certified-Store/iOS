@@ -31,6 +31,8 @@ final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
                         default:
                             observer.onError(ErrorAlertMessage.server)
                         }
+                    } else {
+                        observer.onError(ErrorAlertMessage.client)
                     }
                 }
             }

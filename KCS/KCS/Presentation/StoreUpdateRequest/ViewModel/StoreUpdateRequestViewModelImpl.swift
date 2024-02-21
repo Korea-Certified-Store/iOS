@@ -108,8 +108,11 @@ private extension StoreUpdateRequestViewModelImpl {
                 self?.completeRequestOutput.accept(())
             },
             onError: { [weak self] error in
-                guard let error = error as? ErrorAlertMessage else { return }
-                self?.errorAlertOutput.accept(error)
+                if let error = error as? ErrorAlertMessage{
+                    self?.errorAlertOutput.accept(error)
+                } else {
+                    self?.errorAlertOutput.accept(.client)
+                }
             }
         )
         .disposed(by: disposeBag)

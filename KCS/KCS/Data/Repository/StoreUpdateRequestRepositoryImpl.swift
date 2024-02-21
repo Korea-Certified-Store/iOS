@@ -32,6 +32,8 @@ final class StoreUpdateRequestRepositoryImpl: StoreUpdateRequestRepository {
                         default:
                             observer.onError(ErrorAlertMessage.server)
                         }
+                    } else {
+                        observer.onError(ErrorAlertMessage.client)
                     }
                 }
             }

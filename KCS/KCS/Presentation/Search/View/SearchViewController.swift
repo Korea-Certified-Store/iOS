@@ -352,7 +352,6 @@ private extension SearchViewController {
 
 private extension SearchViewController {
     
-    // TODO: Reload Data 수정 필요
     func generateRecentHistoryData(data: [String]) {
         var snapshot = NSDiffableDataSourceSnapshot<RecentHistorySection, String>()
         snapshot.appendSections([.recentHistory])
