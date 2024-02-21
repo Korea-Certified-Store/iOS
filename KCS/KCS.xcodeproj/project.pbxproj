@@ -171,6 +171,7 @@
 		A8ACB7ED2B59647400540BD1 /* OpeningHourError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */; };
 		A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */; };
 		A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */; };
+		A8AE14C62B86460F00A554A8 /* AutoCompletionKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14C52B86460F00A554A8 /* AutoCompletionKeyword.swift */; };
 		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
 		A8AF06702B80B7DC00E73574 /* AutoCompletionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */; };
 		A8AF06722B80BA5E00E73574 /* AutoCompletionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */; };
@@ -371,6 +372,7 @@
 		A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHourError.swift; sourceTree = "<group>"; };
 		A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCase.swift; sourceTree = "<group>"; };
+		A8AE14C52B86460F00A554A8 /* AutoCompletionKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionKeyword.swift; sourceTree = "<group>"; };
 		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
 		A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionDTO.swift; sourceTree = "<group>"; };
 		A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionResponse.swift; sourceTree = "<group>"; };
@@ -841,6 +843,7 @@
 				A83367B72B6FA0E700E0A844 /* FetchStores.swift */,
 				A8AF06822B8281C200E73574 /* RequestNewStoreCertificationIsSelected.swift */,
 				5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */,
+				A8AE14C52B86460F00A554A8 /* AutoCompletionKeyword.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1374,6 +1377,7 @@
 				A8ACB7DB2B58B51A00540BD1 /* Date+.swift in Sources */,
 				A856594A2B83290200775C78 /* PostNewStoreUseCase.swift in Sources */,
 				A81EFBCA2B5D5A2300D0C0D7 /* UIFont+.swift in Sources */,
+				A8AE14C62B86460F00A554A8 /* AutoCompletionKeyword.swift in Sources */,
 				A83367C52B7271B900E0A844 /* FourthOnboardingView.swift in Sources */,
 				5943764C2B821CB2005B97B2 /* SetStoreIDUseCase.swift in Sources */,
 				59503A722B7FB38E0006CF35 /* NewStoreTextField.swift in Sources */,

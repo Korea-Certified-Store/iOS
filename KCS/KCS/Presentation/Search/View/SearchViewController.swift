@@ -125,15 +125,15 @@ final class SearchViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var autoCompletionDataSource: UITableViewDiffableDataSource<AutoCompletionSection, String> = {
-        let dataSource = UITableViewDiffableDataSource<AutoCompletionSection, String>(
+    private lazy var autoCompletionDataSource: UITableViewDiffableDataSource<AutoCompletionSection, AutoCompletionKeyword> = {
+        let dataSource = UITableViewDiffableDataSource<AutoCompletionSection, AutoCompletionKeyword>(
             tableView: autoCompletionTableView,
-            cellProvider: { [weak self] (tableView, _, keyword) in
+            cellProvider: { [weak self] (tableView, _, autoCompletionKeyword) in
                 guard let self = self,
                       let cell = tableView.dequeueReusableCell(
                     withIdentifier: AutoCompletionTableViewCell.identifier
                 ) as? AutoCompletionTableViewCell else { return AutoCompletionTableViewCell() }
-                cell.setUIContents(keyword: keyword)
+                cell.setUIContents(keyword: autoCompletionKeyword.keyword)
                 cell.setObserver(textObserver: textObserver)
                 cell.selectionStyle = .none
                 
@@ -360,9 +360,9 @@ private extension SearchViewController {
     }
     
     func generateAutoCompletionData(data: [String]) {
-        var snapshot = NSDiffableDataSourceSnapshot<AutoCompletionSection, String>()
+        var snapshot = NSDiffableDataSourceSnapshot<AutoCompletionSection, AutoCompletionKeyword>()
         snapshot.appendSections([.autoCompletion])
-        snapshot.appendItems(data)
+        snapshot.appendItems(data.map { AutoCompletionKeyword(keyword: $0) })
         autoCompletionDataSource.apply(snapshot, animatingDifferences: false)
     }
     
@@ -423,8 +423,8 @@ extension SearchViewController: UITableViewDelegate {
             search(text: keyword)
         }
         if tableView == autoCompletionTableView {
-            guard let keyword = autoCompletionDataSource.itemIdentifier(for: indexPath) else { return }
-            search(text: keyword)
+            guard let autoCompletionKeyword = autoCompletionDataSource.itemIdentifier(for: indexPath) else { return }
+            search(text: autoCompletionKeyword.keyword)
         }
     }
     
