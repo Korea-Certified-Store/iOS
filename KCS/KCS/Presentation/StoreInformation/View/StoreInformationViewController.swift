@@ -72,7 +72,7 @@ extension StoreInformationViewController {
     
     func bind() {
         viewModel.errorAlertOutput
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] error in
                 self?.presentErrorAlert(error: error)
             }
@@ -86,7 +86,7 @@ extension StoreInformationViewController {
             .disposed(by: disposeBag)
         
         viewModel.summaryCallButtonOutput
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] phoneNumber in
                 self?.summaryView.setCallButton(phoneNumber: phoneNumber)
             }

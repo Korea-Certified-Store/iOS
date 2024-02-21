@@ -244,7 +244,6 @@ private extension SearchViewController {
     func setup() {
         view.backgroundColor = .white
         modalPresentationStyle = .fullScreen
-        modalTransitionStyle = .crossDissolve
     }
     
     func addUIComponents() {
