@@ -10,7 +10,7 @@ import RxRelay
 
 final class SearchKeywordRepositoryImpl: SearchKeywordsRepository {
     
-    private var userDefaults: UserDefaults
+    private let userDefaults: UserDefaults
     private let recentSearchKeywordsKey = "recentSearchKeywords"
     
     init(userDefaults: UserDefaults) {

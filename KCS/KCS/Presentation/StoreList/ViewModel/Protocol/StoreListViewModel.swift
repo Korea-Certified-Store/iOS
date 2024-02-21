@@ -9,7 +9,7 @@ import RxRelay
 
 protocol StoreListViewModel: StoreListViewModelInput, StoreListViewModelOutput {
     
-    var fetchImageUseCase: FetchImageUseCase { get }
+    var dependency: StoreListDependency { get }
     
 }
 

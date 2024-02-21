@@ -100,6 +100,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
+  - lottie-ios (4.4.0)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -133,6 +134,7 @@ DEPENDENCIES:
   - Alamofire
   - Firebase/Analytics
   - Firebase/Crashlytics
+  - lottie-ios
   - NMapsMap
   - RxBlocking
   - RxCocoa (= 6.6.0)
@@ -156,6 +158,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
+    - lottie-ios
     - nanopb
     - NMapsGeometry
     - NMapsMap
@@ -183,6 +186,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: bb3c564c3efb933136af0e94899e0a46167466a8
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
+  lottie-ios: ef1be1f90d54255f08e09d767950e43714661178
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
@@ -197,6 +201,6 @@ SPEC CHECKSUMS:
   RxTest: a23f26bb53a5e146a0a69db4f0fa0b69001ce7f4
   SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
 
-PODFILE CHECKSUM: 64333e89ec52ee57b76d093be0a982458f7eb236
+PODFILE CHECKSUM: 1c5bcd7283593f94451bd11b7d54fd9d6d260848
 
 COCOAPODS: 1.15.2

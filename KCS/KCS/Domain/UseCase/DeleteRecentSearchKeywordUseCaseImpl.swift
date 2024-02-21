@@ -9,7 +9,7 @@ import Foundation
 
 struct DeleteRecentSearchKeywordUseCaseImpl: DeleteRecentSearchKeywordUseCase {
     
-    var repository: SearchKeywordsRepository
+    let repository: SearchKeywordsRepository
     
     func execute(index: Int) {
         return repository.deleteRecentSearchKeywords(index: index)

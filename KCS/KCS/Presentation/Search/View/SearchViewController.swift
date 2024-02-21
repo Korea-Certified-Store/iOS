@@ -100,8 +100,8 @@ final class SearchViewController: UIViewController {
                 ) as? RecentHistoryTableViewCell else { return RecentHistoryTableViewCell() }
                 cell.setUIContents(keyword: keyword)
                 cell.setIndexPath(indexPath: indexPath)
-                cell.selectionStyle = .none
                 cell.delegate = self
+                cell.selectionStyle = .none
                 
                 return cell
             }
@@ -128,11 +128,13 @@ final class SearchViewController: UIViewController {
     private lazy var autoCompletionDataSource: UITableViewDiffableDataSource<AutoCompletionSection, String> = {
         let dataSource = UITableViewDiffableDataSource<AutoCompletionSection, String>(
             tableView: autoCompletionTableView,
-            cellProvider: { (tableView, _, keyword) in
-                guard let cell = tableView.dequeueReusableCell(
+            cellProvider: { [weak self] (tableView, _, keyword) in
+                guard let self = self,
+                      let cell = tableView.dequeueReusableCell(
                     withIdentifier: AutoCompletionTableViewCell.identifier
                 ) as? AutoCompletionTableViewCell else { return AutoCompletionTableViewCell() }
                 cell.setUIContents(keyword: keyword)
+                cell.setObserver(textObserver: textObserver)
                 cell.selectionStyle = .none
                 
                 return cell
@@ -150,6 +152,42 @@ final class SearchViewController: UIViewController {
         return view
     }()
     
+    private let noHistoryLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "최근 검색 기록이 없습니다"
+        label.font = UIFont.pretendard(size: 14, weight: .medium)
+        label.textColor = .placeholderText
+        
+        return label
+    }()
+    
+    private lazy var noHistoryView: UIView = {
+        let imageView = UIImageView(image: SystemImage.toast)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.tintColor = .placeholderText
+        
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        view.addSubview(imageView)
+        view.addSubview(noHistoryLabel)
+        
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 45),
+            imageView.heightAnchor.constraint(equalToConstant: 45)
+        ])
+        
+        NSLayoutConstraint.activate([
+            noHistoryLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+            noHistoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        return view
+    }()
+    
     private lazy var tableViewBottomConstraint = [
         autoCompletionTableView.bottomAnchor.constraint(
             equalTo: view.bottomAnchor
@@ -160,11 +198,13 @@ final class SearchViewController: UIViewController {
     ]
     
     private let searchObserver: PublishRelay<String>
+    private let textObserver: PublishRelay<String>
     private let viewModel: SearchViewModel
     
-    init(viewModel: SearchViewModel, searchObserver: PublishRelay<String>) {
+    init(viewModel: SearchViewModel, searchObserver: PublishRelay<String>, textObserver: PublishRelay<String>) {
         self.viewModel = viewModel
         self.searchObserver = searchObserver
+        self.textObserver = textObserver
         
         super.init(nibName: nil, bundle: nil)
         setup()
@@ -212,19 +252,20 @@ private extension SearchViewController {
         view.addSubview(divideView)
         view.addSubview(recentHistoryTableView)
         view.addSubview(autoCompletionTableView)
+        recentHistoryTableView.addSubview(noHistoryView)
     }
     
     func configureConstraints() {
         NSLayoutConstraint.activate([
             backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             backButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            backButton.widthAnchor.constraint(equalToConstant: 10),
-            backButton.heightAnchor.constraint(equalToConstant: 16)
+            backButton.widthAnchor.constraint(equalToConstant: 13),
+            backButton.heightAnchor.constraint(equalToConstant: 24)
         ])
         
         NSLayoutConstraint.activate([
             searchBarView.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
-            searchBarView.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 16),
+            searchBarView.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 13),
             searchBarView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             searchBarView.heightAnchor.constraint(equalToConstant: 50)
         ])
@@ -234,6 +275,11 @@ private extension SearchViewController {
             divideView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             divideView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             divideView.heightAnchor.constraint(equalToConstant: 6)
+        ])
+        
+        NSLayoutConstraint.activate([
+            noHistoryView.topAnchor.constraint(equalTo: divideView.bottomAnchor, constant: 179),
+            noHistoryView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -254,6 +300,7 @@ private extension SearchViewController {
     func bind() {
         viewModel.recentSearchKeywordsOutput
             .bind { [weak self] keywords in
+                self?.noHistoryView.isHidden = true
                 self?.recentHistoryTableView.isHidden = false
                 self?.autoCompletionTableView.isHidden = true
                 self?.generateRecentHistoryData(data: keywords)
@@ -265,6 +312,12 @@ private extension SearchViewController {
                 self?.recentHistoryTableView.isHidden = true
                 self?.autoCompletionTableView.isHidden = false
                 self?.generateAutoCompletionData(data: keywords)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.changeTextColorOutput
+            .bind { [weak self] text in
+                self?.textObserver.accept(text)
             }
             .disposed(by: disposeBag)
         
@@ -280,6 +333,13 @@ private extension SearchViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.noRecentHistoryOutput
+            .bind { [weak self] in
+                guard let self = self else { return }
+                noHistoryView.isHidden = false
+            }
+            .disposed(by: disposeBag)
+        
         RxKeyboard.instance.visibleHeight
             .asObservable()
             .bind { [weak self] keyboardHeight in
@@ -292,7 +352,6 @@ private extension SearchViewController {
 
 private extension SearchViewController {
     
-    // TODO: Reload Data 수정 필요
     func generateRecentHistoryData(data: [String]) {
         var snapshot = NSDiffableDataSourceSnapshot<RecentHistorySection, String>()
         snapshot.appendSections([.recentHistory])
@@ -326,27 +385,7 @@ private extension SearchViewController {
                 constant: -view.frame.maxY + recentHistoryTableView.frame.maxY - 24
             )
         ])
-        
-        UIView.animate(
-            withDuration: 0.4,
-            delay: 0,
-            options: .curveEaseIn,
-            animations: {
-                toastView.alpha = 1.0
-            },
-            completion: { _ in
-                UIView.animate(
-                    withDuration: 0.6,
-                    delay: 2.0,
-                    options: .curveEaseOut,
-                    animations: {
-                        toastView.alpha = 0.0
-                    }, completion: { _ in
-                        toastView.removeFromSuperview()
-                    }
-                )
-            }
-        )
+        toastView.removeFromSuperviewWithAnimation()
     }
 
 }
@@ -381,6 +420,10 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == recentHistoryTableView {
             guard let keyword = recentHistoryDataSource.itemIdentifier(for: indexPath) else { return }
+            search(text: keyword)
+        }
+        if tableView == autoCompletionTableView {
+            guard let keyword = autoCompletionDataSource.itemIdentifier(for: indexPath) else { return }
             search(text: keyword)
         }
     }

@@ -9,10 +9,7 @@ import RxRelay
 
 protocol SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
     
-    var fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase { get }
-    var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase { get }
-    var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase { get }
-    var deleteAllHistoryUseCase: DeleteAllHistoryUseCase { get }
+    var dependency: SearchDependency { get }
     
 }
 
@@ -36,7 +33,9 @@ protocol SearchViewModelOutput {
     
     var recentSearchKeywordsOutput: PublishRelay<[String]> { get }
     var autoCompleteKeywordsOutput: PublishRelay<[String]> { get }
+    var changeTextColorOutput: PublishRelay<String> { get }
     var searchOutput: PublishRelay<String> { get }
     var noKeywordToastOutput: PublishRelay<Void> { get }
+    var noRecentHistoryOutput: PublishRelay<Void> { get }
     
 }

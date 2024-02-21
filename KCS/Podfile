@@ -17,6 +17,7 @@ target 'KCS' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
   pod 'RxKeyboard'
+  pod 'lottie-ios'
 
 post_install do |installer|
     installer.pods_project.targets.each do |target|

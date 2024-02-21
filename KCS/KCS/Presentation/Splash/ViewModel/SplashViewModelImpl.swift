@@ -9,15 +9,15 @@ import RxRelay
 
 final class SplashViewModelImpl: SplashViewModel {
     
-    let checkNetworkStatusUseCase: CheckNetworkStatusUseCase
+    let dependency: SplashDependency
     
     let networkEnableOutput = PublishRelay<Void>()
     let networkDisableOutput = PublishRelay<Void>()
-    var needToUpdateOutput = PublishRelay<Void>()
-    var noNeedToUpdateOutput = PublishRelay<Void>()
+    let needToUpdateOutput = PublishRelay<Void>()
+    let noNeedToUpdateOutput = PublishRelay<Void>()
     
-    init(checkNetworkStatusUseCase: CheckNetworkStatusUseCase) {
-        self.checkNetworkStatusUseCase = checkNetworkStatusUseCase
+    init(dependency: SplashDependency) {
+        self.dependency = dependency
     }
     
     func input(action: SplashViewModelInputCase) {
@@ -34,7 +34,7 @@ final class SplashViewModelImpl: SplashViewModel {
 private extension SplashViewModelImpl {
     
     func checkNetworkInput() {
-        if checkNetworkStatusUseCase.execute() {
+        if dependency.checkNetworkStatusUseCase.execute() {
             networkEnableOutput.accept(())
         } else {
             networkDisableOutput.accept(())

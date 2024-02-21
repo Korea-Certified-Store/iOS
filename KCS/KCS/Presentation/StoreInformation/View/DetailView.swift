@@ -11,6 +11,8 @@ import RxRelay
 
 final class DetailView: UIView {
     
+    private let disposeBag = DisposeBag()
+    
     private lazy var storeTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -128,10 +130,41 @@ final class DetailView: UIView {
         return label
     }()
     
+    private lazy var updateReqeustButton: UIButton = {
+        let title = "잘못된 정보 제보하기"
+        var attributedTitle = NSMutableAttributedString(string: title)
+        attributedTitle.addAttribute(
+            .underlineStyle,
+            value: NSUnderlineStyle.single.rawValue,
+            range: NSRange(location: 0, length: title.count)
+        )
+        attributedTitle.addAttribute(
+            .font, 
+            value: UIFont.pretendard(size: 11, weight: .medium),
+            range: NSRange(location: 0, length: title.count)
+        )
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.kcsGray1, for: .normal)
+        button.titleLabel?.attributedText = attributedTitle
+        
+        button.rx.tap
+            .bind { [weak self] _ in
+                self?.updateReqeustButtonObserver.accept(())
+            }
+            .disposed(by: disposeBag)
+        
+        return button
+    }()
+    
+    private let updateReqeustButtonObserver: PublishRelay<Void>
+    
     private lazy var addressConstraint = address.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
     private lazy var phoneNumberConstraint = phoneNumber.topAnchor.constraint(equalTo: openingHoursStackView.bottomAnchor, constant: 20)
     
-    init() {
+    init(updateReqeustButtonObserver: PublishRelay<Void>) {
+        self.updateReqeustButtonObserver = updateReqeustButtonObserver
         super.init(frame: .zero)
         
         setBackgroundColor()
@@ -165,6 +198,7 @@ private extension DetailView {
         addSubview(phoneNumber)
         addSubview(addressIcon)
         addSubview(address)
+        addSubview(updateReqeustButton)
     }
     
     func configureConstraints() {
@@ -172,6 +206,7 @@ private extension DetailView {
         openingHourConstraints()
         phoneConstraints()
         addressConstraints()
+        updateReqeustButtonConstraints()
     }
     
     func storeRepresentConstraints() {
@@ -256,6 +291,13 @@ private extension DetailView {
             address.topAnchor.constraint(equalTo: phoneNumber.bottomAnchor, constant: 20),
             address.leadingAnchor.constraint(equalTo: addressIcon.trailingAnchor, constant: 13),
             addressConstraint
+        ])
+    }
+    
+    func updateReqeustButtonConstraints() {
+        NSLayoutConstraint.activate([
+            updateReqeustButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            updateReqeustButton.topAnchor.constraint(equalTo: storeImageView.bottomAnchor, constant: 274)
         ])
     }
     

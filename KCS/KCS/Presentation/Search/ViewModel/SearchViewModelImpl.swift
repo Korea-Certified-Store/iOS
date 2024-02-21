@@ -10,28 +10,19 @@ import RxRelay
 
 final class SearchViewModelImpl: SearchViewModel {
     
-    let disposeBag = DisposeBag()
-    
-    var fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase
-    var saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase
-    var deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase
-    var deleteAllHistoryUseCase: DeleteAllHistoryUseCase
+    let dependency: SearchDependency
     
     let recentSearchKeywordsOutput = PublishRelay<[String]>()
     let autoCompleteKeywordsOutput = PublishRelay<[String]>()
+    let changeTextColorOutput = PublishRelay<String>()
     let searchOutput = PublishRelay<String>()
-    var noKeywordToastOutput = PublishRelay<Void>()
+    let noKeywordToastOutput = PublishRelay<Void>()
+    let noRecentHistoryOutput = PublishRelay<Void>()
     
-    init(
-        fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCase,
-        saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCase,
-        deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCase,
-        deleteAllHistoryUseCase: DeleteAllHistoryUseCase
-    ) {
-        self.fetchRecentSearchKeywordUseCase = fetchRecentSearchKeywordUseCase
-        self.saveRecentSearchKeywordUseCase = saveRecentSearchKeywordUseCase
-        self.deleteRecentSearchKeywordUseCase = deleteRecentSearchKeywordUseCase
-        self.deleteAllHistoryUseCase = deleteAllHistoryUseCase
+    private let disposeBag = DisposeBag()
+    
+    init(dependency: SearchDependency) {
+        self.dependency = dependency
     }
     
     func action(input: SearchViewModelInputCase) {
@@ -57,31 +48,38 @@ private extension SearchViewModelImpl {
         if text.isEmpty {
             emitRecentHistory()
         } else {
-            // TODO: autoCompletion usecase 실행(debounce) 후 generateDataOutput.accept([]) (자동완성으로 전환)
-            emitRecentHistory()
+            dependency.getAutoCompletionUseCase.execute(keyword: text)
+                .bind { [weak self] keywords in
+                    self?.autoCompleteKeywordsOutput.accept(keywords)
+                    self?.changeTextColorOutput.accept(text)
+                }
+                .disposed(by: disposeBag)
         }
     }
      
     func searchButtonTapped(text: String) {
-        saveRecentSearchKeywordUseCase.execute(
+        dependency.saveRecentSearchKeywordUseCase.execute(
             recentSearchKeyword: text
         )
     }
     
     func deleteSearchHistory(index: Int) {
-        deleteRecentSearchKeywordUseCase.execute(index: index)
+        dependency.deleteRecentSearchKeywordUseCase.execute(index: index)
         emitRecentHistory()
     }
     
     func deleteAllHistory() {
-        deleteAllHistoryUseCase.execute()
+        dependency.deleteAllHistoryUseCase.execute()
         emitRecentHistory()
     }
     
     func emitRecentHistory() {
-        fetchRecentSearchKeywordUseCase.execute()
+        dependency.fetchRecentSearchKeywordUseCase.execute()
             .bind { [weak self] keywords in
                 self?.recentSearchKeywordsOutput.accept(keywords)
+                if keywords.isEmpty {
+                    self?.noRecentHistoryOutput.accept(())
+                }
             }
             .disposed(by: disposeBag)
     }

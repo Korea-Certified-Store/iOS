@@ -23,22 +23,28 @@ final class StoreInformationViewController: UIViewController {
     }()
     
     private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
+    private let updateReqeustButtonObserver = PublishRelay<Void>()
     
     private lazy var detailView: DetailView = {
-        let view = DetailView()
+        let view = DetailView(updateReqeustButtonObserver: updateReqeustButtonObserver)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
+    private let storeUpdateRequestViewController: StoreUpdateRequestViewController
+    
     private let viewModel: StoreInformationViewModel
     
     init(
+        storeUpdateRequestViewController: StoreUpdateRequestViewController,
         summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
         viewModel: StoreInformationViewModel
     ) {
+        self.storeUpdateRequestViewController = storeUpdateRequestViewController
         self.summaryViewHeightObserver = summaryViewHeightObserver
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
         bind()
     }
@@ -66,7 +72,7 @@ extension StoreInformationViewController {
     
     func bind() {
         viewModel.errorAlertOutput
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] error in
                 self?.presentErrorAlert(error: error)
             }
@@ -80,7 +86,7 @@ extension StoreInformationViewController {
             .disposed(by: disposeBag)
         
         viewModel.summaryCallButtonOutput
-            .debounce(.milliseconds(100), scheduler: MainScheduler())
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] phoneNumber in
                 self?.summaryView.setCallButton(phoneNumber: phoneNumber)
             }
@@ -97,12 +103,20 @@ extension StoreInformationViewController {
                 self?.detailView.setUIContents(contents: contents)
             }
             .disposed(by: disposeBag)
+        
+        updateReqeustButtonObserver
+            .bind { [weak self] _ in
+                guard let self = self else { return }
+                present(storeUpdateRequestViewController, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     func setUIContents(store: Store) {
         summaryView.resetUIContents()
         detailView.resetUIContents()
         viewModel.action(input: .setUIContents(store: store))
+        storeUpdateRequestViewController.setStoreID(id: store.id)
     }
     
     func changeToSummary() {

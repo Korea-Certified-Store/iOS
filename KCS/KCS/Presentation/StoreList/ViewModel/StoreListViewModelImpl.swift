@@ -10,14 +10,14 @@ import RxSwift
 
 final class StoreListViewModelImpl: StoreListViewModel {
     
-    var fetchImageUseCase: FetchImageUseCase
+    let dependency: StoreListDependency
     
-    var updateListOutput = BehaviorRelay<[StoreTableViewCellContents]>(value: [])
+    let updateListOutput = BehaviorRelay<[StoreTableViewCellContents]>(value: [])
     
     private let disposeBag = DisposeBag()
     
-    init(fetchImageUseCase: FetchImageUseCase) {
-        self.fetchImageUseCase = fetchImageUseCase
+    init(dependency: StoreListDependency) {
+        self.dependency = dependency
     }
     
     func action(input: StoreListViewModelInputCase) {
@@ -39,7 +39,7 @@ private extension StoreListViewModelImpl {
                 guard let self = self,
                       let url = store.localPhotos.first else { return Observable<Data?>.just(nil) }
                 
-                return fetchImageUseCase.execute(url: url)
+                return dependency.fetchImageUseCase.execute(url: url)
                     .flatMap { Observable<Data?>.just($0) }
             }))
             .bind { [weak self] imageDataArray in

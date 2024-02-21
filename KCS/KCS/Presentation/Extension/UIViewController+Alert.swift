@@ -9,13 +9,17 @@ import UIKit
 
 extension UIViewController {
     
-    func presentErrorAlert(error: ErrorAlertMessage) {
+    func presentErrorAlert(error: ErrorAlertMessage, completion: (() -> Void)? = nil) {
         let alertController = UIAlertController(title: nil, message: error.errorDescription, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "확인", style: .default))
         if let presentController = presentedViewController {
-            presentController.presentErrorAlert(error: error)
+            presentController.presentErrorAlert(error: error, completion: completion)
         } else if !(self is UIAlertController) {
-            present(alertController, animated: true)
+            present(alertController, animated: true) {
+                if let completion = completion {
+                    completion()
+                }
+            }
         }
     }
     
