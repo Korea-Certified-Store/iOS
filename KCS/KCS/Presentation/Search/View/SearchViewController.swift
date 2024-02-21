@@ -128,12 +128,12 @@ final class SearchViewController: UIViewController {
     private lazy var autoCompletionDataSource: UITableViewDiffableDataSource<AutoCompletionSection, AutoCompletionKeyword> = {
         let dataSource = UITableViewDiffableDataSource<AutoCompletionSection, AutoCompletionKeyword>(
             tableView: autoCompletionTableView,
-            cellProvider: { [weak self] (tableView, _, keyword) in
+            cellProvider: { [weak self] (tableView, _, autoCompletionKeyword) in
                 guard let self = self,
                       let cell = tableView.dequeueReusableCell(
                     withIdentifier: AutoCompletionTableViewCell.identifier
                 ) as? AutoCompletionTableViewCell else { return AutoCompletionTableViewCell() }
-                cell.setUIContents(keyword: keyword.keyword)
+                cell.setUIContents(keyword: autoCompletionKeyword.keyword)
                 cell.setObserver(textObserver: textObserver)
                 cell.selectionStyle = .none
                 
@@ -423,8 +423,8 @@ extension SearchViewController: UITableViewDelegate {
             search(text: keyword)
         }
         if tableView == autoCompletionTableView {
-            guard let keyword = autoCompletionDataSource.itemIdentifier(for: indexPath) else { return }
-            search(text: keyword.keyword)
+            guard let autoCompletionKeyword = autoCompletionDataSource.itemIdentifier(for: indexPath) else { return }
+            search(text: autoCompletionKeyword.keyword)
         }
     }
     
