@@ -31,6 +31,8 @@ final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
                         default:
                             observer.onError(ErrorAlertMessage.server)
                         }
+                    } else {
+                        observer.onError(ErrorAlertMessage.client)
                     }
                 }
             }

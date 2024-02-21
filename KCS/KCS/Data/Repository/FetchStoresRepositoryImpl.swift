@@ -61,6 +61,8 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
                             default:
                                 observer.onError(ErrorAlertMessage.server)
                             }
+                        } else {
+                            observer.onError(ErrorAlertMessage.client)
                         }
                     }
                 } catch {

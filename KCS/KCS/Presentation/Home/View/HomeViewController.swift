@@ -197,7 +197,6 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
-    // TODO: 서버 작동 안 하는 경우 애니메이션이 끝나지 않는 현상 해결
     private lazy var researchKeywordButton: RefreshButton = {
         var titleAttribute = AttributedString("현재 키워드로 재검색")
         titleAttribute.font = UIFont.pretendard(size: 11, weight: .medium)
