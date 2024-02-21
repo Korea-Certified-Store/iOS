@@ -297,7 +297,7 @@ private extension DetailView {
     func updateReqeustButtonConstraints() {
         NSLayoutConstraint.activate([
             updateReqeustButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            updateReqeustButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -15)
+            updateReqeustButton.topAnchor.constraint(equalTo: storeImageView.bottomAnchor, constant: 274)
         ])
     }
     
