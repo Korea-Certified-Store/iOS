@@ -323,7 +323,8 @@ final class HomeViewController: UIViewController {
     private let summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>
     private let listCellSelectedObserver: PublishRelay<Int>
     private let searchObserver: PublishRelay<String>
-    private let refreshCameraPositionObserver: BehaviorRelay<NMFCameraPosition>
+    private let refreshCameraPositionObserver: PublishRelay<NMFCameraPosition>
+    private let endMoveCameraPositionObserver: PublishRelay<NMFCameraPosition>
     private let disposeBag = DisposeBag()
     private var markers: [Marker] = []
     private var clickedMarker: Marker?
@@ -337,7 +338,8 @@ final class HomeViewController: UIViewController {
         summaryViewHeightObserver: PublishRelay<SummaryViewHeightCase>,
         listCellSelectedObserver: PublishRelay<Int>,
         searchObserver: PublishRelay<String>,
-        refreshCameraPositionObserver: BehaviorRelay<NMFCameraPosition>
+        refreshCameraPositionObserver: PublishRelay<NMFCameraPosition>,
+        endMoveCameraPositionObserver: PublishRelay<NMFCameraPosition>
     ) {
         self.viewModel = viewModel
         self.storeListViewController = storeListViewController
@@ -348,6 +350,7 @@ final class HomeViewController: UIViewController {
         self.listCellSelectedObserver = listCellSelectedObserver
         self.searchObserver = searchObserver
         self.refreshCameraPositionObserver = refreshCameraPositionObserver
+        self.endMoveCameraPositionObserver = endMoveCameraPositionObserver
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -396,6 +399,7 @@ private extension HomeViewController {
         bindListCellSelected()
         bindSearch()
         bindMoreStoreButton()
+        bindRefreshCameraPosition()
     }
     
     func bindFetchStores() {
@@ -728,6 +732,23 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindRefreshCameraPosition() {
+        Observable.combineLatest(refreshCameraPositionObserver, endMoveCameraPositionObserver)
+            .observe(on: MainScheduler())
+            .bind { [weak self] refreshCameraPosition, endMoveCameraPosition in
+                guard let self = self else { return }
+                viewModel.action(
+                    input: .compareCameraPosition(
+                        refreshCameraPosition: refreshCameraPosition,
+                        endMoveCameraPosition: endMoveCameraPosition,
+                        refreshCameraPoint: mapView.mapView.projection.point(from: refreshCameraPosition.target),
+                        endMoveCameraPoint: mapView.mapView.projection.point(from: endMoveCameraPosition.target)
+                    )
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }
 
 private extension HomeViewController {
@@ -1027,20 +1048,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-        // TODO: 바인드 중복
-        refreshCameraPositionObserver
-            .observe(on: MainScheduler())
-            .bind { [weak self] cameraPosition in
-            self?.viewModel.action(
-                input: .compareCameraPosition(
-                    refreshCameraPosition: cameraPosition,
-                    endMoveCameraPosition: mapView.cameraPosition,
-                    refreshCameraPoint: mapView.projection.point(from: cameraPosition.target),
-                    endMoveCameraPoint: mapView.projection.point(from: mapView.cameraPosition.target)
-                )
-            )
-        }
-        .disposed(by: disposeBag)
+        endMoveCameraPositionObserver.accept(mapView.cameraPosition)
         enableAllWhileLoading()
     }
     
