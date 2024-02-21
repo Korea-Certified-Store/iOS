@@ -64,7 +64,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let searchObserver = PublishRelay<String>()
         let textObserver = PublishRelay<String>()
         let addressObserver = PublishRelay<String>()
-        let refreshCameraPositionObserver = BehaviorRelay<NMFCameraPosition>(value: NMFCameraPosition())
+        let refreshCameraPositionObserver = PublishRelay<NMFCameraPosition>()
+        let endMoveCameraPositionObserver = PublishRelay<NMFCameraPosition>()
         let searchKeywordRepository = SearchKeywordRepositoryImpl(
             userDefaults: UserDefaults()
         )
@@ -130,7 +131,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             summaryViewHeightObserver: summaryViewHeightObserver,
             listCellSelectedObserver: listCellSelectedObserver,
             searchObserver: searchObserver, 
-            refreshCameraPositionObserver: refreshCameraPositionObserver
+            refreshCameraPositionObserver: refreshCameraPositionObserver,
+            endMoveCameraPositionObserver: endMoveCameraPositionObserver
         )
         
         var rootViewController: UIViewController
