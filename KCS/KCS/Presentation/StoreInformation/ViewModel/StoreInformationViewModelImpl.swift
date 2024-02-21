@@ -43,7 +43,7 @@ private extension StoreInformationViewModelImpl {
         }
         
         do {
-            let openClosedContent = try dependency.getOpenClosedUseCase.execute(openingHours: store.openingHour)
+            let openClosedContent = try dependency.getOpenClosedUseCase.execute(openingHours: store.openingHour, today: Date())
             setSummaryUIContentsOutput.accept(
                 SummaryViewContents(
                     storeTitle: store.title,
