@@ -261,7 +261,13 @@ private extension HomeViewModelImpl {
                 } else {
                     searchStoresOutput.accept(stores)
                 }
-            }) // TODO: onError 처리
+            }, onError: { [weak self] error in
+                if let alertError = error as? ErrorAlertMessage {
+                    self?.errorAlertOutput.accept(alertError)
+                } else {
+                    self?.errorAlertOutput.accept(.client)
+                }
+            })
             .disposed(by: disposeBag)
     }
     
