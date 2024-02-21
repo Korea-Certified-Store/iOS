@@ -599,7 +599,11 @@ private extension HomeViewController {
         viewModel.errorAlertOutput
             .debounce(.milliseconds(100), scheduler: MainScheduler())
             .bind { [weak self] error in
-                self?.presentErrorAlert(error: error)
+                self?.presentErrorAlert(error: error, completion: { [weak self] in
+                    self?.enableAllWhileLoading()
+                    self?.researchKeywordButton.animationInvalidate()
+                    self?.refreshButton.animationInvalidate()
+                })
             }
             .disposed(by: disposeBag)
     }
