@@ -13,13 +13,13 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     let dependency: NewStoreRequestDependency
     
     let titleWarningOutput = PublishRelay<Void>()
-    let titleEditEndOutput = PublishRelay<Void>()
+    let titleEndEditOutput = PublishRelay<Void>()
     let addressWarningOutput = PublishRelay<Void>()
-    let addressEditEndOutput = PublishRelay<Void>()
+    let addressEndEditOutput = PublishRelay<Void>()
     let detailAddressWarningOutput = PublishRelay<Void>()
-    let detailAddressEditEndOutput = PublishRelay<Void>()
+    let detailAddressEndEditOutput = PublishRelay<Void>()
     let certificationWarningOutput = PublishRelay<Void>()
-    let certificationEditEndOutput = PublishRelay<Void>()
+    let certificationEndEditOutput = PublishRelay<Void>()
     let completeButtonIsEnabledOutput = PublishRelay<Bool>()
     let completePostNewStoreOutput = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
@@ -37,13 +37,17 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     
     func action(input: NewStoreRequestViewModelInputCase) {
         switch input {
-        case .titleEditEnd(let text):
+        case .titleWhileEdit(let text):
+            whileEdit(text: text, inputCase: .title)
+        case .titleEndEdit(let text):
             editEnd(text: text, inputCase: .title)
-        case .addressEditEnd(let text):
+        case .addressEndEdit(let text):
             editEnd(text: text, inputCase: .address)
-        case .detailAddressEditEnd(let text):
+        case .detailAddressWhileEdit(let text):
+            whileEdit(text: text, inputCase: .detailAddress)
+        case .detailAddressEndEdit(let text):
             editEnd(text: text, inputCase: .detailAddress)
-        case .certificationEditEnd(let requestNewStoreCertificationIsSelected):
+        case .certificationEndEdit(let requestNewStoreCertificationIsSelected):
             certificationEditEnd(requestNewStoreCertificationIsSelected: requestNewStoreCertificationIsSelected)
         case .completeButtonTapped(let storeName, let address, let certifications):
             completeButtonTapped(storeName: storeName, address: address, certifications: certifications)
@@ -92,7 +96,7 @@ private extension NewStoreRequestViewModelImpl {
         if requestNewStoreCertificationIsSelected.goodPrice == true || 
             requestNewStoreCertificationIsSelected.exemplary == true ||
             requestNewStoreCertificationIsSelected.safe == true {
-            certificationEditEndOutput.accept(())
+            certificationEndEditOutput.accept(())
             certificationEditState.accept(true)
         } else {
             certificationWarningOutput.accept(())

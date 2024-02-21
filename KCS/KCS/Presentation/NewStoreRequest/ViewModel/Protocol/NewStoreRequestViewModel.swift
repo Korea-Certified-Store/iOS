@@ -22,10 +22,12 @@ protocol NewStoreRequestViewModelInput {
 
 enum NewStoreRequestViewModelInputCase {
     
-    case titleEditEnd(text: String)
-    case addressEditEnd(text: String)
-    case detailAddressEditEnd(text: String)
-    case certificationEditEnd(requestNewStoreCertificationIsSelected: RequestNewStoreCertificationIsSelected)
+    case titleWhileEdit(text: String)
+    case titleEndEdit(text: String)
+    case addressEndEdit(text: String)
+    case detailAddressWhileEdit(text: String)
+    case detailAddressEndEdit(text: String)
+    case certificationEndEdit(requestNewStoreCertificationIsSelected: RequestNewStoreCertificationIsSelected)
     case completeButtonTapped(storeName: String, address: String, certifications: RequestNewStoreCertificationIsSelected)
     
 }
@@ -33,13 +35,13 @@ enum NewStoreRequestViewModelInputCase {
 protocol NewStoreRequestViewModelOutput {
     
     var titleWarningOutput: PublishRelay<Void> { get }
-    var titleEditEndOutput: PublishRelay<Void> { get }
+    var titleEndEditOutput: PublishRelay<Void> { get }
     var addressWarningOutput: PublishRelay<Void> { get }
-    var addressEditEndOutput: PublishRelay<Void> { get }
+    var addressEndEditOutput: PublishRelay<Void> { get }
     var detailAddressWarningOutput: PublishRelay<Void> { get }
-    var detailAddressEditEndOutput: PublishRelay<Void> { get }
+    var detailAddressEndEditOutput: PublishRelay<Void> { get }
     var certificationWarningOutput: PublishRelay<Void> { get }
-    var certificationEditEndOutput: PublishRelay<Void> { get }
+    var certificationEndEditOutput: PublishRelay<Void> { get }
     var completeButtonIsEnabledOutput: PublishRelay<Bool> { get }
     var completePostNewStoreOutput: PublishRelay<Void> { get }
     var errorAlertOutput: PublishRelay<ErrorAlertMessage> { get }
