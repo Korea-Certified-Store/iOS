@@ -64,30 +64,48 @@ private extension NewStoreRequestViewModelImpl {
         case detailAddress
     }
     
+    func whileEdit(text: String, inputCase: InputCase) {
+        if text.isEmpty {
+            switch inputCase {
+            case .title:
+                titleEditState.accept(false)
+            case .detailAddress:
+                detailAddressEditState.accept(false)
+            default:
+                break
+            }
+        } else {
+            switch inputCase {
+            case .title:
+                titleEditState.accept(true)
+            case .detailAddress:
+                detailAddressEditState.accept(true)
+            default:
+                break
+            }
+        }
+    }
+    
     func editEnd(text: String, inputCase: InputCase) {
         if text.isEmpty {
             switch inputCase {
             case .title:
                 titleWarningOutput.accept(())
-                titleEditState.accept(false)
             case .address:
                 addressWarningOutput.accept(())
                 addressEditState.accept(false)
             case .detailAddress:
                 detailAddressWarningOutput.accept(())
-                detailAddressEditState.accept(false)
             }
         } else {
             switch inputCase {
             case .title:
-                titleEditEndOutput.accept(())
-                titleEditState.accept(true)
+                titleEndEditOutput.accept(())
             case .address:
-                addressEditEndOutput.accept(())
+                addressEndEditOutput.accept(())
                 addressEditState.accept(true)
             case .detailAddress:
-                detailAddressEditEndOutput.accept(())
-                detailAddressEditState.accept(true)
+                detailAddressEndEditOutput.accept(())
             }
         }
     }

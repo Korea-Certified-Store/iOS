@@ -366,11 +366,30 @@ private extension NewStoreRequestViewController {
     }
     
     func bind() {
+        textFieldBind()
         observerBind()
         titleBind()
         addressBind()
         certificationBind()
         completeBind()
+    }
+    
+    func textFieldBind() {
+        titleTextField.rx.text
+            .orEmpty
+            .distinctUntilChanged()
+            .bind { [weak self] text in
+                self?.viewModel.action(input: .titleWhileEdit(text: text))
+            }
+            .disposed(by: disposeBag)
+        
+        detailAddressTextField.rx.text
+            .orEmpty
+            .distinctUntilChanged()
+            .bind { [weak self] text in
+                self?.viewModel.action(input: .detailAddressWhileEdit(text: text))
+            }
+            .disposed(by: disposeBag)
     }
     
     func observerBind() {
