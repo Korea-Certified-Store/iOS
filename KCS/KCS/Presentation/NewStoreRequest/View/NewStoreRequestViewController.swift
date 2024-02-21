@@ -107,7 +107,7 @@ final class NewStoreRequestViewController: UIViewController {
         textField.rx.controlEvent([.editingDidEnd])
             .asObservable()
             .bind { [weak self] _ in
-                self?.viewModel.action(input: .titleEditEnd(text: textField.text ?? ""))
+                self?.viewModel.action(input: .titleEndEdit(text: textField.text ?? ""))
             }
             .disposed(by: disposeBag)
         
@@ -188,7 +188,7 @@ final class NewStoreRequestViewController: UIViewController {
         textField.rx.controlEvent([.editingDidEnd])
             .asObservable()
             .bind { [weak self] _ in
-                self?.viewModel.action(input: .detailAddressEditEnd(text: textField.text ?? ""))
+                self?.viewModel.action(input: .detailAddressEndEdit(text: textField.text ?? ""))
             }
             .disposed(by: disposeBag)
         
@@ -231,7 +231,7 @@ final class NewStoreRequestViewController: UIViewController {
                 guard let self = self else { return }
                 requestNewStoreCertificationIsSelected.goodPrice = button.isSelected
                 viewModel.action(
-                    input: .certificationEditEnd(
+                    input: .certificationEndEdit(
                         requestNewStoreCertificationIsSelected: requestNewStoreCertificationIsSelected
                     )
                 )
@@ -248,7 +248,7 @@ final class NewStoreRequestViewController: UIViewController {
                 guard let self = self else { return }
                 requestNewStoreCertificationIsSelected.exemplary = button.isSelected
                 viewModel.action(
-                    input: .certificationEditEnd(
+                    input: .certificationEndEdit(
                         requestNewStoreCertificationIsSelected: requestNewStoreCertificationIsSelected
                     )
                 )
@@ -265,7 +265,7 @@ final class NewStoreRequestViewController: UIViewController {
                 guard let self = self else { return }
                 requestNewStoreCertificationIsSelected.safe = button.isSelected
                 viewModel.action(
-                    input: .certificationEditEnd(
+                    input: .certificationEndEdit(
                         requestNewStoreCertificationIsSelected: requestNewStoreCertificationIsSelected
                     )
                 )
@@ -366,11 +366,30 @@ private extension NewStoreRequestViewController {
     }
     
     func bind() {
+        textFieldBind()
         observerBind()
         titleBind()
         addressBind()
         certificationBind()
         completeBind()
+    }
+    
+    func textFieldBind() {
+        titleTextField.rx.text
+            .orEmpty
+            .distinctUntilChanged()
+            .bind { [weak self] text in
+                self?.viewModel.action(input: .titleWhileEdit(text: text))
+            }
+            .disposed(by: disposeBag)
+        
+        detailAddressTextField.rx.text
+            .orEmpty
+            .distinctUntilChanged()
+            .bind { [weak self] text in
+                self?.viewModel.action(input: .detailAddressWhileEdit(text: text))
+            }
+            .disposed(by: disposeBag)
     }
     
     func observerBind() {
@@ -385,13 +404,13 @@ private extension NewStoreRequestViewController {
         addressObserver
             .bind { [weak self] address in
                 self?.addressTextField.text = address
-                self?.viewModel.action(input: .addressEditEnd(text: address))
+                self?.viewModel.action(input: .addressEndEdit(text: address))
             }
             .disposed(by: disposeBag)
     }
     
     func titleBind() {
-        viewModel.titleEditEndOutput
+        viewModel.titleEndEditOutput
             .bind { [weak self] in
                 self?.titleTextField.setNormalUI()
                 self?.titleWarningLabel.isHidden = true
@@ -407,7 +426,7 @@ private extension NewStoreRequestViewController {
     }
     
     func addressBind() {
-        viewModel.addressEditEndOutput
+        viewModel.addressEndEditOutput
             .bind { [weak self] in
                 self?.addressTextField.setNormalUI()
                 self?.addressWarningLabel.isHidden = true
@@ -421,7 +440,7 @@ private extension NewStoreRequestViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.detailAddressEditEndOutput
+        viewModel.detailAddressEndEditOutput
             .bind { [weak self] in
                 self?.detailAddressTextField.setNormalUI()
                 self?.addressWarningLabel.isHidden = true
@@ -437,7 +456,7 @@ private extension NewStoreRequestViewController {
     }
     
     func certificationBind() {
-        viewModel.certificationEditEndOutput
+        viewModel.certificationEndEditOutput
             .bind { [weak self] in
                 self?.certificationWarningLabel.isHidden = true
             }
@@ -651,7 +670,7 @@ private extension NewStoreRequestViewController {
     func presentAddressView() {
         let addressViewController = AddressViewController(addressObserver: addressObserver)
         present(addressViewController, animated: true) { [weak self] in
-            self?.viewModel.action(input: .addressEditEnd(text: self?.addressTextField.text ?? ""))
+            self?.viewModel.action(input: .addressEndEdit(text: self?.addressTextField.text ?? ""))
         }
     }
     
