@@ -29,6 +29,8 @@
 		594376522B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376512B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift */; };
 		594376552B84CDA3005B97B2 /* RefreshAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376542B84CDA3005B97B2 /* RefreshAnimation.json */; };
 		5943765E2B874994005B97B2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5943765D2B874994005B97B2 /* GoogleService-Info.plist */; };
+		594376602B875EDB005B97B2 /* FetchStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */; };
+		594376622B875EFB005B97B2 /* GetStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376612B875EFB005B97B2 /* GetStoresRepository.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
 		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
 		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
@@ -81,7 +83,7 @@
 		59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886632B6EC816005750EF /* SummaryViewHeightCase.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
-		59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* StoreRepository.swift */; };
+		59C306A92B4FF9AF00862625 /* FetchSearchStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* FetchSearchStoresRepository.swift */; };
 		59C306AD2B4FFAC700862625 /* StoreDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306AC2B4FFAC700862625 /* StoreDTO.swift */; };
 		59C306B02B4FFE4400862625 /* RefreshStoreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306AF2B4FFE4400862625 /* RefreshStoreResponse.swift */; };
 		59C306B22B50001F00862625 /* FetchStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306B12B50001F00862625 /* FetchStoresRepositoryImpl.swift */; };
@@ -225,6 +227,8 @@
 		594376512B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+removeFromSuperviewWithAnimation.swift"; sourceTree = "<group>"; };
 		594376542B84CDA3005B97B2 /* RefreshAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RefreshAnimation.json; sourceTree = "<group>"; };
 		5943765D2B874994005B97B2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresRepository.swift; sourceTree = "<group>"; };
+		594376612B875EFB005B97B2 /* GetStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepository.swift; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -278,7 +282,7 @@
 		59B886632B6EC816005750EF /* SummaryViewHeightCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewHeightCase.swift; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
-		59C306A82B4FF9AF00862625 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
+		59C306A82B4FF9AF00862625 /* FetchSearchStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchStoresRepository.swift; sourceTree = "<group>"; };
 		59C306AC2B4FFAC700862625 /* StoreDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDTO.swift; sourceTree = "<group>"; };
 		59C306AF2B4FFE4400862625 /* RefreshStoreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshStoreResponse.swift; sourceTree = "<group>"; };
 		59C306B12B50001F00862625 /* FetchStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -809,7 +813,9 @@
 		59C306A72B4FF98600862625 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				59C306A82B4FF9AF00862625 /* StoreRepository.swift */,
+				5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */,
+				594376612B875EFB005B97B2 /* GetStoresRepository.swift */,
+				59C306A82B4FF9AF00862625 /* FetchSearchStoresRepository.swift */,
 				5977BE992B59AC3300725C90 /* ImageRepository.swift */,
 				A821A3772B74BAA700089B8F /* NetworkRepository.swift */,
 				A86D92182B761EC7003B9FEE /* SearchKeywordsRepository.swift */,
@@ -1428,6 +1434,7 @@
 				A8A7E0622B652F0D00D015E5 /* MarkerContents.swift in Sources */,
 				59B8865C2B6E4B8B005750EF /* StoreInformationViewModel.swift in Sources */,
 				A86D92112B760B75003B9FEE /* SearchKeywordRepositoryImpl.swift in Sources */,
+				594376622B875EFB005B97B2 /* GetStoresRepository.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
 				A8722F062B766278001ED988 /* DeleteRecentSearchKeywordUseCase.swift in Sources */,
 				5977BE942B59738800725C90 /* GetRefreshStoresUseCase.swift in Sources */,
@@ -1450,7 +1457,7 @@
 				594376462B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift in Sources */,
 				594376402B821679005B97B2 /* FetchStoreIDUseCase.swift in Sources */,
 				59C306AD2B4FFAC700862625 /* StoreDTO.swift in Sources */,
-				59C306A92B4FF9AF00862625 /* StoreRepository.swift in Sources */,
+				59C306A92B4FF9AF00862625 /* FetchSearchStoresRepository.swift in Sources */,
 				594376362B8201FB005B97B2 /* StoreUpdateRequestRepository.swift in Sources */,
 				5977BE982B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift in Sources */,
 				5943764E2B821CE1005B97B2 /* SetStoreIDUseCaseImpl.swift in Sources */,
@@ -1466,6 +1473,7 @@
 				A85659482B83280F00775C78 /* PostNewStoreRepository.swift in Sources */,
 				594376382B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift in Sources */,
 				A8AF06762B80BE1000E73574 /* FetchAutoCompletionRepository.swift in Sources */,
+				594376602B875EDB005B97B2 /* FetchStoresRepository.swift in Sources */,
 				59503A5C2B75927F0006CF35 /* SearchStoreResponse.swift in Sources */,
 				59B886622B6E8484005750EF /* UISheetPresentationController+Detent.swift in Sources */,
 				59C306D82B50650D00862625 /* Encodable+.swift in Sources */,

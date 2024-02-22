@@ -9,56 +9,13 @@ import UIKit
 import RxRelay
 import NMapsMap
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        window = UIWindow(windowScene: windowScene)
-        
-        let storeStorage = StoreStorage()
-        let viewModel  = HomeViewModelImpl(
-            dependency: HomeDependency(
-                getStoresUseCase: GetStoresUseCaseImpl(
-                    repository: FetchStoresRepositoryImpl(
-                        storeStorage: storeStorage
-                    )
-                ),
-                getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
-                    repository: GetStoresRepositoryImpl(
-                        storeStorage: storeStorage
-                    )
-                ),
-                getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
-                    repository: GetStoresRepositoryImpl(
-                        storeStorage: storeStorage
-                    )
-                ),
-                getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
-                    repository: FetchSearchStoresRepositoryImpl(
-                        storeStorage: storeStorage
-                    )
-                )
-            )
-        )
-        let storeIDStorage = StoreIDStorage()
-        let storeUpdateRequestViewController = StoreUpdateRequestViewController(
-            viewModel: StoreUpdateRequestViewModelImpl(
-                dependency: StoreUpdateRequestDepenency(
-                    storeUpdateRequestUseCase: StoreUpdateRequestUseCaseImpl(
-                        repository: StoreUpdateRequestRepositoryImpl()
-                    ), fetchStoreIDUseCase: FetchStoreIDUseCaseImpl(
-                        repository: FetchStoreIDRepositoryImpl(storage: storeIDStorage)
-                    ), setStoreIDUseCase: SetStoreIDUseCaseImpl(
-                        storage: storeIDStorage
-                    )
-                )
-            )
-        )
-        
+        // MARK: Observer
         let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
         let listCellSelectedObserver = PublishRelay<Int>()
         let searchObserver = PublishRelay<String>()
@@ -66,65 +23,165 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let addressObserver = PublishRelay<String>()
         let refreshCameraPositionObserver = PublishRelay<NMFCameraPosition>()
         let endMoveCameraPositionObserver = PublishRelay<NMFCameraPosition>()
+        
+        // MARK: PersistentStorage
+        let storeStorage = StoreStorage()
+        let storeIDStorage = StoreIDStorage()
+        let imageCache = ImageCache()
+        let userDefaults = UserDefaults()
+        
+        // MARK: Repository
+        let fetchStoresRepository = FetchStoresRepositoryImpl(
+            storeStorage: storeStorage
+        )
+        let getStoresRepository = GetStoresRepositoryImpl(
+            storeStorage: storeStorage
+        )
+        let fetchSearchStoresRepository = FetchSearchStoresRepositoryImpl(
+            storeStorage: storeStorage
+        )
+        let storeUpdateRequestRepository = StoreUpdateRequestRepositoryImpl()
+        
+        let fetchStoreIDRepository = FetchStoreIDRepositoryImpl(
+            storage: storeIDStorage
+        )
         let searchKeywordRepository = SearchKeywordRepositoryImpl(
-            userDefaults: UserDefaults()
+            userDefaults: userDefaults
+        )
+        let fetchAutoCompletionRepository = FetchAutoCompletionRepositoryImpl()
+        let postNewStoreRepository = PostNewStoreRepositoryImpl()
+        let imageRepository = ImageRepositoryImpl(cache: imageCache)
+        let networkRepository = NetworkRepositoryImpl()
+        
+        // MARK: UseCase
+        let getStoresUseCase = GetStoresUseCaseImpl(
+            repository: fetchStoresRepository
+        )
+        let getRefreshStoresUseCase = GetRefreshStoresUseCaseImpl(
+            repository: getStoresRepository
+        )
+        let getStoreInformationUseCase = GetStoreInformationUseCaseImpl(
+            repository: getStoresRepository
+        )
+        let getSearchStoresUseCase = GetSearchStoresUseCaseImpl(
+            repository: fetchSearchStoresRepository
+        )
+        let storeUpdateRequestUseCase = StoreUpdateRequestUseCaseImpl(
+            repository: storeUpdateRequestRepository
+        )
+        let fetchStoreIDUseCase = FetchStoreIDUseCaseImpl(
+            repository: fetchStoreIDRepository
+        )
+        let setStoreIDUseCase = SetStoreIDUseCaseImpl(
+            storage: storeIDStorage
+        )
+        let getOpenClosedUseCase = GetOpenClosedUseCaseImpl()
+        let fetchImageUseCase = FetchImageUseCaseImpl(
+            repository: imageRepository
+        )
+        let fetchRecentSearchKeywordUseCase = FetchRecentSearchKeywordUseCaseImpl(
+            repository: searchKeywordRepository
+        )
+        let saveRecentSearchKeywordUseCase = SaveRecentSearchKeywordUseCaseImpl(
+            repository: searchKeywordRepository
+        )
+        let deleteRecentSearchKeywordUseCase = DeleteRecentSearchKeywordUseCaseImpl(
+            repository: searchKeywordRepository
+        )
+        let deleteAllHistoryUseCase = DeleteAllHistoryUseCaseImpl(
+            repository: searchKeywordRepository
+        )
+        let getAutoCompletionUseCase = GetAutoCompletionUseCaseImpl(
+            repository: fetchAutoCompletionRepository
+        )
+        let postNewStoreUseCase = PostNewStoreUseCaseImpl(
+            repository: postNewStoreRepository
+        )
+        let checkNetworkStatusUseCase = CheckNetworkStatusUseCaseImpl(
+            repository: networkRepository
+        )
+        
+        // MARK: Dependency
+        let homeDependency = HomeDependency(
+            getStoresUseCase: getStoresUseCase,
+            getRefreshStoresUseCase: getRefreshStoresUseCase,
+            getStoreInformationUseCase: getStoreInformationUseCase,
+            getSearchStoresUseCase: getSearchStoresUseCase
+        )
+        let storeUpdateRequestDepenency = StoreUpdateRequestDepenency(
+            storeUpdateRequestUseCase: storeUpdateRequestUseCase,
+            fetchStoreIDUseCase: fetchStoreIDUseCase,
+            setStoreIDUseCase: setStoreIDUseCase
+        )
+        let storeInformationDependency = StoreInformationDependency(
+            getOpenClosedUseCase: getOpenClosedUseCase,
+            fetchImageUseCase: fetchImageUseCase
+        )
+        let searchDependency = SearchDependency(
+            fetchRecentSearchKeywordUseCase: fetchRecentSearchKeywordUseCase,
+            saveRecentSearchKeywordUseCase: saveRecentSearchKeywordUseCase,
+            deleteRecentSearchKeywordUseCase: deleteRecentSearchKeywordUseCase,
+            deleteAllHistoryUseCase: deleteAllHistoryUseCase,
+            getAutoCompletionUseCase: getAutoCompletionUseCase
+        )
+        let newStoreRequestDependency = NewStoreRequestDependency(
+            postNewStoreUseCase: postNewStoreUseCase
+        )
+        let storeListDependency = StoreListDependency(
+            fetchImageUseCase: fetchImageUseCase
+        )
+        let splashDependency = SplashDependency(
+            checkNetworkStatusUseCase: checkNetworkStatusUseCase
+        )
+
+        // MARK: ViewModel
+        let homeViewModel = HomeViewModelImpl(
+            dependency: homeDependency
+        )
+        let storeUpdateRequestViewModel = StoreUpdateRequestViewModelImpl(
+            dependency: storeUpdateRequestDepenency
+        )
+        let storeInformationViewModel = StoreInformationViewModelImpl(
+            dependency: storeInformationDependency
+        )
+        let searchViewModel = SearchViewModelImpl(
+            dependency: searchDependency
+        )
+        let newStoreRequestViewModel = NewStoreRequestViewModelImpl(
+            dependency: newStoreRequestDependency
+        )
+        let storeListViewModel = StoreListViewModelImpl(
+            dependency: storeListDependency
+        )
+        let splashViewModel = SplashViewModelImpl(
+            dependency: splashDependency
+        )
+        
+        // MARK: ViewController
+        let storeUpdateRequestViewController = StoreUpdateRequestViewController(
+            viewModel: storeUpdateRequestViewModel
         )
         let storeInformationViewController = StoreInformationViewController(
-            storeUpdateRequestViewController: storeUpdateRequestViewController, summaryViewHeightObserver: summaryViewHeightObserver,
-            viewModel: StoreInformationViewModelImpl(
-                dependency: StoreInformationDependency(
-                    getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
-                    fetchImageUseCase: FetchImageUseCaseImpl(
-                        repository: ImageRepositoryImpl(cache: ImageCache())
-                    )
-                )
-            )
+            storeUpdateRequestViewController: storeUpdateRequestViewController, 
+            summaryViewHeightObserver: summaryViewHeightObserver,
+            viewModel: storeInformationViewModel
         )
         let searchViewController = SearchViewController(
-            viewModel: SearchViewModelImpl(
-                dependency: SearchDependency(
-                    fetchRecentSearchKeywordUseCase: FetchRecentSearchKeywordUseCaseImpl(
-                        repository: searchKeywordRepository
-                    ),
-                    saveRecentSearchKeywordUseCase: SaveRecentSearchKeywordUseCaseImpl(
-                        repository: searchKeywordRepository
-                    ),
-                    deleteRecentSearchKeywordUseCase: DeleteRecentSearchKeywordUseCaseImpl(
-                        repository: searchKeywordRepository
-                    ),
-                    deleteAllHistoryUseCase: DeleteAllHistoryUseCaseImpl(
-                        repository: searchKeywordRepository
-                    ),
-                    getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
-                        repository: FetchAutoCompletionRepositoryImpl()
-                    )
-                )
-            ),
+            viewModel: searchViewModel,
             searchObserver: searchObserver,
             textObserver: textObserver
         )
         let newStoreRequestViewController = NewStoreRequestViewController(
-            viewModel: NewStoreRequestViewModelImpl(
-                dependency: NewStoreRequestDependency(
-                    postNewStoreUseCase: PostNewStoreUseCaseImpl(
-                        repository: PostNewStoreRepositoryImpl()
-                    )
-                )
-            ),
+            viewModel: newStoreRequestViewModel,
             addressObserver: addressObserver
         )
+        let storeListViewController = StoreListViewController(
+            viewModel: storeListViewModel,
+            listCellSelectedObserver: listCellSelectedObserver
+        )
         let homeViewController = HomeViewController(
-            viewModel: viewModel,
-            storeListViewController: StoreListViewController(
-                viewModel: StoreListViewModelImpl(
-                    dependency: StoreListDependency(
-                        fetchImageUseCase: FetchImageUseCaseImpl(
-                            repository: ImageRepositoryImpl(cache: ImageCache())
-                        )
-                    )
-                ),
-                listCellSelectedObserver: listCellSelectedObserver
-            ),
+            viewModel: homeViewModel,
+            storeListViewController: storeListViewController,
             storeInformationViewController: storeInformationViewController,
             searchViewController: searchViewController,
             newStoreRequestViewController: newStoreRequestViewController,
@@ -134,28 +191,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             refreshCameraPositionObserver: refreshCameraPositionObserver,
             endMoveCameraPositionObserver: endMoveCameraPositionObserver
         )
-        
-        var rootViewController: UIViewController
+        let onboardingViewController = OnboardingViewController(
+            homeViewController: homeViewController
+        )
+        var splashViewController: SplashViewController
         
         if OnboardStorage.isOnboarded() {
-            rootViewController = OnboardingViewController(homeViewController: homeViewController)
+            splashViewController = SplashViewController(
+                viewModel: splashViewModel,
+                rootViewController: onboardingViewController
+            )
         } else {
-            rootViewController = homeViewController
+            splashViewController = SplashViewController(
+                viewModel: splashViewModel,
+                rootViewController: homeViewController
+            )
         }
         
-        let splashViewController = SplashViewController(
-            viewModel: SplashViewModelImpl(
-                dependency: SplashDependency(
-                    checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
-                        repository: NetworkRepositoryImpl()
-                    )
-                )
-            ), rootViewController: rootViewController
-        )
-        
+        // MARK: Setting
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
         window?.rootViewController = splashViewController
         window?.makeKeyAndVisible()
     }
     
 }
-
