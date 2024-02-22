@@ -20,18 +20,18 @@ enum HomeViewModelInputCase {
     case moreStoreButtonTapped
     case filterButtonTapped(activatedFilter: CertificationType)
     case markerTapped(tag: UInt)
-    case locationButtonTapped(locationAuthorizationStatus: CLAuthorizationStatus, positionMode: NMFMyPositionMode)
-    case dimViewTapGestureEnded
     case setMarker(store: Store, certificationType: CertificationType)
+    case locationButtonTapped(locationAuthorizationStatus: CLAuthorizationStatus, positionMode: NMFMyPositionMode)
     case checkLocationAuthorization(status: CLAuthorizationStatus)
     case search(location: Location, keyword: String)
-    case resetFilters
     case compareCameraPosition(
         refreshCameraPosition: NMFCameraPosition,
         endMoveCameraPosition: NMFCameraPosition,
         refreshCameraPoint: CGPoint,
         endMoveCameraPoint: CGPoint
     )
+    case resetFilters
+    case dimViewTapGestureEnded
     
 }
 

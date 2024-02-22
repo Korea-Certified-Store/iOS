@@ -50,18 +50,14 @@ final class HomeViewModelImpl: HomeViewModel {
             filterButtonTapped(filter: filter)
         case .markerTapped(let tag):
             markerTapped(tag: tag)
-        case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
-            locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
-        case .dimViewTapGestureEnded:
-            dimViewTapGestureEnded()
         case .setMarker(let store, let certificationType):
             setMarker(store: store, certificationType: certificationType)
+        case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
+            locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
         case .checkLocationAuthorization(let status):
             checkLocationAuthorization(status: status)
         case .search(let location, let keyword):
             search(location: location, keyword: keyword)
-        case .resetFilters:
-            resetFilters()
         case .compareCameraPosition(let refreshCameraPosition, let endMoveCameraPosition, let refreshCameraPoint, let endMoveCameraPoint):
             compareCameraPosition(
                 refreshCameraPosition: refreshCameraPosition,
@@ -69,6 +65,10 @@ final class HomeViewModelImpl: HomeViewModel {
                 refreshCameraPoint: refreshCameraPoint,
                 endMoveCameraPoint: endMoveCameraPoint
             )
+        case .resetFilters:
+            resetFilters()
+        case .dimViewTapGestureEnded:
+            dimViewTapGestureEnded()
         }
     }
     
@@ -179,10 +179,6 @@ private extension HomeViewModelImpl {
         default:
             break
         }
-    }
-    
-    func dimViewTapGestureEnded() {
-        dimViewTapGestureEndedOutput.accept(())
     }
     
     func checkLocationAuthorization(status: CLAuthorizationStatus) {
