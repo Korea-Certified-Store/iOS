@@ -9,7 +9,6 @@ import Foundation
 
 final class ImageCache {
     
-    static let shared = ImageCache()
     private let cache = NSCache<NSURL, NSData>()
     
     func getImageData(for key: NSURL) -> NSData? {

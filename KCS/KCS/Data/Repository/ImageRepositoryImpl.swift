@@ -12,10 +12,6 @@ struct ImageRepositoryImpl: ImageRepository {
     
     let cache: ImageCache
     
-    init(cache: ImageCache = ImageCache.shared) {
-        self.cache = cache
-    }
-    
     func fetchImage(
         url: String
     ) -> Observable<Data> {

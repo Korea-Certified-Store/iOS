@@ -9,7 +9,7 @@ import UIKit
 import RxRelay
 import NMapsMap
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
@@ -20,6 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let storeStorage = StoreStorage()
+        let storeIDStorage = StoreIDStorage()
+        let imageCache = ImageCache()
+        
         let viewModel  = HomeViewModelImpl(
             dependency: HomeDependency(
                 getStoresUseCase: GetStoresUseCaseImpl(
@@ -44,15 +47,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 )
             )
         )
-        let storeIDStorage = StoreIDStorage()
         let storeUpdateRequestViewController = StoreUpdateRequestViewController(
             viewModel: StoreUpdateRequestViewModelImpl(
                 dependency: StoreUpdateRequestDepenency(
                     storeUpdateRequestUseCase: StoreUpdateRequestUseCaseImpl(
                         repository: StoreUpdateRequestRepositoryImpl()
-                    ), fetchStoreIDUseCase: FetchStoreIDUseCaseImpl(
-                        repository: FetchStoreIDRepositoryImpl(storage: storeIDStorage)
-                    ), setStoreIDUseCase: SetStoreIDUseCaseImpl(
+                    ), 
+                    fetchStoreIDUseCase: FetchStoreIDUseCaseImpl(
+                        repository: FetchStoreIDRepositoryImpl(
+                            storage: storeIDStorage
+                        )
+                    ), 
+                    setStoreIDUseCase: SetStoreIDUseCaseImpl(
                         storage: storeIDStorage
                     )
                 )
@@ -70,12 +76,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             userDefaults: UserDefaults()
         )
         let storeInformationViewController = StoreInformationViewController(
-            storeUpdateRequestViewController: storeUpdateRequestViewController, summaryViewHeightObserver: summaryViewHeightObserver,
+            storeUpdateRequestViewController: storeUpdateRequestViewController, 
+            summaryViewHeightObserver: summaryViewHeightObserver,
             viewModel: StoreInformationViewModelImpl(
                 dependency: StoreInformationDependency(
                     getOpenClosedUseCase: GetOpenClosedUseCaseImpl(),
                     fetchImageUseCase: FetchImageUseCaseImpl(
-                        repository: ImageRepositoryImpl(cache: ImageCache())
+                        repository: ImageRepositoryImpl(cache: imageCache)
                     )
                 )
             )
