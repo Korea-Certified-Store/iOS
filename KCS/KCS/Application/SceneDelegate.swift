@@ -15,10 +15,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        window = UIWindow(windowScene: windowScene)
-        
+        // MARK: Observer
         let summaryViewHeightObserver = PublishRelay<SummaryViewHeightCase>()
         let listCellSelectedObserver = PublishRelay<Int>()
         let searchObserver = PublishRelay<String>()
@@ -27,11 +24,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let refreshCameraPositionObserver = PublishRelay<NMFCameraPosition>()
         let endMoveCameraPositionObserver = PublishRelay<NMFCameraPosition>()
         
+        // MARK: PersistentStorage
         let storeStorage = StoreStorage()
         let storeIDStorage = StoreIDStorage()
         let imageCache = ImageCache()
         let userDefaults = UserDefaults()
         
+        // MARK: Repository
         let fetchStoresRepository = FetchStoresRepositoryImpl(
             storeStorage: storeStorage
         )
@@ -54,6 +53,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let imageRepository = ImageRepositoryImpl(cache: imageCache)
         let networkRepository = NetworkRepositoryImpl()
         
+        // MARK: UseCase
         let getStoresUseCase = GetStoresUseCaseImpl(
             repository: fetchStoresRepository
         )
@@ -101,6 +101,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             repository: networkRepository
         )
         
+        // MARK: Dependency
         let homeDependency = HomeDependency(
             getStoresUseCase: getStoresUseCase,
             getRefreshStoresUseCase: getRefreshStoresUseCase,
@@ -133,7 +134,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             checkNetworkStatusUseCase: checkNetworkStatusUseCase
         )
 
-        
+        // MARK: ViewModel
         let homeViewModel = HomeViewModelImpl(
             dependency: homeDependency
         )
@@ -156,6 +157,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             dependency: splashDependency
         )
         
+        // MARK: ViewController
         let storeUpdateRequestViewController = StoreUpdateRequestViewController(
             viewModel: storeUpdateRequestViewModel
         )
@@ -206,9 +208,11 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             )
         }
         
+        // MARK: Setting
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
         window?.rootViewController = splashViewController
         window?.makeKeyAndVisible()
     }
     
 }
-
