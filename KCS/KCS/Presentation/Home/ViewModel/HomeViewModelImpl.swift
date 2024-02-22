@@ -33,8 +33,7 @@ final class HomeViewModelImpl: HomeViewModel {
     
     private let disposeBag = DisposeBag()
     private var activatedFilter: [CertificationType] = []
-    private var fetchCount: Int = 1
-    private var maxFetchCount: Int = 1
+    private var fetchContent = FetchCountContent(maxFetchCount: 1, fetchCount: 1)
     
     init(dependency: HomeDependency) {
         self.dependency = dependency
@@ -115,19 +114,17 @@ private extension HomeViewModelImpl {
     }
     
     func moreStoreButtonTapped() {
-        if fetchCount < maxFetchCount {
-            fetchCount += 1
-            applyFilters(
-                stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchCount),
-                filters: getActivatedTypes()
+        if fetchContent.fetchCount < fetchContent.maxFetchCount {
+            fetchContent.fetchCount += 1
+            filteredStoresOutput.accept(
+                applyFilters(
+                    stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchContent.fetchCount),
+                    filters: getActivatedTypes()
+                )
             )
-            fetchCountOutput.accept(FetchCountContent(maxFetchCount: maxFetchCount, fetchCount: fetchCount))
+            fetchCountOutput.accept(FetchCountContent(maxFetchCount: fetchContent.maxFetchCount, fetchCount: fetchContent.fetchCount))
         }
-        checkLastFetch()
-    }
-    
-    func checkLastFetch() {
-        if fetchCount == maxFetchCount {
+        if fetchContent.fetchCount == fetchContent.maxFetchCount {
             noMoreStoresOutput.accept(())
         }
     }
@@ -197,7 +194,7 @@ private extension HomeViewModelImpl {
             .execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
-                fetchCount = stores.count
+                fetchContent.fetchCount = stores.count
                 if stores.count == 1 {
                     guard let oneStore = stores.first else { return }
                     searchOneStoreOutput.accept(oneStore)
