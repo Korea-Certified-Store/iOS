@@ -10,7 +10,8 @@ import Foundation
 protocol GetOpenClosedUseCase {
     
     func execute(
-        openingHours: [RegularOpeningHours]
+        openingHours: [RegularOpeningHours],
+        today: Date
     ) throws -> OpenClosedContent
     
 }
