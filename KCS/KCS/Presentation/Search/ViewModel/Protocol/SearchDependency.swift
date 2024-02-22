@@ -9,9 +9,9 @@ import Foundation
 
 struct SearchDependency {
     
-    let fetchRecentSearchKeywordUseCase: FetchRecentSearchHistoryUseCase
-    let saveRecentSearchKeywordUseCase: SaveRecentSearchHistoryUseCase
-    let deleteRecentSearchKeywordUseCase: DeleteRecentSearchHistoryUseCase
+    let fetchRecentSearchHistoryUseCase: FetchRecentSearchHistoryUseCase
+    let saveRecentSearchHistoryUseCase: SaveRecentSearchHistoryUseCase
+    let deleteRecentSearchHistoryUseCase: DeleteRecentSearchHistoryUseCase
     let deleteAllHistoryUseCase: DeleteAllHistoryUseCase
     let getAutoCompletionUseCase: GetAutoCompletionUseCase
     
