@@ -20,9 +20,8 @@ final class FetchRecentSearchHistoryRepositoryImpl: FetchRecentSearchHistoryRepo
     func fetchRecentSearchHistory() -> Observable<[String]> {
         return Observable.create { [weak self] observer -> Disposable in
             guard let self = self else { return Disposables.create() }
-            if let keywords = userDefaults.array(forKey: recentSearchKeywordsKey) as? [String] {
-                observer.onNext(keywords)
-            }
+            let keywords = userDefaults.array(forKey: recentSearchKeywordsKey) as? [String] ?? []
+            observer.onNext(keywords)
             return Disposables.create()
         }
     }

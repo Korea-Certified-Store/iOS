@@ -17,7 +17,7 @@ struct DeleteRecentSearchHistoryRepositoryImpl: DeleteRecentSearchHistoryReposit
     }
     
     func deleteRecentSearchHistory(index: Int) {
-        guard var keywords = userDefaults.array(forKey: recentSearchKeywordsKey) as? [String] else { return }
+        var keywords = userDefaults.array(forKey: recentSearchKeywordsKey) as? [String] ?? []
         keywords.remove(at: index)
         userDefaults.set(keywords, forKey: recentSearchKeywordsKey)
     }

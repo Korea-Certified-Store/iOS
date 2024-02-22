@@ -17,7 +17,7 @@ struct SaveRecentSearchHistoryRepositoryImpl: SaveRecentSearchHistoryRepository 
     }
     
     func saveRecentSearchHistory(recentSearchKeyword: String) {
-        guard var keywords = userDefaults.array(forKey: recentSearchKeywordsKey) as? [String] else { return }
+        var keywords = userDefaults.array(forKey: recentSearchKeywordsKey) as? [String] ?? []
         if let index = keywords.firstIndex(of: recentSearchKeyword) {
             keywords.remove(at: index)
         }
