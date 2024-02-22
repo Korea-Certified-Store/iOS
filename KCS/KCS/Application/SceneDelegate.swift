@@ -22,42 +22,58 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let storeStorage = StoreStorage()
         let storeIDStorage = StoreIDStorage()
         let imageCache = ImageCache()
+        let userDefaults = UserDefaults()
         
-        let viewModel  = HomeViewModelImpl(
-            dependency: HomeDependency(
-                getStoresUseCase: GetStoresUseCaseImpl(
-                    repository: FetchStoresRepositoryImpl(
-                        storeStorage: storeStorage
-                    )
-                ),
-                getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
-                    repository: GetStoresRepositoryImpl(
-                        storeStorage: storeStorage
-                    )
-                ),
-                getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
-                    repository: GetStoresRepositoryImpl(
-                        storeStorage: storeStorage
-                    )
-                ),
-                getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
-                    repository: FetchSearchStoresRepositoryImpl(
-                        storeStorage: storeStorage
-                    )
-                )
+        let fetchStoresRepository = FetchStoresRepositoryImpl(
+            storeStorage: storeStorage
+        )
+        let getStoresRepository = GetStoresRepositoryImpl(
+            storeStorage: storeStorage
+        )
+        let fetchSearchStoresRepository = FetchSearchStoresRepositoryImpl(
+            storeStorage: storeStorage
+        )
+        let storeUpdateRequestRepository = StoreUpdateRequestRepositoryImpl()
+        
+        let fetchStoreIDRepository = FetchStoreIDRepositoryImpl(
+            storage: storeIDStorage
+        )
+        let searchKeywordRepository = SearchKeywordRepositoryImpl(
+            userDefaults: userDefaults
+        )
+        let fetchAutoCompletionRepository = FetchAutoCompletionRepositoryImpl()
+        let postNewStoreRepository = PostNewStoreRepositoryImpl()
+        let imageRepository = ImageRepositoryImpl(cache: imageCache)
+        let networkRepository = NetworkRepositoryImpl()
+        
+        let homeDependency = HomeDependency(
+            getStoresUseCase: GetStoresUseCaseImpl(
+                repository: fetchStoresRepository
+            ),
+            getRefreshStoresUseCase: GetRefreshStoresUseCaseImpl(
+                repository: getStoresRepository
+            ),
+            getStoreInformationUseCase: GetStoreInformationUseCaseImpl(
+                repository: getStoresRepository
+            ),
+            getSearchStoresUseCase: GetSearchStoresUseCaseImpl(
+                repository: fetchSearchStoresRepository
             )
         )
+        
+        let homeViewModel  = HomeViewModelImpl(
+            dependency: homeDependency
+        )
+        
         let storeUpdateRequestViewController = StoreUpdateRequestViewController(
             viewModel: StoreUpdateRequestViewModelImpl(
                 dependency: StoreUpdateRequestDepenency(
                     storeUpdateRequestUseCase: StoreUpdateRequestUseCaseImpl(
-                        repository: StoreUpdateRequestRepositoryImpl()
-                    ), 
+                        repository: storeUpdateRequestRepository
+                    ),
                     fetchStoreIDUseCase: FetchStoreIDUseCaseImpl(
-                        repository: FetchStoreIDRepositoryImpl(
-                            storage: storeIDStorage
-                        )
-                    ), 
+                        repository: fetchStoreIDRepository
+                    ),
                     setStoreIDUseCase: SetStoreIDUseCaseImpl(
                         storage: storeIDStorage
                     )
@@ -72,9 +88,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let addressObserver = PublishRelay<String>()
         let refreshCameraPositionObserver = PublishRelay<NMFCameraPosition>()
         let endMoveCameraPositionObserver = PublishRelay<NMFCameraPosition>()
-        let searchKeywordRepository = SearchKeywordRepositoryImpl(
-            userDefaults: UserDefaults()
-        )
+        
         let storeInformationViewController = StoreInformationViewController(
             storeUpdateRequestViewController: storeUpdateRequestViewController, 
             summaryViewHeightObserver: summaryViewHeightObserver,
@@ -103,7 +117,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         repository: searchKeywordRepository
                     ),
                     getAutoCompletionUseCase: GetAutoCompletionUseCaseImpl(
-                        repository: FetchAutoCompletionRepositoryImpl()
+                        repository: fetchAutoCompletionRepository
                     )
                 )
             ),
@@ -114,19 +128,19 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             viewModel: NewStoreRequestViewModelImpl(
                 dependency: NewStoreRequestDependency(
                     postNewStoreUseCase: PostNewStoreUseCaseImpl(
-                        repository: PostNewStoreRepositoryImpl()
+                        repository: postNewStoreRepository
                     )
                 )
             ),
             addressObserver: addressObserver
         )
         let homeViewController = HomeViewController(
-            viewModel: viewModel,
+            viewModel: homeViewModel,
             storeListViewController: StoreListViewController(
                 viewModel: StoreListViewModelImpl(
                     dependency: StoreListDependency(
                         fetchImageUseCase: FetchImageUseCaseImpl(
-                            repository: ImageRepositoryImpl(cache: ImageCache())
+                            repository: imageRepository
                         )
                     )
                 ),
@@ -154,7 +168,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             viewModel: SplashViewModelImpl(
                 dependency: SplashDependency(
                     checkNetworkStatusUseCase: CheckNetworkStatusUseCaseImpl(
-                        repository: NetworkRepositoryImpl()
+                        repository: networkRepository
                     )
                 )
             ), rootViewController: rootViewController
