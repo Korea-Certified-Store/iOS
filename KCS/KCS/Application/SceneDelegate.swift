@@ -79,13 +79,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let fetchImageUseCase = FetchImageUseCaseImpl(
             repository: imageRepository
         )
-        let fetchRecentSearchKeywordUseCase = FetchRecentSearchKeywordUseCaseImpl(
+        let fetchRecentSearchKeywordUseCase = FetchRecentSearchHistoryUseCaseImpl(
             repository: searchKeywordRepository
         )
-        let saveRecentSearchKeywordUseCase = SaveRecentSearchKeywordUseCaseImpl(
+        let saveRecentSearchKeywordUseCase = SaveRecentSearchHistoryUseCaseImpl(
             repository: searchKeywordRepository
         )
-        let deleteRecentSearchKeywordUseCase = DeleteRecentSearchKeywordUseCaseImpl(
+        let deleteRecentSearchKeywordUseCase = DeleteRecentSearchHistoryUseCaseImpl(
             repository: searchKeywordRepository
         )
         let deleteAllHistoryUseCase = DeleteAllHistoryUseCaseImpl(
