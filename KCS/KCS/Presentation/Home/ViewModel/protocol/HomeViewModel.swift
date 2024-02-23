@@ -32,6 +32,7 @@ enum HomeViewModelInputCase {
     )
     case resetFilters
     case dimViewTapGestureEnded
+    case mapViewChanged(reason: Int)
     
 }
 
@@ -61,5 +62,6 @@ protocol HomeViewModelOutput {
     var searchOneStoreOutput: PublishRelay<Store> { get }
     var noSearchStoreOutput: PublishRelay<Void> { get }
     var moreStoreButtonHiddenOutput: PublishRelay<Void> { get }
+    var mapViewChangedByGesture: PublishRelay<Void> { get }
     
 }

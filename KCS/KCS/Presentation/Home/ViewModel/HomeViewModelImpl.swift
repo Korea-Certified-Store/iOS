@@ -32,6 +32,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let searchOneStoreOutput = PublishRelay<Store>()
     let noSearchStoreOutput = PublishRelay<Void>()
     let moreStoreButtonHiddenOutput = PublishRelay<Void>()
+    let mapViewChangedByGesture = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
     private var activatedFilter: [CertificationType] = []
@@ -70,6 +71,8 @@ final class HomeViewModelImpl: HomeViewModel {
             resetFilters()
         case .dimViewTapGestureEnded:
             dimViewTapGestureEnded()
+        case .mapViewChanged(let reason):
+            mapViewChanged(reason: reason)
         }
     }
     
@@ -247,6 +250,12 @@ private extension HomeViewModelImpl {
     
     func dimViewTapGestureEnded() {
         dimViewTapGestureEndedOutput.accept(())
+    }
+    
+    func mapViewChanged(reason: Int) {
+        if reason == NMFMapChangedByGesture {
+            mapViewChangedByGesture.accept(())
+        }
     }
     
 }

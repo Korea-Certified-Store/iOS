@@ -401,6 +401,7 @@ private extension HomeViewController {
         bindSearchResult()
         bindMoreStoreButton()
         bindRefreshCameraPosition()
+        bindMapViewChanged()
     }
     
     func bindFetchStores() {
@@ -765,6 +766,14 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindMapViewChanged() {
+        viewModel.mapViewChangedByGesture
+            .bind { [weak self] in
+                self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }
 
 private extension HomeViewController {
@@ -1108,9 +1117,7 @@ extension HomeViewController: CLLocationManagerDelegate {
 extension HomeViewController: NMFMapViewCameraDelegate {
     
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
-        if reason == NMFMapChangedByGesture {
-            locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-        }
+        viewModel.action(input: .mapViewChanged(reason: reason))
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
