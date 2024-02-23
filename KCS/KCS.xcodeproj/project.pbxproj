@@ -31,6 +31,14 @@
 		5943765E2B874994005B97B2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5943765D2B874994005B97B2 /* GoogleService-Info.plist */; };
 		594376602B875EDB005B97B2 /* FetchStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */; };
 		594376622B875EFB005B97B2 /* GetStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376612B875EFB005B97B2 /* GetStoresRepository.swift */; };
+		5943767A2B892480005B97B2 /* RefreshManyStoresSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376722B89247F005B97B2 /* RefreshManyStoresSuccess.json */; };
+		5943767B2B892480005B97B2 /* SearchNoStoreSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376732B89247F005B97B2 /* SearchNoStoreSuccess.json */; };
+		5943767C2B892480005B97B2 /* SearchOneStoreSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376742B892480005B97B2 /* SearchOneStoreSuccess.json */; };
+		5943767D2B892480005B97B2 /* SearchManyStoresSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376752B892480005B97B2 /* SearchManyStoresSuccess.json */; };
+		5943767E2B892480005B97B2 /* UpdateStoreSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376762B892480005B97B2 /* UpdateStoreSuccess.json */; };
+		5943767F2B892480005B97B2 /* RefreshOneStoreSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376772B892480005B97B2 /* RefreshOneStoreSuccess.json */; };
+		594376802B892480005B97B2 /* NewStoreSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376782B892480005B97B2 /* NewStoreSuccess.json */; };
+		594376812B892480005B97B2 /* RefreshNoStoreSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376792B892480005B97B2 /* RefreshNoStoreSuccess.json */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
 		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
 		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
@@ -237,6 +245,14 @@
 		5943765D2B874994005B97B2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresRepository.swift; sourceTree = "<group>"; };
 		594376612B875EFB005B97B2 /* GetStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepository.swift; sourceTree = "<group>"; };
+		594376722B89247F005B97B2 /* RefreshManyStoresSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RefreshManyStoresSuccess.json; sourceTree = "<group>"; };
+		594376732B89247F005B97B2 /* SearchNoStoreSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchNoStoreSuccess.json; sourceTree = "<group>"; };
+		594376742B892480005B97B2 /* SearchOneStoreSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchOneStoreSuccess.json; sourceTree = "<group>"; };
+		594376752B892480005B97B2 /* SearchManyStoresSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchManyStoresSuccess.json; sourceTree = "<group>"; };
+		594376762B892480005B97B2 /* UpdateStoreSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = UpdateStoreSuccess.json; sourceTree = "<group>"; };
+		594376772B892480005B97B2 /* RefreshOneStoreSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RefreshOneStoreSuccess.json; sourceTree = "<group>"; };
+		594376782B892480005B97B2 /* NewStoreSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = NewStoreSuccess.json; sourceTree = "<group>"; };
+		594376792B892480005B97B2 /* RefreshNoStoreSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RefreshNoStoreSuccess.json; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -473,6 +489,37 @@
 			path = Animation;
 			sourceTree = "<group>";
 		};
+		594376642B890FD6005B97B2 /* MockServer */ = {
+			isa = PBXGroup;
+			children = (
+				594376652B890FDF005B97B2 /* Response */,
+			);
+			path = MockServer;
+			sourceTree = "<group>";
+		};
+		594376652B890FDF005B97B2 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				594376822B892485005B97B2 /* Success */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		594376822B892485005B97B2 /* Success */ = {
+			isa = PBXGroup;
+			children = (
+				594376782B892480005B97B2 /* NewStoreSuccess.json */,
+				594376722B89247F005B97B2 /* RefreshManyStoresSuccess.json */,
+				594376792B892480005B97B2 /* RefreshNoStoreSuccess.json */,
+				594376772B892480005B97B2 /* RefreshOneStoreSuccess.json */,
+				594376752B892480005B97B2 /* SearchManyStoresSuccess.json */,
+				594376732B89247F005B97B2 /* SearchNoStoreSuccess.json */,
+				594376742B892480005B97B2 /* SearchOneStoreSuccess.json */,
+				594376762B892480005B97B2 /* UpdateStoreSuccess.json */,
+			);
+			path = Success;
+			sourceTree = "<group>";
+		};
 		59503A4B2B751AEE0006CF35 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,6 +691,7 @@
 		5977BE8B2B5966F900725C90 /* KCSUnitTest */ = {
 			isa = PBXGroup;
 			children = (
+				594376642B890FD6005B97B2 /* MockServer */,
 				598CC4D92B5D342F0043D064 /* MockRepository */,
 				5977BE8C2B5966F900725C90 /* StoreRepositoryImplTests.swift */,
 				59F478BA2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift */,
@@ -1214,6 +1262,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5943767E2B892480005B97B2 /* UpdateStoreSuccess.json in Resources */,
+				594376802B892480005B97B2 /* NewStoreSuccess.json in Resources */,
+				5943767D2B892480005B97B2 /* SearchManyStoresSuccess.json in Resources */,
+				5943767F2B892480005B97B2 /* RefreshOneStoreSuccess.json in Resources */,
+				594376812B892480005B97B2 /* RefreshNoStoreSuccess.json in Resources */,
+				5943767B2B892480005B97B2 /* SearchNoStoreSuccess.json in Resources */,
+				5943767A2B892480005B97B2 /* RefreshManyStoresSuccess.json in Resources */,
+				5943767C2B892480005B97B2 /* SearchOneStoreSuccess.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
