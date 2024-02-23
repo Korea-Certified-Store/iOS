@@ -515,8 +515,8 @@
 		59503A6D2B7FB2EB0006CF35 /* NewStoreRequest */ = {
 			isa = PBXGroup;
 			children = (
-				59503A732B80A2890006CF35 /* ViewModel */,
 				59503A6E2B7FB2FE0006CF35 /* View */,
+				59503A732B80A2890006CF35 /* ViewModel */,
 			);
 			path = NewStoreRequest;
 			sourceTree = "<group>";
@@ -552,8 +552,8 @@
 		59503A792B80E8260006CF35 /* StoreUpdateRequest */ = {
 			isa = PBXGroup;
 			children = (
-				59503A7D2B80ED160006CF35 /* ViewModel */,
 				59503A7A2B80E84A0006CF35 /* View */,
+				59503A7D2B80ED160006CF35 /* ViewModel */,
 			);
 			path = StoreUpdateRequest;
 			sourceTree = "<group>";
