@@ -761,7 +761,6 @@ private extension HomeViewController {
     
     func markerTouchHandler(marker: Marker) {
         marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            // TODO: enable 확인
             if self?.mapView.isUserInteractionEnabled == true {
                 self?.disableAllWhileLoading()
                 if let clickedMarker = self?.clickedMarker {
@@ -904,6 +903,11 @@ private extension HomeViewController {
     }
     
     func configureConstraints() {
+        viewConstraints()
+        buttonConstraints()
+    }
+    
+    func viewConstraints() {
         NSLayoutConstraint.activate([
             mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
@@ -919,13 +923,6 @@ private extension HomeViewController {
         ])
         
         NSLayoutConstraint.activate([
-            locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            locationButton.widthAnchor.constraint(equalToConstant: 48),
-            locationButton.heightAnchor.constraint(equalToConstant: 48),
-            locationButtonBottomConstraint
-        ])
-        
-        NSLayoutConstraint.activate([
             searchBarView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8),
             searchBarView.trailingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             searchBarView.heightAnchor.constraint(equalToConstant: 50),
@@ -935,6 +932,15 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             filterButtonStackView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 8)
+        ])
+    }
+    
+    func buttonConstraints() {
+        NSLayoutConstraint.activate([
+            locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            locationButton.widthAnchor.constraint(equalToConstant: 48),
+            locationButton.heightAnchor.constraint(equalToConstant: 48),
+            locationButtonBottomConstraint
         ])
         
         NSLayoutConstraint.activate([

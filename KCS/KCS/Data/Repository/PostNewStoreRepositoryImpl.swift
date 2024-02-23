@@ -16,7 +16,7 @@ final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
                 newStoreRequestDTO: NewStoreRequestDTO(
                     storeName: storeName,
                     formattedAddress: formattedAddress,
-                    certifications: certifications.map{ $0.rawValue }
+                    certifications: certifications.map { $0.rawValue }
                 )
             ))
             .response { response in
