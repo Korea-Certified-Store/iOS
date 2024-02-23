@@ -1061,33 +1061,6 @@ private extension HomeViewController {
         toastView.removeFromSuperviewWithAnimation()
     }
     
-}
-
-extension HomeViewController: CLLocationManagerDelegate {
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        viewModel.action(
-            input: .checkLocationAuthorization(
-                status: locationManager.authorizationStatus
-            )
-        )
-    }
-    
-}
-
-extension HomeViewController: NMFMapViewCameraDelegate {
-    
-    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
-        if reason == NMFMapChangedByGesture {
-            locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-        }
-    }
-    
-    func mapViewCameraIdle(_ mapView: NMFMapView) {
-        endMoveCameraPositionObserver.accept(mapView.cameraPosition)
-        enableAllWhileLoading()
-    }
-    
     func disableAllWhileLoading() {
         goodPriceFilterButton.isUserInteractionEnabled = false
         exemplaryFilterButton.isUserInteractionEnabled = false
@@ -1116,6 +1089,33 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         researchKeywordButton.isUserInteractionEnabled = true
         backStoreListButton.isUserInteractionEnabled = true
         addStoreButton.isUserInteractionEnabled = true
+    }
+    
+}
+
+extension HomeViewController: CLLocationManagerDelegate {
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        viewModel.action(
+            input: .checkLocationAuthorization(
+                status: locationManager.authorizationStatus
+            )
+        )
+    }
+    
+}
+
+extension HomeViewController: NMFMapViewCameraDelegate {
+    
+    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+        if reason == NMFMapChangedByGesture {
+            locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+        }
+    }
+    
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        endMoveCameraPositionObserver.accept(mapView.cameraPosition)
+        enableAllWhileLoading()
     }
     
 }
