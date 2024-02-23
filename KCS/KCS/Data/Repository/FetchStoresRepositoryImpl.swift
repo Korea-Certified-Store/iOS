@@ -39,17 +39,17 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
                         self?.storeStorage.stores = resultStores.flatMap({ $0 })
                         if isEntire {
                             observer.onNext(FetchStores(
-                                fetchCountContent: FetchCountContent(),
+                                fetchCountContent: FetchCountContent(maxFetchCount: 1, fetchCount: 1),
                                 stores: resultStores.flatMap { $0 }
                             ))
                         } else if let firstIndexStore = resultStores.first {
                             observer.onNext(FetchStores(
-                                fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count),
+                                fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count, fetchCount: 1),
                                 stores: firstIndexStore
                             ))
                         } else {
                             observer.onNext(FetchStores(
-                                fetchCountContent: FetchCountContent(),
+                                fetchCountContent: FetchCountContent(maxFetchCount: 1, fetchCount: 1),
                                 stores: []
                             ))
                         }
