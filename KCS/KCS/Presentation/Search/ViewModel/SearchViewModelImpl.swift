@@ -58,13 +58,13 @@ private extension SearchViewModelImpl {
     }
      
     func searchButtonTapped(text: String) {
-        dependency.saveRecentSearchKeywordUseCase.execute(
+        dependency.saveRecentSearchHistoryUseCase.execute(
             recentSearchKeyword: text
         )
     }
     
     func deleteSearchHistory(index: Int) {
-        dependency.deleteRecentSearchKeywordUseCase.execute(index: index)
+        dependency.deleteRecentSearchHistoryUseCase.execute(index: index)
         emitRecentHistory()
     }
     
@@ -74,7 +74,7 @@ private extension SearchViewModelImpl {
     }
     
     func emitRecentHistory() {
-        dependency.fetchRecentSearchKeywordUseCase.execute()
+        dependency.fetchRecentSearchHistoryUseCase.execute()
             .bind { [weak self] keywords in
                 self?.recentSearchKeywordsOutput.accept(keywords)
                 if keywords.isEmpty {

@@ -41,11 +41,19 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             storeStorage: storeStorage
         )
         let storeUpdateRequestRepository = StoreUpdateRequestRepositoryImpl()
-        
         let fetchStoreIDRepository = FetchStoreIDRepositoryImpl(
             storage: storeIDStorage
         )
-        let searchKeywordRepository = SearchKeywordRepositoryImpl(
+        let fetchRecentSearchHistoryRepository = FetchRecentSearchHistoryRepositoryImpl(
+            userDefaults: userDefaults
+        )
+        let saveRecentSearchHistoryRepository = SaveRecentSearchHistoryRepositoryImpl(
+            userDefaults: userDefaults
+        )
+        let deleteRecentSearchHistoryRepository = DeleteRecentSearchHistoryRepositoryImpl(
+            userDefaults: userDefaults
+        )
+        let deleteAllHistoryRepository = DeleteAllHistoryRepositoryImpl(
             userDefaults: userDefaults
         )
         let fetchAutoCompletionRepository = FetchAutoCompletionRepositoryImpl()
@@ -79,17 +87,17 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let fetchImageUseCase = FetchImageUseCaseImpl(
             repository: imageRepository
         )
-        let fetchRecentSearchKeywordUseCase = FetchRecentSearchKeywordUseCaseImpl(
-            repository: searchKeywordRepository
+        let fetchRecentSearchHistoryUseCase = FetchRecentSearchHistoryUseCaseImpl(
+            repository: fetchRecentSearchHistoryRepository
         )
-        let saveRecentSearchKeywordUseCase = SaveRecentSearchKeywordUseCaseImpl(
-            repository: searchKeywordRepository
+        let saveRecentSearchHistoryUseCase = SaveRecentSearchHistoryUseCaseImpl(
+            repository: saveRecentSearchHistoryRepository
         )
-        let deleteRecentSearchKeywordUseCase = DeleteRecentSearchKeywordUseCaseImpl(
-            repository: searchKeywordRepository
+        let deleteRecentSearchHistoryUseCase = DeleteRecentSearchHistoryUseCaseImpl(
+            repository: deleteRecentSearchHistoryRepository
         )
         let deleteAllHistoryUseCase = DeleteAllHistoryUseCaseImpl(
-            repository: searchKeywordRepository
+            repository: deleteAllHistoryRepository
         )
         let getAutoCompletionUseCase = GetAutoCompletionUseCaseImpl(
             repository: fetchAutoCompletionRepository
@@ -118,9 +126,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             fetchImageUseCase: fetchImageUseCase
         )
         let searchDependency = SearchDependency(
-            fetchRecentSearchKeywordUseCase: fetchRecentSearchKeywordUseCase,
-            saveRecentSearchKeywordUseCase: saveRecentSearchKeywordUseCase,
-            deleteRecentSearchKeywordUseCase: deleteRecentSearchKeywordUseCase,
+            fetchRecentSearchHistoryUseCase: fetchRecentSearchHistoryUseCase,
+            saveRecentSearchHistoryUseCase: saveRecentSearchHistoryUseCase,
+            deleteRecentSearchHistoryUseCase: deleteRecentSearchHistoryUseCase,
             deleteAllHistoryUseCase: deleteAllHistoryUseCase,
             getAutoCompletionUseCase: getAutoCompletionUseCase
         )

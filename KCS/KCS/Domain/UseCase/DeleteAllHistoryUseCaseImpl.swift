@@ -9,7 +9,7 @@ import Foundation
 
 struct DeleteAllHistoryUseCaseImpl: DeleteAllHistoryUseCase {
     
-    let repository: SearchKeywordsRepository
+    let repository: DeleteAllHistoryRepository
     
     func execute() {
         return repository.deleteAllHistory()

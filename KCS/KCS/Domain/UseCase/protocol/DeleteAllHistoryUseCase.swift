@@ -9,9 +9,9 @@ import Foundation
 
 protocol DeleteAllHistoryUseCase {
     
-    var repository: SearchKeywordsRepository { get }
+    var repository: DeleteAllHistoryRepository { get }
     
-    init(repository: SearchKeywordsRepository)
+    init(repository: DeleteAllHistoryRepository)
     
     func execute()
     
