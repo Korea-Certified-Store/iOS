@@ -16,7 +16,7 @@ struct FetchStores {
 
 struct FetchCountContent {
     
-    var maxFetchCount: Int = 1
-    var fetchCount: Int = 1
+    var maxFetchCount: Int
+    var fetchCount: Int
     
 }

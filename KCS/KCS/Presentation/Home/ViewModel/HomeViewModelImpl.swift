@@ -33,8 +33,7 @@ final class HomeViewModelImpl: HomeViewModel {
     
     private let disposeBag = DisposeBag()
     private var activatedFilter: [CertificationType] = []
-    private var fetchCount: Int = 1
-    private var maxFetchCount: Int = 1
+    private var fetchContent = FetchCountContent(maxFetchCount: 1, fetchCount: 1)
     
     init(dependency: HomeDependency) {
         self.dependency = dependency
@@ -50,18 +49,14 @@ final class HomeViewModelImpl: HomeViewModel {
             filterButtonTapped(filter: filter)
         case .markerTapped(let tag):
             markerTapped(tag: tag)
-        case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
-            locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
-        case .dimViewTapGestureEnded:
-            dimViewTapGestureEnded()
         case .setMarker(let store, let certificationType):
             setMarker(store: store, certificationType: certificationType)
+        case .locationButtonTapped(let locationAuthorizationStatus, let positionMode):
+            locationButtonTapped(locationAuthorizationStatus: locationAuthorizationStatus, positionMode: positionMode)
         case .checkLocationAuthorization(let status):
             checkLocationAuthorization(status: status)
         case .search(let location, let keyword):
             search(location: location, keyword: keyword)
-        case .resetFilters:
-            resetFilters()
         case .compareCameraPosition(let refreshCameraPosition, let endMoveCameraPosition, let refreshCameraPoint, let endMoveCameraPoint):
             compareCameraPosition(
                 refreshCameraPosition: refreshCameraPosition,
@@ -69,6 +64,10 @@ final class HomeViewModelImpl: HomeViewModel {
                 refreshCameraPoint: refreshCameraPoint,
                 endMoveCameraPoint: endMoveCameraPoint
             )
+        case .resetFilters:
+            resetFilters()
+        case .dimViewTapGestureEnded:
+            dimViewTapGestureEnded()
         }
     }
     
@@ -87,12 +86,19 @@ private extension HomeViewModelImpl {
         .subscribe(
             onNext: { [weak self] refreshContent in
                 guard let self = self else { return }
-                resetFetchCount()
-                maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
-                applyFilters(stores: refreshContent.stores, filters: getActivatedTypes())
-                fetchCountOutput.accept(FetchCountContent(maxFetchCount: maxFetchCount))
+                fetchContent.fetchCount = 1
+                fetchContent.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
+                filteredStoresOutput.accept(
+                    applyFilters(
+                        stores: refreshContent.stores,
+                        filters: getActivatedTypes()
+                    )
+                )
+                fetchCountOutput.accept(fetchContent)
                 refreshDoneOutput.accept(isEntire)
-                checkLastFetch()
+                if fetchContent.fetchCount == fetchContent.maxFetchCount {
+                    noMoreStoresOutput.accept(())
+                }
             },
             onError: { [weak self] error in
                 if error is StoreRepositoryError {
@@ -108,19 +114,17 @@ private extension HomeViewModelImpl {
     }
     
     func moreStoreButtonTapped() {
-        if fetchCount < maxFetchCount {
-            fetchCount += 1
-            applyFilters(
-                stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchCount),
-                filters: getActivatedTypes()
+        if fetchContent.fetchCount < fetchContent.maxFetchCount {
+            fetchContent.fetchCount += 1
+            filteredStoresOutput.accept(
+                applyFilters(
+                    stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchContent.fetchCount),
+                    filters: getActivatedTypes()
+                )
             )
-            fetchCountOutput.accept(FetchCountContent(maxFetchCount: maxFetchCount, fetchCount: fetchCount))
+            fetchCountOutput.accept(FetchCountContent(maxFetchCount: fetchContent.maxFetchCount, fetchCount: fetchContent.fetchCount))
         }
-        checkLastFetch()
-    }
-    
-    func checkLastFetch() {
-        if fetchCount == maxFetchCount {
+        if fetchContent.fetchCount == fetchContent.maxFetchCount {
             noMoreStoresOutput.accept(())
         }
     }
@@ -131,50 +135,12 @@ private extension HomeViewModelImpl {
         } else {
             activatedFilter.append(filter)
         }
-        applyFilters(stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchCount), filters: getActivatedTypes())
-    }
-    
-    func getActivatedTypes() -> [CertificationType] {
-        if activatedFilter.isEmpty {
-            return [.safe, .exemplary, .goodPrice]
-        }
-        
-        return activatedFilter
-    }
-    
-    func applyFilters(stores: [Store], filters: [CertificationType]) {
-        var goodPriceStores = FilteredStores(
-            type: .goodPrice,
-            stores: []
+        filteredStoresOutput.accept(
+            applyFilters(
+                stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchContent.fetchCount),
+                filters: getActivatedTypes()
+            )
         )
-        var exemplaryStores = FilteredStores(
-            type: .exemplary,
-            stores: []
-        )
-        var safeStores = FilteredStores(
-            type: .safe,
-            stores: []
-        )
-        
-        stores.forEach { store in
-            var type: CertificationType?
-            filters.forEach { filter in
-                if store.certificationTypes.contains(filter) {
-                    type = filter
-                }
-            }
-            if let checkedType = type {
-                switch checkedType {
-                case .goodPrice:
-                    goodPriceStores.stores.append(store)
-                case .exemplary:
-                    exemplaryStores.stores.append(store)
-                case .safe:
-                    safeStores.stores.append(store)
-                }
-            }
-        }
-        filteredStoresOutput.accept([goodPriceStores, exemplaryStores, safeStores])
     }
     
     func markerTapped(tag: UInt) {
@@ -190,32 +156,11 @@ private extension HomeViewModelImpl {
     func setMarker(store: Store, certificationType: CertificationType) {
         switch certificationType {
         case .goodPrice:
-            setMarkerOutput.accept(
-                MarkerContents(
-                    tag: store.id,
-                    location: store.location,
-                    deselectImageName: "MarkerGoodPriceNormal",
-                    selectImageName: "MarkerGoodPriceSelected"
-                )
-            )
+            setMarkerOutput.accept(setMarkerContents(store: store, certificationType: .goodPrice))
         case .exemplary:
-            setMarkerOutput.accept(
-                MarkerContents(
-                    tag: store.id,
-                    location: store.location,
-                    deselectImageName: "MarkerExemplaryNormal",
-                    selectImageName: "MarkerExemplarySelected"
-                )
-            )
+            setMarkerOutput.accept(setMarkerContents(store: store, certificationType: .exemplary))
         case .safe:
-            setMarkerOutput.accept(
-                MarkerContents(
-                    tag: store.id,
-                    location: store.location,
-                    deselectImageName: "MarkerSafeNormal",
-                    selectImageName: "MarkerSafeSelected"
-                )
-            )
+            setMarkerOutput.accept(setMarkerContents(store: store, certificationType: .safe))
         }
     }
     
@@ -231,10 +176,6 @@ private extension HomeViewModelImpl {
         default:
             break
         }
-    }
-    
-    func dimViewTapGestureEnded() {
-        dimViewTapGestureEndedOutput.accept(())
     }
     
     func checkLocationAuthorization(status: CLAuthorizationStatus) {
@@ -253,7 +194,7 @@ private extension HomeViewModelImpl {
             .execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
-                fetchCount = stores.count
+                fetchContent.fetchCount = stores.count
                 if stores.count == 1 {
                     guard let oneStore = stores.first else { return }
                     searchOneStoreOutput.accept(oneStore)
@@ -290,8 +231,74 @@ private extension HomeViewModelImpl {
         activatedFilter = []
     }
     
-    func resetFetchCount() {
-        fetchCount = 1
+    func dimViewTapGestureEnded() {
+        dimViewTapGestureEndedOutput.accept(())
+    }
+    
+}
+
+private extension HomeViewModelImpl {
+    
+    func getActivatedTypes() -> [CertificationType] {
+        if activatedFilter.isEmpty {
+            return [.safe, .exemplary, .goodPrice]
+        }
+        
+        return activatedFilter
+    }
+    
+    func applyFilters(stores: [Store], filters: [CertificationType]) -> [FilteredStores] {
+        var goodPriceStores = FilteredStores(
+            type: .goodPrice,
+            stores: []
+        )
+        var exemplaryStores = FilteredStores(
+            type: .exemplary,
+            stores: []
+        )
+        var safeStores = FilteredStores(
+            type: .safe,
+            stores: []
+        )
+        
+        stores.forEach { store in
+            var type: CertificationType?
+            filters.forEach { filter in
+                if store.certificationTypes.contains(filter) {
+                    type = filter
+                }
+            }
+            if let checkedType = type {
+                switch checkedType {
+                case .goodPrice:
+                    goodPriceStores.stores.append(store)
+                case .exemplary:
+                    exemplaryStores.stores.append(store)
+                case .safe:
+                    safeStores.stores.append(store)
+                }
+            }
+        }
+        
+        return [goodPriceStores, exemplaryStores, safeStores]
+    }
+    
+    func setMarkerContents(store: Store, certificationType: CertificationType) -> MarkerContents {
+        var imageName: String
+        switch certificationType {
+        case .goodPrice:
+            imageName = "GoodPrice"
+        case .exemplary:
+            imageName = "Exemplary"
+        case .safe:
+            imageName = "Safe"
+        }
+        return MarkerContents(
+            tag: store.id,
+            location: store.location,
+            deselectImageName: "Marker\(imageName)Normal",
+            selectImageName: "Marker\(imageName)Selected"
+        )
     }
     
 }
