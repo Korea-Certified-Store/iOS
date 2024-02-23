@@ -437,8 +437,8 @@ private extension HomeViewController {
             .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
-                self.markers.forEach { $0.mapView = nil }
-                self.markers = []
+                resetMarker()
+                resetLayout()
                 var stores: [Store] = []
                 filteredStores.forEach { filteredStore in
                     filteredStore.stores.forEach { [weak self] store in
@@ -451,17 +451,21 @@ private extension HomeViewController {
                         stores.append(store)
                     }
                 }
-                if stores.isEmpty {
-                    showToast(message: "검색 결과가 존재하지 않습니다.")
-                    storeListViewController.emptyStoreList()
-                } else {
-                    storeListViewController.updateList(stores: stores)
-                }
-                backStoreListButton.isHidden = true
-                searchBarViewLeadingConstraint.constant = 16
-                clickedMarker?.deselect()
-                clickedMarker = nil
+                storeListViewController.updateList(stores: stores)
                 storeInformationViewController.dismiss(animated: true) { [weak self] in
+                    self?.presentStoreListView()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noFilteredStoreOutput
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
+            .bind { [weak self] in
+                self?.resetMarker()
+                self?.resetLayout()
+                self?.showToast(message: "검색 결과가 존재하지 않습니다.")
+                self?.storeListViewController.emptyStoreList()
+                self?.storeInformationViewController.dismiss(animated: true) { [weak self] in
                     self?.presentStoreListView()
                 }
             }
@@ -665,8 +669,10 @@ private extension HomeViewController {
                 guard let self = self else { return }
                 resetFilters()
                 resetMarker()
-                setSearchDoneLayout()
+                resetLayout()
+                setMapViewPositionMode()
                 setSearchStoresMarker(stores: stores)
+                
                 mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
                 let cameraUpdate = NMFCameraUpdate(
                     fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
@@ -688,8 +694,10 @@ private extension HomeViewController {
                 guard let self = self else { return }
                 resetFilters()
                 resetMarker()
-                setSearchDoneLayout()
+                resetLayout()
+                setMapViewPositionMode()
                 setSearchStoresMarker(stores: [store])
+                
                 mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
                 let cameraUpdate = NMFCameraUpdate(
                     position: NMFCameraPosition(store.location.toMapLocation(), zoom: 15)
@@ -716,7 +724,9 @@ private extension HomeViewController {
             .bind { [weak self] in
                 self?.resetFilters()
                 self?.resetMarker()
-                self?.setSearchDoneLayout()
+                self?.resetLayout()
+                self?.setMapViewPositionMode()
+                
                 self?.storeInformationViewController.dismiss(animated: true) { [weak self] in
                     self?.presentStoreListView()
                 }
@@ -1013,11 +1023,14 @@ private extension HomeViewController {
         markers = []
     }
     
-    func setSearchDoneLayout() {
+    func resetLayout() {
         backStoreListButton.isHidden = true
         searchBarViewLeadingConstraint.constant = 16
         clickedMarker?.deselect()
         clickedMarker = nil
+    }
+    
+    func setMapViewPositionMode() {
         mapView.mapView.positionMode = .normal
         locationButton.setImage(UIImage.locationButtonNone, for: .normal)
     }

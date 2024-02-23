@@ -24,6 +24,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let requestLocationAuthorizationOutput = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     let filteredStoresOutput = PublishRelay<[FilteredStores]>()
+    let noFilteredStoreOutput = PublishRelay<Void>()
     let fetchCountOutput = PublishRelay<FetchCountContent>()
     let noMoreStoresOutput = PublishRelay<Void>()
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
@@ -89,12 +90,16 @@ private extension HomeViewModelImpl {
                 guard let self = self else { return }
                 fetchContent.fetchCount = 1
                 fetchContent.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
-                filteredStoresOutput.accept(
-                    applyFilters(
-                        stores: refreshContent.stores,
-                        filters: getActivatedTypes()
-                    )
+                let filteredStores = applyFilters(
+                    stores: refreshContent.stores,
+                    filters: getActivatedTypes()
                 )
+                let noEmptyFilteredStores = filteredStores.filter({ !$0.stores.isEmpty })
+                if noEmptyFilteredStores.isEmpty {
+                    noFilteredStoreOutput.accept(())
+                } else {
+                    filteredStoresOutput.accept(filteredStores)
+                }
                 fetchCountOutput.accept(fetchContent)
                 refreshDoneOutput.accept(isEntire)
                 if fetchContent.fetchCount == fetchContent.maxFetchCount {
@@ -136,12 +141,16 @@ private extension HomeViewModelImpl {
         } else {
             activatedFilter.append(filter)
         }
-        filteredStoresOutput.accept(
-            applyFilters(
-                stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchContent.fetchCount),
-                filters: getActivatedTypes()
-            )
+        let filteredStores = applyFilters(
+            stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchContent.fetchCount),
+            filters: getActivatedTypes()
         )
+        let noEmptyFilteredStores = filteredStores.filter({ !$0.stores.isEmpty })
+        if noEmptyFilteredStores.isEmpty {
+            noFilteredStoreOutput.accept(())
+        } else {
+            filteredStoresOutput.accept(filteredStores)
+        }
     }
     
     func markerTapped(tag: UInt) {

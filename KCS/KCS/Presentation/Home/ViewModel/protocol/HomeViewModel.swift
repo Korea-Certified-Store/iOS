@@ -46,6 +46,7 @@ protocol HomeViewModelOutput {
     var getStoreInformationOutput: PublishRelay<Store> { get }
     var refreshDoneOutput: PublishRelay<Bool> { get }
     var filteredStoresOutput: PublishRelay<[FilteredStores]> { get }
+    var noFilteredStoreOutput: PublishRelay<Void> { get }
     var locationButtonOutput: PublishRelay<NMFMyPositionMode> { get }
     var setMarkerOutput: PublishRelay<MarkerContents> { get }
     var locationAuthorizationStatusDeniedOutput: PublishRelay<Void> { get }
