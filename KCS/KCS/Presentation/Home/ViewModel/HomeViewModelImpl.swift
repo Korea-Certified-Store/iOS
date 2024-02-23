@@ -29,6 +29,7 @@ final class HomeViewModelImpl: HomeViewModel {
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
     let searchStoresOutput = PublishRelay<[Store]>()
     let searchOneStoreOutput = PublishRelay<Store>()
+    let noSearchStoreOutput = PublishRelay<Void>()
     let moreStoreButtonHiddenOutput = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
@@ -194,12 +195,16 @@ private extension HomeViewModelImpl {
             .execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
-                fetchContent.fetchCount = stores.count
-                if stores.count == 1 {
-                    guard let oneStore = stores.first else { return }
-                    searchOneStoreOutput.accept(oneStore)
+                if stores.isEmpty {
+                    noSearchStoreOutput.accept(())
                 } else {
-                    searchStoresOutput.accept(stores)
+                    fetchContent.fetchCount = stores.count
+                    if stores.count == 1 {
+                        guard let oneStore = stores.first else { return }
+                        searchOneStoreOutput.accept(oneStore)
+                    } else {
+                        searchStoresOutput.accept(stores)
+                    }
                 }
             }, onError: { [weak self] error in
                 if let alertError = error as? ErrorAlertMessage {

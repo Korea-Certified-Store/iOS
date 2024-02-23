@@ -398,6 +398,7 @@ private extension HomeViewController {
         bindErrorAlert()
         bindListCellSelected()
         bindSearch()
+        bindSearchResult()
         bindMoreStoreButton()
         bindRefreshCameraPosition()
     }
@@ -656,32 +657,28 @@ private extension HomeViewController {
                 moreStoreButton.isHidden = true
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindSearchResult() {
         viewModel.searchStoresOutput
             .bind { [weak self] stores in
                 guard let self = self else { return }
                 resetFilters()
-                backStoreListButton.isHidden = true
-                searchBarViewLeadingConstraint.constant = 16
-                clickedMarker?.deselect()
-                clickedMarker = nil
+                resetMarker()
+                setSearchDoneLayout()
+                setSearchStoresMarker(stores: stores)
+                mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
+                let cameraUpdate = NMFCameraUpdate(
+                    fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
+                    padding: 30
+                )
+                cameraUpdate.animation = .easeIn
+                cameraUpdate.animationDuration = 0.5
+                mapView.mapView.moveCamera(cameraUpdate)
+                
                 storeInformationViewController.dismiss(animated: true) { [weak self] in
                     self?.presentStoreListView()
                 }
-                setSearchStoresMarker(stores: stores)
-                
-                mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
-                if !stores.isEmpty {
-                    let cameraUpdate = NMFCameraUpdate(
-                        fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
-                        padding: 30
-                    )
-                    cameraUpdate.animation = .easeIn
-                    cameraUpdate.animationDuration = 0.5
-                    mapView.mapView.moveCamera(cameraUpdate)
-                }
-                mapView.mapView.positionMode = .normal
-                locationButton.setImage(UIImage.locationButtonNone, for: .normal)
                 researchKeywordButton.animationInvalidate()
             }
             .disposed(by: disposeBag)
@@ -690,33 +687,42 @@ private extension HomeViewController {
             .bind { [weak self] store in
                 guard let self = self else { return }
                 resetFilters()
+                resetMarker()
+                setSearchDoneLayout()
                 setSearchStoresMarker(stores: [store])
-                
                 mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
-                
                 let cameraUpdate = NMFCameraUpdate(
                     position: NMFCameraPosition(store.location.toMapLocation(), zoom: 15)
                 )
                 cameraUpdate.animation = .easeIn
                 cameraUpdate.animationDuration = 0.5
                 mapView.mapView.moveCamera(cameraUpdate)
-                mapView.mapView.positionMode = .normal
-                locationButton.setImage(UIImage.locationButtonNone, for: .normal)
                 
-                guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
+                guard let marker = markers.first(where: { $0.tag == store.id }) else { return }
                 if let clickedMarker = clickedMarker {
                     if clickedMarker == marker {
                         enableAllWhileLoading()
                         return
                     }
-                    backStoreListButton.isHidden = true
-                    searchBarViewLeadingConstraint.constant = 16
-                    self.clickedMarker?.deselect()
-                    self.clickedMarker = nil
                 }
                 storeInformationViewController.setUIContents(store: store)
                 marker.select()
                 clickedMarker = marker
+                researchKeywordButton.animationInvalidate()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noSearchStoreOutput
+            .bind { [weak self] in
+                self?.resetFilters()
+                self?.resetMarker()
+                self?.setSearchDoneLayout()
+                self?.storeInformationViewController.dismiss(animated: true) { [weak self] in
+                    self?.presentStoreListView()
+                }
+                self?.showToast(message: "검색 결과가 존재하지 않습니다.")
+                self?.storeListViewController.emptyStoreList()
+                self?.researchKeywordButton.animationInvalidate()
             }
             .disposed(by: disposeBag)
     }
@@ -996,9 +1002,21 @@ private extension HomeViewController {
         viewModel.action(input: .resetFilters)
     }
     
-    func setSearchStoresMarker(stores: [Store]) {
+    func resetMarker() {
         markers.forEach({ $0.mapView = nil })
         markers = []
+    }
+    
+    func setSearchDoneLayout() {
+        backStoreListButton.isHidden = true
+        searchBarViewLeadingConstraint.constant = 16
+        clickedMarker?.deselect()
+        clickedMarker = nil
+        mapView.mapView.positionMode = .normal
+        locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+    }
+    
+    func setSearchStoresMarker(stores: [Store]) {
         stores.forEach { [weak self] store in
             guard let certificationType = store.certificationTypes.last else { return }
             self?.viewModel.action(input: .setMarker(
@@ -1006,13 +1024,7 @@ private extension HomeViewController {
                 certificationType: certificationType
             ))
         }
-        // TODO: 로직 ViewModel로 이동
-        if stores.isEmpty {
-            showToast(message: "검색 결과가 존재하지 않습니다.")
-            storeListViewController.emptyStoreList()
-        } else {
-            storeListViewController.updateList(stores: stores)
-        }
+        storeListViewController.updateList(stores: stores)
     }
     
     func showToast(message: String) {

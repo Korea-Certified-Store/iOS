@@ -58,6 +58,7 @@ protocol HomeViewModelOutput {
     var dimViewTapGestureEndedOutput: PublishRelay<Void> { get }
     var searchStoresOutput: PublishRelay<[Store]> { get }
     var searchOneStoreOutput: PublishRelay<Store> { get }
+    var noSearchStoreOutput: PublishRelay<Void> { get }
     var moreStoreButtonHiddenOutput: PublishRelay<Void> { get }
     
 }
