@@ -24,12 +24,15 @@ final class HomeViewModelImpl: HomeViewModel {
     let requestLocationAuthorizationOutput = PublishRelay<Void>()
     let errorAlertOutput = PublishRelay<ErrorAlertMessage>()
     let filteredStoresOutput = PublishRelay<[FilteredStores]>()
+    let noFilteredStoreOutput = PublishRelay<Void>()
     let fetchCountOutput = PublishRelay<FetchCountContent>()
     let noMoreStoresOutput = PublishRelay<Void>()
     let dimViewTapGestureEndedOutput = PublishRelay<Void>()
     let searchStoresOutput = PublishRelay<[Store]>()
     let searchOneStoreOutput = PublishRelay<Store>()
+    let noSearchStoreOutput = PublishRelay<Void>()
     let moreStoreButtonHiddenOutput = PublishRelay<Void>()
+    let mapViewChangedByGesture = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
     private var activatedFilter: [CertificationType] = []
@@ -68,6 +71,8 @@ final class HomeViewModelImpl: HomeViewModel {
             resetFilters()
         case .dimViewTapGestureEnded:
             dimViewTapGestureEnded()
+        case .mapViewChanged(let reason):
+            mapViewChanged(reason: reason)
         }
     }
     
@@ -88,12 +93,16 @@ private extension HomeViewModelImpl {
                 guard let self = self else { return }
                 fetchContent.fetchCount = 1
                 fetchContent.maxFetchCount = refreshContent.fetchCountContent.maxFetchCount
-                filteredStoresOutput.accept(
-                    applyFilters(
-                        stores: refreshContent.stores,
-                        filters: getActivatedTypes()
-                    )
+                let filteredStores = applyFilters(
+                    stores: refreshContent.stores,
+                    filters: getActivatedTypes()
                 )
+                let noEmptyFilteredStores = filteredStores.filter({ !$0.stores.isEmpty })
+                if noEmptyFilteredStores.isEmpty {
+                    noFilteredStoreOutput.accept(())
+                } else {
+                    filteredStoresOutput.accept(filteredStores)
+                }
                 fetchCountOutput.accept(fetchContent)
                 refreshDoneOutput.accept(isEntire)
                 if fetchContent.fetchCount == fetchContent.maxFetchCount {
@@ -135,12 +144,16 @@ private extension HomeViewModelImpl {
         } else {
             activatedFilter.append(filter)
         }
-        filteredStoresOutput.accept(
-            applyFilters(
-                stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchContent.fetchCount),
-                filters: getActivatedTypes()
-            )
+        let filteredStores = applyFilters(
+            stores: dependency.getRefreshStoresUseCase.execute(fetchCount: fetchContent.fetchCount),
+            filters: getActivatedTypes()
         )
+        let noEmptyFilteredStores = filteredStores.filter({ !$0.stores.isEmpty })
+        if noEmptyFilteredStores.isEmpty {
+            noFilteredStoreOutput.accept(())
+        } else {
+            filteredStoresOutput.accept(filteredStores)
+        }
     }
     
     func markerTapped(tag: UInt) {
@@ -194,12 +207,16 @@ private extension HomeViewModelImpl {
             .execute(location: location, keyword: keyword)
             .subscribe(onNext: { [weak self] stores in
                 guard let self = self else { return }
-                fetchContent.fetchCount = stores.count
-                if stores.count == 1 {
-                    guard let oneStore = stores.first else { return }
-                    searchOneStoreOutput.accept(oneStore)
+                if stores.isEmpty {
+                    noSearchStoreOutput.accept(())
                 } else {
-                    searchStoresOutput.accept(stores)
+                    fetchContent.fetchCount = stores.count
+                    if stores.count == 1 {
+                        guard let oneStore = stores.first else { return }
+                        searchOneStoreOutput.accept(oneStore)
+                    } else {
+                        searchStoresOutput.accept(stores)
+                    }
                 }
             }, onError: { [weak self] error in
                 if let alertError = error as? ErrorAlertMessage {
@@ -233,6 +250,12 @@ private extension HomeViewModelImpl {
     
     func dimViewTapGestureEnded() {
         dimViewTapGestureEndedOutput.accept(())
+    }
+    
+    func mapViewChanged(reason: Int) {
+        if reason == NMFMapChangedByGesture {
+            mapViewChangedByGesture.accept(())
+        }
     }
     
 }

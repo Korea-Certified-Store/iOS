@@ -301,22 +301,6 @@ private extension DetailView {
         ])
     }
     
-    func setOpeningHourText(openClosedContent: OpenClosedContent) {
-        if openClosedContent.openClosedType == .none {
-            storeOpenClosed.text = "영업시간 정보 없음"
-            storeOpenClosed.textColor = .black
-            openingHour.text = openClosedContent.openClosedType.rawValue
-            addressConstraint.constant = -174
-            phoneNumberConstraint.constant = 20 - 11
-        } else {
-            storeOpenClosed.text = openClosedContent.openClosedType.description
-            storeOpenClosed.textColor = UIColor.goodPrice
-            openingHour.text = openClosedContent.nextOpeningHour
-            addressConstraint.constant = -16
-            phoneNumberConstraint.constant = 20
-        }
-    }
-    
 }
 
 extension DetailView {
@@ -333,7 +317,6 @@ extension DetailView {
             }
         address.text = contents.address
         phoneNumber.text = contents.phoneNumber
-        setOpeningHourText(openClosedContent: contents.openClosedContent)
         
         var detailOpeningHours = contents.detailOpeningHour
         if detailOpeningHours.isEmpty { return }
@@ -357,6 +340,22 @@ extension DetailView {
     
     func setThumbnailImage(imageData: Data) {
         storeImageView.image = UIImage(data: imageData)
+    }
+    
+    func setOpeningHour(openClosedContent: OpenClosedContent) {
+        storeOpenClosed.text = openClosedContent.openClosedType.description
+        storeOpenClosed.textColor = UIColor.goodPrice
+        openingHour.text = openClosedContent.nextOpeningHour
+        addressConstraint.constant = -16
+        phoneNumberConstraint.constant = 20
+    }
+    
+    func setNoOpeningHour() {
+        storeOpenClosed.text = "영업시간 정보 없음"
+        storeOpenClosed.textColor = .black
+        openingHour.text = OpenClosedType.none.rawValue
+        addressConstraint.constant = -174
+        phoneNumberConstraint.constant = 20 - 11
     }
     
     func resetUIContents() {

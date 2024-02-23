@@ -104,6 +104,18 @@ extension StoreInformationViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.openClosedContentOutput
+            .bind { [weak self] openClosedContent in
+                self?.detailView.setOpeningHour(openClosedContent: openClosedContent)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noneOpenClosedContentOutput
+            .bind { [weak self] in
+                self?.detailView.setNoOpeningHour()
+            }
+            .disposed(by: disposeBag)
+        
         updateReqeustButtonObserver
             .bind { [weak self] _ in
                 guard let self = self else { return }

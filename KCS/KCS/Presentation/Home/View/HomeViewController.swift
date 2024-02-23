@@ -398,8 +398,10 @@ private extension HomeViewController {
         bindErrorAlert()
         bindListCellSelected()
         bindSearch()
+        bindSearchResult()
         bindMoreStoreButton()
         bindRefreshCameraPosition()
+        bindMapViewChanged()
     }
     
     func bindFetchStores() {
@@ -436,8 +438,8 @@ private extension HomeViewController {
             .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
             .bind { [weak self] filteredStores in
                 guard let self = self else { return }
-                self.markers.forEach { $0.mapView = nil }
-                self.markers = []
+                resetMarker()
+                resetLayout()
                 var stores: [Store] = []
                 filteredStores.forEach { filteredStore in
                     filteredStore.stores.forEach { [weak self] store in
@@ -450,17 +452,21 @@ private extension HomeViewController {
                         stores.append(store)
                     }
                 }
-                if stores.isEmpty {
-                    showToast(message: "검색 결과가 존재하지 않습니다.")
-                    storeListViewController.emptyStoreList()
-                } else {
-                    storeListViewController.updateList(stores: stores)
-                }
-                backStoreListButton.isHidden = true
-                searchBarViewLeadingConstraint.constant = 16
-                clickedMarker?.deselect()
-                clickedMarker = nil
+                storeListViewController.updateList(stores: stores)
                 storeInformationViewController.dismiss(animated: true) { [weak self] in
+                    self?.presentStoreListView()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noFilteredStoreOutput
+            .throttle(.milliseconds(10), latest: false, scheduler: MainScheduler())
+            .bind { [weak self] in
+                self?.resetMarker()
+                self?.resetLayout()
+                self?.showToast(message: "검색 결과가 존재하지 않습니다.")
+                self?.storeListViewController.emptyStoreList()
+                self?.storeInformationViewController.dismiss(animated: true) { [weak self] in
                     self?.presentStoreListView()
                 }
             }
@@ -656,32 +662,30 @@ private extension HomeViewController {
                 moreStoreButton.isHidden = true
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindSearchResult() {
         viewModel.searchStoresOutput
             .bind { [weak self] stores in
                 guard let self = self else { return }
                 resetFilters()
-                backStoreListButton.isHidden = true
-                searchBarViewLeadingConstraint.constant = 16
-                clickedMarker?.deselect()
-                clickedMarker = nil
-                storeInformationViewController.dismiss(animated: true) { [weak self] in
-                    self?.presentStoreListView()
-                }
+                resetMarker()
+                resetLayout()
+                setMapViewPositionMode()
                 setSearchStoresMarker(stores: stores)
                 
                 mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
-                if !stores.isEmpty {
-                    let cameraUpdate = NMFCameraUpdate(
-                        fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
-                        padding: 30
-                    )
-                    cameraUpdate.animation = .easeIn
-                    cameraUpdate.animationDuration = 0.5
-                    mapView.mapView.moveCamera(cameraUpdate)
+                let cameraUpdate = NMFCameraUpdate(
+                    fit: NMGLatLngBounds(latLngs: markers.map({ $0.position })),
+                    padding: 30
+                )
+                cameraUpdate.animation = .easeIn
+                cameraUpdate.animationDuration = 0.5
+                mapView.mapView.moveCamera(cameraUpdate)
+                
+                storeInformationViewController.dismiss(animated: true) { [weak self] in
+                    self?.presentStoreListView()
                 }
-                mapView.mapView.positionMode = .normal
-                locationButton.setImage(UIImage.locationButtonNone, for: .normal)
                 researchKeywordButton.animationInvalidate()
             }
             .disposed(by: disposeBag)
@@ -690,33 +694,46 @@ private extension HomeViewController {
             .bind { [weak self] store in
                 guard let self = self else { return }
                 resetFilters()
+                resetMarker()
+                resetLayout()
+                setMapViewPositionMode()
                 setSearchStoresMarker(stores: [store])
                 
                 mapView.mapView.moveCamera(NMFCameraUpdate(heading: 0))
-                
                 let cameraUpdate = NMFCameraUpdate(
                     position: NMFCameraPosition(store.location.toMapLocation(), zoom: 15)
                 )
                 cameraUpdate.animation = .easeIn
                 cameraUpdate.animationDuration = 0.5
                 mapView.mapView.moveCamera(cameraUpdate)
-                mapView.mapView.positionMode = .normal
-                locationButton.setImage(UIImage.locationButtonNone, for: .normal)
                 
-                guard let marker = markers.first(where: { $0.tag == store.id}) else { return }
+                guard let marker = markers.first(where: { $0.tag == store.id }) else { return }
                 if let clickedMarker = clickedMarker {
                     if clickedMarker == marker {
                         enableAllWhileLoading()
                         return
                     }
-                    backStoreListButton.isHidden = true
-                    searchBarViewLeadingConstraint.constant = 16
-                    self.clickedMarker?.deselect()
-                    self.clickedMarker = nil
                 }
                 storeInformationViewController.setUIContents(store: store)
                 marker.select()
                 clickedMarker = marker
+                researchKeywordButton.animationInvalidate()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.noSearchStoreOutput
+            .bind { [weak self] in
+                self?.resetFilters()
+                self?.resetMarker()
+                self?.resetLayout()
+                self?.setMapViewPositionMode()
+                
+                self?.storeInformationViewController.dismiss(animated: true) { [weak self] in
+                    self?.presentStoreListView()
+                }
+                self?.showToast(message: "검색 결과가 존재하지 않습니다.")
+                self?.storeListViewController.emptyStoreList()
+                self?.researchKeywordButton.animationInvalidate()
             }
             .disposed(by: disposeBag)
     }
@@ -749,13 +766,20 @@ private extension HomeViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindMapViewChanged() {
+        viewModel.mapViewChangedByGesture
+            .bind { [weak self] in
+                self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }
 
 private extension HomeViewController {
     
     func markerTouchHandler(marker: Marker) {
         marker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            // TODO: enable 확인
             if self?.mapView.isUserInteractionEnabled == true {
                 self?.disableAllWhileLoading()
                 if let clickedMarker = self?.clickedMarker {
@@ -898,6 +922,11 @@ private extension HomeViewController {
     }
     
     func configureConstraints() {
+        viewConstraints()
+        buttonConstraints()
+    }
+    
+    func viewConstraints() {
         NSLayoutConstraint.activate([
             mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
@@ -913,13 +942,6 @@ private extension HomeViewController {
         ])
         
         NSLayoutConstraint.activate([
-            locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            locationButton.widthAnchor.constraint(equalToConstant: 48),
-            locationButton.heightAnchor.constraint(equalToConstant: 48),
-            locationButtonBottomConstraint
-        ])
-        
-        NSLayoutConstraint.activate([
             searchBarView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 8),
             searchBarView.trailingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             searchBarView.heightAnchor.constraint(equalToConstant: 50),
@@ -929,6 +951,15 @@ private extension HomeViewController {
         NSLayoutConstraint.activate([
             filterButtonStackView.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             filterButtonStackView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 8)
+        ])
+    }
+    
+    func buttonConstraints() {
+        NSLayoutConstraint.activate([
+            locationButton.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            locationButton.widthAnchor.constraint(equalToConstant: 48),
+            locationButton.heightAnchor.constraint(equalToConstant: 48),
+            locationButtonBottomConstraint
         ])
         
         NSLayoutConstraint.activate([
@@ -996,9 +1027,24 @@ private extension HomeViewController {
         viewModel.action(input: .resetFilters)
     }
     
-    func setSearchStoresMarker(stores: [Store]) {
+    func resetMarker() {
         markers.forEach({ $0.mapView = nil })
         markers = []
+    }
+    
+    func resetLayout() {
+        backStoreListButton.isHidden = true
+        searchBarViewLeadingConstraint.constant = 16
+        clickedMarker?.deselect()
+        clickedMarker = nil
+    }
+    
+    func setMapViewPositionMode() {
+        mapView.mapView.positionMode = .normal
+        locationButton.setImage(UIImage.locationButtonNone, for: .normal)
+    }
+    
+    func setSearchStoresMarker(stores: [Store]) {
         stores.forEach { [weak self] store in
             guard let certificationType = store.certificationTypes.last else { return }
             self?.viewModel.action(input: .setMarker(
@@ -1006,13 +1052,7 @@ private extension HomeViewController {
                 certificationType: certificationType
             ))
         }
-        // TODO: 로직 ViewModel로 이동
-        if stores.isEmpty {
-            showToast(message: "검색 결과가 존재하지 않습니다.")
-            storeListViewController.emptyStoreList()
-        } else {
-            storeListViewController.updateList(stores: stores)
-        }
+        storeListViewController.updateList(stores: stores)
     }
     
     func showToast(message: String) {
@@ -1028,33 +1068,6 @@ private extension HomeViewController {
             ])
         }
         toastView.removeFromSuperviewWithAnimation()
-    }
-    
-}
-
-extension HomeViewController: CLLocationManagerDelegate {
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        viewModel.action(
-            input: .checkLocationAuthorization(
-                status: locationManager.authorizationStatus
-            )
-        )
-    }
-    
-}
-
-extension HomeViewController: NMFMapViewCameraDelegate {
-    
-    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
-        if reason == NMFMapChangedByGesture {
-            locationButton.setImage(UIImage.locationButtonNone, for: .normal)
-        }
-    }
-    
-    func mapViewCameraIdle(_ mapView: NMFMapView) {
-        endMoveCameraPositionObserver.accept(mapView.cameraPosition)
-        enableAllWhileLoading()
     }
     
     func disableAllWhileLoading() {
@@ -1085,6 +1098,31 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         researchKeywordButton.isUserInteractionEnabled = true
         backStoreListButton.isUserInteractionEnabled = true
         addStoreButton.isUserInteractionEnabled = true
+    }
+    
+}
+
+extension HomeViewController: CLLocationManagerDelegate {
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        viewModel.action(
+            input: .checkLocationAuthorization(
+                status: locationManager.authorizationStatus
+            )
+        )
+    }
+    
+}
+
+extension HomeViewController: NMFMapViewCameraDelegate {
+    
+    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+        viewModel.action(input: .mapViewChanged(reason: reason))
+    }
+    
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        endMoveCameraPositionObserver.accept(mapView.cameraPosition)
+        enableAllWhileLoading()
     }
     
 }

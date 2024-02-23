@@ -13,6 +13,8 @@ final class StoreInformationViewModelImpl: StoreInformationViewModel {
     let dependency: StoreInformationDependency
     
     let setDetailUIContentsOutput = PublishRelay<DetailViewContents>()
+    let openClosedContentOutput = PublishRelay<OpenClosedContent>()
+    let noneOpenClosedContentOutput = PublishRelay<Void>()
     let setSummaryUIContentsOutput = PublishRelay<SummaryViewContents>()
     let thumbnailImageOutput = PublishRelay<Data>()
     let summaryCallButtonOutput = PublishRelay<String>()
@@ -59,10 +61,14 @@ private extension StoreInformationViewModelImpl {
                     certificationTypes: store.certificationTypes,
                     address: store.address,
                     phoneNumber: store.phoneNumber ?? "전화번호 정보 없음",
-                    openClosedContent: openClosedContent,
                     detailOpeningHour: detailOpeningHour(openingHours: store.openingHour)
                 )
             )
+            if openClosedContent.openClosedType == .none {
+                noneOpenClosedContentOutput.accept(())
+            } else {
+                openClosedContentOutput.accept(openClosedContent)
+            }
         } catch {
             errorAlertOutput.accept(.client)
         }
