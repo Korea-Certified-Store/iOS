@@ -174,6 +174,8 @@
 		A8ACB7EF2B5AEBB900540BD1 /* GetStoreInformationUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */; };
 		A8ACB7F12B5AEBE300540BD1 /* GetStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */; };
 		A8AE14C62B86460F00A554A8 /* AutoCompletionKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14C52B86460F00A554A8 /* AutoCompletionKeyword.swift */; };
+		A8AE14D42B886DE400A554A8 /* ApplyDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14D32B886DE400A554A8 /* ApplyDiffableDataSource.swift */; };
+		A8AE14D62B886DF700A554A8 /* ReloadDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14D52B886DF700A554A8 /* ReloadDiffableDataSource.swift */; };
 		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
 		A8AF06702B80B7DC00E73574 /* AutoCompletionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */; };
 		A8AF06722B80BA5E00E73574 /* AutoCompletionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */; };
@@ -377,6 +379,8 @@
 		A8ACB7EE2B5AEBB800540BD1 /* GetStoreInformationUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImpl.swift; sourceTree = "<group>"; };
 		A8ACB7F02B5AEBE300540BD1 /* GetStoreInformationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCase.swift; sourceTree = "<group>"; };
 		A8AE14C52B86460F00A554A8 /* AutoCompletionKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionKeyword.swift; sourceTree = "<group>"; };
+		A8AE14D32B886DE400A554A8 /* ApplyDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyDiffableDataSource.swift; sourceTree = "<group>"; };
+		A8AE14D52B886DF700A554A8 /* ReloadDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadDiffableDataSource.swift; sourceTree = "<group>"; };
 		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
 		A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionDTO.swift; sourceTree = "<group>"; };
 		A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionResponse.swift; sourceTree = "<group>"; };
@@ -1004,6 +1008,8 @@
 				59B8865F2B6E7CF6005750EF /* UIViewController+Alert.swift */,
 				59B886612B6E8484005750EF /* UISheetPresentationController+Detent.swift */,
 				594376512B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift */,
+				A8AE14D32B886DE400A554A8 /* ApplyDiffableDataSource.swift */,
+				A8AE14D52B886DF700A554A8 /* ReloadDiffableDataSource.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1360,6 +1366,7 @@
 				A85659582B83CA5F00775C78 /* SplashDependency.swift in Sources */,
 				59F478B32B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift in Sources */,
 				A8ACB7ED2B59647400540BD1 /* OpeningHourError.swift in Sources */,
+				A8AE14D62B886DF700A554A8 /* ReloadDiffableDataSource.swift in Sources */,
 				5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */,
 				A821A37C2B74BC4B00089B8F /* CheckNetworkStatusUseCase.swift in Sources */,
 				A8A7E05D2B64AF1300D015E5 /* StoreInformationViewConstraints.swift in Sources */,
@@ -1412,6 +1419,7 @@
 				A8CD526A2B7B7DFE00917786 /* CellDelegate.swift in Sources */,
 				A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */,
 				59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */,
+				A8AE14D42B886DE400A554A8 /* ApplyDiffableDataSource.swift in Sources */,
 				A8ACB7D82B57BE7D00540BD1 /* StoreRepositoryError.swift in Sources */,
 				59503A7C2B80E8650006CF35 /* StoreUpdateRequestViewController.swift in Sources */,
 				59B8864A2B6A9CCB005750EF /* UIStackView+clear.swift in Sources */,
