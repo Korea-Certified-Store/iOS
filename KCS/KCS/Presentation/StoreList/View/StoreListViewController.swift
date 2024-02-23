@@ -91,9 +91,12 @@ final class StoreListViewController: UIViewController {
         }
     }()
     
+    private let applyDiffableDataSource = ApplyDiffableDataSource<Section, StoreTableViewCellContents>()
     private let viewModel: StoreListViewModel
     
-    init(viewModel: StoreListViewModel, listCellSelectedObserver: PublishRelay<Int>) {
+    init(viewModel: StoreListViewModel,
+         listCellSelectedObserver: PublishRelay<Int>
+    ) {
         self.viewModel = viewModel
         self.listCellSelectedObserver = listCellSelectedObserver
         
@@ -190,10 +193,11 @@ private extension StoreListViewController {
         viewModel.updateListOutput
             .bind { [weak self] contentsArray in
                 guard let self = self else { return }
-                var snapshot = NSDiffableDataSourceSnapshot<Section, StoreTableViewCellContents>()
-                snapshot.appendSections([.store])
-                snapshot.appendItems(contentsArray, toSection: Section.store)
-                dataSource.apply(snapshot)
+                applyDiffableDataSource.applyDiffableDataSource(
+                    dataSource: dataSource,
+                    section: [.store],
+                    data: contentsArray
+                )
             }
             .disposed(by: disposeBag)
     }

@@ -197,11 +197,16 @@ final class SearchViewController: UIViewController {
         )
     ]
     
+    private let applyDiffableDataSource = ApplyDiffableDataSource<AutoCompletionSection, AutoCompletionKeyword>()
+    private let reloadDiffableDataSource = ReloadDiffableDataSource<RecentHistorySection, String>()
     private let searchObserver: PublishRelay<String>
     private let textObserver: PublishRelay<String>
     private let viewModel: SearchViewModel
     
-    init(viewModel: SearchViewModel, searchObserver: PublishRelay<String>, textObserver: PublishRelay<String>) {
+    init(viewModel: SearchViewModel,
+         searchObserver: PublishRelay<String>,
+         textObserver: PublishRelay<String>
+    ) {
         self.viewModel = viewModel
         self.searchObserver = searchObserver
         self.textObserver = textObserver
@@ -300,18 +305,29 @@ private extension SearchViewController {
     func bind() {
         viewModel.recentSearchKeywordsOutput
             .bind { [weak self] keywords in
-                self?.noHistoryView.isHidden = true
-                self?.recentHistoryTableView.isHidden = false
-                self?.autoCompletionTableView.isHidden = true
-                self?.generateRecentHistoryData(data: keywords)
+                guard let self = self else { return }
+                noHistoryView.isHidden = true
+                recentHistoryTableView.isHidden = false
+                autoCompletionTableView.isHidden = true
+                reloadDiffableDataSource.applyReloadDiffableDataSource(
+                    dataSource: recentHistoryDataSource,
+                    section: [.recentHistory],
+                    data: keywords
+                )
             }
             .disposed(by: disposeBag)
         
         viewModel.autoCompleteKeywordsOutput
             .bind { [weak self] keywords in
-                self?.recentHistoryTableView.isHidden = true
-                self?.autoCompletionTableView.isHidden = false
-                self?.generateAutoCompletionData(data: keywords)
+                guard let self = self else { return }
+                let keywords = keywords.map { AutoCompletionKeyword(keyword: $0) }
+                recentHistoryTableView.isHidden = true
+                autoCompletionTableView.isHidden = false
+                applyDiffableDataSource.applyDiffableDataSource(
+                    dataSource: autoCompletionDataSource,
+                    section: [.autoCompletion],
+                    data: keywords
+                )
             }
             .disposed(by: disposeBag)
         
@@ -351,20 +367,6 @@ private extension SearchViewController {
 }
 
 private extension SearchViewController {
-    
-    func generateRecentHistoryData(data: [String]) {
-        var snapshot = NSDiffableDataSourceSnapshot<RecentHistorySection, String>()
-        snapshot.appendSections([.recentHistory])
-        snapshot.appendItems(data)
-        recentHistoryDataSource.applySnapshotUsingReloadData(snapshot)
-    }
-    
-    func generateAutoCompletionData(data: [String]) {
-        var snapshot = NSDiffableDataSourceSnapshot<AutoCompletionSection, AutoCompletionKeyword>()
-        snapshot.appendSections([.autoCompletion])
-        snapshot.appendItems(data.map { AutoCompletionKeyword(keyword: $0) })
-        autoCompletionDataSource.apply(snapshot, animatingDifferences: false)
-    }
     
     func search(text: String) {
         dismissViewController()
