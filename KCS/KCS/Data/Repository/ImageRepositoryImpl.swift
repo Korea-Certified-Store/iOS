@@ -11,6 +11,7 @@ import Alamofire
 struct ImageRepositoryImpl: ImageRepository {
     
     let cache: ImageCache
+    let storeAPI: StoreAPI<String>
     
     func fetchImage(
         url: String
@@ -20,7 +21,8 @@ struct ImageRepositoryImpl: ImageRepository {
                 if let imageData = cache.getImageData(for: imageURL as NSURL) {
                     observer.onNext(Data(imageData))
                 } else {
-                    AF.request(StoreAPI.getImage(url: url))
+                    guard let urlRequest = storeAPI.execute(requestValue: url) else { return Disposables.create() }
+                    AF.request(urlRequest)
                         .response(completionHandler: { response in
                             switch response.result {
                             case .success(let result):
