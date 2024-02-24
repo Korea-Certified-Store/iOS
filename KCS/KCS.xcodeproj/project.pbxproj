@@ -182,6 +182,7 @@
 		A8AE14D22B87894000A554A8 /* DeleteAllHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14D12B87894000A554A8 /* DeleteAllHistoryRepository.swift */; };
 		A8AE14D42B886DE400A554A8 /* ApplyDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14D32B886DE400A554A8 /* ApplyDiffableDataSource.swift */; };
 		A8AE14D62B886DF700A554A8 /* ReloadDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14D52B886DF700A554A8 /* ReloadDiffableDataSource.swift */; };
+		A8AE14E42B8A689900A554A8 /* APIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14E32B8A689900A554A8 /* APIType.swift */; };
 		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
 		A8AF06702B80B7DC00E73574 /* AutoCompletionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */; };
 		A8AF06722B80BA5E00E73574 /* AutoCompletionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */; };
@@ -393,6 +394,7 @@
 		A8AE14D12B87894000A554A8 /* DeleteAllHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAllHistoryRepository.swift; sourceTree = "<group>"; };
 		A8AE14D32B886DE400A554A8 /* ApplyDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyDiffableDataSource.swift; sourceTree = "<group>"; };
 		A8AE14D52B886DF700A554A8 /* ReloadDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadDiffableDataSource.swift; sourceTree = "<group>"; };
+		A8AE14E32B8A689900A554A8 /* APIType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIType.swift; sourceTree = "<group>"; };
 		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
 		A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionDTO.swift; sourceTree = "<group>"; };
 		A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionResponse.swift; sourceTree = "<group>"; };
@@ -893,6 +895,7 @@
 				59C306D42B50629400862625 /* Error */,
 				59C306B72B50033200862625 /* Response */,
 				59C306AB2B4FFABA00862625 /* DTO */,
+				A8AE14E32B8A689900A554A8 /* APIType.swift */,
 				59C306CA2B50357900862625 /* Router.swift */,
 				59C306CC2B5035B100862625 /* StoreAPI.swift */,
 			);
@@ -1472,6 +1475,7 @@
 				594376522B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift in Sources */,
 				59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */,
 				5943764A2B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift in Sources */,
+				A8AE14E42B8A689900A554A8 /* APIType.swift in Sources */,
 				596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */,
 				59C306B22B50001F00862625 /* FetchStoresRepositoryImpl.swift in Sources */,
 				59503A6C2B7980B80006CF35 /* AutoCompletionTableViewCell.swift in Sources */,

@@ -8,17 +8,6 @@
 import RxSwift
 import Alamofire
 
-enum APIType {
-    
-    case getStores
-    case getImage
-    case getSearchStores
-    case getAutoCompletion
-    case postNewStoreRequest
-    case storeUpdateRequest
-    
-}
-
 final class StoreAPI<T>: Router, URLRequestConvertible {
     
     typealias RequestValue = T
