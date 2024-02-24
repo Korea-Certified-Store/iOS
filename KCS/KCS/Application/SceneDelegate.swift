@@ -30,17 +30,29 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let imageCache = ImageCache()
         let userDefaults = UserDefaults()
         
+        // MARK: API
+        let getStoresAPI = StoreAPI<RequestLocationDTO>(type: .getStores)
+        let getImageAPI = StoreAPI<String>(type: .getImage)
+        let getSearchStoresAPI = StoreAPI<SearchDTO>(type: .getSearchStores)
+        let getAutoCompletionAPI = StoreAPI<AutoCompletionDTO>(type: .getAutoCompletion)
+        let postNewStoreRequestAPI = StoreAPI<NewStoreRequestDTO>(type: .postNewStoreRequest)
+        let storeUpdateRequestAPI = StoreAPI<UpdateRequestDTO>(type: .storeUpdateRequest)
+        
         // MARK: Repository
         let fetchStoresRepository = FetchStoresRepositoryImpl(
-            storeStorage: storeStorage
+            storeStorage: storeStorage,
+            storeAPI: getStoresAPI
         )
         let getStoresRepository = GetStoresRepositoryImpl(
             storeStorage: storeStorage
         )
         let fetchSearchStoresRepository = FetchSearchStoresRepositoryImpl(
-            storeStorage: storeStorage
+            storeStorage: storeStorage, 
+            storeAPI: getSearchStoresAPI
         )
-        let storeUpdateRequestRepository = StoreUpdateRequestRepositoryImpl()
+        let storeUpdateRequestRepository = StoreUpdateRequestRepositoryImpl(
+            storeAPI: storeUpdateRequestAPI
+        )
         let fetchStoreIDRepository = FetchStoreIDRepositoryImpl(
             storage: storeIDStorage
         )
@@ -56,9 +68,16 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let deleteAllHistoryRepository = DeleteAllHistoryRepositoryImpl(
             userDefaults: userDefaults
         )
-        let fetchAutoCompletionRepository = FetchAutoCompletionRepositoryImpl()
-        let postNewStoreRepository = PostNewStoreRepositoryImpl()
-        let imageRepository = ImageRepositoryImpl(cache: imageCache)
+        let fetchAutoCompletionRepository = FetchAutoCompletionRepositoryImpl(
+            storeAPI: getAutoCompletionAPI
+        )
+        let postNewStoreRepository = PostNewStoreRepositoryImpl(
+            storeAPI: postNewStoreRequestAPI
+        )
+        let imageRepository = ImageRepositoryImpl(
+            cache: imageCache,
+            storeAPI: getImageAPI
+        )
         let networkRepository = NetworkRepositoryImpl()
         
         // MARK: UseCase
