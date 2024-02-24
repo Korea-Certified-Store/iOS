@@ -9,11 +9,16 @@ import Alamofire
 
 protocol Router {
     
-    var baseURL: String? { get }
+    associatedtype RequestValue
+    
+    var type: APIType { get }
+    var baseURL: String? { get set }
     var path: String { get }
     var method: HTTPMethod { get }
     var headers: [String: String] { get }
-    var parameters: [String: Any]? { get }
+    var parameters: [String: Any]? { get set }
     var encoding: ParameterEncoding? { get }
+    
+    func execute(requestValue: RequestValue) -> URLRequest?
     
 }

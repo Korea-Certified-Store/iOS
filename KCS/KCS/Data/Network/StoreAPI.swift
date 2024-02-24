@@ -8,30 +8,59 @@
 import RxSwift
 import Alamofire
 
-enum StoreAPI {
+enum APIType {
     
-    case getStores(location: RequestLocationDTO)
-    case getImage(url: String)
-    case getSearchStores(searchDTO: SearchDTO)
-    case getAutoCompletion(autoCompletionDTO: AutoCompletionDTO)
-    case postNewStoreRequest(newStoreRequestDTO: NewStoreRequestDTO)
-    case storeUpdateRequest(updateRequestDTO: UpdateRequestDTO)
+    case getStores
+    case getImage
+    case getSearchStores
+    case getAutoCompletion
+    case postNewStoreRequest
+    case storeUpdateRequest
     
 }
 
-extension StoreAPI: Router, URLRequestConvertible {
+final class StoreAPI<T>: Router, URLRequestConvertible {
     
-    var baseURL: String? {
-        switch self {
-        case .getStores, .getSearchStores, .getAutoCompletion, .postNewStoreRequest, .storeUpdateRequest:
-            return getURL(type: .product)
-        case .getImage(let url):
-            return url
+    typealias RequestValue = T
+    
+    let type: APIType
+    
+    init(type: APIType) {
+        self.type = type
+    }
+    
+    func execute(requestValue: T) -> URLRequest? {
+        do {
+            switch type {
+            case .getStores:
+                baseURL = getURL(type: .develop)
+                parameters = try (requestValue as? RequestLocationDTO).asDictionary()
+            case .getImage:
+                baseURL = requestValue as? String
+                parameters = [:]
+            case .getSearchStores:
+                baseURL = getURL(type: .develop)
+                parameters = try (requestValue as? SearchDTO).asDictionary()
+            case .getAutoCompletion:
+                baseURL = getURL(type: .develop)
+                parameters = try (requestValue as? AutoCompletionDTO).asDictionary()
+            case .postNewStoreRequest:
+                baseURL = getURL(type: .develop)
+                parameters = try (requestValue as? NewStoreRequestDTO).asDictionary()
+            case .storeUpdateRequest:
+                baseURL = getURL(type: .develop)
+                parameters = try (requestValue as? UpdateRequestDTO).asDictionary()
+            }
+            return try asURLRequest()
+        } catch {
+            return nil
         }
     }
     
+    var baseURL: String?
+    
     var path: String {
-        switch self {
+        switch type {
         case .getStores:
             return "/storecertification/byLocation/v2"
         case .getImage:
@@ -48,7 +77,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     }
     
     var method: HTTPMethod {
-        switch self {
+        switch type {
         case .getStores, .getImage, .getSearchStores, .getAutoCompletion:
             return .get
         case .postNewStoreRequest, .storeUpdateRequest:
@@ -57,7 +86,7 @@ extension StoreAPI: Router, URLRequestConvertible {
     }
     
     var headers: [String: String] {
-        switch self {
+        switch type {
         case .getStores, .getSearchStores, .getAutoCompletion, .postNewStoreRequest, .storeUpdateRequest:
             return [
                 "Content-Type": "application/json"
@@ -67,31 +96,12 @@ extension StoreAPI: Router, URLRequestConvertible {
         }
     }
     
-    var parameters: [String: Any]? {
-        do {
-            switch self {
-            case let .getStores(location):
-                return try location.asDictionary()
-            case .getImage:
-                return [:]
-            case let .getSearchStores(searchDTO):
-                return try searchDTO.asDictionary()
-            case let .getAutoCompletion(autoCompletionDTO):
-                return try autoCompletionDTO.asDictionary()
-            case let .postNewStoreRequest(newStoreRequestDTO):
-                return try newStoreRequestDTO.asDictionary()
-            case let .storeUpdateRequest(updateRequestDTO):
-                return try updateRequestDTO.asDictionary()
-            }
-        } catch {
-            return nil
-        }
-    }
+    var parameters: [String: Any]?
     
     /// 파라미터로 보내야할 것이 있다면, URLEncoding.default
     /// 바디에 담아서 보내야할 것이 있다면, JSONEncoding.default
     var encoding: ParameterEncoding? {
-        switch self {
+        switch type {
         case .getStores, .getSearchStores, .getAutoCompletion:
             return URLEncoding.default
         case .postNewStoreRequest, .storeUpdateRequest:
