@@ -20,13 +20,13 @@ final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
         searchKeyword: String
     ) -> Observable<[String]> {
         return Observable<[String]>.create { [weak self] observer -> Disposable in
-            guard let self = self,
-                  let urlRequest = storeAPI.execute(
+            do {
+                guard let self = self else { return Disposables.create() }
+                AF.request(try storeAPI.execute(
                     requestValue: AutoCompletionDTO(
                         searchKeyword: searchKeyword
                     )
-                  ) else { return Disposables.create() }
-            AF.request(urlRequest)
+                ))
                 .responseDecodable(of: AutoCompletionResponse.self) { response in
                     switch response.result {
                     case .success(let result):
@@ -45,6 +45,9 @@ final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
                         }
                     }
                 }
+            } catch {
+                observer.onError(error)
+            }
             return Disposables.create()
         }
     }

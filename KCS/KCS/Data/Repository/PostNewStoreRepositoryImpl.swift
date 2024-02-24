@@ -18,15 +18,15 @@ final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
     
     func postNewStore(storeName: String, formattedAddress: String, certifications: [CertificationType]) -> Observable<Void> {
         return Observable<Void>.create { [weak self] observer -> Disposable in
-            guard let self = self,
-                  let urlRequest = storeAPI.execute(
+            do {
+                guard let self = self else { return Disposables.create() }
+                AF.request(try storeAPI.execute(
                     requestValue: NewStoreRequestDTO(
                         storeName: storeName,
                         formattedAddress: formattedAddress,
                         certifications: certifications.map { $0.rawValue }
                     )
-                  ) else { return Disposables.create() }
-            AF.request(urlRequest)
+                ))
                 .response { response in
                     switch response.result {
                     case .success:
@@ -44,6 +44,9 @@ final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
                         }
                     }
                 }
+            } catch {
+                observer.onError(error)
+            }
             return Disposables.create()
         }
     }

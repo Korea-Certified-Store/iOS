@@ -19,6 +19,6 @@ protocol Router {
     var parameters: [String: Any]? { get set }
     var encoding: ParameterEncoding? { get }
     
-    func execute(requestValue: RequestValue) -> URLRequest?
+    func execute(requestValue: RequestValue) throws -> URLRequest
     
 }

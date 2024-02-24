@@ -29,7 +29,7 @@ final class StoreAPI<T>: Router, URLRequestConvertible {
         self.type = type
     }
     
-    func execute(requestValue: T) -> URLRequest? {
+    func execute(requestValue: T) throws -> URLRequest {
         do {
             switch type {
             case .getStores:
@@ -52,8 +52,10 @@ final class StoreAPI<T>: Router, URLRequestConvertible {
                 parameters = try (requestValue as? UpdateRequestDTO).asDictionary()
             }
             return try asURLRequest()
+        } catch JSONContentsError.dictionaryConvert {
+            throw NetworkError.wrongParameters
         } catch {
-            return nil
+            throw NetworkError.wrongURL
         }
     }
     

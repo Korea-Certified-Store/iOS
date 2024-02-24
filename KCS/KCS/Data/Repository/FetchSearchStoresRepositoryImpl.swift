@@ -20,15 +20,15 @@ final class FetchSearchStoresRepositoryImpl: FetchSearchStoresRepository {
     
     func fetchSearchStores(location: Location, keyword: String) -> Observable<[Store]> {
         return Observable<[Store]>.create { [weak self] observer -> Disposable in
-            guard let self = self,
-                  let urlRequest = storeAPI.execute(
+            do {
+                guard let self = self else { return Disposables.create() }
+                AF.request(try storeAPI.execute(
                     requestValue: SearchDTO(
                         currLong: location.longitude,
                         currLat: location.latitude,
                         searchKeyword: keyword
                     )
-                  ) else { return Disposables.create() }
-            AF.request(urlRequest)
+                ))
                 .responseDecodable(of: SearchStoreResponse.self) { [weak self] response in
                     do {
                         switch response.result {
@@ -52,6 +52,9 @@ final class FetchSearchStoresRepositoryImpl: FetchSearchStoresRepository {
                         observer.onError(error)
                     }
                 }
+            } catch {
+                observer.onError(error)
+            }
             return Disposables.create()
         }
     }
