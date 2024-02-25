@@ -11,7 +11,7 @@ import Alamofire
 struct ImageRepositoryImpl: ImageRepository {
     
     let cache: ImageCache
-    let storeAPI: StoreAPI<String>
+    let storeAPI: Router
     
     func fetchImage(
         url: String

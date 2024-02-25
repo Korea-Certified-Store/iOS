@@ -8,9 +8,7 @@
 import RxSwift
 import Alamofire
 
-final class StoreAPI<T>: Router, URLRequestConvertible {
-    
-    typealias RequestValue = T
+final class StoreAPI: Router {
     
     let type: APIType
     
@@ -18,27 +16,15 @@ final class StoreAPI<T>: Router, URLRequestConvertible {
         self.type = type
     }
     
-    func execute(requestValue: T) throws -> URLRequest {
+    func execute<T: Encodable>(requestValue: T) throws -> URLRequest {
         do {
             switch type {
-            case .getStores:
+            case .getStores, .getSearchStores, .getAutoCompletion, .postNewStoreRequest, .storeUpdateRequest:
                 baseURL = getURL(type: .develop)
-                parameters = try (requestValue as? RequestLocationDTO).asDictionary()
+                parameters = try requestValue.asDictionary()
             case .getImage:
                 baseURL = requestValue as? String
                 parameters = [:]
-            case .getSearchStores:
-                baseURL = getURL(type: .develop)
-                parameters = try (requestValue as? SearchDTO).asDictionary()
-            case .getAutoCompletion:
-                baseURL = getURL(type: .develop)
-                parameters = try (requestValue as? AutoCompletionDTO).asDictionary()
-            case .postNewStoreRequest:
-                baseURL = getURL(type: .develop)
-                parameters = try (requestValue as? NewStoreRequestDTO).asDictionary()
-            case .storeUpdateRequest:
-                baseURL = getURL(type: .develop)
-                parameters = try (requestValue as? UpdateRequestDTO).asDictionary()
             }
             return try asURLRequest()
         } catch JSONContentsError.dictionaryConvert {

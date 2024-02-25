@@ -7,9 +7,7 @@
 
 import Alamofire
 
-protocol Router {
-    
-    associatedtype RequestValue
+protocol Router: URLRequestConvertible {
     
     var type: APIType { get }
     var baseURL: String? { get set }
@@ -19,6 +17,6 @@ protocol Router {
     var parameters: [String: Any]? { get set }
     var encoding: ParameterEncoding? { get }
     
-    func execute(requestValue: RequestValue) throws -> URLRequest
+    func execute<T: Encodable>(requestValue: T) throws -> URLRequest
     
 }
