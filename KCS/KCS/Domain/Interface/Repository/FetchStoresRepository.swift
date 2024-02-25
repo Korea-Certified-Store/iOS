@@ -12,7 +12,7 @@ protocol FetchStoresRepository {
     
     var storeStorage: StoreStorage { get }
     var storeAPI: any Router { get }
-    var session: NetworkSession { get }
+    var session: Session { get }
     
     func fetchStores(
         requestLocation: RequestLocation,

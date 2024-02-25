@@ -11,9 +11,9 @@ import Alamofire
 final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
     
     let storeAPI: any Router
-    let session: NetworkSession
+    let session: Session
     
-    init(storeAPI: any Router, session: NetworkSession) {
+    init(storeAPI: any Router, session: Session) {
         self.storeAPI = storeAPI
         self.session = session
     }

@@ -12,9 +12,9 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
     
     let storeStorage: StoreStorage
     let storeAPI: any Router
-    let session: NetworkSession
+    let session: Session
     
-    init(storeStorage: StoreStorage, storeAPI: any Router, session: NetworkSession) {
+    init(storeStorage: StoreStorage, storeAPI: any Router, session: Session) {
         self.storeStorage = storeStorage
         self.storeAPI = storeAPI
         self.session = session
@@ -63,6 +63,7 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
                                 ))
                             }
                         case .failure(let error):
+                            dump(error)
                             if let underlyingError = error.underlyingError as? NSError {
                                 switch underlyingError.code {
                                 case URLError.notConnectedToInternet.rawValue:

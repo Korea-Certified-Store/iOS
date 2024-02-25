@@ -12,9 +12,9 @@ final class FetchSearchStoresRepositoryImpl: FetchSearchStoresRepository {
     
     let storeStorage: StoreStorage
     let storeAPI: any Router
-    let session: NetworkSession
+    let session: Session
     
-    init(storeStorage: StoreStorage, storeAPI: any Router, session: NetworkSession) {
+    init(storeStorage: StoreStorage, storeAPI: any Router, session: Session) {
         self.storeStorage = storeStorage
         self.storeAPI = storeAPI
         self.session = session

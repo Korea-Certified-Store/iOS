@@ -39,7 +39,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let postNewStoreRequestAPI = StoreAPI(type: .postNewStoreRequest)
         let storeUpdateRequestAPI = StoreAPI(type: .storeUpdateRequest)
         
-        let session = AlamofireSession()
+        let session = Session.default
         
         // MARK: Repository
         let fetchStoresRepository = FetchStoresRepositoryImpl(

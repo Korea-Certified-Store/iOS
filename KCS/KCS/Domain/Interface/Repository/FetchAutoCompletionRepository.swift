@@ -11,7 +11,7 @@ import Alamofire
 protocol FetchAutoCompletionRepository {
     
     var storeAPI: any Router { get }
-    var session: NetworkSession { get }
+    var session: Session { get }
     
     func fetchAutoCompletion(
         searchKeyword: String

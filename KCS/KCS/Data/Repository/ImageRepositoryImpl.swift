@@ -12,7 +12,7 @@ struct ImageRepositoryImpl: ImageRepository {
     
     let cache: ImageCache
     let storeAPI: any Router
-    let session: NetworkSession
+    let session: Session
     
     func fetchImage(
         url: String
@@ -24,7 +24,7 @@ struct ImageRepositoryImpl: ImageRepository {
                 } else {
                     do {
                         try storeAPI.execute(requestValue: url)
-                        AF.request(storeAPI)
+                        session.request(storeAPI)
                             .response(completionHandler: { response in
                                 switch response.result {
                                 case .success(let result):

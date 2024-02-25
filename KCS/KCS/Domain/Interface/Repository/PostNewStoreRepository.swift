@@ -11,7 +11,7 @@ import Alamofire
 protocol PostNewStoreRepository {
     
     var storeAPI: any Router { get }
-    var session: NetworkSession { get }
+    var session: Session { get }
     
     func postNewStore(
         storeName: String,
