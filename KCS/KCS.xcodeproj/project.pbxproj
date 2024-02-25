@@ -1077,6 +1077,39 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
+		A8AE14DA2B89F16800A554A8 /* UseCaseTest */ = {
+			isa = PBXGroup;
+			children = (
+				A8AE14E52B8B265100A554A8 /* Splash */,
+			);
+			path = UseCaseTest;
+			sourceTree = "<group>";
+		};
+		A8AE14DE2B89F37300A554A8 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				A8AE14E22B8A1BC200A554A8 /* Repository */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		A8AE14E22B8A1BC200A554A8 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				A8AE14EA2B8B2D3E00A554A8 /* MockSuccessNetworkRepository.swift */,
+				A8AE14EC2B8B303500A554A8 /* MockFailureNetworkRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		A8AE14E52B8B265100A554A8 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				A8AE14E82B8B2B4000A554A8 /* CheckNetworkStatusUseCaseImplTests.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
 		E99F20FF9A30DCF9C51285A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
