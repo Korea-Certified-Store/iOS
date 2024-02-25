@@ -10,9 +10,9 @@ import Alamofire
 
 final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
     
-    let storeAPI: StoreAPI<AutoCompletionDTO>
+    let storeAPI: Router
     
-    init(storeAPI: StoreAPI<AutoCompletionDTO>) {
+    init(storeAPI: Router) {
         self.storeAPI = storeAPI
     }
     

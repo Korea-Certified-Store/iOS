@@ -10,9 +10,9 @@ import Alamofire
 
 final class StoreUpdateRequestRepositoryImpl: StoreUpdateRequestRepository {
     
-    let storeAPI: StoreAPI<UpdateRequestDTO>
+    let storeAPI: Router
     
-    init(storeAPI: StoreAPI<UpdateRequestDTO>) {
+    init(storeAPI: Router) {
         self.storeAPI = storeAPI
     }
     
