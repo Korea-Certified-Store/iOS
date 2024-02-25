@@ -27,7 +27,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // MARK: PersistentStorage
         let storeStorage = StoreStorage()
         let storeIDStorage = StoreIDStorage()
-        let imageCache = ImageCache()
+        let imageCache = ImageCache(cache: NSCache<NSURL, NSData>())
         let userDefaults = UserDefaults()
         
         // MARK: API
