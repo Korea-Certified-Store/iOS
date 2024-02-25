@@ -7,8 +7,6 @@
 
 import XCTest
 @testable import KCS
-import RxSwift
-import RxTest
 
 final class CheckNetworkStatusUseCaseImplTests: XCTestCase {
     
