@@ -14,7 +14,6 @@ struct DetailViewContents {
     let certificationTypes: [CertificationType]
     let address: String
     let phoneNumber: String
-    let openClosedContent: OpenClosedContent
     let detailOpeningHour: [DetailOpeningHour]
     
 }

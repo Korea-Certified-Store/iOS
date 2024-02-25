@@ -303,6 +303,12 @@ private extension SearchViewController {
     }
     
     func bind() {
+        bindRecentHistory()
+        bindAutoCompletion()
+        bindSearch()
+    }
+    
+    func bindRecentHistory() {
         viewModel.recentSearchKeywordsOutput
             .bind { [weak self] keywords in
                 guard let self = self else { return }
@@ -317,6 +323,15 @@ private extension SearchViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.noRecentHistoryOutput
+            .bind { [weak self] in
+                guard let self = self else { return }
+                noHistoryView.isHidden = false
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindAutoCompletion() {
         viewModel.autoCompleteKeywordsOutput
             .bind { [weak self] keywords in
                 guard let self = self else { return }
@@ -336,7 +351,9 @@ private extension SearchViewController {
                 self?.textObserver.accept(text)
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindSearch() {
         viewModel.searchOutput
             .bind { [weak self] keyword in
                 self?.search(text: keyword)
@@ -346,13 +363,6 @@ private extension SearchViewController {
         viewModel.noKeywordToastOutput
             .bind { [weak self] _ in
                 self?.showToast(message: "검색어를 입력하세요.")
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.noRecentHistoryOutput
-            .bind { [weak self] in
-                guard let self = self else { return }
-                noHistoryView.isHidden = false
             }
             .disposed(by: disposeBag)
         

@@ -32,6 +32,7 @@ enum HomeViewModelInputCase {
     )
     case resetFilters
     case dimViewTapGestureEnded
+    case mapViewChanged(reason: Int)
     
 }
 
@@ -46,6 +47,7 @@ protocol HomeViewModelOutput {
     var getStoreInformationOutput: PublishRelay<Store> { get }
     var refreshDoneOutput: PublishRelay<Bool> { get }
     var filteredStoresOutput: PublishRelay<[FilteredStores]> { get }
+    var noFilteredStoreOutput: PublishRelay<Void> { get }
     var locationButtonOutput: PublishRelay<NMFMyPositionMode> { get }
     var setMarkerOutput: PublishRelay<MarkerContents> { get }
     var locationAuthorizationStatusDeniedOutput: PublishRelay<Void> { get }
@@ -58,6 +60,8 @@ protocol HomeViewModelOutput {
     var dimViewTapGestureEndedOutput: PublishRelay<Void> { get }
     var searchStoresOutput: PublishRelay<[Store]> { get }
     var searchOneStoreOutput: PublishRelay<Store> { get }
+    var noSearchStoreOutput: PublishRelay<Void> { get }
     var moreStoreButtonHiddenOutput: PublishRelay<Void> { get }
+    var mapViewChangedByGesture: PublishRelay<Void> { get }
     
 }

@@ -28,6 +28,8 @@ protocol StoreInformationViewModelInput {
 protocol StoreInformationViewModelOutput {
     
     var setDetailUIContentsOutput: PublishRelay<DetailViewContents> { get }
+    var openClosedContentOutput: PublishRelay<OpenClosedContent> { get }
+    var noneOpenClosedContentOutput: PublishRelay<Void> { get }
     var setSummaryUIContentsOutput: PublishRelay<SummaryViewContents> { get }
     var thumbnailImageOutput: PublishRelay<Data> { get }
     var summaryCallButtonOutput: PublishRelay<String> { get }

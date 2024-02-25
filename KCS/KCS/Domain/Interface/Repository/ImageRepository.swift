@@ -10,6 +10,7 @@ import RxSwift
 protocol ImageRepository {
     
     var cache: ImageCache { get }
+    var storeAPI: StoreAPI<String> { get }
     
     func fetchImage(
         url: String
