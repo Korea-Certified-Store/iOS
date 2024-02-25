@@ -10,7 +10,7 @@ import RxSwift
 protocol FetchSearchStoresRepository {
     
     var storeStorage: StoreStorage { get }
-    var storeAPI: StoreAPI<SearchDTO> { get }
+    var storeAPI: Router { get }
     
     func fetchSearchStores(
         location: Location,

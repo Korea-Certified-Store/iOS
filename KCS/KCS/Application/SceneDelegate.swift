@@ -31,12 +31,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let userDefaults = UserDefaults()
         
         // MARK: API
-        let getStoresAPI = StoreAPI<RequestLocationDTO>(type: .getStores)
-        let getImageAPI = StoreAPI<String>(type: .getImage)
-        let getSearchStoresAPI = StoreAPI<SearchDTO>(type: .getSearchStores)
-        let getAutoCompletionAPI = StoreAPI<AutoCompletionDTO>(type: .getAutoCompletion)
-        let postNewStoreRequestAPI = StoreAPI<NewStoreRequestDTO>(type: .postNewStoreRequest)
-        let storeUpdateRequestAPI = StoreAPI<UpdateRequestDTO>(type: .storeUpdateRequest)
+        let getStoresAPI = StoreAPI(type: .getStores)
+        let getImageAPI = StoreAPI(type: .getImage)
+        let getSearchStoresAPI = StoreAPI(type: .getSearchStores)
+        let getAutoCompletionAPI = StoreAPI(type: .getAutoCompletion)
+        let postNewStoreRequestAPI = StoreAPI(type: .postNewStoreRequest)
+        let storeUpdateRequestAPI = StoreAPI(type: .storeUpdateRequest)
         
         // MARK: Repository
         let fetchStoresRepository = FetchStoresRepositoryImpl(

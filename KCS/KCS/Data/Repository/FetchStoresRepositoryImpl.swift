@@ -11,9 +11,9 @@ import Alamofire
 final class FetchStoresRepositoryImpl: FetchStoresRepository {
     
     let storeStorage: StoreStorage
-    let storeAPI: StoreAPI<RequestLocationDTO>
+    let storeAPI: Router
     
-    init(storeStorage: StoreStorage, storeAPI: StoreAPI<RequestLocationDTO>) {
+    init(storeStorage: StoreStorage, storeAPI: Router) {
         self.storeStorage = storeStorage
         self.storeAPI = storeAPI
     }

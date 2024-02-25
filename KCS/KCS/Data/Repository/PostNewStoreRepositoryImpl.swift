@@ -10,9 +10,9 @@ import Alamofire
 
 final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
     
-    let storeAPI: StoreAPI<NewStoreRequestDTO>
+    let storeAPI: Router
     
-    init(storeAPI: StoreAPI<NewStoreRequestDTO>) {
+    init(storeAPI: Router) {
         self.storeAPI = storeAPI
     }
     
