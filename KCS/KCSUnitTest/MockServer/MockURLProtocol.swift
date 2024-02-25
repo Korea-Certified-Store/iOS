@@ -100,7 +100,7 @@ extension MockURLProtocol {
         MockURLProtocol.responseType = MockURLProtocol.ResponseType.success(HTTPURLResponse(url: URL(string: urlString)!, statusCode: code, httpVersion: nil, headerFields: nil)!)
     }
     
-    static func responseWithDTO(type: MockJSONFile) {
+    static func setResponseFile(type: MockJSONFile) {
         MockURLProtocol.jsonFile = type
     }
     
