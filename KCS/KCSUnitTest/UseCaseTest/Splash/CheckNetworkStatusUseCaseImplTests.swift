@@ -12,14 +12,14 @@ final class CheckNetworkStatusUseCaseImplTests: XCTestCase {
     
     private var checkNetworkStatusUseCase: CheckNetworkStatusUseCase!
     
-    func test_네트워크가_안정된_경우_execute는_True를_반환한다() {
+    func test_네트워크가_안정한_경우_true를_반환한다() {
         checkNetworkStatusUseCase = CheckNetworkStatusUseCaseImpl(
             repository: MockSuccessNetworkRepository()
         )
         XCTAssertTrue(checkNetworkStatusUseCase.execute())
     }
     
-    func test_네트워크가_불안정한_경우_execute는_False를_반환한다() {
+    func test_네트워크가_불안정한_경우_false를_반환한다() {
         checkNetworkStatusUseCase = CheckNetworkStatusUseCaseImpl(
             repository: MockFailureNetworkRepository()
         )
