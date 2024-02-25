@@ -6,10 +6,11 @@
 //
 
 import RxSwift
+import Alamofire
 
 protocol FetchAutoCompletionRepository {
     
-    var storeAPI: Router { get }
+    var session: Session { get }
     
     func fetchAutoCompletion(
         searchKeyword: String

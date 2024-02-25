@@ -8,36 +8,30 @@
 import RxSwift
 import Alamofire
 
-final class StoreAPI: Router {
+enum StoreAPI {
     
-    let type: APIType
+    case getStores(location: RequestLocationDTO)
+    case getImage(url: String)
+    case getSearchStores(searchDTO: SearchDTO)
+    case getAutoCompletion(autoCompletionDTO: AutoCompletionDTO)
+    case postNewStoreRequest(newStoreRequestDTO: NewStoreRequestDTO)
+    case storeUpdateRequest(updateRequestDTO: UpdateRequestDTO)
     
-    init(type: APIType) {
-        self.type = type
-    }
+}
+
+extension StoreAPI: Router, URLRequestConvertible {
     
-    func execute<T: Encodable>(requestValue: T) throws -> URLRequest {
-        do {
-            switch type {
-            case .getStores, .getSearchStores, .getAutoCompletion, .postNewStoreRequest, .storeUpdateRequest:
-                baseURL = getURL(type: .develop)
-                parameters = try requestValue.asDictionary()
-            case .getImage:
-                baseURL = requestValue as? String
-                parameters = [:]
-            }
-            return try asURLRequest()
-        } catch JSONContentsError.dictionaryConvert {
-            throw NetworkError.wrongParameters
-        } catch {
-            throw NetworkError.wrongURL
+    var baseURL: String? {
+        switch self {
+        case .getStores, .getSearchStores, .getAutoCompletion, .postNewStoreRequest, .storeUpdateRequest:
+            return getURL(type: .product)
+        case .getImage(let url):
+            return url
         }
     }
     
-    var baseURL: String?
-    
     var path: String {
-        switch type {
+        switch self {
         case .getStores:
             return "/storecertification/byLocation/v2"
         case .getImage:
@@ -54,7 +48,7 @@ final class StoreAPI: Router {
     }
     
     var method: HTTPMethod {
-        switch type {
+        switch self {
         case .getStores, .getImage, .getSearchStores, .getAutoCompletion:
             return .get
         case .postNewStoreRequest, .storeUpdateRequest:
@@ -63,7 +57,7 @@ final class StoreAPI: Router {
     }
     
     var headers: [String: String] {
-        switch type {
+        switch self {
         case .getStores, .getSearchStores, .getAutoCompletion, .postNewStoreRequest, .storeUpdateRequest:
             return [
                 "Content-Type": "application/json"
@@ -73,12 +67,31 @@ final class StoreAPI: Router {
         }
     }
     
-    var parameters: [String: Any]?
+    var parameters: [String: Any]? {
+        do {
+            switch self {
+            case let .getStores(location):
+                return try location.asDictionary()
+            case .getImage:
+                return [:]
+            case let .getSearchStores(searchDTO):
+                return try searchDTO.asDictionary()
+            case let .getAutoCompletion(autoCompletionDTO):
+                return try autoCompletionDTO.asDictionary()
+            case let .postNewStoreRequest(newStoreRequestDTO):
+                return try newStoreRequestDTO.asDictionary()
+            case let .storeUpdateRequest(updateRequestDTO):
+                return try updateRequestDTO.asDictionary()
+            }
+        } catch {
+            return nil
+        }
+    }
     
     /// 파라미터로 보내야할 것이 있다면, URLEncoding.default
     /// 바디에 담아서 보내야할 것이 있다면, JSONEncoding.default
     var encoding: ParameterEncoding? {
-        switch type {
+        switch self {
         case .getStores, .getSearchStores, .getAutoCompletion:
             return URLEncoding.default
         case .postNewStoreRequest, .storeUpdateRequest:

@@ -6,11 +6,12 @@
 //
 
 import RxSwift
+import Alamofire
 
 protocol FetchStoresRepository {
     
     var storeStorage: StoreStorage { get }
-    var storeAPI: Router { get }
+    var session: Session { get }
     
     func fetchStores(
         requestLocation: RequestLocation,

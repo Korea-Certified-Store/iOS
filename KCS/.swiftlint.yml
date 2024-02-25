@@ -8,6 +8,7 @@ opt_in_rules:
 excluded:
     - Pods
     - KCS/Application
+    - KCSUnitTest
 
 line_length: 140
 cyclomatic_complexity: 20
