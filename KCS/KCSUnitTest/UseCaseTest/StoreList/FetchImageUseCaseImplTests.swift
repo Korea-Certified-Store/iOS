@@ -9,7 +9,6 @@ import XCTest
 @testable import KCS
 import RxSwift
 import RxTest
-import RxBlocking
 
 final class FetchImageUseCaseImplTests: XCTestCase {
     
