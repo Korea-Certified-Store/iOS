@@ -8,6 +8,7 @@
 import UIKit
 import RxRelay
 import NMapsMap
+import Alamofire
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -38,20 +39,25 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let postNewStoreRequestAPI = StoreAPI(type: .postNewStoreRequest)
         let storeUpdateRequestAPI = StoreAPI(type: .storeUpdateRequest)
         
+        let session = AlamofireSession()
+        
         // MARK: Repository
         let fetchStoresRepository = FetchStoresRepositoryImpl(
             storeStorage: storeStorage,
-            storeAPI: getStoresAPI
+            storeAPI: getStoresAPI,
+            session: session
         )
         let getStoresRepository = GetStoresRepositoryImpl(
             storeStorage: storeStorage
         )
         let fetchSearchStoresRepository = FetchSearchStoresRepositoryImpl(
             storeStorage: storeStorage, 
-            storeAPI: getSearchStoresAPI
+            storeAPI: getSearchStoresAPI,
+            session: session
         )
         let storeUpdateRequestRepository = StoreUpdateRequestRepositoryImpl(
-            storeAPI: storeUpdateRequestAPI
+            storeAPI: storeUpdateRequestAPI,
+            session: session
         )
         let fetchStoreIDRepository = FetchStoreIDRepositoryImpl(
             storage: storeIDStorage
@@ -69,14 +75,17 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             userDefaults: userDefaults
         )
         let fetchAutoCompletionRepository = FetchAutoCompletionRepositoryImpl(
-            storeAPI: getAutoCompletionAPI
+            storeAPI: getAutoCompletionAPI,
+            session: session
         )
         let postNewStoreRepository = PostNewStoreRepositoryImpl(
-            storeAPI: postNewStoreRequestAPI
+            storeAPI: postNewStoreRequestAPI,
+            session: session
         )
         let imageRepository = ImageRepositoryImpl(
             cache: imageCache,
-            storeAPI: getImageAPI
+            storeAPI: getImageAPI,
+            session: session
         )
         let networkRepository = NetworkRepositoryImpl()
         

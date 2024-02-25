@@ -12,10 +12,12 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
     
     let storeStorage: StoreStorage
     let storeAPI: any Router
+    let session: NetworkSession
     
-    init(storeStorage: StoreStorage, storeAPI: any Router) {
+    init(storeStorage: StoreStorage, storeAPI: any Router, session: NetworkSession) {
         self.storeStorage = storeStorage
         self.storeAPI = storeAPI
+        self.session = session
     }
     
     func fetchStores(
@@ -37,7 +39,7 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
                         neLat: requestLocation.northEast.latitude
                     )
                 )
-                AF.request(storeAPI)
+                session.request(storeAPI)
                 .responseDecodable(of: RefreshStoreResponse.self) { [weak self] response in
                     do {
                         switch response.result {

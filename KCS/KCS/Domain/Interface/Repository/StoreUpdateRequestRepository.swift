@@ -6,10 +6,12 @@
 //
 
 import RxSwift
+import Alamofire
 
 protocol StoreUpdateRequestRepository {
     
     var storeAPI: any Router { get }
+    var session: NetworkSession { get }
     
     func storeUpdateReqeust(
         type: StoreUpdateRequestType,

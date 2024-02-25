@@ -11,9 +11,11 @@ import Alamofire
 final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
     
     let storeAPI: any Router
+    let session: NetworkSession
     
-    init(storeAPI: any Router) {
+    init(storeAPI: any Router, session: NetworkSession) {
         self.storeAPI = storeAPI
+        self.session = session
     }
     
     func postNewStore(storeName: String, formattedAddress: String, certifications: [CertificationType]) -> Observable<Void> {
@@ -27,7 +29,7 @@ final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
                         certifications: certifications.map { $0.rawValue }
                     )
                 )
-                AF.request(storeAPI)
+                session.request(storeAPI)
                 .response { response in
                     switch response.result {
                     case .success:

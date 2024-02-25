@@ -11,9 +11,11 @@ import Alamofire
 final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
     
     let storeAPI: any Router
+    let session: NetworkSession
     
-    init(storeAPI: any Router) {
+    init(storeAPI: any Router, session: NetworkSession) {
         self.storeAPI = storeAPI
+        self.session = session
     }
     
     func fetchAutoCompletion(
@@ -27,7 +29,7 @@ final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
                         searchKeyword: searchKeyword
                     )
                 )
-                AF.request(storeAPI)
+                session.request(storeAPI)
                 .responseDecodable(of: AutoCompletionResponse.self) { response in
                     switch response.result {
                     case .success(let result):

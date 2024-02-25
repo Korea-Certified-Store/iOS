@@ -6,11 +6,13 @@
 //
 
 import RxSwift
+import Alamofire
 
 protocol ImageRepository {
     
     var cache: ImageCache { get }
     var storeAPI: any Router { get }
+    var session: NetworkSession { get }
     
     func fetchImage(
         url: String

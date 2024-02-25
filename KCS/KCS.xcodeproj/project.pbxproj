@@ -34,6 +34,7 @@
 		594376882B8B1F21005B97B2 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376872B8B1F21005B97B2 /* MockServer.swift */; };
 		5943768A2B8B2A54005B97B2 /* APIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376892B8B2A54005B97B2 /* APIType.swift */; };
 		5943768C2B8B322A005B97B2 /* Example.json in Resources */ = {isa = PBXBuildFile; fileRef = 5943768B2B8B322A005B97B2 /* Example.json */; };
+		5943768E2B8B4481005B97B2 /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943768D2B8B4481005B97B2 /* NetworkSession.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
 		59503A4E2B751B0B0006CF35 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A4D2B751B0B0006CF35 /* SearchViewController.swift */; };
 		59503A522B751FCC0006CF35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59503A512B751FCC0006CF35 /* SearchViewModel.swift */; };
@@ -243,6 +244,7 @@
 		594376872B8B1F21005B97B2 /* MockServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServer.swift; sourceTree = "<group>"; };
 		594376892B8B2A54005B97B2 /* APIType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIType.swift; sourceTree = "<group>"; };
 		5943768B2B8B322A005B97B2 /* Example.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Example.json; sourceTree = "<group>"; };
+		5943768D2B8B4481005B97B2 /* NetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		59503A4D2B751B0B0006CF35 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59503A512B751FCC0006CF35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -920,6 +922,7 @@
 				59C306CA2B50357900862625 /* Router.swift */,
 				59C306CC2B5035B100862625 /* StoreAPI.swift */,
 				594376892B8B2A54005B97B2 /* APIType.swift */,
+				5943768D2B8B4481005B97B2 /* NetworkSession.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1376,6 +1379,7 @@
 			files = (
 				A821A3762B74B9F900089B8F /* NetworkRepositoryImpl.swift in Sources */,
 				59B886482B6A5CE9005750EF /* StoreListViewModelImpl.swift in Sources */,
+				5943768E2B8B4481005B97B2 /* NetworkSession.swift in Sources */,
 				A8722F082B7662F5001ED988 /* DeleteRecentSearchHistoryUseCaseImpl.swift in Sources */,
 				A83367BD2B70A52900E0A844 /* OnboardStorage.swift in Sources */,
 				A8AF06782B80BE7200E73574 /* GetAutoCompletionUseCase.swift in Sources */,

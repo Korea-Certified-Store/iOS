@@ -12,10 +12,12 @@ final class FetchSearchStoresRepositoryImpl: FetchSearchStoresRepository {
     
     let storeStorage: StoreStorage
     let storeAPI: any Router
+    let session: NetworkSession
     
-    init(storeStorage: StoreStorage, storeAPI: any Router) {
+    init(storeStorage: StoreStorage, storeAPI: any Router, session: NetworkSession) {
         self.storeStorage = storeStorage
         self.storeAPI = storeAPI
+        self.session = session
     }
     
     func fetchSearchStores(location: Location, keyword: String) -> Observable<[Store]> {
@@ -29,7 +31,7 @@ final class FetchSearchStoresRepositoryImpl: FetchSearchStoresRepository {
                         searchKeyword: keyword
                     )
                 )
-                AF.request(storeAPI)
+                session.request(storeAPI)
                 .responseDecodable(of: SearchStoreResponse.self) { [weak self] response in
                     do {
                         switch response.result {

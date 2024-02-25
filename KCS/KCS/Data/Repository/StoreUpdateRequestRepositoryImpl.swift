@@ -11,9 +11,11 @@ import Alamofire
 final class StoreUpdateRequestRepositoryImpl: StoreUpdateRequestRepository {
     
     let storeAPI: any Router
+    let session: NetworkSession
     
-    init(storeAPI: any Router) {
+    init(storeAPI: any Router, session: NetworkSession) {
         self.storeAPI = storeAPI
+        self.session = session
     }
     
     func storeUpdateReqeust(type: StoreUpdateRequestType, storeID: Int, content: String) -> Observable<Void> {
@@ -27,7 +29,7 @@ final class StoreUpdateRequestRepositoryImpl: StoreUpdateRequestRepository {
                         contents: content
                     )
                 )
-                AF.request(storeAPI)
+                session.request(storeAPI)
                 .response { response in
                     switch response.result {
                     case .success:

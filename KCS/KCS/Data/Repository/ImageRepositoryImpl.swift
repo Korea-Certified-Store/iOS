@@ -12,6 +12,7 @@ struct ImageRepositoryImpl: ImageRepository {
     
     let cache: ImageCache
     let storeAPI: any Router
+    let session: NetworkSession
     
     func fetchImage(
         url: String
