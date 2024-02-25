@@ -9,6 +9,8 @@ import RxSwift
 
 protocol PostNewStoreRepository {
     
+    var storeAPI: StoreAPI<NewStoreRequestDTO> { get }
+    
     func postNewStore(
         storeName: String,
         formattedAddress: String,

@@ -9,6 +9,8 @@ import RxSwift
 
 protocol FetchAutoCompletionRepository {
     
+    var storeAPI: StoreAPI<AutoCompletionDTO> { get }
+    
     func fetchAutoCompletion(
         searchKeyword: String
     ) -> Observable<[String]>

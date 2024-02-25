@@ -11,6 +11,7 @@ import Alamofire
 struct ImageRepositoryImpl: ImageRepository {
     
     let cache: ImageCache
+    let storeAPI: StoreAPI<String>
     
     func fetchImage(
         url: String
@@ -20,20 +21,24 @@ struct ImageRepositoryImpl: ImageRepository {
                 if let imageData = cache.getImageData(for: imageURL as NSURL) {
                     observer.onNext(Data(imageData))
                 } else {
-                    AF.request(StoreAPI.getImage(url: url))
-                        .response(completionHandler: { response in
-                            switch response.result {
-                            case .success(let result):
-                                if let resultData = result, String(data: resultData, encoding: .utf8) == nil {
-                                    cache.setImageData(resultData as NSData, for: imageURL as NSURL)
-                                    observer.onNext(resultData)
-                                } else {
-                                    observer.onError(ImageRepositoryError.noImageData)
+                    do {
+                        AF.request(try storeAPI.execute(requestValue: url))
+                            .response(completionHandler: { response in
+                                switch response.result {
+                                case .success(let result):
+                                    if let resultData = result, String(data: resultData, encoding: .utf8) == nil {
+                                        cache.setImageData(resultData as NSData, for: imageURL as NSURL)
+                                        observer.onNext(resultData)
+                                    } else {
+                                        observer.onError(ImageRepositoryError.noImageData)
+                                    }
+                                case .failure(let error):
+                                    observer.onError(error)
                                 }
-                            case .failure(let error):
-                                observer.onError(error)
-                            }
-                        })
+                            })
+                    } catch {
+                        observer.onError(error)
+                    }
                 }
             }
             
