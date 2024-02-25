@@ -8,6 +8,7 @@
 import XCTest
 @testable import KCS
 import RxSwift
+import RxBlocking
 
 final class FetchImageUseCaseImplTests: XCTestCase {
     
@@ -24,11 +25,13 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     }
     
     func test_캐시데이터에_이미지가_존재하는_경우_이미지_데이터를_담은_옵저버를_반환한다() throws {
-        let expectation = XCTestExpectation(description: "test_fetch_imageData_in_cache_success")
+        // Given
         let urlString = "test_cache_image_URL"
-        
         guard let url = NSURL(string: urlString),
-              let imageData = "cache_image".data(using: .utf8) as? NSData else { return }
+              let imageData = "cache_image".data(using: .utf8) as? NSData else {
+            XCTFail("데이터 변환 실패")
+            return
+        }
         imageCache.setImageData(imageData, for: url)
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
@@ -36,20 +39,31 @@ final class FetchImageUseCaseImplTests: XCTestCase {
                 storeAPI: storeAPI
             )
         )
-        fetchImageUseCase.execute(url: urlString)
-            .subscribe { data in
-                if data == Data(imageData) {
-                    expectation.fulfill()
-                }
-            }
-            .disposed(by: disposeBag)
         
-        wait(for: [expectation])
+        // When
+        let imageUseCaseObservable = fetchImageUseCase.execute(url: urlString).toBlocking()
+        
+        // Then
+        do {
+            guard let result = try imageUseCaseObservable.first() else {
+                XCTFail("BlockingObservable 값 추출 실패")
+                return
+            }
+            dump(result)
+            XCTAssertEqual(Data(imageData), result)
+        } catch let error {
+            dump(error)
+            XCTFail("캐시데이터 이미지 fetch 실패")
+        }
+        
     }
 
     func test_캐시데이터에_이미지가_존재하지_않는_경우_서버에서_받아온_이미지_데이터를_담은_옵저버를_반환한다() throws {
-        let expectation = XCTestExpectation(description: "test_fetch_imageData_success")
-        let expectData = "no_cache".data(using: .utf8)
+        // Given
+        guard let imageData = "no_cache".data(using: .utf8) else {
+            XCTFail("데이터 변환 실패")
+            return
+        }
         let urlString = "test_no_cache_image_URL"
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
@@ -57,18 +71,24 @@ final class FetchImageUseCaseImplTests: XCTestCase {
                 storeAPI: storeAPI
             )
         )
-        fetchImageUseCase.execute(url: urlString)
-            .subscribe { data in
-                if data == expectData {
-                    expectation.fulfill()
-                }
-            }
-            .disposed(by: disposeBag)
         
-        wait(for: [expectation])
+        // When
+        let imageUseCaseObservable = fetchImageUseCase.execute(url: urlString).toBlocking()
+        
+        // Then
+        do {
+            guard let result = try imageUseCaseObservable.first() else {
+                XCTFail("BlockingObservable 값 추출 실패")
+                return
+            }
+            XCTAssertEqual(Data(imageData), result)
+        } catch let error {
+            XCTFail("캐시데이터 이미지 fetch 실패")
+        }
     }
     
     func test_URL에_맞는_이미지_데이터가_없는_경우_ImageRepositoryError를_담은_옵저버를_반환한다() throws {
+        // Given
         let expectation = XCTestExpectation(description: "test_fetch_imageData_failure")
         let urlString = "test_no_image_URL"
         fetchImageUseCase = FetchImageUseCaseImpl(
@@ -77,18 +97,25 @@ final class FetchImageUseCaseImplTests: XCTestCase {
                 storeAPI: storeAPI
             )
         )
-        fetchImageUseCase.execute(url: urlString)
-            .subscribe(onError: { error in
-                if error as? ImageRepositoryError == ImageRepositoryError.noImageData {
-                    expectation.fulfill()
-                }
-            })
-            .disposed(by: disposeBag)
         
-        wait(for: [expectation])
+        // When
+        let imageUseCaseObservable = fetchImageUseCase.execute(url: urlString).toBlocking().materialize()
+        
+        // Then
+        switch imageUseCaseObservable {
+        case .completed(let elements):
+            XCTFail("ImageRepositoryError 에러를 담은 데이터를 반환 실패")
+        case .failed(let elements, let error):
+            guard let error = error as? ImageRepositoryError else {
+                XCTFail("ImageRepositoryError 에러를 담은 데이터를 반환 실패")
+                return
+            }
+            XCTAssertEqual(ImageRepositoryError.noImageData, error)
+        }
     }
     
     func test_API_호출이_실패한_경우_서버_ErrorAlertMessage를_담은_옵저버를_반환한다() throws {
+        // Given
         let expectation = XCTestExpectation(description: "test_fetch_imageData_API_failure")
         let urlString = "test_fail_API_URL"
         fetchImageUseCase = FetchImageUseCaseImpl(
@@ -97,15 +124,21 @@ final class FetchImageUseCaseImplTests: XCTestCase {
                 storeAPI: storeAPI
             )
         )
-        fetchImageUseCase.execute(url: urlString)
-            .subscribe(onError: { error in
-                if error as? ErrorAlertMessage == ErrorAlertMessage.server {
-                    expectation.fulfill()
-                }
-            })
-            .disposed(by: disposeBag)
         
-        wait(for: [expectation])
+        // When
+        let imageUseCaseObservable = fetchImageUseCase.execute(url: urlString).toBlocking().materialize()
+        
+        // Then
+        switch imageUseCaseObservable {
+        case .completed(let elements):
+            XCTFail("ErrorAlertMessage 에러를 담은 데이터를 반환 실패")
+        case .failed(let elements, let error):
+            guard let error = error as? ErrorAlertMessage else {
+                XCTFail("ErrorAlertMessage 에러를 담은 데이터를 반환 실패")
+                return
+            }
+            XCTAssertEqual(ErrorAlertMessage.server, error)
+        }
     }
     
 }
