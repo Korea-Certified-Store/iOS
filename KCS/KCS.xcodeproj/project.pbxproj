@@ -31,7 +31,6 @@
 		5943765E2B874994005B97B2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5943765D2B874994005B97B2 /* GoogleService-Info.plist */; };
 		594376602B875EDB005B97B2 /* FetchStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */; };
 		594376622B875EFB005B97B2 /* GetStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376612B875EFB005B97B2 /* GetStoresRepository.swift */; };
-		594376882B8B1F21005B97B2 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376872B8B1F21005B97B2 /* MockServer.swift */; };
 		5943768A2B8B2A54005B97B2 /* APIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376892B8B2A54005B97B2 /* APIType.swift */; };
 		5943768C2B8B322A005B97B2 /* Example.json in Resources */ = {isa = PBXBuildFile; fileRef = 5943768B2B8B322A005B97B2 /* Example.json */; };
 		594376902B8B48BD005B97B2 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943768F2B8B48BD005B97B2 /* MockURLProtocol.swift */; };
@@ -234,7 +233,6 @@
 		5943765D2B874994005B97B2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresRepository.swift; sourceTree = "<group>"; };
 		594376612B875EFB005B97B2 /* GetStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepository.swift; sourceTree = "<group>"; };
-		594376872B8B1F21005B97B2 /* MockServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServer.swift; sourceTree = "<group>"; };
 		594376892B8B2A54005B97B2 /* APIType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIType.swift; sourceTree = "<group>"; };
 		5943768B2B8B322A005B97B2 /* Example.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Example.json; sourceTree = "<group>"; };
 		5943768F2B8B48BD005B97B2 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
@@ -471,7 +469,6 @@
 			isa = PBXGroup;
 			children = (
 				594376652B890FDF005B97B2 /* Response */,
-				594376872B8B1F21005B97B2 /* MockServer.swift */,
 				5943768F2B8B48BD005B97B2 /* MockURLProtocol.swift */,
 			);
 			path = MockServer;
@@ -1521,7 +1518,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				594376882B8B1F21005B97B2 /* MockServer.swift in Sources */,
 				594376902B8B48BD005B97B2 /* MockURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
