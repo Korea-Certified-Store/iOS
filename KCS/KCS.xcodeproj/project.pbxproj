@@ -60,15 +60,11 @@
 		5977BE662B553BA800725C90 /* HomeViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE652B553BA800725C90 /* HomeViewModelImpl.swift */; };
 		5977BE682B553C8300725C90 /* HomeDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE672B553C8300725C90 /* HomeDependency.swift */; };
 		5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE732B57FA7A00725C90 /* FilteredStores.swift */; };
-		5977BE8D2B5966F900725C90 /* StoreRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE8C2B5966F900725C90 /* StoreRepositoryImplTests.swift */; };
 		5977BE942B59738800725C90 /* GetRefreshStoresUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE932B59738800725C90 /* GetRefreshStoresUseCase.swift */; };
 		5977BE982B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE972B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift */; };
 		5977BE9A2B59AC3300725C90 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE992B59AC3300725C90 /* ImageRepository.swift */; };
 		5977BE9C2B59AC8D00725C90 /* ImageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */; };
 		5977BE9E2B59ACE800725C90 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5977BE9D2B59ACE800725C90 /* ImageCache.swift */; };
-		598CC4D82B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */; };
-		598CC4DB2B5D344C0043D064 /* MockSuccessStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */; };
-		598CC4DD2B5D44940043D064 /* MockFailStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */; };
 		59B886262B6A3A02005750EF /* StoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886252B6A3A02005750EF /* StoreListViewController.swift */; };
 		59B886292B6A3F1E005750EF /* StoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */; };
 		59B886462B6A5CDC005750EF /* StoreListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886452B6A5CDC005750EF /* StoreListViewModel.swift */; };
@@ -102,10 +98,7 @@
 		59F478B12B59BB00002FEF9E /* ImageRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478B02B59BB00002FEF9E /* ImageRepositoryError.swift */; };
 		59F478B32B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478B22B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift */; };
 		59F478B52B59BE0B002FEF9E /* FetchImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478B42B59BE0B002FEF9E /* FetchImageUseCase.swift */; };
-		59F478BB2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478BA2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift */; };
-		59F478BD2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478BC2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift */; };
 		59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478BE2B5BEA08002FEF9E /* RequestLocation.swift */; };
-		59F478C12B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F478C02B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift */; };
 		A802D1F62B5277630091FDE7 /* CertificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802D1F52B5277620091FDE7 /* CertificationLabel.swift */; };
 		A81B5A662B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81B5A652B7C81A50042307A /* DeleteAllHistoryUseCaseImpl.swift */; };
 		A81B5A682B7C81DB0042307A /* DeleteAllHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81B5A672B7C81DB0042307A /* DeleteAllHistoryUseCase.swift */; };
@@ -183,6 +176,9 @@
 		A8AE14D42B886DE400A554A8 /* ApplyDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14D32B886DE400A554A8 /* ApplyDiffableDataSource.swift */; };
 		A8AE14D62B886DF700A554A8 /* ReloadDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14D52B886DF700A554A8 /* ReloadDiffableDataSource.swift */; };
 		A8AE14E42B8A689900A554A8 /* APIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14E32B8A689900A554A8 /* APIType.swift */; };
+		A8AE14E92B8B2B4000A554A8 /* CheckNetworkStatusUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14E82B8B2B4000A554A8 /* CheckNetworkStatusUseCaseImplTests.swift */; };
+		A8AE14EB2B8B2D3E00A554A8 /* MockSuccessNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14EA2B8B2D3E00A554A8 /* MockSuccessNetworkRepository.swift */; };
+		A8AE14ED2B8B303500A554A8 /* MockFailureNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE14EC2B8B303500A554A8 /* MockFailureNetworkRepository.swift */; };
 		A8AE4B1B2B62A60B00632355 /* OpeningHoursCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */; };
 		A8AF06702B80B7DC00E73574 /* AutoCompletionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */; };
 		A8AF06722B80BA5E00E73574 /* AutoCompletionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */; };
@@ -268,15 +264,11 @@
 		5977BE672B553C8300725C90 /* HomeDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDependency.swift; sourceTree = "<group>"; };
 		5977BE732B57FA7A00725C90 /* FilteredStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredStores.swift; sourceTree = "<group>"; };
 		5977BE8A2B5966F900725C90 /* KCSUnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCSUnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5977BE8C2B5966F900725C90 /* StoreRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepositoryImplTests.swift; sourceTree = "<group>"; };
 		5977BE932B59738800725C90 /* GetRefreshStoresUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRefreshStoresUseCase.swift; sourceTree = "<group>"; };
 		5977BE972B5999E000725C90 /* GetRefreshStoresUseCaseImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetRefreshStoresUseCaseImpl.swift; sourceTree = "<group>"; };
 		5977BE992B59AC3300725C90 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		5977BE9B2B59AC8D00725C90 /* ImageRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryImpl.swift; sourceTree = "<group>"; };
 		5977BE9D2B59ACE800725C90 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
-		598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRefreshStoresUseCaseImplTests.swift; sourceTree = "<group>"; };
-		598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSuccessStoreRepository.swift; sourceTree = "<group>"; };
-		598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFailStoreRepository.swift; sourceTree = "<group>"; };
 		59B886252B6A3A02005750EF /* StoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewController.swift; sourceTree = "<group>"; };
 		59B886282B6A3F1E005750EF /* StoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTableViewCell.swift; sourceTree = "<group>"; };
 		59B886452B6A5CDC005750EF /* StoreListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListViewModel.swift; sourceTree = "<group>"; };
@@ -310,10 +302,7 @@
 		59F478B02B59BB00002FEF9E /* ImageRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryError.swift; sourceTree = "<group>"; };
 		59F478B22B59BDD6002FEF9E /* FetchImageUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageUseCaseImpl.swift; sourceTree = "<group>"; };
 		59F478B42B59BE0B002FEF9E /* FetchImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageUseCase.swift; sourceTree = "<group>"; };
-		59F478BA2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImplTests.swift; sourceTree = "<group>"; };
-		59F478BC2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresUseCaseImplTests.swift; sourceTree = "<group>"; };
 		59F478BE2B5BEA08002FEF9E /* RequestLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestLocation.swift; sourceTree = "<group>"; };
-		59F478C02B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryImplTests.swift; sourceTree = "<group>"; };
 		5A3902FBE673069073F47D82 /* Pods_KCS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E7A587B8D04F1EBD1715550 /* Pods-KCS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCS.release.xcconfig"; path = "Target Support Files/Pods-KCS/Pods-KCS.release.xcconfig"; sourceTree = "<group>"; };
 		71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCSUnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -395,6 +384,9 @@
 		A8AE14D32B886DE400A554A8 /* ApplyDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyDiffableDataSource.swift; sourceTree = "<group>"; };
 		A8AE14D52B886DF700A554A8 /* ReloadDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadDiffableDataSource.swift; sourceTree = "<group>"; };
 		A8AE14E32B8A689900A554A8 /* APIType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIType.swift; sourceTree = "<group>"; };
+		A8AE14E82B8B2B4000A554A8 /* CheckNetworkStatusUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNetworkStatusUseCaseImplTests.swift; sourceTree = "<group>"; };
+		A8AE14EA2B8B2D3E00A554A8 /* MockSuccessNetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSuccessNetworkRepository.swift; sourceTree = "<group>"; };
+		A8AE14EC2B8B303500A554A8 /* MockFailureNetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFailureNetworkRepository.swift; sourceTree = "<group>"; };
 		A8AE4B1A2B62A60B00632355 /* OpeningHoursCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursCellView.swift; sourceTree = "<group>"; };
 		A8AF066F2B80B7DC00E73574 /* AutoCompletionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionDTO.swift; sourceTree = "<group>"; };
 		A8AF06712B80BA5E00E73574 /* AutoCompletionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionResponse.swift; sourceTree = "<group>"; };
@@ -646,12 +638,8 @@
 		5977BE8B2B5966F900725C90 /* KCSUnitTest */ = {
 			isa = PBXGroup;
 			children = (
-				598CC4D92B5D342F0043D064 /* MockRepository */,
-				5977BE8C2B5966F900725C90 /* StoreRepositoryImplTests.swift */,
-				59F478BA2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift */,
-				59F478BC2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift */,
-				598CC4D72B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift */,
-				59F478C02B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift */,
+				A8AE14DE2B89F37300A554A8 /* Mock */,
+				A8AE14DA2B89F16800A554A8 /* UseCaseTest */,
 			);
 			path = KCSUnitTest;
 			sourceTree = "<group>";
@@ -742,15 +730,6 @@
 				59503A552B756CCD0006CF35 /* SearchBarView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		598CC4D92B5D342F0043D064 /* MockRepository */ = {
-			isa = PBXGroup;
-			children = (
-				598CC4DA2B5D344C0043D064 /* MockSuccessStoreRepository.swift */,
-				598CC4DC2B5D44940043D064 /* MockFailStoreRepository.swift */,
-			);
-			path = MockRepository;
 			sourceTree = "<group>";
 		};
 		59B886242B6A39E9005750EF /* StoreList */ = {
@@ -1085,6 +1064,39 @@
 				A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		A8AE14DA2B89F16800A554A8 /* UseCaseTest */ = {
+			isa = PBXGroup;
+			children = (
+				A8AE14E52B8B265100A554A8 /* Splash */,
+			);
+			path = UseCaseTest;
+			sourceTree = "<group>";
+		};
+		A8AE14DE2B89F37300A554A8 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				A8AE14E22B8A1BC200A554A8 /* Repository */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		A8AE14E22B8A1BC200A554A8 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				A8AE14EA2B8B2D3E00A554A8 /* MockSuccessNetworkRepository.swift */,
+				A8AE14EC2B8B303500A554A8 /* MockFailureNetworkRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		A8AE14E52B8B265100A554A8 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				A8AE14E82B8B2B4000A554A8 /* CheckNetworkStatusUseCaseImplTests.swift */,
+			);
+			path = Splash;
 			sourceTree = "<group>";
 		};
 		E99F20FF9A30DCF9C51285A2 /* Frameworks */ = {
@@ -1524,13 +1536,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59F478BD2B5AE180002FEF9E /* FetchStoresUseCaseImplTests.swift in Sources */,
-				598CC4DB2B5D344C0043D064 /* MockSuccessStoreRepository.swift in Sources */,
-				59F478C12B5D0D8D002FEF9E /* ImageRepositoryImplTests.swift in Sources */,
-				5977BE8D2B5966F900725C90 /* StoreRepositoryImplTests.swift in Sources */,
-				598CC4D82B5D2E3C0043D064 /* FetchRefreshStoresUseCaseImplTests.swift in Sources */,
-				59F478BB2B5ADC64002FEF9E /* GetStoreInformationUseCaseImplTests.swift in Sources */,
-				598CC4DD2B5D44940043D064 /* MockFailStoreRepository.swift in Sources */,
+				A8AE14EB2B8B2D3E00A554A8 /* MockSuccessNetworkRepository.swift in Sources */,
+				A8AE14E92B8B2B4000A554A8 /* CheckNetworkStatusUseCaseImplTests.swift in Sources */,
+				A8AE14ED2B8B303500A554A8 /* MockFailureNetworkRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1770,7 +1778,7 @@
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = KoreaCertifiedStore.KCSUnitTest;
@@ -1796,7 +1804,7 @@
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = KoreaCertifiedStore.KCSUnitTest;
