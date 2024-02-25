@@ -110,13 +110,8 @@ extension MockURLProtocol {
     
     enum MockJSONFile {
         
-        case example
-        
         var fileName: String {
-            switch self {
-            case .example:
-                return "Example"
-            }
+            switch self {}
         }
         
     }
