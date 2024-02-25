@@ -10,7 +10,6 @@ import Alamofire
 
 protocol FetchAutoCompletionRepository {
     
-    var storeAPI: any Router { get }
     var session: Session { get }
     
     func fetchAutoCompletion(

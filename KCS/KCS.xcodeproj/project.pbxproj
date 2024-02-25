@@ -31,7 +31,6 @@
 		5943765E2B874994005B97B2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5943765D2B874994005B97B2 /* GoogleService-Info.plist */; };
 		594376602B875EDB005B97B2 /* FetchStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */; };
 		594376622B875EFB005B97B2 /* GetStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376612B875EFB005B97B2 /* GetStoresRepository.swift */; };
-		5943768A2B8B2A54005B97B2 /* APIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376892B8B2A54005B97B2 /* APIType.swift */; };
 		5943768C2B8B322A005B97B2 /* Example.json in Resources */ = {isa = PBXBuildFile; fileRef = 5943768B2B8B322A005B97B2 /* Example.json */; };
 		594376902B8B48BD005B97B2 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943768F2B8B48BD005B97B2 /* MockURLProtocol.swift */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
@@ -233,7 +232,6 @@
 		5943765D2B874994005B97B2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresRepository.swift; sourceTree = "<group>"; };
 		594376612B875EFB005B97B2 /* GetStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepository.swift; sourceTree = "<group>"; };
-		594376892B8B2A54005B97B2 /* APIType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIType.swift; sourceTree = "<group>"; };
 		5943768B2B8B322A005B97B2 /* Example.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Example.json; sourceTree = "<group>"; };
 		5943768F2B8B48BD005B97B2 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
@@ -890,7 +888,6 @@
 				59C306AB2B4FFABA00862625 /* DTO */,
 				59C306CA2B50357900862625 /* Router.swift */,
 				59C306CC2B5035B100862625 /* StoreAPI.swift */,
-				594376892B8B2A54005B97B2 /* APIType.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1469,7 +1466,6 @@
 				594376522B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift in Sources */,
 				59F478BF2B5BEA08002FEF9E /* RequestLocation.swift in Sources */,
 				5943764A2B8218F2005B97B2 /* FetchStoreIDUseCaseImpl.swift in Sources */,
-				5943768A2B8B2A54005B97B2 /* APIType.swift in Sources */,
 				596DDC4D2B6416AB00A4BBC4 /* SummaryViewContents.swift in Sources */,
 				59C306B22B50001F00862625 /* FetchStoresRepositoryImpl.swift in Sources */,
 				59503A6C2B7980B80006CF35 /* AutoCompletionTableViewCell.swift in Sources */,

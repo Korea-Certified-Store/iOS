@@ -10,7 +10,6 @@ import Alamofire
 
 protocol StoreUpdateRequestRepository {
     
-    var storeAPI: any Router { get }
     var session: Session { get }
     
     func storeUpdateReqeust(

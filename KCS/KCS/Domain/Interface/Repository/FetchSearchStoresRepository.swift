@@ -11,7 +11,6 @@ import Alamofire
 protocol FetchSearchStoresRepository {
     
     var storeStorage: StoreStorage { get }
-    var storeAPI: any Router { get }
     var session: Session { get }
     
     func fetchSearchStores(

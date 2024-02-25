@@ -11,7 +11,6 @@ import Alamofire
 protocol ImageRepository {
     
     var cache: ImageCache { get }
-    var storeAPI: any Router { get }
     var session: Session { get }
     
     func fetchImage(

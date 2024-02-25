@@ -10,11 +10,9 @@ import Alamofire
 
 final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
     
-    let storeAPI: any Router
     let session: Session
     
-    init(storeAPI: any Router, session: Session) {
-        self.storeAPI = storeAPI
+    init(session: Session) {
         self.session = session
     }
     
@@ -22,34 +20,27 @@ final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
         searchKeyword: String
     ) -> Observable<[String]> {
         return Observable<[String]>.create { [weak self] observer -> Disposable in
-            do {
-                guard let self = self else { return Disposables.create() }
-                try storeAPI.execute(
-                    requestValue: AutoCompletionDTO(
-                        searchKeyword: searchKeyword
-                    )
-                )
-                session.request(storeAPI)
-                .responseDecodable(of: AutoCompletionResponse.self) { response in
-                    switch response.result {
-                    case .success(let result):
-                        let autoCompletion = result.data
-                        observer.onNext(autoCompletion)
-                    case .failure(let error):
-                        if let underlyingError = error.underlyingError as? NSError {
-                            switch underlyingError.code {
-                            case URLError.notConnectedToInternet.rawValue:
-                                observer.onError(ErrorAlertMessage.internet)
-                            default:
-                                observer.onError(ErrorAlertMessage.server)
-                            }
-                        } else {
-                            observer.onError(ErrorAlertMessage.client)
+            self?.session.request(StoreAPI.getAutoCompletion(
+                autoCompletionDTO: AutoCompletionDTO(
+                    searchKeyword: searchKeyword
+                )))
+            .responseDecodable(of: AutoCompletionResponse.self) { response in
+                switch response.result {
+                case .success(let result):
+                    let autoCompletion = result.data
+                    observer.onNext(autoCompletion)
+                case .failure(let error):
+                    if let underlyingError = error.underlyingError as? NSError {
+                        switch underlyingError.code {
+                        case URLError.notConnectedToInternet.rawValue:
+                            observer.onError(ErrorAlertMessage.internet)
+                        default:
+                            observer.onError(ErrorAlertMessage.server)
                         }
+                    } else {
+                        observer.onError(ErrorAlertMessage.client)
                     }
                 }
-            } catch {
-                observer.onError(error)
             }
             return Disposables.create()
         }
