@@ -8,7 +8,6 @@
 import XCTest
 @testable import KCS
 import RxSwift
-import RxTest
 
 final class FetchImageUseCaseImplTests: XCTestCase {
     
@@ -16,14 +15,12 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     private var imageCache: ImageCache!
     private var storeAPI: Router!
     private var disposeBag: DisposeBag!
-    private var scheduler: TestScheduler!
 
     override func setUp() {
         imageCache = ImageCache(cache: NSCache<NSURL, NSData>())
         // TODO: Mock Server 주입 필요
         storeAPI = StoreAPI(type: .getImage)
         disposeBag = DisposeBag()
-        scheduler = TestScheduler(initialClock: 0)
     }
     
     func test_캐시데이터에_이미지가_존재하는_경우_이미지_데이터를_담은_옵저버를_반환한다() throws {
