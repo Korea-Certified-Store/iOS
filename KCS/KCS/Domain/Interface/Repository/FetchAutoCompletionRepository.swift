@@ -9,7 +9,7 @@ import RxSwift
 
 protocol FetchAutoCompletionRepository {
     
-    var storeAPI: Router { get }
+    var storeAPI: any Router { get }
     
     func fetchAutoCompletion(
         searchKeyword: String

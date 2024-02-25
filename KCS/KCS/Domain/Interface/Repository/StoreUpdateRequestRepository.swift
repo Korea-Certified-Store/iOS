@@ -9,7 +9,7 @@ import RxSwift
 
 protocol StoreUpdateRequestRepository {
     
-    var storeAPI: Router { get }
+    var storeAPI: any Router { get }
     
     func storeUpdateReqeust(
         type: StoreUpdateRequestType,

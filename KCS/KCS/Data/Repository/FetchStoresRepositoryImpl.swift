@@ -11,9 +11,9 @@ import Alamofire
 final class FetchStoresRepositoryImpl: FetchStoresRepository {
     
     let storeStorage: StoreStorage
-    let storeAPI: Router
+    let storeAPI: any Router
     
-    init(storeStorage: StoreStorage, storeAPI: Router) {
+    init(storeStorage: StoreStorage, storeAPI: any Router) {
         self.storeStorage = storeStorage
         self.storeAPI = storeAPI
     }
@@ -25,7 +25,7 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
         return Observable<FetchStores>.create { [weak self] observer -> Disposable in
             do {
                 guard let self = self else { return Disposables.create() }
-                AF.request(try storeAPI.execute(
+                try storeAPI.execute(
                     requestValue: RequestLocationDTO(
                         nwLong: requestLocation.northWest.longitude,
                         nwLat: requestLocation.northWest.latitude,
@@ -36,7 +36,8 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
                         neLong: requestLocation.northEast.longitude,
                         neLat: requestLocation.northEast.latitude
                     )
-                ))
+                )
+                AF.request(storeAPI)
                 .responseDecodable(of: RefreshStoreResponse.self) { [weak self] response in
                     do {
                         switch response.result {

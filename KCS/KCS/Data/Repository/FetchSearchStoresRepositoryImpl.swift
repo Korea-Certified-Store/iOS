@@ -11,9 +11,9 @@ import Alamofire
 final class FetchSearchStoresRepositoryImpl: FetchSearchStoresRepository {
     
     let storeStorage: StoreStorage
-    let storeAPI: Router
+    let storeAPI: any Router
     
-    init(storeStorage: StoreStorage, storeAPI: Router) {
+    init(storeStorage: StoreStorage, storeAPI: any Router) {
         self.storeStorage = storeStorage
         self.storeAPI = storeAPI
     }
@@ -22,13 +22,14 @@ final class FetchSearchStoresRepositoryImpl: FetchSearchStoresRepository {
         return Observable<[Store]>.create { [weak self] observer -> Disposable in
             do {
                 guard let self = self else { return Disposables.create() }
-                AF.request(try storeAPI.execute(
+                try storeAPI.execute(
                     requestValue: SearchDTO(
                         currLong: location.longitude,
                         currLat: location.latitude,
                         searchKeyword: keyword
                     )
-                ))
+                )
+                AF.request(storeAPI)
                 .responseDecodable(of: SearchStoreResponse.self) { [weak self] response in
                     do {
                         switch response.result {

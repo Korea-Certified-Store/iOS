@@ -10,7 +10,7 @@ import RxSwift
 protocol FetchStoresRepository {
     
     var storeStorage: StoreStorage { get }
-    var storeAPI: Router { get }
+    var storeAPI: any Router { get }
     
     func fetchStores(
         requestLocation: RequestLocation,

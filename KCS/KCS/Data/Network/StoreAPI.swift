@@ -10,13 +10,15 @@ import Alamofire
 
 final class StoreAPI: Router {
     
-    let type: APIType
+    typealias API = APIType
     
-    init(type: APIType) {
+    let type: API
+    
+    init(type: API) {
         self.type = type
     }
     
-    func execute<T: Encodable>(requestValue: T) throws -> URLRequest {
+    func execute<T: Encodable>(requestValue: T) throws {
         do {
             switch type {
             case .getStores, .getSearchStores, .getAutoCompletion, .postNewStoreRequest, .storeUpdateRequest:
@@ -26,11 +28,8 @@ final class StoreAPI: Router {
                 baseURL = requestValue as? String
                 parameters = [:]
             }
-            return try asURLRequest()
         } catch JSONContentsError.dictionaryConvert {
             throw NetworkError.wrongParameters
-        } catch {
-            throw NetworkError.wrongURL
         }
     }
     

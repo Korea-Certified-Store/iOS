@@ -10,9 +10,9 @@ import Alamofire
 
 final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
     
-    let storeAPI: Router
+    let storeAPI: any Router
     
-    init(storeAPI: Router) {
+    init(storeAPI: any Router) {
         self.storeAPI = storeAPI
     }
     
@@ -20,13 +20,14 @@ final class PostNewStoreRepositoryImpl: PostNewStoreRepository {
         return Observable<Void>.create { [weak self] observer -> Disposable in
             do {
                 guard let self = self else { return Disposables.create() }
-                AF.request(try storeAPI.execute(
+                try storeAPI.execute(
                     requestValue: NewStoreRequestDTO(
                         storeName: storeName,
                         formattedAddress: formattedAddress,
                         certifications: certifications.map { $0.rawValue }
                     )
-                ))
+                )
+                AF.request(storeAPI)
                 .response { response in
                     switch response.result {
                     case .success:

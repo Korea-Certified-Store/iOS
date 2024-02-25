@@ -10,9 +10,9 @@ import Alamofire
 
 final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
     
-    let storeAPI: Router
+    let storeAPI: any Router
     
-    init(storeAPI: Router) {
+    init(storeAPI: any Router) {
         self.storeAPI = storeAPI
     }
     
@@ -22,11 +22,12 @@ final class FetchAutoCompletionRepositoryImpl: FetchAutoCompletionRepository {
         return Observable<[String]>.create { [weak self] observer -> Disposable in
             do {
                 guard let self = self else { return Disposables.create() }
-                AF.request(try storeAPI.execute(
+                try storeAPI.execute(
                     requestValue: AutoCompletionDTO(
                         searchKeyword: searchKeyword
                     )
-                ))
+                )
+                AF.request(storeAPI)
                 .responseDecodable(of: AutoCompletionResponse.self) { response in
                     switch response.result {
                     case .success(let result):

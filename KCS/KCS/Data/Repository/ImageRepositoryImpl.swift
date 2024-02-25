@@ -11,7 +11,7 @@ import Alamofire
 struct ImageRepositoryImpl: ImageRepository {
     
     let cache: ImageCache
-    let storeAPI: Router
+    let storeAPI: any Router
     
     func fetchImage(
         url: String
@@ -22,7 +22,8 @@ struct ImageRepositoryImpl: ImageRepository {
                     observer.onNext(Data(imageData))
                 } else {
                     do {
-                        AF.request(try storeAPI.execute(requestValue: url))
+                        try storeAPI.execute(requestValue: url)
+                        AF.request(storeAPI)
                             .response(completionHandler: { response in
                                 switch response.result {
                                 case .success(let result):
