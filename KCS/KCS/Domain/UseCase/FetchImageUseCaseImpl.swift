@@ -9,7 +9,7 @@ import RxSwift
 
 struct FetchImageUseCaseImpl: FetchImageUseCase {
     
-    let repository: ImageRepository
+    let repository: FetchImageRepository
     
     func execute(url: String) -> Observable<Data> {
         return repository.fetchImage(url: url)

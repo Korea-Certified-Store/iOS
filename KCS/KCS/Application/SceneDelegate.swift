@@ -70,7 +70,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let postNewStoreRepository = PostNewStoreRepositoryImpl(
             session: session
         )
-        let imageRepository = ImageRepositoryImpl(
+        let imageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
         )
