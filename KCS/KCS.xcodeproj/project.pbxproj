@@ -128,6 +128,9 @@
 		A82674682B8C7AD7004710CB /* MockSuccessNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82674622B8C7AD7004710CB /* MockSuccessNetworkRepository.swift */; };
 		A82674692B8C7AD7004710CB /* MockSuccessImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82674632B8C7AD7004710CB /* MockSuccessImageRepository.swift */; };
 		A826746A2B8C7AD7004710CB /* MockFailureImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82674642B8C7AD7004710CB /* MockFailureImageRepository.swift */; };
+		A826746F2B8C8254004710CB /* MockImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A826746E2B8C8254004710CB /* MockImage.swift */; };
+		A82674702B8CB701004710CB /* MockStoreResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C306BC2B500D3D00862625 /* MockStoreResponse.json */; };
+		A82674712B8CB709004710CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 591A88852B384E610059E40F /* Assets.xcassets */; };
 		A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */; };
 		A83367B82B6FA0E700E0A844 /* FetchStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B72B6FA0E700E0A844 /* FetchStores.swift */; };
 		A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */; };
@@ -339,6 +342,7 @@
 		A82674622B8C7AD7004710CB /* MockSuccessNetworkRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSuccessNetworkRepository.swift; sourceTree = "<group>"; };
 		A82674632B8C7AD7004710CB /* MockSuccessImageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSuccessImageRepository.swift; sourceTree = "<group>"; };
 		A82674642B8C7AD7004710CB /* MockFailureImageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFailureImageRepository.swift; sourceTree = "<group>"; };
+		A826746E2B8C8254004710CB /* MockImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImage.swift; sourceTree = "<group>"; };
 		A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStoreButton.swift; sourceTree = "<group>"; };
 		A83367B72B6FA0E700E0A844 /* FetchStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStores.swift; sourceTree = "<group>"; };
 		A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -1018,6 +1022,7 @@
 		A826745F2B8C7AD7004710CB /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				A826746D2B8C7ED7004710CB /* Resource */,
 				A82674602B8C7AD7004710CB /* Repository */,
 			);
 			path = Mock;
@@ -1032,6 +1037,14 @@
 				A82674642B8C7AD7004710CB /* MockFailureImageRepository.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		A826746D2B8C7ED7004710CB /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				A826746E2B8C8254004710CB /* MockImage.swift */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		A83367B92B709BE900E0A844 /* OnBoarding */ = {
@@ -1262,6 +1275,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82674712B8CB709004710CB /* Assets.xcassets in Resources */,
+				A82674702B8CB701004710CB /* MockStoreResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1575,6 +1590,7 @@
 				A82674692B8C7AD7004710CB /* MockSuccessImageRepository.swift in Sources */,
 				A826746A2B8C7AD7004710CB /* MockFailureImageRepository.swift in Sources */,
 				A82674652B8C7AD7004710CB /* CheckNetworkStatusUseCaseImplTests.swift in Sources */,
+				A826746F2B8C8254004710CB /* MockImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
