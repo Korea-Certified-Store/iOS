@@ -46,10 +46,8 @@ final class FetchImageUseCaseImplTests: XCTestCase {
                 XCTFail("BlockingObservable 값 추출 실패")
                 return
             }
-            dump(result)
             XCTAssertEqual(Data(imageData), result)
         } catch let error {
-            dump(error)
             XCTFail("캐시데이터 이미지 fetch 실패")
         }
         
