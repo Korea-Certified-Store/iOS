@@ -7,12 +7,13 @@
 
 import Foundation
 @testable import KCS
+import Alamofire
 import RxSwift
 
 struct MockSuccessImageRepository: ImageRepository {
     
     var cache: ImageCache
-    var storeAPI: Router
+    var session: Session = Session.default
     
     func fetchImage(url: String) -> Observable<Data> {
         return Observable.create { observer -> Disposable in

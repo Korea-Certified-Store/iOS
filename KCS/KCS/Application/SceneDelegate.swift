@@ -8,6 +8,7 @@
 import UIKit
 import RxRelay
 import NMapsMap
+import Alamofire
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -30,28 +31,23 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let imageCache = ImageCache(cache: NSCache<NSURL, NSData>())
         let userDefaults = UserDefaults()
         
-        // MARK: API
-        let getStoresAPI = StoreAPI(type: .getStores)
-        let getImageAPI = StoreAPI(type: .getImage)
-        let getSearchStoresAPI = StoreAPI(type: .getSearchStores)
-        let getAutoCompletionAPI = StoreAPI(type: .getAutoCompletion)
-        let postNewStoreRequestAPI = StoreAPI(type: .postNewStoreRequest)
-        let storeUpdateRequestAPI = StoreAPI(type: .storeUpdateRequest)
+        // MARK: Network Session
+        let session = Session.default
         
         // MARK: Repository
         let fetchStoresRepository = FetchStoresRepositoryImpl(
             storeStorage: storeStorage,
-            storeAPI: getStoresAPI
+            session: session
         )
         let getStoresRepository = GetStoresRepositoryImpl(
             storeStorage: storeStorage
         )
         let fetchSearchStoresRepository = FetchSearchStoresRepositoryImpl(
-            storeStorage: storeStorage, 
-            storeAPI: getSearchStoresAPI
+            storeStorage: storeStorage,
+            session: session
         )
         let storeUpdateRequestRepository = StoreUpdateRequestRepositoryImpl(
-            storeAPI: storeUpdateRequestAPI
+            session: session
         )
         let fetchStoreIDRepository = FetchStoreIDRepositoryImpl(
             storage: storeIDStorage
@@ -69,14 +65,14 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             userDefaults: userDefaults
         )
         let fetchAutoCompletionRepository = FetchAutoCompletionRepositoryImpl(
-            storeAPI: getAutoCompletionAPI
+            session: session
         )
         let postNewStoreRepository = PostNewStoreRepositoryImpl(
-            storeAPI: postNewStoreRequestAPI
+            session: session
         )
         let imageRepository = ImageRepositoryImpl(
             cache: imageCache,
-            storeAPI: getImageAPI
+            session: session
         )
         let networkRepository = NetworkRepositoryImpl()
         
