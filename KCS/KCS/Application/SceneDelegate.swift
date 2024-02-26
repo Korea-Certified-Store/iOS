@@ -28,7 +28,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // MARK: PersistentStorage
         let storeStorage = StoreStorage()
         let storeIDStorage = StoreIDStorage()
-        let imageCache = ImageCache()
+        let imageCache = ImageCache(cache: NSCache<NSURL, NSData>())
         let userDefaults = UserDefaults()
         
         // MARK: Network Session
@@ -70,7 +70,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let postNewStoreRepository = PostNewStoreRepositoryImpl(
             session: session
         )
-        let imageRepository = ImageRepositoryImpl(
+        let imageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
         )

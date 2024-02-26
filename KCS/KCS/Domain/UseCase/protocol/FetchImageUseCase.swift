@@ -9,9 +9,9 @@ import RxSwift
 
 protocol FetchImageUseCase {
     
-    var repository: ImageRepository { get }
+    var repository: FetchImageRepository { get }
     
-    init(repository: ImageRepository)
+    init(repository: FetchImageRepository)
     
     func execute(url: String) -> Observable<Data>
     

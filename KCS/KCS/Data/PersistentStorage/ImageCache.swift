@@ -9,7 +9,11 @@ import Foundation
 
 final class ImageCache {
     
-    private let cache = NSCache<NSURL, NSData>()
+    private let cache: NSCache<NSURL, NSData>
+    
+    init(cache: NSCache<NSURL, NSData>) {
+        self.cache = cache
+    }
     
     func getImageData(for key: NSURL) -> NSData? {
         if let cachedImageData = cache.object(forKey: key as NSURL) {
