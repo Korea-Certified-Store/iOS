@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import RxSwift
 
-final class MockSuccessImageRepository: ImageRepository {
+final class MockSuccessImageRepository: FetchImageRepository {
     
     var cache: ImageCache
     var session: Session = Session.default

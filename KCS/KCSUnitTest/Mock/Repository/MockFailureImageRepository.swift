@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import Alamofire
 
-struct MockNoImageFailureImageRepository: ImageRepository {
+struct MockNoImageFailureImageRepository: FetchImageRepository {
     
     var cache: ImageCache
     var session: Session = Session.default
@@ -25,7 +25,7 @@ struct MockNoImageFailureImageRepository: ImageRepository {
     
 }
 
-struct MockAPIFailureImageRepository: ImageRepository {
+struct MockAPIFailureImageRepository: FetchImageRepository {
     
     var cache: ImageCache
     var session: Session = Session.default
