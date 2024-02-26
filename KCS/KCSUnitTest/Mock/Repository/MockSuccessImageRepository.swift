@@ -10,20 +10,24 @@ import Foundation
 import Alamofire
 import RxSwift
 
-struct MockSuccessImageRepository: ImageRepository {
+final class MockSuccessImageRepository: ImageRepository {
     
     var cache: ImageCache
     var session: Session = Session.default
-    var mockImage = MockImage()
+    
+    init(cache: ImageCache) {
+        self.cache = cache
+    }
     
     func fetchImage(url: String) -> Observable<Data> {
-        return Observable.create { observer -> Disposable in
+        return Observable.create { [weak self] observer -> Disposable in
+            guard let self = self else { return Disposables.create() }
             if let url = URL(string: url) {
                 if let imageData = cache.getImageData(for: url as NSURL) {
                     observer.onNext(Data(imageData))
                 } else {
-                    let data = mockImage.getImageData(url: "NoCacheImage")
-                    observer.onNext(data)
+                    guard let imageURL = Bundle(for: type(of: self)).url(forResource: "MockImage", withExtension: ".jpeg") else { return Disposables.create() }
+                    observer.onNext(try! Data(contentsOf: imageURL))
                 }
             }
             return Disposables.create()

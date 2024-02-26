@@ -12,27 +12,33 @@ import RxBlocking
 
 final class FetchImageUseCaseImplTests: XCTestCase {
     
+    enum URLString: String {
+        case cache = "test_cache_image_URL"
+        case noCache = "test_no_cache_image_URL"
+        case fail = ""
+    }
+    
     private var fetchImageUseCase: FetchImageUseCase!
-    private var mockImage: MockImage!
     private var imageCache: ImageCache!
     private var disposeBag: DisposeBag!
+    private let imageString = "MockImage"
 
     override func setUp() {
         imageCache = ImageCache(cache: NSCache<NSURL, NSData>())
         // TODO: Mock Server 주입 필요
         disposeBag = DisposeBag()
-        mockImage = MockImage()
     }
     
-    func test_캐시데이터에_이미지가_존재하는_경우_이미지_데이터를_담은_옵저버를_반환한다() throws {
+    func test_캐시데이터에_이미지가_존재하는_경우() throws {
         // Given
-        let urlString = "test_cache_image_URL"
-        let imageData = mockImage.getImageData(url: "CacheImage") as NSData
-        guard let url = NSURL(string: urlString) else {
+        let urlString = URLString.cache.rawValue
+        guard let url = NSURL(string: urlString),
+              let imageURL = Bundle(for: type(of: self)).url(forResource: imageString, withExtension: "jpeg") else {
             XCTFail("데이터 변환 실패")
             return
         }
-        imageCache.setImageData(imageData, for: url)
+        let imageData = try! Data(contentsOf: imageURL)
+        imageCache.setImageData(Data(imageData) as NSData, for: url)
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
                 cache: imageCache
@@ -49,16 +55,20 @@ final class FetchImageUseCaseImplTests: XCTestCase {
                 return
             }
             XCTAssertEqual(Data(imageData), result)
-        } catch let error {
+        } catch {
             XCTFail("캐시데이터 이미지 fetch 실패")
         }
         
     }
 
-    func test_캐시데이터에_이미지가_존재하지_않는_경우_서버에서_받아온_이미지_데이터를_담은_옵저버를_반환한다() throws {
+    func test_캐시데이터에_이미지가_존재하지_않는_경우() throws {
         // Given
-        let imageData = mockImage.getImageData(url: "NoCacheImage") as NSData
-        let urlString = "test_no_cache_image_URL"
+        let urlString = URLString.noCache.rawValue
+        guard let imageURL = Bundle(for: type(of: self)).url(forResource: imageString, withExtension: "jpeg") else {
+            XCTFail("데이터 변환 실패")
+            return
+        }
+        let imageData = try! Data(contentsOf: imageURL)
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
                 cache: imageCache
@@ -80,9 +90,9 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         }
     }
     
-    func test_URL에_맞는_이미지_데이터가_없는_경우_ImageRepositoryError를_담은_옵저버를_반환한다() throws {
+    func test_URL에_맞는_이미지_데이터가_없는_경우() throws {
         // Given
-        let urlString = "test_no_image_URL"
+        let urlString = URLString.fail.rawValue
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockNoImageFailureImageRepository(
                 cache: imageCache
@@ -105,9 +115,9 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         }
     }
     
-    func test_API_호출이_실패한_경우_서버_ErrorAlertMessage를_담은_옵저버를_반환한다() throws {
+    func test_API_호출이_실패한_경우() throws {
         // Given
-        let urlString = "test_fail_API_URL"
+        let urlString = URLString.fail.rawValue
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockAPIFailureImageRepository(
                 cache: imageCache
