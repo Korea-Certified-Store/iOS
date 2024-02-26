@@ -19,8 +19,7 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
     }
     
     func fetchStores(
-        requestLocation: RequestLocation,
-        isEntire: Bool
+        requestLocation: RequestLocation
     ) -> Observable<FetchStores> {
         return Observable<FetchStores>.create { [weak self] observer -> Disposable in
             self?.session.request(StoreAPI.getStores(location: RequestLocationDTO(
@@ -39,12 +38,7 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
                     case .success(let result):
                         let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
                         self?.storeStorage.stores = resultStores.flatMap({ $0 })
-                        if isEntire {
-                            observer.onNext(FetchStores(
-                                fetchCountContent: FetchCountContent(maxFetchCount: 1, fetchCount: 1),
-                                stores: resultStores.flatMap { $0 }
-                            ))
-                        } else if let firstIndexStore = resultStores.first {
+                        if let firstIndexStore = resultStores.first {
                             observer.onNext(FetchStores(
                                 fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count, fetchCount: 1),
                                 stores: firstIndexStore

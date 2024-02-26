@@ -14,8 +14,7 @@ protocol GetStoresUseCase {
     init(repository: FetchStoresRepository)
     
     func execute(
-        requestLocation: RequestLocation,
-        isEntire: Bool
+        requestLocation: RequestLocation
     ) -> Observable<FetchStores>
 
 }
