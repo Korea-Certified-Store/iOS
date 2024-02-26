@@ -132,6 +132,7 @@
 		A826748F2B8CFA78004710CB /* FetchImageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A826748E2B8CFA78004710CB /* FetchImageRepositoryImpl.swift */; };
 		A82674942B8CFD61004710CB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = A82674932B8CFD61004710CB /* .gitkeep */; };
 		A82674962B8CFD7E004710CB /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82674952B8CFD7E004710CB /* MockURLProtocol.swift */; };
+		A82674992B8D059D004710CB /* FetchImageRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82674982B8D059C004710CB /* FetchImageRepositoryTests.swift */; };
 		A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */; };
 		A83367B82B6FA0E700E0A844 /* FetchStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B72B6FA0E700E0A844 /* FetchStores.swift */; };
 		A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */; };
@@ -345,6 +346,7 @@
 		A826748E2B8CFA78004710CB /* FetchImageRepositoryImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchImageRepositoryImpl.swift; sourceTree = "<group>"; };
 		A82674932B8CFD61004710CB /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		A82674952B8CFD7E004710CB /* MockURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		A82674982B8D059C004710CB /* FetchImageRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchImageRepositoryTests.swift; sourceTree = "<group>"; };
 		A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStoreButton.swift; sourceTree = "<group>"; };
 		A83367B72B6FA0E700E0A844 /* FetchStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStores.swift; sourceTree = "<group>"; };
 		A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -650,8 +652,9 @@
 		5977BE8B2B5966F900725C90 /* KCSUnitTest */ = {
 			isa = PBXGroup;
 			children = (
-				A826745F2B8C7AD7004710CB /* Mock */,
+				A82674972B8D0170004710CB /* RepositoryTest */,
 				A826745A2B8C7AD7004710CB /* UseCaseTest */,
+				A826745F2B8C7AD7004710CB /* Mock */,
 			);
 			path = KCSUnitTest;
 			sourceTree = "<group>";
@@ -982,26 +985,10 @@
 		A826745A2B8C7AD7004710CB /* UseCaseTest */ = {
 			isa = PBXGroup;
 			children = (
-				A826745B2B8C7AD7004710CB /* Splash */,
-				A826745D2B8C7AD7004710CB /* StoreList */,
-			);
-			path = UseCaseTest;
-			sourceTree = "<group>";
-		};
-		A826745B2B8C7AD7004710CB /* Splash */ = {
-			isa = PBXGroup;
-			children = (
 				A826745C2B8C7AD7004710CB /* CheckNetworkStatusUseCaseImplTests.swift */,
-			);
-			path = Splash;
-			sourceTree = "<group>";
-		};
-		A826745D2B8C7AD7004710CB /* StoreList */ = {
-			isa = PBXGroup;
-			children = (
 				A826745E2B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift */,
 			);
-			path = StoreList;
+			path = UseCaseTest;
 			sourceTree = "<group>";
 		};
 		A826745F2B8C7AD7004710CB /* Mock */ = {
@@ -1048,6 +1035,14 @@
 				A82674932B8CFD61004710CB /* .gitkeep */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		A82674972B8D0170004710CB /* RepositoryTest */ = {
+			isa = PBXGroup;
+			children = (
+				A82674982B8D059C004710CB /* FetchImageRepositoryTests.swift */,
+			);
+			path = RepositoryTest;
 			sourceTree = "<group>";
 		};
 		A83367B92B709BE900E0A844 /* OnBoarding */ = {
@@ -1590,6 +1585,7 @@
 			files = (
 				A82674962B8CFD7E004710CB /* MockURLProtocol.swift in Sources */,
 				A82674662B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift in Sources */,
+				A82674992B8D059D004710CB /* FetchImageRepositoryTests.swift in Sources */,
 				A82674672B8C7AD7004710CB /* MockFailureNetworkRepository.swift in Sources */,
 				A82674682B8C7AD7004710CB /* MockSuccessNetworkRepository.swift in Sources */,
 				A82674692B8C7AD7004710CB /* MockSuccessImageRepository.swift in Sources */,
