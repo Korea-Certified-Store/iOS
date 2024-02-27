@@ -31,7 +31,6 @@
 		5943765E2B874994005B97B2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5943765D2B874994005B97B2 /* GoogleService-Info.plist */; };
 		594376602B875EDB005B97B2 /* FetchStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */; };
 		594376622B875EFB005B97B2 /* GetStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376612B875EFB005B97B2 /* GetStoresRepository.swift */; };
-		594376902B8B48BD005B97B2 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943768F2B8B48BD005B97B2 /* MockURLProtocol.swift */; };
 		594376952B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376942B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift */; };
 		594376972B8CF630005B97B2 /* FetchStoresSuccessWithZeroStore.json in Resources */ = {isa = PBXBuildFile; fileRef = 594376962B8CF630005B97B2 /* FetchStoresSuccessWithZeroStore.json */; };
 		59503A4A2B741F1E0006CF35 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59503A492B741F1E0006CF35 /* Secret.xcconfig */; };
@@ -245,7 +244,6 @@
 		5943765D2B874994005B97B2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5943765F2B875EDB005B97B2 /* FetchStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresRepository.swift; sourceTree = "<group>"; };
 		594376612B875EFB005B97B2 /* GetStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepository.swift; sourceTree = "<group>"; };
-		5943768F2B8B48BD005B97B2 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		594376942B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoresRepositoryImplTests.swift; sourceTree = "<group>"; };
 		594376962B8CF630005B97B2 /* FetchStoresSuccessWithZeroStore.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FetchStoresSuccessWithZeroStore.json; sourceTree = "<group>"; };
 		59503A492B741F1E0006CF35 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
@@ -454,7 +452,6 @@
 				591A887A2B384E600059E40F /* Products */,
 				ED50AD730FA5F4D533F6DF5F /* Pods */,
 				E99F20FF9A30DCF9C51285A2 /* Frameworks */,
-				59C0308D2B8E4BF600A1A6FB /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -834,14 +831,6 @@
 				A85659532B83C7E100775C78 /* StoreInformationDependency.swift */,
 			);
 			path = Protocol;
-			sourceTree = "<group>";
-		};
-		59C0308D2B8E4BF600A1A6FB /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				5943768F2B8B48BD005B97B2 /* MockURLProtocol.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		59C306A72B4FF98600862625 /* Repository */ = {
@@ -1619,7 +1608,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				594376952B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift in Sources */,
-				594376902B8B48BD005B97B2 /* MockURLProtocol.swift in Sources */,
 				59C030912B8E4E0A00A1A6FB /* MockSuccessNetworkRepository.swift in Sources */,
 				59C030932B8E4E8900A1A6FB /* MockURLProtocol.swift in Sources */,
 				A82674662B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift in Sources */,
