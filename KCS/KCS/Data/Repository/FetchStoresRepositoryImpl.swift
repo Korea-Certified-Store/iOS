@@ -54,7 +54,7 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
                            underlyingError.code == URLError.notConnectedToInternet.rawValue {
                             observer.onError(ErrorAlertMessage.internet)
                         } else if let underlyingError = error.underlyingError as? NSError,
-                                  underlyingError.code == 13 {
+                                  underlyingError.code == 13 { // TODO: Magic Number 상수화
                             observer.onError(ErrorAlertMessage.server)
                         } else {
                             observer.onError(ErrorAlertMessage.client)

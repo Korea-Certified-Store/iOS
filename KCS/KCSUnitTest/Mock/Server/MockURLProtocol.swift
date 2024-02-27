@@ -58,7 +58,6 @@ final class MockURLProtocol: URLProtocol {
         var response: HTTPURLResponse?
         switch MockURLProtocol.responseType {
         case .error(let error)?:
-            dump(error)
             client?.urlProtocol(self, didFailWithError: error)
         case .success(let newResponse)?:
             response = newResponse

@@ -75,7 +75,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         testEntity = FetchStoresRepositoryImplTestsEntity()
     }
     
-    func test_0개를_받아_성공한_경우() {
+    func test_Store_0개를_받아_성공한_경우() {
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchStoresSuccessWithZeroStore)
         do {
@@ -90,7 +90,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         }
     }
     
-    func test_여러개를_받아_성공한_경우() {
+    func test_Store_1개_이상을_받아_성공한_경우() {
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchStoresSuccessWithManyStores)
         do {
