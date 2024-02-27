@@ -1,0 +1,111 @@
+{
+    "code": 200,
+    "message": "ok",
+    "data": [
+        [
+            {
+                "id": 27742,
+                "displayName": "삼삼오오",
+                "primaryTypeDisplayName": "음식점",
+                "formattedAddress": "대한민국 서울특별시 명륜3가 1-1145번지 종로구 서울특별시 KR",
+                "phoneNumber": "02-741-1206",
+                "location": {
+                    "longitude": 126.9943777,
+                    "latitude": 37.5891892
+                },
+                "regularOpeningHours": [
+                    {
+                        "open": {
+                            "day": "MON",
+                            "hour": 11,
+                            "minute": 0
+                        },
+                        "close": {
+                            "day": "MON",
+                            "hour": 21,
+                            "minute": 30
+                        }
+                    },
+                    {
+                        "open": {
+                            "day": "TUE",
+                            "hour": 11,
+                            "minute": 0
+                        },
+                        "close": {
+                            "day": "TUE",
+                            "hour": 21,
+                            "minute": 30
+                        }
+                    },
+                    {
+                        "open": {
+                            "day": "WED",
+                            "hour": 11,
+                            "minute": 0
+                        },
+                        "close": {
+                            "day": "WED",
+                            "hour": 21,
+                            "minute": 30
+                        }
+                    },
+                    {
+                        "open": {
+                            "day": "THU",
+                            "hour": 11,
+                            "minute": 0
+                        },
+                        "close": {
+                            "day": "THU",
+                            "hour": 21,
+                            "minute": 30
+                        }
+                    },
+                    {
+                        "open": {
+                            "day": "FRI",
+                            "hour": 11,
+                            "minute": 0
+                        },
+                        "close": {
+                            "day": "FRI",
+                            "hour": 21,
+                            "minute": 30
+                        }
+                    },
+                    {
+                        "open": {
+                            "day": "SAT",
+                            "hour": 11,
+                            "minute": 0
+                        },
+                        "close": {
+                            "day": "SAT",
+                            "hour": 21,
+                            "minute": 30
+                        }
+                    },
+                    {
+                        "open": {
+                            "day": "SUN",
+                            "hour": 11,
+                            "minute": 0
+                        },
+                        "close": {
+                            "day": "SUN",
+                            "hour": 21,
+                            "minute": 30
+                        }
+                    }
+                ],
+                "localPhotos": [
+                    "https://storage.googleapis.com/kcs-dev-bucket1/7a903205-40f9-4410-99be-0ab1a8ea51a2"
+                ],
+                "certificationName": [
+                    "안심식당no"
+                ]
+            }
+        ]
+    ]
+}
