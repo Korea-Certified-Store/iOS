@@ -1,5 +1,5 @@
 //
-//  ImageRepositoryImpl.swift
+//  FetchImageRepositoryImpl.swift
 //  KCS
 //
 //  Created by 조성민 on 1/19/24.
@@ -8,7 +8,7 @@
 import RxSwift
 import Alamofire
 
-struct ImageRepositoryImpl: ImageRepository {
+struct FetchImageRepositoryImpl: FetchImageRepository {
     
     let cache: ImageCache
     let session: Session

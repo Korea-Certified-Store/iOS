@@ -70,10 +70,9 @@ final class MockURLProtocol: URLProtocol {
     }
     
     private func setUpMockData() -> Data? {
-        guard let fileName: String = MockURLProtocol.jsonFile?.fileName else { return nil }
-        
-        guard let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: "json") else {
-            return Data()
+        guard let fileName: String = MockURLProtocol.jsonFile?.fileName,
+              let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: "json") else {
+            return nil
         }
         return try? Data(contentsOf: file)
     }
