@@ -1,0 +1,3838 @@
+{
+  "code": 200,
+  "message": "ok",
+  "data": [
+    [
+      {
+        "id": 27742,
+        "displayName": "삼삼오오",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 명륜3가 1-1145번지 종로구 서울특별시 KR",
+        "phoneNumber": "02-741-1206",
+        "location": {
+          "longitude": 126.9943777,
+          "latitude": 37.5891892
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 30
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/7a903205-40f9-4410-99be-0ab1a8ea51a2"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 30607,
+        "displayName": "쿰피르스테이크 혜화점",
+        "primaryTypeDisplayName": "터키 음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭동 130-43",
+        "phoneNumber": "02-762-0772",
+        "location": {
+          "longitude": 127.0048465,
+          "latitude": 37.580541499999995
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 22,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 22,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/2dfc5773-e19f-4f40-b71e-8220ff23781a"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 4894,
+        "displayName": "프리모바치오바치 대학로점",
+        "primaryTypeDisplayName": "이탈리아 음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭동 1-60",
+        "phoneNumber": "010-3911-2827",
+        "location": {
+          "longitude": 127.00251240000001,
+          "latitude": 37.5817914
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/18fb8263-02b6-4f15-8e81-2c8f046a1c20"
+        ],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 27190,
+        "displayName": "동숭숯불갈비",
+        "primaryTypeDisplayName": "숯불구이/바베큐전문점",
+        "formattedAddress": "대한민국 서울특별시",
+        "phoneNumber": "02-741-3451",
+        "location": {
+          "longitude": 127.0005463,
+          "latitude": 37.5816503
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/895fff6f-e77f-41cd-ad97-65df20f2ce3e"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 38208,
+        "displayName": "어촌",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 혜화동 74-38",
+        "phoneNumber": "02-762-9992",
+        "location": {
+          "longitude": 127.0004174,
+          "latitude": 37.586589
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/3f191d0f-bb55-4bac-920c-88f4bb03eb35"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 27744,
+        "displayName": "대규스시",
+        "primaryTypeDisplayName": "스시/초밥집",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭동 동숭3길 1",
+        "phoneNumber": "02-766-0821",
+        "location": {
+          "longitude": 127.00441409999999,
+          "latitude": 37.58122000000001
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 0,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 0,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 0,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 10,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 0,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 10,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 0,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 10,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 0,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/04d2756b-558e-49e9-9507-d9e2131bb235"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 5544,
+        "displayName": "전통설렁탕",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 성북구 성북동 성북로 105",
+        "phoneNumber": null,
+        "location": {
+          "longitude": 126.9972539,
+          "latitude": 37.59261600000001
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/5373a4ee-38e0-495a-b68c-9ab5a7a91e17"
+        ],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 27191,
+        "displayName": "파스타마켓",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 명륜4가 103-6번지 1층 종로구 서울특별시 KR",
+        "phoneNumber": "070-4195-7700",
+        "location": {
+          "longitude": 127.00125149999998,
+          "latitude": 37.5820096
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/a93f92c5-b27d-4513-a2ef-b4128108f6a2"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 27586,
+        "displayName": "이유식당",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 창경궁로26길 41-3 1층",
+        "phoneNumber": "02-762-5430",
+        "location": {
+          "longitude": 126.99974809999998,
+          "latitude": 37.5820566
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 20,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 20,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 20,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 20,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 20,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/5e0287ce-5ca0-48d3-8d1d-35ed137cbda7"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 27361,
+        "displayName": "어바웃샤브",
+        "primaryTypeDisplayName": "일본 음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 대학로12길 61",
+        "phoneNumber": "02-747-7730",
+        "location": {
+          "longitude": 127.00396990000002,
+          "latitude": 37.581438299999995
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/3ff8db7c-188e-4f6a-a978-c01fb193b861"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 27745,
+        "displayName": "더키친750",
+        "primaryTypeDisplayName": "이탈리아 음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭동 1-73",
+        "phoneNumber": "02-743-0554",
+        "location": {
+          "longitude": 127.0032519,
+          "latitude": 37.5824518
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 30
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/15a88753-3fff-43c6-b55a-9c4c129ee5e2"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 35351,
+        "displayName": "타오월드",
+        "primaryTypeDisplayName": null,
+        "formattedAddress": "대한민국 서울특별시 종로구 창경궁로33길 4",
+        "phoneNumber": "02-765-3270",
+        "location": {
+          "longitude": 126.99930009999999,
+          "latitude": 37.583921499999995
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 18,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 18,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 18,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 18,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 18,
+              "minute": 30
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/f8eaa4d2-ab46-4fd2-8dea-56a58383d2c5"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 4935,
+        "displayName": "우가돈가",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 종로구 명륜2가 8",
+        "phoneNumber": "02-747-1589",
+        "location": {
+          "longitude": 126.99938359999997,
+          "latitude": 37.5844774
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 25477,
+        "displayName": "순대실록 대학로본점",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭동 1-41",
+        "phoneNumber": "02-742-5338",
+        "location": {
+          "longitude": 127.00305010000001,
+          "latitude": 37.5832367
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 23,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 23,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 23,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 23,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 23,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 23,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 9,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 23,
+              "minute": 30
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/4a1bcbfb-87e6-4316-8f27-99b051a406d8"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 31161,
+        "displayName": "맛의 정원",
+        "primaryTypeDisplayName": "일본 음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 명륜1가 31-3",
+        "phoneNumber": null,
+        "location": {
+          "longitude": 126.9989078,
+          "latitude": 37.5896296
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 15,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 20,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 15,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 20,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 15,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 20,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 15,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 20,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 15,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 15,
+              "minute": 30
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/c4de9375-6218-4e4e-b6a9-695e227c4092"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      }
+    ],
+    [
+      {
+        "id": 3715,
+        "displayName": "이소빈머리나라",
+        "primaryTypeDisplayName": "미용실",
+        "formattedAddress": "대한민국 서울특별시 명륜3가 2-35번지 1층 종로구 서울특별시 KR",
+        "phoneNumber": "02-766-0545",
+        "location": {
+          "longitude": 126.9961395,
+          "latitude": 37.587924799999996
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [],
+        "certificationName": [
+          "착한가격업소"
+        ]
+      },
+      {
+        "id": 48951,
+        "displayName": "옛날중국집",
+        "primaryTypeDisplayName": "중국 음식점",
+        "formattedAddress": "대한민국 서울특별시 성북구 성북로8길 8",
+        "phoneNumber": "02-764-0094",
+        "location": {
+          "longitude": 127.0043802,
+          "latitude": 37.5908066
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/ba513a05-21bf-494d-b5bf-c04262250e04"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 27052,
+        "displayName": "꺽정이네장작구이",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 종로구 명륜4가 85-9",
+        "phoneNumber": "02-744-7004",
+        "location": {
+          "longitude": 127.00107019999999,
+          "latitude": 37.5830223
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 4900,
+        "displayName": "페르시안궁전(할랄 음식)",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 성균관로6길 9",
+        "phoneNumber": "02-763-6050",
+        "location": {
+          "longitude": 126.99728900000001,
+          "latitude": 37.5848625
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 15,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "MON",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 25
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 15,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 25
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 15,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 25
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 15,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 25
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 15,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 25
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 15,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 25
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 15,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 25
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/a6d5b148-f4cf-4ba6-bba4-9d0401c19add"
+        ],
+        "certificationName": [
+          "모범음식점",
+          "안심식당"
+        ]
+      },
+      {
+        "id": 5596,
+        "displayName": "성북동함박스테이크",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 성북구 성북동 266-11",
+        "phoneNumber": "02-741-5600",
+        "location": {
+          "longitude": 126.99286450000001,
+          "latitude": 37.5945159
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/e47f49c8-943a-43c2-9255-6c1f98b7e98b"
+        ],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 27743,
+        "displayName": "깔리",
+        "primaryTypeDisplayName": "인도 레스토랑",
+        "formattedAddress": "대한민국 서울특별시 종로구 명륜4가 대학로11길 43",
+        "phoneNumber": "02-747-5050",
+        "location": {
+          "longitude": 126.9993044,
+          "latitude": 37.5824317
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 10
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 10
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 10
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 10
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 10
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 10
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/39423806-b217-486d-baf9-279582748175"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 24928,
+        "displayName": "서울대학교병원",
+        "primaryTypeDisplayName": "종합병원",
+        "formattedAddress": "대한민국 서울특별시 종로구 대학로 101",
+        "phoneNumber": "1588-5700",
+        "location": {
+          "longitude": 126.99906019999999,
+          "latitude": 37.5795427
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 18,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 18,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 18,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 18,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 18,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 13,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/4846b391-36d9-4746-9c6d-fabd29fde081"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 4934,
+        "displayName": "대가곱창",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 명륜3가 1-1143",
+        "phoneNumber": "02-747-3827",
+        "location": {
+          "longitude": 126.9942536,
+          "latitude": 37.5892413
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/8a045a8b-bad8-46bb-92a3-4fc2b16e0b18"
+        ],
+        "certificationName": [
+          "모범음식점",
+          "안심식당"
+        ]
+      },
+      {
+        "id": 26784,
+        "displayName": "작은마을",
+        "primaryTypeDisplayName": "관심 지점",
+        "formattedAddress": "대한민국 서울특별시 명륜3가 1-129번지 종로구 서울특별시 KR",
+        "phoneNumber": "02-741-0770",
+        "location": {
+          "longitude": 126.994243,
+          "latitude": 37.5894395
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 25034,
+        "displayName": "쌀레에뻬뻬",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭동 1-77",
+        "phoneNumber": "02-745-2077",
+        "location": {
+          "longitude": 127.00349440000001,
+          "latitude": 37.5817834
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/a27d9b3a-cee1-43e2-a7c2-e47497467b7c"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 31743,
+        "displayName": "후암동숯불닭갈비",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭길 86",
+        "phoneNumber": "02-743-8181",
+        "location": {
+          "longitude": 127.00419160000001,
+          "latitude": 37.582063
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/38deed71-4914-4ae8-9e89-017046f76ad3"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 24927,
+        "displayName": "가화원 서울대병원",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 종로구 대학로 101",
+        "phoneNumber": "070-7702-1190",
+        "location": {
+          "longitude": 126.99988630000001,
+          "latitude": 37.577595599999995
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 20,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 20,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 20,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 20,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 20,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 15,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/31a47a26-5d13-4433-9071-5d03a5447ee5"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 38548,
+        "displayName": "성북동칼국수",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 성북구 성북동 성북로 5-7",
+        "phoneNumber": null,
+        "location": {
+          "longitude": 127.0051366,
+          "latitude": 37.5887197
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/83797c20-1e66-4579-afe1-0ccf3367769a"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 39136,
+        "displayName": "대성정육식당",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 혜화동 번지 1층 190-1",
+        "phoneNumber": "02-6402-7510",
+        "location": {
+          "longitude": 127.0022602,
+          "latitude": 37.583716599999995
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 5548,
+        "displayName": "안동할매청국장",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 성북구 성북동 성북로5길 9-3",
+        "phoneNumber": "02-743-8104",
+        "location": {
+          "longitude": 127.0046316,
+          "latitude": 37.5889514
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 8,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 30
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/f5a7f407-e58d-4557-b39b-8969055c4f67"
+        ],
+        "certificationName": [
+          "모범음식점"
+        ]
+      }
+    ],
+    [
+      {
+        "id": 3716,
+        "displayName": "삼삼뚝배기",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭동 1-147",
+        "phoneNumber": "02-765-4683",
+        "location": {
+          "longitude": 127.0041777,
+          "latitude": 37.5805179
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 7,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 7,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 7,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 7,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 7,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 7,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 7,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/ed9e9bc9-ed57-406a-9a6e-d7fc82007c15"
+        ],
+        "certificationName": [
+          "착한가격업소"
+        ]
+      },
+      {
+        "id": 27192,
+        "displayName": "수제비와 보리밥세상",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 연건동 93-15",
+        "phoneNumber": null,
+        "location": {
+          "longitude": 127.0014012,
+          "latitude": 37.5783463
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/77a22a37-a511-4be7-a62c-c8cf38b5a3f8"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 25771,
+        "displayName": "호프만의이야기",
+        "primaryTypeDisplayName": "술집",
+        "formattedAddress": "대한민국 서울특별시 동숭동 1-85 KR 서울특별시 종로구 동숭동 대학로12길 43",
+        "phoneNumber": "02-763-7796",
+        "location": {
+          "longitude": 127.0039586,
+          "latitude": 37.5820842
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 2,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 2,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 2,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 2,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 2,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 2,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 1,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/40d7e217-e70b-4cf7-a5b3-c5f509c44ab4"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 50462,
+        "displayName": "육즙마니",
+        "primaryTypeDisplayName": "숯불구이/바베큐전문점",
+        "formattedAddress": "대한민국 서울특별시 종로구 혜화동 126-5",
+        "phoneNumber": "010-9148-0502",
+        "location": {
+          "longitude": 127.0006412,
+          "latitude": 37.5851703
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 0,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 0,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 0,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 0,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 0,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 0,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 0,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/76372641-98fc-42fb-bc1d-f1f535eaea82"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 33258,
+        "displayName": "스시산 신관",
+        "primaryTypeDisplayName": "스시/초밥집",
+        "formattedAddress": "대한민국 서울특별시 성북구 성북동 성북로 5-1",
+        "phoneNumber": "02-745-3730",
+        "location": {
+          "longitude": 127.0053379,
+          "latitude": 37.5888081
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 30
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/24c05e2d-0617-479f-b857-60296faa99dd"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 5615,
+        "displayName": "성북동참치",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 성북구 성북로 22",
+        "phoneNumber": "02-764-2703",
+        "location": {
+          "longitude": 127.0046605,
+          "latitude": 37.5900207
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 0,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 1,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 1,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 1,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 1,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 17,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 0,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/100d7da3-3dfb-4ea6-a0ee-f41c850b33eb"
+        ],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 5608,
+        "displayName": "중경당",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 성북구 창경궁로43길 30",
+        "phoneNumber": "02-765-8283",
+        "location": {
+          "longitude": 127.00402240000001,
+          "latitude": 37.5892909
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/3c6baa63-b277-4558-9530-f5768f97e00b"
+        ],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 46485,
+        "displayName": "성북동 편백찜",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 성북구 성북로5길 15",
+        "phoneNumber": "02-747-6699",
+        "location": {
+          "longitude": 127.00430399999999,
+          "latitude": 37.5888519
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/794a7a78-92aa-4eb8-9fae-6d9b05d0ee47"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 4906,
+        "displayName": "커피중공업",
+        "primaryTypeDisplayName": "카페",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭동 130 17번지 1층",
+        "phoneNumber": null,
+        "location": {
+          "longitude": 127.00480280000001,
+          "latitude": 37.5808502
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 3717,
+        "displayName": "돈까스보라",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시",
+        "phoneNumber": "02-741-3455",
+        "location": {
+          "longitude": 127.00167779999998,
+          "latitude": 37.578154999999995
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/ba3f5acc-25c7-4025-af33-c2b0a307b0fe"
+        ],
+        "certificationName": [
+          "착한가격업소"
+        ]
+      },
+      {
+        "id": 4868,
+        "displayName": "조선식당",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 종로구 대학로 128",
+        "phoneNumber": "02-763-3323",
+        "location": {
+          "longitude": 127.0021429,
+          "latitude": 37.582665899999995
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 10,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/d667f6a6-e554-4074-8928-29df93171056"
+        ],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 4875,
+        "displayName": "더불어함께 一起共享",
+        "primaryTypeDisplayName": "한식당",
+        "formattedAddress": "대한민국 서울특별시 종로구 명륜4가 대명1길 21",
+        "phoneNumber": "02-747-3685",
+        "location": {
+          "longitude": 127.00085569999999,
+          "latitude": 37.5826444
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/edd2de8b-8357-4474-93c1-1eedfb94df10"
+        ],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 26785,
+        "displayName": "밥은",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 종로구 명륜3가동 명륜길 41",
+        "phoneNumber": "02-742-4698",
+        "location": {
+          "longitude": 126.994861,
+          "latitude": 37.5888645
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "MON",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "WED",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "THU",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 21,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 21,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/26030b25-9644-4f2d-ab7b-8ac32b0f87f7"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 25478,
+        "displayName": "핏제리아오",
+        "primaryTypeDisplayName": "피자 전문점",
+        "formattedAddress": "대한민국 서울특별시 종로구 동숭길 86",
+        "phoneNumber": "02-3673-5005",
+        "location": {
+          "longitude": 127.00427739999999,
+          "latitude": 37.582043299999995
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 22,
+              "minute": 0
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 11,
+              "minute": 30
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 22,
+              "minute": 0
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/949cd07b-b2b5-487b-a826-645970269948"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      },
+      {
+        "id": 48213,
+        "displayName": "백소정 대학로점",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "2층, 143 대학로 종로구 서울특별시 대한민국",
+        "phoneNumber": null,
+        "location": {
+          "longitude": 127.0013052,
+          "latitude": 37.5840295
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/876db221-e95e-4e5f-ba7f-38d5b1e9c915"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      }
+    ],
+    [
+      {
+        "id": 4925,
+        "displayName": "돌깨마을맷돌순두부",
+        "primaryTypeDisplayName": "음식점",
+        "formattedAddress": "대한민국 서울특별시 동숭동 1-37번지 3층 로얄케스트 종로구 서울특별시 KR",
+        "phoneNumber": "02-744-6477",
+        "location": {
+          "longitude": 127.0024241,
+          "latitude": 37.583225999999996
+        },
+        "regularOpeningHours": [],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/c4a900a1-5917-4da8-b352-9a57f54ba429"
+        ],
+        "certificationName": [
+          "모범음식점"
+        ]
+      },
+      {
+        "id": 27585,
+        "displayName": "대학로에 취하다",
+        "primaryTypeDisplayName": "주류 판매점",
+        "formattedAddress": "대한민국 서울특별시 1F KR 서울특별시 종로구",
+        "phoneNumber": "02-743-3853",
+        "location": {
+          "longitude": 127.00281549999998,
+          "latitude": 37.5823142
+        },
+        "regularOpeningHours": [
+          {
+            "open": {
+              "day": "MON",
+              "hour": 16,
+              "minute": 30
+            },
+            "close": {
+              "day": "MON",
+              "hour": 0,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "TUE",
+              "hour": 16,
+              "minute": 30
+            },
+            "close": {
+              "day": "TUE",
+              "hour": 0,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "WED",
+              "hour": 16,
+              "minute": 30
+            },
+            "close": {
+              "day": "WED",
+              "hour": 0,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "THU",
+              "hour": 16,
+              "minute": 30
+            },
+            "close": {
+              "day": "THU",
+              "hour": 0,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "FRI",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "FRI",
+              "hour": 0,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SAT",
+              "hour": 4,
+              "minute": 0
+            },
+            "close": {
+              "day": "SAT",
+              "hour": 0,
+              "minute": 30
+            }
+          },
+          {
+            "open": {
+              "day": "SUN",
+              "hour": 16,
+              "minute": 0
+            },
+            "close": {
+              "day": "SUN",
+              "hour": 0,
+              "minute": 30
+            }
+          }
+        ],
+        "localPhotos": [
+          "https://storage.googleapis.com/kcs-dev-bucket1/cbd78e6d-25bf-42e3-9dcb-cfbd822bcb6d"
+        ],
+        "certificationName": [
+          "안심식당"
+        ]
+      }
+    ]
+  ]
+}

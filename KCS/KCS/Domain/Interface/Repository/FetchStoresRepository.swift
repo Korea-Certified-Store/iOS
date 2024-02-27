@@ -14,8 +14,7 @@ protocol FetchStoresRepository {
     var session: Session { get }
     
     func fetchStores(
-        requestLocation: RequestLocation,
-        isEntire: Bool
+        requestLocation: RequestLocation
     ) -> Observable<FetchStores>
     
 }

@@ -32,7 +32,15 @@ struct FetchImageRepositoryImpl: FetchImageRepository {
                                     observer.onError(ImageRepositoryError.noImageData)
                                 }
                             case .failure(let error):
-                                observer.onError(error)
+                                if let underlyingError = error.underlyingError as? NSError,
+                                   underlyingError.code == URLError.notConnectedToInternet.rawValue {
+                                    observer.onError(ErrorAlertMessage.internet)
+                                } else if let underlyingError = error.underlyingError as? NSError,
+                                          underlyingError.code == 13 {
+                                    observer.onError(ErrorAlertMessage.server)
+                                } else {
+                                    observer.onError(ErrorAlertMessage.client)
+                                }
                             }
                         })
                 }

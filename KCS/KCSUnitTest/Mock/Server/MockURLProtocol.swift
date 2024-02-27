@@ -18,8 +18,8 @@ final class MockURLProtocol: URLProtocol {
         
     }
     
-    static var responseType: ResponseType!
-    static var jsonFile: MockJSONFile!
+    static var responseType: ResponseType?
+    static var jsonFile: MockJSONFile?
     
     private lazy var session: URLSession = {
         let configuration: URLSessionConfiguration = URLSessionConfiguration.ephemeral
@@ -45,15 +45,15 @@ final class MockURLProtocol: URLProtocol {
         let response = setUpMockResponse()
         let data = setUpMockData()
         
-        client?.urlProtocol(self, didReceive: response!, cacheStoragePolicy: .notAllowed)
-        
-        client?.urlProtocol(self, didLoad: data!)
-        
+        if let response = response {
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            client?.urlProtocol(self, didLoad: data!)
+        }
         self.client?.urlProtocolDidFinishLoading(self)
         activeTask = session.dataTask(with: request.urlRequest!)
         activeTask?.cancel()
     }
-
+    
     private func setUpMockResponse() -> HTTPURLResponse? {
         var response: HTTPURLResponse?
         switch MockURLProtocol.responseType {
@@ -65,14 +65,13 @@ final class MockURLProtocol: URLProtocol {
             fatalError("No fake responses found.")
         }
         
-        return response!
+        return response
     }
     
     private func setUpMockData() -> Data? {
-        let fileName: String = MockURLProtocol.jsonFile.fileName
-
-        guard let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: "json") else {
-            return Data()
+        guard let fileName: String = MockURLProtocol.jsonFile?.fileName,
+              let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: "json") else {
+            return nil
         }
         return try? Data(contentsOf: file)
     }
@@ -86,18 +85,40 @@ final class MockURLProtocol: URLProtocol {
 extension MockURLProtocol {
     
     enum MockError: Error {
-        case none
+        case noInternetConnection
+        case noServerConnection
+        case alamofireError
     }
     
-    static func responseWithFailure() {
-        MockURLProtocol.responseType = MockURLProtocol.ResponseType.error(MockError.none)
+    static func responseWithFailure(error: MockError) {
+        let responseError: Error = {
+            switch error {
+            case .noInternetConnection:
+                NSError(
+                    domain: "",
+                    code: URLError.notConnectedToInternet.rawValue
+                )
+            case .noServerConnection:
+                AFError.sessionTaskFailed(error: MockError.noServerConnection)
+            case .alamofireError:
+                AFError.explicitlyCancelled
+            }
+        }()
+        MockURLProtocol.responseType = MockURLProtocol.ResponseType.error(responseError)
     }
     
     static func responseWithStatusCode(code: Int) {
         guard let urlString = Bundle.main.object(forInfoDictionaryKey: "DEV_SERVER_URL") as? String else {
             return
         }
-        MockURLProtocol.responseType = MockURLProtocol.ResponseType.success(HTTPURLResponse(url: URL(string: urlString)!, statusCode: code, httpVersion: nil, headerFields: nil)!)
+        guard let url = URL(string: urlString),
+              let httpResponse = HTTPURLResponse(
+                url: url,
+                statusCode: code,
+                httpVersion: nil,
+                headerFields: nil
+              ) else { return }
+        MockURLProtocol.responseType = MockURLProtocol.ResponseType.success(httpResponse)
     }
     
     static func setResponseFile(type: MockJSONFile) {
@@ -110,8 +131,22 @@ extension MockURLProtocol {
     
     enum MockJSONFile {
         
+        case fetchStoresSuccessWithZeroStore
+        case fetchStoresSuccessWithManyStores
+        case fetchStoresFailureWithWrongDay
+        case fetchStoresFailureWithWrongCeritifcation
+        
         var fileName: String {
-            switch self {}
+            switch self {
+            case .fetchStoresSuccessWithZeroStore:
+                return "FetchStoresSuccessWithZeroStore"
+            case .fetchStoresSuccessWithManyStores:
+                return "FetchStoresSuccessWithManyStores"
+            case .fetchStoresFailureWithWrongDay:
+                return "FetchStoresFailureWithWrongDay"
+            case .fetchStoresFailureWithWrongCeritifcation:
+                return "FetchStoresFailureWithWrongCeritifcation"
+            }
         }
         
     }
