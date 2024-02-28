@@ -10,6 +10,19 @@ import XCTest
 import RxSwift
 import RxBlocking
 
+struct FetchImageUseCaseImplTestsEntity {
+    
+    enum MockURLString: String {
+        
+        case cache = "test_cache_image_URL"
+        case noCache = "test_no_cache_image_URL"
+        case fail = "url"
+        case wrongURL = ""
+        
+    }
+    
+}
+
 final class FetchImageUseCaseImplTests: XCTestCase {
     
     private var fetchImageUseCase: FetchImageUseCase!
@@ -26,7 +39,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     
     func test_캐시데이터에_이미지가_존재하는_경우() {
         // Given
-        let urlString = MockURLString.cache.rawValue
+        let urlString = FetchImageUseCaseImplTestsEntity.MockURLString.cache.rawValue
         guard let url = NSURL(string: urlString) else {
             XCTFail("데이터 변환 실패")
             return
@@ -57,7 +70,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
 
     func test_캐시데이터에_이미지가_존재하지_않는_경우() {
         // Given
-        let urlString = MockURLString.noCache.rawValue
+        let urlString = FetchImageUseCaseImplTestsEntity.MockURLString.noCache.rawValue
         let imageData = mockImage.getImageURL(imageString: imageString)
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
@@ -82,7 +95,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     
     func test_URL에_맞는_이미지_데이터가_없는_경우() {
         // Given
-        let urlString = MockURLString.fail.rawValue
+        let urlString = FetchImageUseCaseImplTestsEntity.MockURLString.fail.rawValue
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockNoImageFailureImageRepository(
                 cache: imageCache
@@ -103,7 +116,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     
     func test_API_호출이_실패한_경우() {
         // Given
-        let urlString = MockURLString.fail.rawValue
+        let urlString = FetchImageUseCaseImplTestsEntity.MockURLString.fail.rawValue
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockAPIFailureImageRepository(
                 cache: imageCache

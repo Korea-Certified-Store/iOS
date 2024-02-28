@@ -1,5 +1,5 @@
 //
-//  FetchImageRepositoryTests.swift
+//  FetchImageRepositoryImplTests.swift
 //  KCSUnitTest
 //
 //  Created by 김영현 on 2/26/24.
@@ -11,7 +11,20 @@ import Alamofire
 import RxSwift
 import RxBlocking
 
-final class FetchImageRepositoryTests: XCTestCase {
+struct FetchImageRepositoryImplTestsEntity {
+    
+    enum MockURLString: String {
+        
+        case cache = "test_cache_image_URL"
+        case noCache = "test_no_cache_image_URL"
+        case fail = "url"
+        case wrongURL = ""
+        
+    }
+    
+}
+
+final class FetchImageRepositoryImplTests: XCTestCase {
     
     private var fetchImageRepository: FetchImageRepository!
     private var imageCache: ImageCache!
@@ -40,7 +53,7 @@ final class FetchImageRepositoryTests: XCTestCase {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFile)
-        let urlString = MockURLString.cache.rawValue
+        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.cache.rawValue
         let imageData = mockImage.getImageURL(imageString: imageString)
         guard let url = NSURL(string: urlString) else {
             XCTFail("데이터 변환 실패")
@@ -71,7 +84,7 @@ final class FetchImageRepositoryTests: XCTestCase {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFile)
-        let urlString = MockURLString.noCache.rawValue
+        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.noCache.rawValue
         let imageData = mockImage.getImageURL(imageString: imageString)
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
@@ -97,7 +110,7 @@ final class FetchImageRepositoryTests: XCTestCase {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFileFail)
-        let urlString = MockURLString.fail.rawValue
+        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.fail.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
@@ -119,7 +132,7 @@ final class FetchImageRepositoryTests: XCTestCase {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFileFail)
-        let urlString = MockURLString.wrongURL.rawValue
+        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.wrongURL.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
@@ -140,7 +153,7 @@ final class FetchImageRepositoryTests: XCTestCase {
     func test_인터넷_연결에_실패한_경우() {
         // Given
         MockURLProtocol.responseWithFailure(error: .noInternetConnection)
-        let urlString = MockURLString.fail.rawValue
+        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.fail.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
@@ -161,7 +174,7 @@ final class FetchImageRepositoryTests: XCTestCase {
     func test_서버_연결에_실패한_경우() {
         // Given
         MockURLProtocol.responseWithFailure(error: .noServerConnection)
-        let urlString = MockURLString.fail.rawValue
+        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.fail.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
@@ -182,7 +195,7 @@ final class FetchImageRepositoryTests: XCTestCase {
     func test_Alamofire_통신에_실패한_경우() {
         // Given
         MockURLProtocol.responseWithFailure(error: .alamofireError)
-        let urlString = MockURLString.fail.rawValue
+        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.fail.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
