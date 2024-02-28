@@ -74,11 +74,15 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Store_0개를_받아_성공한_경우() {
+        // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchStoresSuccessWithZeroStore)
+        
         do {
+            // When
             let result = try fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().first()
             
+            // Then
             XCTAssertEqual(fetchStoresRepository.storeStorage.stores, testEntity.emptyStoreArray)
             XCTAssertTrue(result?.fetchCountContent.maxFetchCount == 1)
             XCTAssertTrue(result?.fetchCountContent.fetchCount == 1)
@@ -89,10 +93,15 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Store_1개_이상을_받아_성공한_경우() {
+        // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchStoresSuccessWithManyStores)
+        
         do {
+            // When
             let result = try fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().first()
+            
+            // Then
             XCTAssertEqual(fetchStoresRepository.storeStorage.stores, testEntity.flattenStores)
             XCTAssertTrue(result?.fetchCountContent.maxFetchCount == 4)
             XCTAssertTrue(result?.fetchCountContent.fetchCount == 1)
@@ -103,10 +112,13 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_인터넷_연결에_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithFailure(error: .noInternetConnection)
         
+        // When
         let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")
@@ -116,10 +128,13 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_서버_연결에_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithFailure(error: .noServerConnection)
         
+        // When
         let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")
@@ -129,11 +144,14 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Day_toEntity_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchStoresFailureWithWrongDay)
         
+        // When
         let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")
@@ -143,11 +161,14 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Certification_toEntity_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchStoresFailureWithWrongCeritifcation)
         
+        // When
         let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")
@@ -157,10 +178,13 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Alamofire_통신에_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithFailure(error: .alamofireError)
         
+        // When
         let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")

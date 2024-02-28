@@ -96,14 +96,18 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
     }
 
     func test_Store_0개를_받아_성공한_경우() {
+        // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchSearchStoresSuccessWithNoStore)
+        
         do {
+            // When
             let result = try fetchSearchStoresRepository.fetchSearchStores(
                 location: testEntity.mockLocation,
                 keyword: testEntity.mockKeyword
             ).toBlocking().first()
             
+            // Then
             XCTAssertEqual(fetchSearchStoresRepository.storeStorage.stores, testEntity.emptyStoreArray)
             XCTAssertEqual(result, testEntity.emptyStoreArray)
         } catch {
@@ -112,14 +116,18 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Store_1개를_받아_성공한_경우() {
+        // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchSearchStoresSuccessWithOneStore)
+        
         do {
+            // When
             let result = try fetchSearchStoresRepository.fetchSearchStores(
                 location: testEntity.mockLocation,
                 keyword: testEntity.mockKeyword
             ).toBlocking().first()
             
+            // Then
             XCTAssertEqual(fetchSearchStoresRepository.storeStorage.stores, testEntity.oneStore)
             XCTAssertEqual(result, testEntity.oneStore)
         } catch {
@@ -128,14 +136,18 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Store_2개_이상을_받아_성공한_경우() {
+        // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchSearchStoresSuccessWithManyStores)
+        
         do {
+            // When
             let result = try fetchSearchStoresRepository.fetchSearchStores(
                 location: testEntity.mockLocation,
                 keyword: testEntity.mockKeyword
             ).toBlocking().first()
             
+            // Then
             XCTAssertEqual(fetchSearchStoresRepository.storeStorage.stores, testEntity.manyStores)
             XCTAssertEqual(result, testEntity.manyStores)
         } catch {
@@ -144,13 +156,16 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
     }
         
     func test_인터넷_연결에_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithFailure(error: .noInternetConnection)
         
+        // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
             location: testEntity.mockLocation,
             keyword: testEntity.mockKeyword
         ).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")
@@ -160,13 +175,16 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_서버_연결에_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithFailure(error: .noServerConnection)
         
+        // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
             location: testEntity.mockLocation,
             keyword: testEntity.mockKeyword
         ).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")
@@ -176,14 +194,17 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Day_toEntity_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchSearchStoresFailureWithWrongDay)
         
+        // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
             location: testEntity.mockLocation,
             keyword: testEntity.mockKeyword
         ).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")
@@ -193,14 +214,17 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Certification_toEntity_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchSearchStoresFailureWithWrongCertification)
         
+        // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
             location: testEntity.mockLocation,
             keyword: testEntity.mockKeyword
         ).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")
@@ -211,13 +235,16 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
     }
     
     func test_Alamofire_통신에_실패한_경우() {
+        // Given
         MockURLProtocol.responseWithFailure(error: .alamofireError)
         
+        // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
             location: testEntity.mockLocation,
             keyword: testEntity.mockKeyword
         ).toBlocking().materialize()
         
+        // Then
         switch result {
         case .completed:
             XCTFail("Error 방출 실패")
