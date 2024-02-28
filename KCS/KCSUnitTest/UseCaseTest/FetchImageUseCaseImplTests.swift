@@ -12,12 +12,6 @@ import RxBlocking
 
 final class FetchImageUseCaseImplTests: XCTestCase {
     
-    enum URLString: String {
-        case cache = "test_cache_image_URL"
-        case noCache = "test_no_cache_image_URL"
-        case fail = ""
-    }
-    
     private var fetchImageUseCase: FetchImageUseCase!
     private var imageCache: ImageCache!
     private var disposeBag: DisposeBag!
@@ -27,13 +21,12 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     override func setUp() {
         imageCache = ImageCache(cache: NSCache<NSURL, NSData>())
         mockImage = MockImage()
-        // TODO: Mock Server 주입 필요
         disposeBag = DisposeBag()
     }
     
-    func test_캐시데이터에_이미지가_존재하는_경우() throws {
+    func test_캐시데이터에_이미지가_존재하는_경우() {
         // Given
-        let urlString = URLString.cache.rawValue
+        let urlString = MockURLString.cache.rawValue
         guard let url = NSURL(string: urlString) else {
             XCTFail("데이터 변환 실패")
             return
@@ -62,9 +55,9 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         
     }
 
-    func test_캐시데이터에_이미지가_존재하지_않는_경우() throws {
+    func test_캐시데이터에_이미지가_존재하지_않는_경우() {
         // Given
-        let urlString = URLString.noCache.rawValue
+        let urlString = MockURLString.noCache.rawValue
         let imageData = mockImage.getImageURL(imageString: imageString)
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
@@ -87,9 +80,9 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         }
     }
     
-    func test_URL에_맞는_이미지_데이터가_없는_경우() throws {
+    func test_URL에_맞는_이미지_데이터가_없는_경우() {
         // Given
-        let urlString = URLString.fail.rawValue
+        let urlString = MockURLString.fail.rawValue
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockNoImageFailureImageRepository(
                 cache: imageCache
@@ -108,9 +101,9 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         }
     }
     
-    func test_API_호출이_실패한_경우() throws {
+    func test_API_호출이_실패한_경우() {
         // Given
-        let urlString = URLString.fail.rawValue
+        let urlString = MockURLString.fail.rawValue
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockAPIFailureImageRepository(
                 cache: imageCache

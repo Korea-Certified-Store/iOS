@@ -126,7 +126,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         case .completed:
             XCTFail("Error 방출 실패")
         case .failed(_, let error):
-            XCTAssertEqual(error as! ErrorAlertMessage, ErrorAlertMessage.server)
+            XCTAssertEqual(error as? ErrorAlertMessage, ErrorAlertMessage.server)
         }
     }
     
