@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 @testable import KCS
 
 final class MockURLProtocol: URLProtocol {
@@ -45,10 +44,10 @@ final class MockURLProtocol: URLProtocol {
         let response = setUpMockResponse()
         let data = setUpMockData()
         
-        client?.urlProtocol(self, didReceive: response!, cacheStoragePolicy: .notAllowed)
-        
-        client?.urlProtocol(self, didLoad: data!)
-        
+        if let response = response {
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            client?.urlProtocol(self, didLoad: data!)
+        }
         self.client?.urlProtocolDidFinishLoading(self)
         activeTask = session.dataTask(with: request.urlRequest!)
         activeTask?.cancel()
@@ -70,8 +69,16 @@ final class MockURLProtocol: URLProtocol {
     
     private func setUpMockData() -> Data? {
         let fileName: String = MockURLProtocol.jsonFile.fileName
-
-        guard let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: "json") else {
+        var extensionName: String
+        
+        switch MockURLProtocol.jsonFile {
+        case .fetchImageFile:
+            extensionName = "jpeg"
+        default:
+            extensionName = "json"
+        }
+        
+        guard let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: extensionName) else {
             return Data()
         }
         return try? Data(contentsOf: file)
@@ -86,11 +93,20 @@ final class MockURLProtocol: URLProtocol {
 extension MockURLProtocol {
     
     enum MockError: Error {
-        case none
+        case noInternetConnection
     }
     
-    static func responseWithFailure() {
-        MockURLProtocol.responseType = MockURLProtocol.ResponseType.error(MockError.none)
+    static func responseWithFailure(error: MockError) {
+        var responseError: Error = {
+            switch error {
+            case .noInternetConnection:
+                NSError(
+                    domain: "",
+                    code: URLError.notConnectedToInternet.rawValue
+                )
+            }
+        }()
+        MockURLProtocol.responseType = MockURLProtocol.ResponseType.error(responseError)
     }
     
     static func responseWithStatusCode(code: Int) {
@@ -110,8 +126,22 @@ extension MockURLProtocol {
     
     enum MockJSONFile {
         
+        case fetchStoresSuccessWithZeroStore
+        case fetchStoresSuccessWithManyStores
+        case fetchImageFile
+        case fetchImageFileFail
+        
         var fileName: String {
-            switch self {}
+            switch self {
+            case .fetchStoresSuccessWithZeroStore:
+                return "FetchStoresSuccessWithZeroStore"
+            case .fetchStoresSuccessWithManyStores:
+                return "FetchStoresSuccessWithManyStores"
+            case .fetchImageFile:
+                return "MockImage"
+            case .fetchImageFileFail:
+                return ""
+            }
         }
         
     }
