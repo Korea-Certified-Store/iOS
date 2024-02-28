@@ -78,8 +78,6 @@
 		59B886602B6E7CF6005750EF /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8865F2B6E7CF6005750EF /* UIViewController+Alert.swift */; };
 		59B886622B6E8484005750EF /* UISheetPresentationController+Detent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886612B6E8484005750EF /* UISheetPresentationController+Detent.swift */; };
 		59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886632B6EC816005750EF /* SummaryViewHeightCase.swift */; };
-		59C0308F2B8E4DC800A1A6FB /* MockFailureNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C0308E2B8E4DC800A1A6FB /* MockFailureNetworkRepository.swift */; };
-		59C030912B8E4E0A00A1A6FB /* MockSuccessNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C030902B8E4E0A00A1A6FB /* MockSuccessNetworkRepository.swift */; };
 		59C030932B8E4E8900A1A6FB /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C030922B8E4E8900A1A6FB /* MockURLProtocol.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
@@ -130,11 +128,12 @@
 		A82674662B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A826745E2B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift */; };
 		A82674692B8C7AD7004710CB /* MockSuccessImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82674632B8C7AD7004710CB /* MockSuccessImageRepository.swift */; };
 		A826746A2B8C7AD7004710CB /* MockFailureImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82674642B8C7AD7004710CB /* MockFailureImageRepository.swift */; };
-		A82674702B8CB701004710CB /* (null) in Resources */ = {isa = PBXBuildFile; };
 		A82674862B8CF482004710CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 591A88852B384E610059E40F /* Assets.xcassets */; };
 		A82674882B8CF624004710CB /* MockImage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A82674872B8CF623004710CB /* MockImage.jpeg */; };
 		A826748D2B8CFA62004710CB /* FetchImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A826748C2B8CFA61004710CB /* FetchImageRepository.swift */; };
 		A826748F2B8CFA78004710CB /* FetchImageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A826748E2B8CFA78004710CB /* FetchImageRepositoryImpl.swift */; };
+		A82674992B8D059D004710CB /* FetchImageRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82674982B8D059C004710CB /* FetchImageRepositoryImplTests.swift */; };
+		A826749B2B8D0BB1004710CB /* MockImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A826749A2B8D0BB0004710CB /* MockImage.swift */; };
 		A83367B62B6F993F00E0A844 /* MoreStoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */; };
 		A83367B82B6FA0E700E0A844 /* FetchStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367B72B6FA0E700E0A844 /* FetchStores.swift */; };
 		A83367BB2B709C0200E0A844 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */; };
@@ -202,6 +201,8 @@
 		A8E53C252B77DDF3003FCBA2 /* StoreStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */; };
 		A8E53C272B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */; };
 		A8E53C2B2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */; };
+		A8EC5B002B8F9B1D00D9182F /* MockFailureNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C0308E2B8E4DC800A1A6FB /* MockFailureNetworkRepository.swift */; };
+		A8EC5B012B8F9B1F00D9182F /* MockSuccessNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C030902B8E4E0A00A1A6FB /* MockSuccessNetworkRepository.swift */; };
 		AE60727C9A543E3D0F3A0279 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */; };
 		BBE1483137890D1D37D0E308 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3902FBE673069073F47D82 /* Pods_KCS.framework */; };
 /* End PBXBuildFile section */
@@ -351,6 +352,8 @@
 		A82674872B8CF623004710CB /* MockImage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = MockImage.jpeg; path = KCSUnitTest/Mock/Resource/MockImage.jpeg; sourceTree = SOURCE_ROOT; };
 		A826748C2B8CFA61004710CB /* FetchImageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchImageRepository.swift; sourceTree = "<group>"; };
 		A826748E2B8CFA78004710CB /* FetchImageRepositoryImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchImageRepositoryImpl.swift; sourceTree = "<group>"; };
+		A82674982B8D059C004710CB /* FetchImageRepositoryImplTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchImageRepositoryImplTests.swift; sourceTree = "<group>"; };
+		A826749A2B8D0BB0004710CB /* MockImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImage.swift; sourceTree = "<group>"; };
 		A83367B52B6F993F00E0A844 /* MoreStoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStoreButton.swift; sourceTree = "<group>"; };
 		A83367B72B6FA0E700E0A844 /* FetchStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStores.swift; sourceTree = "<group>"; };
 		A83367BA2B709C0200E0A844 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -489,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				594376942B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift */,
+				A82674982B8D059C004710CB /* FetchImageRepositoryImplTests.swift */,
 			);
 			path = RepositoryTest;
 			sourceTree = "<group>";
@@ -665,8 +669,8 @@
 			isa = PBXGroup;
 			children = (
 				594376932B8C7E5C005B97B2 /* RepositoryTest */,
-				A826745F2B8C7AD7004710CB /* Mock */,
 				A826745A2B8C7AD7004710CB /* UseCaseTest */,
+				A826745F2B8C7AD7004710CB /* Mock */,
 			);
 			path = KCSUnitTest;
 			sourceTree = "<group>";
@@ -996,34 +1000,18 @@
 		A826745A2B8C7AD7004710CB /* UseCaseTest */ = {
 			isa = PBXGroup;
 			children = (
-				A826745B2B8C7AD7004710CB /* Splash */,
-				A826745D2B8C7AD7004710CB /* StoreList */,
-			);
-			path = UseCaseTest;
-			sourceTree = "<group>";
-		};
-		A826745B2B8C7AD7004710CB /* Splash */ = {
-			isa = PBXGroup;
-			children = (
 				A826745C2B8C7AD7004710CB /* CheckNetworkStatusUseCaseImplTests.swift */,
-			);
-			path = Splash;
-			sourceTree = "<group>";
-		};
-		A826745D2B8C7AD7004710CB /* StoreList */ = {
-			isa = PBXGroup;
-			children = (
 				A826745E2B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift */,
 			);
-			path = StoreList;
+			path = UseCaseTest;
 			sourceTree = "<group>";
 		};
 		A826745F2B8C7AD7004710CB /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				A82674602B8C7AD7004710CB /* Repository */,
 				A82674912B8CFD61004710CB /* Server */,
 				A82674892B8CF6DF004710CB /* Resource */,
-				A82674602B8C7AD7004710CB /* Repository */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -1043,6 +1031,7 @@
 			isa = PBXGroup;
 			children = (
 				A82674872B8CF623004710CB /* MockImage.jpeg */,
+				A826749A2B8D0BB0004710CB /* MockImage.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -1300,7 +1289,6 @@
 				594376972B8CF630005B97B2 /* FetchStoresSuccessWithZeroStore.json in Resources */,
 				A82674862B8CF482004710CB /* Assets.xcassets in Resources */,
 				A82674882B8CF624004710CB /* MockImage.jpeg in Resources */,
-				A82674702B8CB701004710CB /* (null) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1607,12 +1595,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				594376952B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift in Sources */,
-				59C030912B8E4E0A00A1A6FB /* MockSuccessNetworkRepository.swift in Sources */,
-				59C030932B8E4E8900A1A6FB /* MockURLProtocol.swift in Sources */,
+				A826749B2B8D0BB1004710CB /* MockImage.swift in Sources */,
 				A82674662B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift in Sources */,
+				A8EC5B012B8F9B1F00D9182F /* MockSuccessNetworkRepository.swift in Sources */,
+				A82674992B8D059D004710CB /* FetchImageRepositoryImplTests.swift in Sources */,
+				594376952B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift in Sources */,
+				59C030932B8E4E8900A1A6FB /* MockURLProtocol.swift in Sources */,
+				A8EC5B002B8F9B1D00D9182F /* MockFailureNetworkRepository.swift in Sources */,
 				A82674692B8C7AD7004710CB /* MockSuccessImageRepository.swift in Sources */,
-				59C0308F2B8E4DC800A1A6FB /* MockFailureNetworkRepository.swift in Sources */,
 				A826746A2B8C7AD7004710CB /* MockFailureImageRepository.swift in Sources */,
 				A82674652B8C7AD7004710CB /* CheckNetworkStatusUseCaseImplTests.swift in Sources */,
 			);

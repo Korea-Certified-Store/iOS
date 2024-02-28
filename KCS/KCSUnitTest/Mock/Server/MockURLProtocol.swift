@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import Alamofire
 @testable import KCS
+import Alamofire
 
 final class MockURLProtocol: URLProtocol {
     
@@ -69,9 +69,18 @@ final class MockURLProtocol: URLProtocol {
     }
     
     private func setUpMockData() -> Data? {
+        var extensionName: String
+        
+        switch MockURLProtocol.jsonFile {
+        case .fetchImageFile:
+            extensionName = "jpeg"
+        default:
+            extensionName = "json"
+        }
+        
         guard let fileName: String = MockURLProtocol.jsonFile?.fileName,
-              let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: "json") else {
-            return nil
+              let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: extensionName) else {
+            return Data()
         }
         return try? Data(contentsOf: file)
     }
@@ -135,6 +144,8 @@ extension MockURLProtocol {
         case fetchStoresSuccessWithManyStores
         case fetchStoresFailureWithWrongDay
         case fetchStoresFailureWithWrongCeritifcation
+        case fetchImageFile
+        case fetchImageFileFail
         
         var fileName: String {
             switch self {
@@ -146,6 +157,10 @@ extension MockURLProtocol {
                 return "FetchStoresFailureWithWrongDay"
             case .fetchStoresFailureWithWrongCeritifcation:
                 return "FetchStoresFailureWithWrongCeritifcation"
+            case .fetchImageFile:
+                return "MockImage"
+            case .fetchImageFileFail:
+                return ""
             }
         }
         

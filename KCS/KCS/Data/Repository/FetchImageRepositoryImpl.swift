@@ -44,8 +44,9 @@ struct FetchImageRepositoryImpl: FetchImageRepository {
                             }
                         })
                 }
+            } else {
+                observer.onError(ErrorAlertMessage.client)
             }
-            
             return Disposables.create()
         }
     }
