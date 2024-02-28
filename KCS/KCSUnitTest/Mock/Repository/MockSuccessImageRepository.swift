@@ -14,6 +14,7 @@ final class MockSuccessImageRepository: FetchImageRepository {
     
     var cache: ImageCache
     var session: Session = Session.default
+    let mockImage = MockImage()
     
     init(cache: ImageCache) {
         self.cache = cache
@@ -26,8 +27,7 @@ final class MockSuccessImageRepository: FetchImageRepository {
                 if let imageData = cache.getImageData(for: url as NSURL) {
                     observer.onNext(Data(imageData))
                 } else {
-                    guard let imageURL = Bundle(for: type(of: self)).url(forResource: "MockImage", withExtension: ".jpeg") else { return Disposables.create() }
-                    observer.onNext(try! Data(contentsOf: imageURL))
+                    observer.onNext(mockImage.getImageURL(imageString: "MockImage"))
                 }
             }
             return Disposables.create()

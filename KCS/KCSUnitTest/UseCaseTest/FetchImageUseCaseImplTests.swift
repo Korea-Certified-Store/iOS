@@ -21,10 +21,12 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     private var fetchImageUseCase: FetchImageUseCase!
     private var imageCache: ImageCache!
     private var disposeBag: DisposeBag!
+    private var mockImage: MockImage!
     private let imageString = "MockImage"
 
     override func setUp() {
         imageCache = ImageCache(cache: NSCache<NSURL, NSData>())
+        mockImage = MockImage()
         // TODO: Mock Server 주입 필요
         disposeBag = DisposeBag()
     }
@@ -32,13 +34,12 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     func test_캐시데이터에_이미지가_존재하는_경우() throws {
         // Given
         let urlString = URLString.cache.rawValue
-        guard let url = NSURL(string: urlString),
-              let imageURL = Bundle(for: type(of: self)).url(forResource: imageString, withExtension: "jpeg") else {
+        guard let url = NSURL(string: urlString) else {
             XCTFail("데이터 변환 실패")
             return
         }
-        let imageData = try! Data(contentsOf: imageURL)
-        imageCache.setImageData(Data(imageData) as NSData, for: url)
+        let imageData = mockImage.getImageURL(imageString: imageString)
+        imageCache.setImageData(imageData as NSData, for: url)
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
                 cache: imageCache
@@ -54,7 +55,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
                 XCTFail("BlockingObservable 값 추출 실패")
                 return
             }
-            XCTAssertEqual(Data(imageData), result)
+            XCTAssertEqual(result, imageData)
         } catch {
             XCTFail("캐시데이터 이미지 fetch 실패")
         }
@@ -64,11 +65,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     func test_캐시데이터에_이미지가_존재하지_않는_경우() throws {
         // Given
         let urlString = URLString.noCache.rawValue
-        guard let imageURL = Bundle(for: type(of: self)).url(forResource: imageString, withExtension: "jpeg") else {
-            XCTFail("데이터 변환 실패")
-            return
-        }
-        let imageData = try! Data(contentsOf: imageURL)
+        let imageData = mockImage.getImageURL(imageString: imageString)
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
                 cache: imageCache
@@ -84,7 +81,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
                 XCTFail("BlockingObservable 값 추출 실패")
                 return
             }
-            XCTAssertEqual(Data(imageData), result)
+            XCTAssertEqual(result, imageData)
         } catch {
             XCTFail("캐시데이터 이미지 fetch 실패")
         }
@@ -107,11 +104,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         case .completed(_):
             XCTFail("ImageRepositoryError 에러를 담은 데이터를 반환 실패")
         case .failed(_, let error):
-            guard let error = error as? ImageRepositoryError else {
-                XCTFail("ImageRepositoryError 에러를 담은 데이터를 반환 실패")
-                return
-            }
-            XCTAssertEqual(ImageRepositoryError.noImageData, error)
+            XCTAssertEqual(error as? ImageRepositoryError, ImageRepositoryError.noImageData)
         }
     }
     
@@ -132,11 +125,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         case .completed(_):
             XCTFail("ErrorAlertMessage 에러를 담은 데이터를 반환 실패")
         case .failed(_, let error):
-            guard let error = error as? ErrorAlertMessage else {
-                XCTFail("ErrorAlertMessage 에러를 담은 데이터를 반환 실패")
-                return
-            }
-            XCTAssertEqual(ErrorAlertMessage.server, error)
+            XCTAssertEqual(error as? ErrorAlertMessage, ErrorAlertMessage.server)
         }
     }
     
