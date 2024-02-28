@@ -33,13 +33,12 @@ final class FetchSearchStoresRepositoryImpl: FetchSearchStoresRepository {
                         self?.storeStorage.stores = resultStores
                         observer.onNext(resultStores)
                     case .failure(let error):
-                        if let underlyingError = error.underlyingError as? NSError {
-                            switch underlyingError.code {
-                            case URLError.notConnectedToInternet.rawValue:
-                                observer.onError(ErrorAlertMessage.internet)
-                            default:
-                                observer.onError(ErrorAlertMessage.server)
-                            }
+                        if let underlyingError = error.underlyingError as? NSError,
+                           underlyingError.code == URLError.notConnectedToInternet.rawValue {
+                            observer.onError(ErrorAlertMessage.internet)
+                        } else if let underlyingError = error.underlyingError as? NSError,
+                                  underlyingError.code == 13 {
+                            observer.onError(ErrorAlertMessage.server)
                         } else {
                             observer.onError(ErrorAlertMessage.client)
                         }

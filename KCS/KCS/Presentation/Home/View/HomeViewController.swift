@@ -406,10 +406,10 @@ private extension HomeViewController {
     
     func bindFetchStores() {
         viewModel.refreshDoneOutput
-            .bind { [weak self] isEntire in
+            .bind { [weak self] isHidden in
                 self?.refreshButton.animationInvalidate()
                 self?.refreshButton.isHidden = true
-                self?.moreStoreButton.isHidden = isEntire
+                self?.moreStoreButton.isHidden = isHidden
                 self?.moreStoreButton.isEnabled = true
                 self?.mapView.mapView.positionMode = .normal
                 self?.locationButton.setImage(UIImage.locationButtonNone, for: .normal)

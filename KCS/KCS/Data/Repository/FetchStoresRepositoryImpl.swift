@@ -19,8 +19,7 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
     }
     
     func fetchStores(
-        requestLocation: RequestLocation,
-        isEntire: Bool
+        requestLocation: RequestLocation
     ) -> Observable<FetchStores> {
         return Observable<FetchStores>.create { [weak self] observer -> Disposable in
             self?.session.request(StoreAPI.getStores(location: RequestLocationDTO(
@@ -39,12 +38,7 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
                     case .success(let result):
                         let resultStores = try result.data.map { try $0.map { try $0.toEntity() } }
                         self?.storeStorage.stores = resultStores.flatMap({ $0 })
-                        if isEntire {
-                            observer.onNext(FetchStores(
-                                fetchCountContent: FetchCountContent(maxFetchCount: 1, fetchCount: 1),
-                                stores: resultStores.flatMap { $0 }
-                            ))
-                        } else if let firstIndexStore = resultStores.first {
+                        if let firstIndexStore = resultStores.first {
                             observer.onNext(FetchStores(
                                 fetchCountContent: FetchCountContent(maxFetchCount: resultStores.count, fetchCount: 1),
                                 stores: firstIndexStore
@@ -56,13 +50,12 @@ final class FetchStoresRepositoryImpl: FetchStoresRepository {
                             ))
                         }
                     case .failure(let error):
-                        if let underlyingError = error.underlyingError as? NSError {
-                            switch underlyingError.code {
-                            case URLError.notConnectedToInternet.rawValue:
-                                observer.onError(ErrorAlertMessage.internet)
-                            default:
-                                observer.onError(ErrorAlertMessage.server)
-                            }
+                        if let underlyingError = error.underlyingError as? NSError,
+                           underlyingError.code == URLError.notConnectedToInternet.rawValue {
+                            observer.onError(ErrorAlertMessage.internet)
+                        } else if let underlyingError = error.underlyingError as? NSError,
+                                  underlyingError.code == 13 { // TODO: Magic Number 상수화
+                            observer.onError(ErrorAlertMessage.server)
                         } else {
                             observer.onError(ErrorAlertMessage.client)
                         }

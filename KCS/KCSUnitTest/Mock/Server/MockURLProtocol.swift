@@ -7,6 +7,7 @@
 
 import Foundation
 @testable import KCS
+import Alamofire
 
 final class MockURLProtocol: URLProtocol {
     
@@ -17,8 +18,8 @@ final class MockURLProtocol: URLProtocol {
         
     }
     
-    static var responseType: ResponseType!
-    static var jsonFile: MockJSONFile!
+    static var responseType: ResponseType?
+    static var jsonFile: MockJSONFile?
     
     private lazy var session: URLSession = {
         let configuration: URLSessionConfiguration = URLSessionConfiguration.ephemeral
@@ -52,7 +53,7 @@ final class MockURLProtocol: URLProtocol {
         activeTask = session.dataTask(with: request.urlRequest!)
         activeTask?.cancel()
     }
-
+    
     private func setUpMockResponse() -> HTTPURLResponse? {
         var response: HTTPURLResponse?
         switch MockURLProtocol.responseType {
@@ -64,11 +65,10 @@ final class MockURLProtocol: URLProtocol {
             fatalError("No fake responses found.")
         }
         
-        return response!
+        return response
     }
     
     private func setUpMockData() -> Data? {
-        let fileName: String = MockURLProtocol.jsonFile.fileName
         var extensionName: String
         
         switch MockURLProtocol.jsonFile {
@@ -78,7 +78,8 @@ final class MockURLProtocol: URLProtocol {
             extensionName = "json"
         }
         
-        guard let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: extensionName) else {
+        guard let fileName: String = MockURLProtocol.jsonFile?.fileName,
+              let file = Bundle(for: type(of: self)).url(forResource: fileName, withExtension: extensionName) else {
             return Data()
         }
         return try? Data(contentsOf: file)
@@ -94,16 +95,22 @@ extension MockURLProtocol {
     
     enum MockError: Error {
         case noInternetConnection
+        case noServerConnection
+        case alamofireError
     }
     
     static func responseWithFailure(error: MockError) {
-        var responseError: Error = {
+        let responseError: Error = {
             switch error {
             case .noInternetConnection:
                 NSError(
                     domain: "",
                     code: URLError.notConnectedToInternet.rawValue
                 )
+            case .noServerConnection:
+                AFError.sessionTaskFailed(error: MockError.noServerConnection)
+            case .alamofireError:
+                AFError.explicitlyCancelled
             }
         }()
         MockURLProtocol.responseType = MockURLProtocol.ResponseType.error(responseError)
@@ -113,7 +120,14 @@ extension MockURLProtocol {
         guard let urlString = Bundle.main.object(forInfoDictionaryKey: "DEV_SERVER_URL") as? String else {
             return
         }
-        MockURLProtocol.responseType = MockURLProtocol.ResponseType.success(HTTPURLResponse(url: URL(string: urlString)!, statusCode: code, httpVersion: nil, headerFields: nil)!)
+        guard let url = URL(string: urlString),
+              let httpResponse = HTTPURLResponse(
+                url: url,
+                statusCode: code,
+                httpVersion: nil,
+                headerFields: nil
+              ) else { return }
+        MockURLProtocol.responseType = MockURLProtocol.ResponseType.success(httpResponse)
     }
     
     static func setResponseFile(type: MockJSONFile) {
@@ -128,6 +142,8 @@ extension MockURLProtocol {
         
         case fetchStoresSuccessWithZeroStore
         case fetchStoresSuccessWithManyStores
+        case fetchStoresFailureWithWrongDay
+        case fetchStoresFailureWithWrongCeritifcation
         case fetchImageFile
         case fetchImageFileFail
         
@@ -137,6 +153,10 @@ extension MockURLProtocol {
                 return "FetchStoresSuccessWithZeroStore"
             case .fetchStoresSuccessWithManyStores:
                 return "FetchStoresSuccessWithManyStores"
+            case .fetchStoresFailureWithWrongDay:
+                return "FetchStoresFailureWithWrongDay"
+            case .fetchStoresFailureWithWrongCeritifcation:
+                return "FetchStoresFailureWithWrongCeritifcation"
             case .fetchImageFile:
                 return "MockImage"
             case .fetchImageFileFail:
