@@ -53,15 +53,25 @@ final class GetStoresRepositoryImplTests: XCTestCase {
     }
 
     func test_Store가_0개인_경우() {
+        // Given
         storeStorage.stores = testEntity.emptyStoreArray
         
-        XCTAssertEqual(getStoresRepository.getStores(), testEntity.emptyStoreArray)
+        // When
+        let result = getStoresRepository.getStores()
+        
+        // Then
+        XCTAssertEqual(result, testEntity.emptyStoreArray)
     }
     
     func test_Store가_1개_이상인_경우() {
+        // Given
         storeStorage.stores = testEntity.stores
         
-        XCTAssertEqual(getStoresRepository.getStores(), testEntity.stores)
+        // When
+        let result = getStoresRepository.getStores()
+        
+        // Then
+        XCTAssertEqual(result, testEntity.stores)
     }
 
 }
