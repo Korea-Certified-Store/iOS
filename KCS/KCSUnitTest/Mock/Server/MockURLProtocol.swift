@@ -146,6 +146,13 @@ extension MockURLProtocol {
         case fetchStoresFailureWithWrongCeritifcation
         case fetchImageFile
         case fetchImageFileFail
+        case fetchSearchStoresSuccessWithNoStore
+        case fetchSearchStoresSuccessWithOneStore
+        case fetchSearchStoresSuccessWithManyStores
+        case fetchSearchStoresFailureWithWrongDay
+        case fetchSearchStoresFailureWithWrongCertification
+        
+        
         
         var fileName: String {
             switch self {
@@ -161,6 +168,16 @@ extension MockURLProtocol {
                 return "MockImage"
             case .fetchImageFileFail:
                 return ""
+            case .fetchSearchStoresSuccessWithNoStore:
+                return "FetchSearchStoresSuccessWithNoStore"
+            case .fetchSearchStoresSuccessWithOneStore:
+                return "FetchSearchStoresSuccessWithOneStore"
+            case .fetchSearchStoresSuccessWithManyStores:
+                return "FetchSearchStoresSuccessWithManyStores"
+            case .fetchSearchStoresFailureWithWrongDay:
+                return "FetchSearchStoresFailureWithWrongDay"
+            case .fetchSearchStoresFailureWithWrongCertification:
+                return "FetchSearchStoresFailureWithWrongCertification"
             }
         }
         

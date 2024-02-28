@@ -1,0 +1,110 @@
+{
+  "code": 200,
+  "message": "ok",
+  "data": [
+    {
+      "id": 5118,
+      "displayName": "Restaurant I.O.U",
+      "primaryTypeDisplayName": "음식점",
+      "formattedAddress": "대한민국 서울특별시 용산구 청암동 164",
+      "phoneNumber": "02-3275-1151",
+      "location": {
+        "longitude": 126.9456201,
+        "latitude": 37.5351297
+      },
+      "regularOpeningHours": [
+        {
+          "open": {
+            "day": "MON",
+            "hour": 11,
+            "minute": 0
+          },
+          "close": {
+            "day": "MON",
+            "hour": 23,
+            "minute": 0
+          }
+        },
+        {
+          "open": {
+            "day": "TUE",
+            "hour": 11,
+            "minute": 0
+          },
+          "close": {
+            "day": "TUE",
+            "hour": 23,
+            "minute": 0
+          }
+        },
+        {
+          "open": {
+            "day": "WED",
+            "hour": 11,
+            "minute": 0
+          },
+          "close": {
+            "day": "WED",
+            "hour": 23,
+            "minute": 0
+          }
+        },
+        {
+          "open": {
+            "day": "THU",
+            "hour": 11,
+            "minute": 0
+          },
+          "close": {
+            "day": "THU",
+            "hour": 23,
+            "minute": 0
+          }
+        },
+        {
+          "open": {
+            "day": "FRI",
+            "hour": 11,
+            "minute": 0
+          },
+          "close": {
+            "day": "FRI",
+            "hour": 23,
+            "minute": 0
+          }
+        },
+        {
+          "open": {
+            "day": "SAT",
+            "hour": 11,
+            "minute": 0
+          },
+          "close": {
+            "day": "SAT",
+            "hour": 23,
+            "minute": 0
+          }
+        },
+        {
+          "open": {
+            "day": "SUN",
+            "hour": 11,
+            "minute": 0
+          },
+          "close": {
+            "day": "SUN",
+            "hour": 23,
+            "minute": 0
+          }
+        }
+      ],
+      "localPhotos": [
+        "https://storage.googleapis.com/kcs-dev-bucket1/e7ca5513-442c-44e3-a09d-81dbbbaf50d2"
+      ],
+      "certificationName": [
+        "모범음식점",
+        "안심식당"
+      ]
+    }
+  ]
+}
