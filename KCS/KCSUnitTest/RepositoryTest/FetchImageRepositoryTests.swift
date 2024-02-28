@@ -144,4 +144,67 @@ final class FetchImageRepositoryTests: XCTestCase {
         }
     }
     
+    func test_인터넷_연결에_실패한_경우() {
+        // Given
+        MockURLProtocol.responseWithFailure(error: .noInternetConnection)
+        let urlString = URLString.fail.rawValue
+        fetchImageRepository = FetchImageRepositoryImpl(
+            cache: imageCache,
+            session: session
+        )
+        
+        // When
+        let imageObservable = fetchImageRepository.fetchImage(url: urlString).toBlocking().materialize()
+        
+        // Then
+        switch imageObservable {
+        case .completed:
+            XCTFail("Error 방출 실패")
+        case .failed(_, let error):
+            XCTAssertEqual(error as? ErrorAlertMessage, ErrorAlertMessage.internet)
+        }
+    }
+    
+    func test_서버_연결에_실패한_경우() {
+        // Given
+        MockURLProtocol.responseWithFailure(error: .noServerConnection)
+        let urlString = URLString.fail.rawValue
+        fetchImageRepository = FetchImageRepositoryImpl(
+            cache: imageCache,
+            session: session
+        )
+        
+        // When
+        let imageObservable = fetchImageRepository.fetchImage(url: urlString).toBlocking().materialize()
+        
+        // Then
+        switch imageObservable {
+        case .completed:
+            XCTFail("Error 방출 실패")
+        case .failed(_, let error):
+            XCTAssertEqual(error as! ErrorAlertMessage, ErrorAlertMessage.server)
+        }
+    }
+    
+    func test_Alamofire_통신에_실패한_경우() {
+        // Given
+        MockURLProtocol.responseWithFailure(error: .alamofireError)
+        let urlString = URLString.fail.rawValue
+        fetchImageRepository = FetchImageRepositoryImpl(
+            cache: imageCache,
+            session: session
+        )
+        
+        // When
+        let imageObservable = fetchImageRepository.fetchImage(url: urlString).toBlocking().materialize()
+        
+        // Then
+        switch imageObservable {
+        case .completed:
+            XCTFail("Error 방출 실패")
+        case .failed(_, let error):
+            XCTAssertEqual(error as? ErrorAlertMessage, ErrorAlertMessage.client)
+        }
+    }
+    
 }
