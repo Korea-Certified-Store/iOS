@@ -10,7 +10,7 @@ import XCTest
 import RxSwift
 import RxBlocking
 
-final class FetchRecentSearchHistoryRepositoryImplTestsEntity {
+struct FetchRecentSearchHistoryRepositoryImplTestsEntity {
     
     let emptyRecentHistory: [String] = []
     let RecentHistory: [String] = ["검색어1", "검색어2", "검색어3"]
@@ -32,15 +32,14 @@ final class FetchRecentSearchHistoryRepositoryImplTests: XCTestCase {
     }
     
     func test_userDefaults에서_빈_배열값을_가져오는_경우() {
-        // Given
-        let key = "recentSearchKeywords"
-        
+        // Given initial state
         // When
         let result = fetchRecentSearchHistoryRepository.fetchRecentSearchHistory().toBlocking()
         
-        // Then
         do {
             let resultArray = try result.first()
+            
+            // Then
             XCTAssertEqual(resultArray, fetchRecentSearchHistoryRepositoryImplTestsEntity.emptyRecentHistory)
         } catch {
             XCTFail("빈 배열 불러오기 실패")
@@ -55,9 +54,10 @@ final class FetchRecentSearchHistoryRepositoryImplTests: XCTestCase {
         // When
         let result = fetchRecentSearchHistoryRepository.fetchRecentSearchHistory().toBlocking()
         
-        // Then
         do {
             let resultArray = try result.first()
+            
+            // Then
             XCTAssertEqual(resultArray, userDefaults.array(forKey: key) as? [String])
         } catch {
             XCTFail("문자열 배열 불러오기 실패")
