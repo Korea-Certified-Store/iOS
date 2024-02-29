@@ -85,6 +85,7 @@
 		59B886642B6EC816005750EF /* SummaryViewHeightCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B886632B6EC816005750EF /* SummaryViewHeightCase.swift */; };
 		59C030932B8E4E8900A1A6FB /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C030922B8E4E8900A1A6FB /* MockURLProtocol.swift */; };
 		59C030992B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C030982B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift */; };
+		59C030972B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C030962B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift */; };
 		59C306A42B4D7EBA00862625 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A32B4D7EBA00862625 /* Marker.swift */; };
 		59C306A62B4D966C00862625 /* CertificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A52B4D966C00862625 /* CertificationType.swift */; };
 		59C306A92B4FF9AF00862625 /* FetchSearchStoresRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C306A82B4FF9AF00862625 /* FetchSearchStoresRepository.swift */; };
@@ -308,6 +309,7 @@
 		59C030902B8E4E0A00A1A6FB /* MockSuccessNetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSuccessNetworkRepository.swift; sourceTree = "<group>"; };
 		59C030922B8E4E8900A1A6FB /* MockURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		59C030982B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchStoresRepositoryImplTests.swift; sourceTree = "<group>"; };
+		59C030962B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepositoryImplTests.swift; sourceTree = "<group>"; };
 		59C306A32B4D7EBA00862625 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		59C306A52B4D966C00862625 /* CertificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationType.swift; sourceTree = "<group>"; };
 		59C306A82B4FF9AF00862625 /* FetchSearchStoresRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchStoresRepository.swift; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 				594376942B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift */,
 				A82674982B8D059C004710CB /* FetchImageRepositoryImplTests.swift */,
 				59C030982B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift */,
+				59C030962B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift */,
 			);
 			path = RepositoryTest;
 			sourceTree = "<group>";
@@ -1629,6 +1632,7 @@
 				A82674692B8C7AD7004710CB /* MockSuccessImageRepository.swift in Sources */,
 				A826746A2B8C7AD7004710CB /* MockFailureImageRepository.swift in Sources */,
 				A82674652B8C7AD7004710CB /* CheckNetworkStatusUseCaseImplTests.swift in Sources */,
+				59C030972B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
