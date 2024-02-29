@@ -210,6 +210,8 @@
 		A8E53C2B2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */; };
 		A8EC5B002B8F9B1D00D9182F /* MockFailureNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C0308E2B8E4DC800A1A6FB /* MockFailureNetworkRepository.swift */; };
 		A8EC5B012B8F9B1F00D9182F /* MockSuccessNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C030902B8E4E0A00A1A6FB /* MockSuccessNetworkRepository.swift */; };
+		A8EC5B062B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B052B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift */; };
+		A8EC5B082B9055E300D9182F /* MockUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B072B9055E300D9182F /* MockUserDefaults.swift */; };
 		AE60727C9A543E3D0F3A0279 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */; };
 		BBE1483137890D1D37D0E308 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3902FBE673069073F47D82 /* Pods_KCS.framework */; };
 /* End PBXBuildFile section */
@@ -435,6 +437,8 @@
 		A8E53C242B77DDF3003FCBA2 /* StoreStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreStorage.swift; sourceTree = "<group>"; };
 		A8E53C262B77F99C003FCBA2 /* GetStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRepositoryImpl.swift; sourceTree = "<group>"; };
 		A8E53C2A2B77FA30003FCBA2 /* FetchSearchStoresRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchStoresRepositoryImpl.swift; sourceTree = "<group>"; };
+		A8EC5B052B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRecentSearchHistoryRepositoryImplTests.swift; sourceTree = "<group>"; };
+		A8EC5B072B9055E300D9182F /* MockUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDefaults.swift; sourceTree = "<group>"; };
 		D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -507,6 +511,7 @@
 			children = (
 				594376942B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift */,
 				A82674982B8D059C004710CB /* FetchImageRepositoryImplTests.swift */,
+				A8EC5B052B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift */,
 				59C030982B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift */,
 				59C030962B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift */,
 			);
@@ -1048,6 +1053,7 @@
 			children = (
 				A82674872B8CF623004710CB /* MockImage.jpeg */,
 				A826749A2B8D0BB0004710CB /* MockImage.swift */,
+				A8EC5B072B9055E300D9182F /* MockUserDefaults.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -1623,6 +1629,7 @@
 			files = (
 				A826749B2B8D0BB1004710CB /* MockImage.swift in Sources */,
 				A82674662B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift in Sources */,
+				A8EC5B082B9055E300D9182F /* MockUserDefaults.swift in Sources */,
 				A8EC5B012B8F9B1F00D9182F /* MockSuccessNetworkRepository.swift in Sources */,
 				59C030992B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift in Sources */,
 				A82674992B8D059D004710CB /* FetchImageRepositoryImplTests.swift in Sources */,
@@ -1631,6 +1638,7 @@
 				A8EC5B002B8F9B1D00D9182F /* MockFailureNetworkRepository.swift in Sources */,
 				A82674692B8C7AD7004710CB /* MockSuccessImageRepository.swift in Sources */,
 				A826746A2B8C7AD7004710CB /* MockFailureImageRepository.swift in Sources */,
+				A8EC5B062B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift in Sources */,
 				A82674652B8C7AD7004710CB /* CheckNetworkStatusUseCaseImplTests.swift in Sources */,
 				59C030972B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift in Sources */,
 			);

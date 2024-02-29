@@ -11,7 +11,7 @@ import RxSwift
 import Alamofire
 import RxBlocking
 
-final class FetchSearchStoresRepositoryImplTestsEntity {
+final class FetchSearchStoresRepositoryImplTestsConstant {
     
     var emptyStoreArray: [Store] = []
     var oneStore: [Store] = []
@@ -74,7 +74,7 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
     private var fetchSearchStoresRepository: FetchSearchStoresRepository!
     private var storeStorage: StoreStorage!
     private var disposeBag: DisposeBag!
-    private var testEntity: FetchSearchStoresRepositoryImplTestsEntity!
+    private var testEntity: FetchSearchStoresRepositoryImplTestsConstant!
     
     override func setUp() {
         let session: Session = {
@@ -92,7 +92,7 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
             session: session
         )
         disposeBag = DisposeBag()
-        testEntity = FetchSearchStoresRepositoryImplTestsEntity()
+        testEntity = FetchSearchStoresRepositoryImplTestsConstant()
     }
 
     func test_Store_0개를_받아_성공한_경우() {

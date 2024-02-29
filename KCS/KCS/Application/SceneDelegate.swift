@@ -29,7 +29,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let storeStorage = StoreStorage()
         let storeIDStorage = StoreIDStorage()
         let imageCache = ImageCache(cache: NSCache<NSURL, NSData>())
-        let userDefaults = UserDefaults()
+        let userDefaults = UserDefaults.standard
         
         // MARK: Network Session
         let session = Session.default
