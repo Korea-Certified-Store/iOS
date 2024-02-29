@@ -94,9 +94,11 @@ final class MockURLProtocol: URLProtocol {
 extension MockURLProtocol {
     
     enum MockError: Error {
+        
         case noInternetConnection
         case noServerConnection
         case alamofireError
+        
     }
     
     static func responseWithFailure(error: MockError) {
@@ -151,8 +153,6 @@ extension MockURLProtocol {
         case fetchSearchStoresSuccessWithManyStores
         case fetchSearchStoresFailureWithWrongDay
         case fetchSearchStoresFailureWithWrongCertification
-        
-        
         
         var fileName: String {
             switch self {
