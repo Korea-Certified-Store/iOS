@@ -12,6 +12,7 @@ struct DeleteAllHistoryRepositoryImplTestsConstant {
     
     let key = "recentSearchKeywords"
     let recentHistory: [String] = ["검색어1", "검색어2", "검색어3"]
+    let resultRecentHistory: [String] = []
     
 }
 
@@ -37,7 +38,7 @@ final class DeleteAllHistoryRepositoryImplTests: XCTestCase {
         
         // Then
         if let result = userDefaults.array(forKey: constant.key) as? [String] {
-            XCTAssertEqual(result, [])
+            XCTAssertEqual(result, constant.resultRecentHistory)
         } else {
             XCTFail("최근 검색어 모두 삭제 실패")
         }
