@@ -11,7 +11,7 @@ import Alamofire
 import RxSwift
 import RxBlocking
 
-struct FetchImageRepositoryImplTestsEntity {
+struct FetchImageRepositoryImplTestsConstant {
     
     enum MockURLString: String {
         
@@ -53,7 +53,7 @@ final class FetchImageRepositoryImplTests: XCTestCase {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFile)
-        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.cache.rawValue
+        let urlString = FetchImageRepositoryImplTestsConstant.MockURLString.cache.rawValue
         let imageData = mockImage.getImageURL(imageString: imageString)
         guard let url = NSURL(string: urlString) else {
             XCTFail("데이터 변환 실패")
@@ -84,7 +84,7 @@ final class FetchImageRepositoryImplTests: XCTestCase {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFile)
-        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.noCache.rawValue
+        let urlString = FetchImageRepositoryImplTestsConstant.MockURLString.noCache.rawValue
         let imageData = mockImage.getImageURL(imageString: imageString)
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
@@ -110,7 +110,7 @@ final class FetchImageRepositoryImplTests: XCTestCase {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFileFail)
-        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.fail.rawValue
+        let urlString = FetchImageRepositoryImplTestsConstant.MockURLString.fail.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
@@ -132,7 +132,7 @@ final class FetchImageRepositoryImplTests: XCTestCase {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFileFail)
-        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.wrongURL.rawValue
+        let urlString = FetchImageRepositoryImplTestsConstant.MockURLString.wrongURL.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
@@ -153,7 +153,7 @@ final class FetchImageRepositoryImplTests: XCTestCase {
     func test_인터넷_연결에_실패한_경우() {
         // Given
         MockURLProtocol.responseWithFailure(error: .noInternetConnection)
-        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.fail.rawValue
+        let urlString = FetchImageRepositoryImplTestsConstant.MockURLString.fail.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
@@ -174,7 +174,7 @@ final class FetchImageRepositoryImplTests: XCTestCase {
     func test_서버_연결에_실패한_경우() {
         // Given
         MockURLProtocol.responseWithFailure(error: .noServerConnection)
-        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.fail.rawValue
+        let urlString = FetchImageRepositoryImplTestsConstant.MockURLString.fail.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session
@@ -195,7 +195,7 @@ final class FetchImageRepositoryImplTests: XCTestCase {
     func test_Alamofire_통신에_실패한_경우() {
         // Given
         MockURLProtocol.responseWithFailure(error: .alamofireError)
-        let urlString = FetchImageRepositoryImplTestsEntity.MockURLString.fail.rawValue
+        let urlString = FetchImageRepositoryImplTestsConstant.MockURLString.fail.rawValue
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session

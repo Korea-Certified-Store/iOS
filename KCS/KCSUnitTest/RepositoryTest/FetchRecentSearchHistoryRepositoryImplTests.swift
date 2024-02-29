@@ -10,8 +10,9 @@ import XCTest
 import RxSwift
 import RxBlocking
 
-struct FetchRecentSearchHistoryRepositoryImplTestsEntity {
+struct FetchRecentSearchHistoryRepositoryImplTestsConstant {
     
+    let key = "recentSearchKeywords"
     let emptyRecentHistory: [String] = []
     let RecentHistory: [String] = ["검색어1", "검색어2", "검색어3"]
     
@@ -21,11 +22,11 @@ final class FetchRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
     private var fetchRecentSearchHistoryRepository: FetchRecentSearchHistoryRepository!
     private var userDefaults: MockUserDefaults!
-    private var fetchRecentSearchHistoryRepositoryImplTestsEntity: FetchRecentSearchHistoryRepositoryImplTestsEntity!
+    private var fetchRecentSearchHistoryRepositoryImplTestsEntity: FetchRecentSearchHistoryRepositoryImplTestsConstant!
 
     override func setUp() {
         userDefaults = MockUserDefaults()
-        fetchRecentSearchHistoryRepositoryImplTestsEntity = FetchRecentSearchHistoryRepositoryImplTestsEntity()
+        fetchRecentSearchHistoryRepositoryImplTestsEntity = FetchRecentSearchHistoryRepositoryImplTestsConstant()
         fetchRecentSearchHistoryRepository = FetchRecentSearchHistoryRepositoryImpl(
             userDefaults: userDefaults
         )
@@ -48,7 +49,7 @@ final class FetchRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
     func test_userDefaults에서_문자열_배열값을_가져오는_경우() {
         // Given
-        let key = "recentSearchKeywords"
+        let key = fetchRecentSearchHistoryRepositoryImplTestsEntity.key
         userDefaults.set(fetchRecentSearchHistoryRepositoryImplTestsEntity.RecentHistory, forKey: key)
         
         // When

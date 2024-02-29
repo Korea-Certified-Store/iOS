@@ -9,7 +9,7 @@ import XCTest
 @testable import KCS
 import RxSwift
 
-final class GetStoresRepositoryImplTestsEntity {
+final class GetStoresRepositoryImplTestsConstant {
     
     let emptyStoreArray: [Store] = []
     var stores: [Store] = []
@@ -43,13 +43,13 @@ final class GetStoresRepositoryImplTests: XCTestCase {
     private var getStoresRepository: GetStoresRepository!
     private var storeStorage: StoreStorage!
     private var disposeBag: DisposeBag!
-    private var testEntity: GetStoresRepositoryImplTestsEntity!
+    private var testEntity: GetStoresRepositoryImplTestsConstant!
     
     override func setUp() {
         storeStorage = StoreStorage()
         getStoresRepository = GetStoresRepositoryImpl(storeStorage: storeStorage)
         disposeBag = DisposeBag()
-        testEntity = GetStoresRepositoryImplTestsEntity()
+        testEntity = GetStoresRepositoryImplTestsConstant()
     }
 
     func test_Store가_0개인_경우() {
