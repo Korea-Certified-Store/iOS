@@ -11,7 +11,8 @@ import XCTest
 struct DeleteRecentSearchHistoryRepositoryImplTestsConstant {
     
     let key = "recentSearchKeywords"
-    let RecentHistory: [String] = ["검색어1", "검색어2", "검색어3"]
+    let recentHistory: [String] = ["검색어1", "검색어2", "검색어3"]
+    let resultRecentHistory: [String] = ["검색어1", "검색어3"]
     
 }
 
@@ -31,14 +32,14 @@ final class DeleteRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
     func test_1번째_인덱스_최근검색어를_삭제하는_경우() {
         // Given
-        userDefaults.set(constant.RecentHistory, forKey: constant.key)
+        userDefaults.set(constant.recentHistory, forKey: constant.key)
         
         // When
         deleteRecentSearchHistoryRepository.deleteRecentSearchHistory(index: 1)
         
         // Then
         if let result = userDefaults.array(forKey: constant.key) as? [String] {
-            XCTAssertEqual(result, ["검색어1", "검색어3"])
+            XCTAssertEqual(result, constant.resultRecentHistory)
         } else {
             XCTFail("검색어 삭제 실패")
         }
