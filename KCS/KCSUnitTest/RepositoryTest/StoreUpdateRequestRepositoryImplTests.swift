@@ -22,7 +22,6 @@ struct StoreUpdateRequestRepositoryImplTestsConstant {
 final class StoreUpdateRequestRepositoryImplTests: XCTestCase {
 
     private var storeUpdateRequestRepository: StoreUpdateRequestRepositoryImpl!
-    private var disposeBag: DisposeBag!
     private var constant: StoreUpdateRequestRepositoryImplTestsConstant!
     
     override func setUp() {
@@ -36,7 +35,6 @@ final class StoreUpdateRequestRepositoryImplTests: XCTestCase {
         }()
         
         storeUpdateRequestRepository = StoreUpdateRequestRepositoryImpl(session: session)
-        disposeBag = DisposeBag()
         constant = StoreUpdateRequestRepositoryImplTestsConstant()
     }
 
