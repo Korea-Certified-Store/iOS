@@ -36,7 +36,7 @@ struct SaveRecentSearchHistoryRepositoryImplTestsConstant {
 
 final class SaveRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
-    private var saveRecentSearchHistoryRepository: SaveRecentSearchHistoryRepository!
+    private var saveRecentSearchHistoryRepository: SaveRecentSearchHistoryRepositoryImpl!
     private var userDefaults: FakeUserDefaults!
     private var constant: SaveRecentSearchHistoryRepositoryImplTestsConstant!
 

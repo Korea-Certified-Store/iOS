@@ -16,7 +16,7 @@ final class FetchStoresRepositoryImplTestsConstant {
     let emptyStoreArray: [Store] = []
     var stores: [[Store]] = []
     var flattenStores: [Store] = []
-    let mockRequestLocation: RequestLocation = RequestLocation(
+    let requestLocation: RequestLocation = RequestLocation(
         northWest: Location(longitude: 0, latitude: 0),
         southWest: Location(longitude: 0, latitude: 0),
         southEast: Location(longitude: 0, latitude: 0),
@@ -53,7 +53,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
     private var fetchStoresRepository: FetchStoresRepositoryImpl!
     private var storeStorage: StoreStorage!
     private var disposeBag: DisposeBag!
-    private var testEntity: FetchStoresRepositoryImplTestsConstant!
+    private var constant: FetchStoresRepositoryImplTestsConstant!
     
     override func setUp() {
         let session: Session = {
@@ -70,7 +70,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
             session: session
         )
         disposeBag = DisposeBag()
-        testEntity = FetchStoresRepositoryImplTestsConstant()
+        constant = FetchStoresRepositoryImplTestsConstant()
     }
     
     func test_Store_0개를_받아_성공한_경우() {
@@ -80,13 +80,13 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         
         do {
             // When
-            let result = try fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().first()
+            let result = try fetchStoresRepository.fetchStores(requestLocation: constant.requestLocation).toBlocking().first()
             
             // Then
-            XCTAssertEqual(fetchStoresRepository.storeStorage.stores, testEntity.emptyStoreArray)
+            XCTAssertEqual(fetchStoresRepository.storeStorage.stores, constant.emptyStoreArray)
             XCTAssertTrue(result?.fetchCountContent.maxFetchCount == 1)
             XCTAssertTrue(result?.fetchCountContent.fetchCount == 1)
-            XCTAssertEqual(result?.stores, testEntity.emptyStoreArray)
+            XCTAssertEqual(result?.stores, constant.emptyStoreArray)
         } catch {
             XCTFail("toEntity 실패")
         }
@@ -99,13 +99,13 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         
         do {
             // When
-            let result = try fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().first()
+            let result = try fetchStoresRepository.fetchStores(requestLocation: constant.requestLocation).toBlocking().first()
             
             // Then
-            XCTAssertEqual(fetchStoresRepository.storeStorage.stores, testEntity.flattenStores)
+            XCTAssertEqual(fetchStoresRepository.storeStorage.stores, constant.flattenStores)
             XCTAssertTrue(result?.fetchCountContent.maxFetchCount == 4)
             XCTAssertTrue(result?.fetchCountContent.fetchCount == 1)
-            XCTAssertEqual(result?.stores, testEntity.stores.first)
+            XCTAssertEqual(result?.stores, constant.stores.first)
         } catch {
             XCTFail("toEntity 실패")
         }
@@ -116,7 +116,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         MockURLProtocol.responseWithFailure(error: .noInternetConnection)
         
         // When
-        let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
+        let result = fetchStoresRepository.fetchStores(requestLocation: constant.requestLocation).toBlocking().materialize()
         
         // Then
         switch result {
@@ -132,7 +132,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         MockURLProtocol.responseWithFailure(error: .noServerConnection)
         
         // When
-        let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
+        let result = fetchStoresRepository.fetchStores(requestLocation: constant.requestLocation).toBlocking().materialize()
         
         // Then
         switch result {
@@ -149,7 +149,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         MockURLProtocol.setResponseFile(type: .fetchStoresFailureWithWrongDay)
         
         // When
-        let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
+        let result = fetchStoresRepository.fetchStores(requestLocation: constant.requestLocation).toBlocking().materialize()
         
         // Then
         switch result {
@@ -166,7 +166,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         MockURLProtocol.setResponseFile(type: .fetchStoresFailureWithWrongCeritifcation)
         
         // When
-        let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
+        let result = fetchStoresRepository.fetchStores(requestLocation: constant.requestLocation).toBlocking().materialize()
         
         // Then
         switch result {
@@ -182,7 +182,7 @@ final class FetchStoresRepositoryImplTests: XCTestCase {
         MockURLProtocol.responseWithFailure(error: .alamofireError)
         
         // When
-        let result = fetchStoresRepository.fetchStores(requestLocation: testEntity.mockRequestLocation).toBlocking().materialize()
+        let result = fetchStoresRepository.fetchStores(requestLocation: constant.requestLocation).toBlocking().materialize()
         
         // Then
         switch result {

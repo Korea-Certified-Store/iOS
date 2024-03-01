@@ -18,7 +18,7 @@ struct DeleteRecentSearchHistoryRepositoryImplTestsConstant {
 
 final class DeleteRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
-    private var deleteRecentSearchHistoryRepository: DeleteRecentSearchHistoryRepository!
+    private var deleteRecentSearchHistoryRepository: DeleteRecentSearchHistoryRepositoryImpl!
     private var userDefaults: FakeUserDefaults!
     private var constant: DeleteRecentSearchHistoryRepositoryImplTestsConstant!
 

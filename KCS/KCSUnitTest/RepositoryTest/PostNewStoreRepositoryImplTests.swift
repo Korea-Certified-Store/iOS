@@ -21,7 +21,7 @@ struct PostNewStoreRepositoryImplTestsConstant {
 
 final class PostNewStoreRepositoryImplTests: XCTestCase {
     
-    private var postNewStoreRepository: PostNewStoreRepository!
+    private var postNewStoreRepository: PostNewStoreRepositoryImpl!
     private var session: Session!
     private var constant: PostNewStoreRepositoryImplTestsConstant!
 

@@ -20,13 +20,13 @@ struct FetchRecentSearchHistoryRepositoryImplTestsConstant {
 
 final class FetchRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
-    private var fetchRecentSearchHistoryRepository: FetchRecentSearchHistoryRepository!
+    private var fetchRecentSearchHistoryRepository: FetchRecentSearchHistoryRepositoryImpl!
     private var userDefaults: FakeUserDefaults!
-    private var fetchRecentSearchHistoryRepositoryImplTestsEntity: FetchRecentSearchHistoryRepositoryImplTestsConstant!
+    private var constant: FetchRecentSearchHistoryRepositoryImplTestsConstant!
 
     override func setUp() {
         userDefaults = FakeUserDefaults()
-        fetchRecentSearchHistoryRepositoryImplTestsEntity = FetchRecentSearchHistoryRepositoryImplTestsConstant()
+        constant = FetchRecentSearchHistoryRepositoryImplTestsConstant()
         fetchRecentSearchHistoryRepository = FetchRecentSearchHistoryRepositoryImpl(
             userDefaults: userDefaults
         )
@@ -41,7 +41,7 @@ final class FetchRecentSearchHistoryRepositoryImplTests: XCTestCase {
             let resultArray = try result.first()
             
             // Then
-            XCTAssertEqual(resultArray, fetchRecentSearchHistoryRepositoryImplTestsEntity.emptyRecentHistory)
+            XCTAssertEqual(resultArray, constant.emptyRecentHistory)
         } catch {
             XCTFail("빈 배열 불러오기 실패")
         }
@@ -49,8 +49,8 @@ final class FetchRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
     func test_userDefaults에서_문자열_배열값을_가져오는_경우() {
         // Given
-        let key = fetchRecentSearchHistoryRepositoryImplTestsEntity.key
-        userDefaults.set(fetchRecentSearchHistoryRepositoryImplTestsEntity.RecentHistory, forKey: key)
+        let key = constant.key
+        userDefaults.set(constant.RecentHistory, forKey: key)
         
         // When
         let result = fetchRecentSearchHistoryRepository.fetchRecentSearchHistory().toBlocking()

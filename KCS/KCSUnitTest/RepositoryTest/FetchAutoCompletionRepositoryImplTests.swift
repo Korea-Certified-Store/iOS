@@ -43,7 +43,7 @@ final class FetchAutoCompletionRepositoryImplTestsConstant {
 
 final class FetchAutoCompletionRepositoryImplTests: XCTestCase {
     
-    private var fetchAutoCompletionRepository: FetchAutoCompletionRepository!
+    private var fetchAutoCompletionRepository: FetchAutoCompletionRepositoryImpl!
     private var session: Session!
     private var constant: FetchAutoCompletionRepositoryImplTestsConstant!
 
