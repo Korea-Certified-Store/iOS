@@ -16,8 +16,8 @@ final class FetchSearchStoresRepositoryImplTestsConstant {
     var emptyStoreArray: [Store] = []
     var oneStore: [Store] = []
     var manyStores: [Store] = []
-    let mockKeyword: String = "keyword"
-    let mockLocation: Location = Location(longitude: 0, latitude: 0)
+    let keyword: String = "keyword"
+    let location: Location = Location(longitude: 0, latitude: 0)
     
     enum SearchCase: CaseIterable {
         case noStore
@@ -71,10 +71,10 @@ final class FetchSearchStoresRepositoryImplTestsConstant {
 
 final class FetchSearchStoresRepositoryImplTests: XCTestCase {
 
-    private var fetchSearchStoresRepository: FetchSearchStoresRepository!
+    private var fetchSearchStoresRepository: FetchSearchStoresRepositoryImpl!
     private var storeStorage: StoreStorage!
     private var disposeBag: DisposeBag!
-    private var testEntity: FetchSearchStoresRepositoryImplTestsConstant!
+    private var constant: FetchSearchStoresRepositoryImplTestsConstant!
     
     override func setUp() {
         let session: Session = {
@@ -92,7 +92,7 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
             session: session
         )
         disposeBag = DisposeBag()
-        testEntity = FetchSearchStoresRepositoryImplTestsConstant()
+        constant = FetchSearchStoresRepositoryImplTestsConstant()
     }
 
     func test_Store_0개를_받아_성공한_경우() {
@@ -103,13 +103,13 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
         do {
             // When
             let result = try fetchSearchStoresRepository.fetchSearchStores(
-                location: testEntity.mockLocation,
-                keyword: testEntity.mockKeyword
+                location: constant.location,
+                keyword: constant.keyword
             ).toBlocking().first()
             
             // Then
-            XCTAssertEqual(fetchSearchStoresRepository.storeStorage.stores, testEntity.emptyStoreArray)
-            XCTAssertEqual(result, testEntity.emptyStoreArray)
+            XCTAssertEqual(fetchSearchStoresRepository.storeStorage.stores, constant.emptyStoreArray)
+            XCTAssertEqual(result, constant.emptyStoreArray)
         } catch {
             XCTFail("to Entity 실패")
         }
@@ -123,13 +123,13 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
         do {
             // When
             let result = try fetchSearchStoresRepository.fetchSearchStores(
-                location: testEntity.mockLocation,
-                keyword: testEntity.mockKeyword
+                location: constant.location,
+                keyword: constant.keyword
             ).toBlocking().first()
             
             // Then
-            XCTAssertEqual(fetchSearchStoresRepository.storeStorage.stores, testEntity.oneStore)
-            XCTAssertEqual(result, testEntity.oneStore)
+            XCTAssertEqual(fetchSearchStoresRepository.storeStorage.stores, constant.oneStore)
+            XCTAssertEqual(result, constant.oneStore)
         } catch {
             XCTFail("to Entity 실패")
         }
@@ -143,13 +143,13 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
         do {
             // When
             let result = try fetchSearchStoresRepository.fetchSearchStores(
-                location: testEntity.mockLocation,
-                keyword: testEntity.mockKeyword
+                location: constant.location,
+                keyword: constant.keyword
             ).toBlocking().first()
             
             // Then
-            XCTAssertEqual(fetchSearchStoresRepository.storeStorage.stores, testEntity.manyStores)
-            XCTAssertEqual(result, testEntity.manyStores)
+            XCTAssertEqual(fetchSearchStoresRepository.storeStorage.stores, constant.manyStores)
+            XCTAssertEqual(result, constant.manyStores)
         } catch {
             XCTFail("to Entity 실패")
         }
@@ -161,8 +161,8 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
         
         // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
-            location: testEntity.mockLocation,
-            keyword: testEntity.mockKeyword
+            location: constant.location,
+            keyword: constant.keyword
         ).toBlocking().materialize()
         
         // Then
@@ -180,8 +180,8 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
         
         // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
-            location: testEntity.mockLocation,
-            keyword: testEntity.mockKeyword
+            location: constant.location,
+            keyword: constant.keyword
         ).toBlocking().materialize()
         
         // Then
@@ -200,8 +200,8 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
         
         // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
-            location: testEntity.mockLocation,
-            keyword: testEntity.mockKeyword
+            location: constant.location,
+            keyword: constant.keyword
         ).toBlocking().materialize()
         
         // Then
@@ -220,8 +220,8 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
         
         // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
-            location: testEntity.mockLocation,
-            keyword: testEntity.mockKeyword
+            location: constant.location,
+            keyword: constant.keyword
         ).toBlocking().materialize()
         
         // Then
@@ -240,8 +240,8 @@ final class FetchSearchStoresRepositoryImplTests: XCTestCase {
         
         // When
         let result = fetchSearchStoresRepository.fetchSearchStores(
-            location: testEntity.mockLocation,
-            keyword: testEntity.mockKeyword
+            location: constant.location,
+            keyword: constant.keyword
         ).toBlocking().materialize()
         
         // Then

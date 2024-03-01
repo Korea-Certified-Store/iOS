@@ -40,38 +40,38 @@ final class GetStoresRepositoryImplTestsConstant {
 
 final class GetStoresRepositoryImplTests: XCTestCase {
 
-    private var getStoresRepository: GetStoresRepository!
+    private var getStoresRepository: GetStoresRepositoryImpl!
     private var storeStorage: StoreStorage!
     private var disposeBag: DisposeBag!
-    private var testEntity: GetStoresRepositoryImplTestsConstant!
+    private var constant: GetStoresRepositoryImplTestsConstant!
     
     override func setUp() {
         storeStorage = StoreStorage()
         getStoresRepository = GetStoresRepositoryImpl(storeStorage: storeStorage)
         disposeBag = DisposeBag()
-        testEntity = GetStoresRepositoryImplTestsConstant()
+        constant = GetStoresRepositoryImplTestsConstant()
     }
 
     func test_Store가_0개인_경우() {
         // Given
-        storeStorage.stores = testEntity.emptyStoreArray
+        storeStorage.stores = constant.emptyStoreArray
         
         // When
         let result = getStoresRepository.getStores()
         
         // Then
-        XCTAssertEqual(result, testEntity.emptyStoreArray)
+        XCTAssertEqual(result, constant.emptyStoreArray)
     }
     
     func test_Store가_1개_이상인_경우() {
         // Given
-        storeStorage.stores = testEntity.stores
+        storeStorage.stores = constant.stores
         
         // When
         let result = getStoresRepository.getStores()
         
         // Then
-        XCTAssertEqual(result, testEntity.stores)
+        XCTAssertEqual(result, constant.stores)
     }
 
 }
