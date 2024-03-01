@@ -10,23 +10,25 @@ import XCTest
 
 struct GetRefreshStoresUseCaseImplTestsConstant {
     
-    let location = Location(longitude: 0, latitude: 0)
-    let businessHour = BusinessHour(
-        day: .monday,
-        hour: 0,
-        minute: 0
-    )
-    lazy var store = Store(
+    let store = Store(
         id: 1,
         title: "",
         certificationTypes: [.goodPrice],
         category: nil,
         address: "",
         phoneNumber: nil,
-        location: location,
+        location: Location(longitude: 0, latitude: 0),
         openingHour: [RegularOpeningHours(
-            open: businessHour,
-            close: businessHour
+            open: BusinessHour(
+                day: .monday,
+                hour: 0,
+                minute: 0
+            ),
+            close: BusinessHour(
+                day: .monday,
+                hour: 0,
+                minute: 0
+            )
         )],
         localPhotos: [""]
     )
