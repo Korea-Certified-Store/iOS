@@ -19,6 +19,7 @@
 		592D0E022B8FBDD0003E90F9 /* FetchSearchStoresSuccessWithNoStore.json in Resources */ = {isa = PBXBuildFile; fileRef = 592D0DFD2B8FB98B003E90F9 /* FetchSearchStoresSuccessWithNoStore.json */; };
 		592D0E032B8FBDD0003E90F9 /* FetchSearchStoresFailureWithWrongDay.json in Resources */ = {isa = PBXBuildFile; fileRef = 592D0DFE2B8FB9B3003E90F9 /* FetchSearchStoresFailureWithWrongDay.json */; };
 		592D0E042B8FBDD0003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json in Resources */ = {isa = PBXBuildFile; fileRef = 592D0DFF2B8FB9CA003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json */; };
+		592D0E062B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E052B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift */; };
 		594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376332B81F071005B97B2 /* UpdateRequestDTO.swift */; };
 		594376362B8201FB005B97B2 /* StoreUpdateRequestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */; };
 		594376382B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */; };
@@ -249,6 +250,7 @@
 		592D0DFD2B8FB98B003E90F9 /* FetchSearchStoresSuccessWithNoStore.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FetchSearchStoresSuccessWithNoStore.json; sourceTree = "<group>"; };
 		592D0DFE2B8FB9B3003E90F9 /* FetchSearchStoresFailureWithWrongDay.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FetchSearchStoresFailureWithWrongDay.json; sourceTree = "<group>"; };
 		592D0DFF2B8FB9CA003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FetchSearchStoresFailureWithWrongCertification.json; sourceTree = "<group>"; };
+		592D0E052B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepositoryImplTests.swift; sourceTree = "<group>"; };
 		594376332B81F071005B97B2 /* UpdateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequestDTO.swift; sourceTree = "<group>"; };
 		594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepository.swift; sourceTree = "<group>"; };
 		594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@ D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileR
 				A8EC5B0F2B90F18F00D9182F /* FetchAutoCompletionRepositoryImplTests.swift */,
 				59C030962B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift */,
 				A8EC5B092B90C43A00D9182F /* SaveRecentSearchHistoryRepositoryImplTests.swift */,
+				592D0E052B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift */,
 				A8EC5B152B90FE6C00D9182F /* PostNewStoreRepositoryImplTests.swift */,
 			);
 			path = RepositoryTest;
@@ -1655,6 +1658,7 @@ D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileR
 				A826749B2B8D0BB1004710CB /* MockImage.swift in Sources */,
 				A82674662B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift in Sources */,
 				A8EC5B082B9055E300D9182F /* MockUserDefaults.swift in Sources */,
+				592D0E062B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift in Sources */,
 				A8EC5B012B8F9B1F00D9182F /* MockSuccessNetworkRepository.swift in Sources */,
 				59C030992B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift in Sources */,
 				A82674992B8D059D004710CB /* FetchImageRepositoryImplTests.swift in Sources */,
