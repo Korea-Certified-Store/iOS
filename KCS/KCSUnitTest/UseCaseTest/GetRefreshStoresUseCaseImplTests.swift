@@ -49,8 +49,7 @@ final class GetRefreshStoresUseCaseImplTests: XCTestCase {
     
     func test_storeStorage에_가게가_0개_들어있는_경우() {
         // Given
-        constant.storesStorage.stores = constant.emptyStore
-        repository = MockGetStoresRepository(storeStorage: constant.storesStorage)
+        repository = StubGetEmptyStoreRepository(storeStorage: constant.storesStorage)
         getRefreshStoresUseCase = GetRefreshStoresUseCaseImpl(repository: repository)
         
         // When
@@ -62,8 +61,7 @@ final class GetRefreshStoresUseCaseImplTests: XCTestCase {
     
     func test_storeStorage에_가게가_여러개이고_일부_가게만을_불러오는_경우() {
         // Given
-        constant.storesStorage.stores = constant.manyStores
-        repository = MockGetStoresRepository(storeStorage: constant.storesStorage)
+        repository = StubGetManyStoresRepository(storeStorage: constant.storesStorage)
         getRefreshStoresUseCase = GetRefreshStoresUseCaseImpl(repository: repository)
         
         // When
@@ -75,8 +73,7 @@ final class GetRefreshStoresUseCaseImplTests: XCTestCase {
     
     func test_storeStorage에_가게가_여러개이고_모든_가게를_불러오는_경우() {
         // Given
-        constant.storesStorage.stores = constant.manyStores
-        repository = MockGetStoresRepository(storeStorage: constant.storesStorage)
+        repository = StubGetManyStoresRepository(storeStorage: constant.storesStorage)
         getRefreshStoresUseCase = GetRefreshStoresUseCaseImpl(repository: repository)
         
         // When
