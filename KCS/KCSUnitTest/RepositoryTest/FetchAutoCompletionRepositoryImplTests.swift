@@ -62,13 +62,13 @@ final class FetchAutoCompletionRepositoryImplTests: XCTestCase {
         constant = FetchAutoCompletionRepositoryImplTestsConstant()
     }
 
-    func test_커피에_대한_자동완성_API요청을_한_경우() {
+    func test_자동완성의_개수가_여러개인_경우() {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchAutoCompletionSuccess)
         
-        // When
         do {
+            // When
             let result = try fetchAutoCompletionRepository.fetchAutoCompletion(searchKeyword: constant.searchKeyword).toBlocking().first()
             
             // Then
@@ -78,13 +78,13 @@ final class FetchAutoCompletionRepositoryImplTests: XCTestCase {
         }
     }
     
-    func test_asdf에_대한_자동완성_API요청을_한_경우() {
+    func test_자동완성의_개수가_0개인_경우() {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchAutoCompletionSuccessWithZeroAutoCompletion)
         
-        // When
         do {
+            // When
             let result = try fetchAutoCompletionRepository.fetchAutoCompletion(searchKeyword: constant.searchKeywordWithZeroAutoCompletion).toBlocking().first()
             
             // Then
