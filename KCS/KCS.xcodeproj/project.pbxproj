@@ -213,8 +213,9 @@
 		A8EC5B062B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B052B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift */; };
 		A8EC5B082B9055E300D9182F /* MockUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B072B9055E300D9182F /* MockUserDefaults.swift */; };
 		A8EC5B0A2B90C43A00D9182F /* SaveRecentSearchHistoryRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B092B90C43A00D9182F /* SaveRecentSearchHistoryRepositoryImplTests.swift */; };
-		A8EC5B0E2B90DC2000D9182F /* DeleteAllHistoryRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B0D2B90DC2000D9182F /* DeleteAllHistoryRepositoryImplTests.swift */; };
 		A8EC5B0C2B90CF0D00D9182F /* DeleteRecentSearchHistoryRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B0B2B90CF0D00D9182F /* DeleteRecentSearchHistoryRepositoryImplTests.swift */; };
+		A8EC5B0E2B90DC2000D9182F /* DeleteAllHistoryRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B0D2B90DC2000D9182F /* DeleteAllHistoryRepositoryImplTests.swift */; };
+		A8EC5B162B90FE6C00D9182F /* PostNewStoreRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B152B90FE6C00D9182F /* PostNewStoreRepositoryImplTests.swift */; };
 		AE60727C9A543E3D0F3A0279 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */; };
 		BBE1483137890D1D37D0E308 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3902FBE673069073F47D82 /* Pods_KCS.framework */; };
 /* End PBXBuildFile section */
@@ -443,8 +444,9 @@
 		A8EC5B052B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRecentSearchHistoryRepositoryImplTests.swift; sourceTree = "<group>"; };
 		A8EC5B072B9055E300D9182F /* MockUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDefaults.swift; sourceTree = "<group>"; };
 		A8EC5B092B90C43A00D9182F /* SaveRecentSearchHistoryRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRecentSearchHistoryRepositoryImplTests.swift; sourceTree = "<group>"; };
-		A8EC5B0D2B90DC2000D9182F /* DeleteAllHistoryRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAllHistoryRepositoryImplTests.swift; sourceTree = "<group>"; };
 		A8EC5B0B2B90CF0D00D9182F /* DeleteRecentSearchHistoryRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecentSearchHistoryRepositoryImplTests.swift; sourceTree = "<group>"; };
+		A8EC5B0D2B90DC2000D9182F /* DeleteAllHistoryRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAllHistoryRepositoryImplTests.swift; sourceTree = "<group>"; };
+		A8EC5B152B90FE6C00D9182F /* PostNewStoreRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNewStoreRepositoryImplTests.swift; sourceTree = "<group>"; };
 		D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -523,6 +525,7 @@
 				A8EC5B092B90C43A00D9182F /* SaveRecentSearchHistoryRepositoryImplTests.swift */,
 				A8EC5B0D2B90DC2000D9182F /* DeleteAllHistoryRepositoryImplTests.swift */,
 				A8EC5B0B2B90CF0D00D9182F /* DeleteRecentSearchHistoryRepositoryImplTests.swift */,
+				A8EC5B152B90FE6C00D9182F /* PostNewStoreRepositoryImplTests.swift */,
 			);
 			path = RepositoryTest;
 			sourceTree = "<group>";
@@ -1643,6 +1646,7 @@
 				59C030992B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift in Sources */,
 				A82674992B8D059D004710CB /* FetchImageRepositoryImplTests.swift in Sources */,
 				A8EC5B0C2B90CF0D00D9182F /* DeleteRecentSearchHistoryRepositoryImplTests.swift in Sources */,
+				A8EC5B162B90FE6C00D9182F /* PostNewStoreRepositoryImplTests.swift in Sources */,
 				594376952B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift in Sources */,
 				59C030932B8E4E8900A1A6FB /* MockURLProtocol.swift in Sources */,
 				A8EC5B002B8F9B1D00D9182F /* MockFailureNetworkRepository.swift in Sources */,
