@@ -43,7 +43,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
             XCTFail("데이터 변환 실패")
             return
         }
-        let imageData = mockImage.getImageURL(imageString: imageString)
+        let imageData = mockImage.getImageURL()
         imageCache.setImageData(imageData as NSData, for: url)
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
@@ -70,7 +70,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
     func test_캐시데이터에_이미지가_존재하지_않는_경우() {
         // Given
         let urlString = FetchImageUseCaseImplTestsConstant.MockURLString.noCache.rawValue
-        let imageData = mockImage.getImageURL(imageString: imageString)
+        let imageData = mockImage.getImageURL()
         fetchImageUseCase = FetchImageUseCaseImpl(
             repository: MockSuccessImageRepository(
                 cache: imageCache

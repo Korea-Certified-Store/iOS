@@ -37,11 +37,11 @@ struct SaveRecentSearchHistoryRepositoryImplTestsConstant {
 final class SaveRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
     private var saveRecentSearchHistoryRepository: SaveRecentSearchHistoryRepository!
-    private var userDefaults: MockUserDefaults!
+    private var userDefaults: FakeUserDefaults!
     private var constant: SaveRecentSearchHistoryRepositoryImplTestsConstant!
 
     override func setUp() {
-        userDefaults = MockUserDefaults()
+        userDefaults = FakeUserDefaults()
         constant = SaveRecentSearchHistoryRepositoryImplTestsConstant()
         saveRecentSearchHistoryRepository = SaveRecentSearchHistoryRepositoryImpl(
             userDefaults: userDefaults

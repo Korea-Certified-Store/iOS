@@ -21,11 +21,11 @@ struct FetchRecentSearchHistoryRepositoryImplTestsConstant {
 final class FetchRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
     private var fetchRecentSearchHistoryRepository: FetchRecentSearchHistoryRepository!
-    private var userDefaults: MockUserDefaults!
+    private var userDefaults: FakeUserDefaults!
     private var fetchRecentSearchHistoryRepositoryImplTestsEntity: FetchRecentSearchHistoryRepositoryImplTestsConstant!
 
     override func setUp() {
-        userDefaults = MockUserDefaults()
+        userDefaults = FakeUserDefaults()
         fetchRecentSearchHistoryRepositoryImplTestsEntity = FetchRecentSearchHistoryRepositoryImplTestsConstant()
         fetchRecentSearchHistoryRepository = FetchRecentSearchHistoryRepositoryImpl(
             userDefaults: userDefaults

@@ -54,7 +54,7 @@ final class FetchImageRepositoryImplTests: XCTestCase {
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFile)
         let urlString = FetchImageRepositoryImplTestsConstant.MockURLString.cache.rawValue
-        let imageData = mockImage.getImageURL(imageString: imageString)
+        let imageData = mockImage.getImageURL()
         guard let url = NSURL(string: urlString) else {
             XCTFail("데이터 변환 실패")
             return
@@ -85,7 +85,7 @@ final class FetchImageRepositoryImplTests: XCTestCase {
         MockURLProtocol.responseWithStatusCode(code: 200)
         MockURLProtocol.setResponseFile(type: .fetchImageFile)
         let urlString = FetchImageRepositoryImplTestsConstant.MockURLString.noCache.rawValue
-        let imageData = mockImage.getImageURL(imageString: imageString)
+        let imageData = mockImage.getImageURL()
         fetchImageRepository = FetchImageRepositoryImpl(
             cache: imageCache,
             session: session

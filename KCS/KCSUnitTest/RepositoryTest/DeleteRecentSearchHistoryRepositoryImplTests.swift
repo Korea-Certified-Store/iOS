@@ -19,11 +19,11 @@ struct DeleteRecentSearchHistoryRepositoryImplTestsConstant {
 final class DeleteRecentSearchHistoryRepositoryImplTests: XCTestCase {
     
     private var deleteRecentSearchHistoryRepository: DeleteRecentSearchHistoryRepository!
-    private var userDefaults: MockUserDefaults!
+    private var userDefaults: FakeUserDefaults!
     private var constant: DeleteRecentSearchHistoryRepositoryImplTestsConstant!
 
     override func setUp() {
-        userDefaults = MockUserDefaults()
+        userDefaults = FakeUserDefaults()
         deleteRecentSearchHistoryRepository = DeleteRecentSearchHistoryRepositoryImpl(
             userDefaults: userDefaults
         )
