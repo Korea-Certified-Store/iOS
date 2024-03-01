@@ -13,7 +13,7 @@ struct MockGetStoresRepository: GetStoresRepository {
     var storeStorage: StoreStorage
     
     func getStores() -> [Store] {
-        return storeStorage.stores
+        return []
     }
     
 }

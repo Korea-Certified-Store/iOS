@@ -27,7 +27,7 @@ final class MockSuccessImageRepository: FetchImageRepository {
                 if let imageData = cache.getImageData(for: url as NSURL) {
                     observer.onNext(Data(imageData))
                 } else {
-                    observer.onNext(mockImage.getImageURL(imageString: "MockImage"))
+                    observer.onNext(mockImage.getImageURL())
                 }
             }
             return Disposables.create()

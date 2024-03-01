@@ -19,12 +19,12 @@ struct DeleteAllHistoryRepositoryImplTestsConstant {
 final class DeleteAllHistoryRepositoryImplTests: XCTestCase {
     
     private var deleteAllHistoryRepository: DeleteAllHistoryRepository!
-    private var userDefaults: MockUserDefaults!
+    private var userDefaults: FakeUserDefaults!
     private var constant: DeleteAllHistoryRepositoryImplTestsConstant!
 
     override func setUp() {
         constant = DeleteAllHistoryRepositoryImplTestsConstant()
-        userDefaults = MockUserDefaults()
+        userDefaults = FakeUserDefaults()
         userDefaults.set(constant.recentHistory, forKey: constant.key)
         deleteAllHistoryRepository = DeleteAllHistoryRepositoryImpl(
             userDefaults: userDefaults
