@@ -41,7 +41,6 @@ final class StoreUpdateRequestRepositoryImplTests: XCTestCase {
     func test_수정_업데이트_요청_성공한_경우() {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
-        MockURLProtocol.setResponseFile(type: .storeFixUpdateRequestSuccess)
         
         do {
             // When
@@ -61,7 +60,6 @@ final class StoreUpdateRequestRepositoryImplTests: XCTestCase {
     func test_삭제_업데이트_요청_성공한_경우() {
         // Given
         MockURLProtocol.responseWithStatusCode(code: 200)
-        MockURLProtocol.setResponseFile(type: .storeDeleteUpdateRequestSuccess)
         
         do {
             // When

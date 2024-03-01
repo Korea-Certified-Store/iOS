@@ -20,8 +20,6 @@
 		592D0E032B8FBDD0003E90F9 /* FetchSearchStoresFailureWithWrongDay.json in Resources */ = {isa = PBXBuildFile; fileRef = 592D0DFE2B8FB9B3003E90F9 /* FetchSearchStoresFailureWithWrongDay.json */; };
 		592D0E042B8FBDD0003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json in Resources */ = {isa = PBXBuildFile; fileRef = 592D0DFF2B8FB9CA003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json */; };
 		592D0E062B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E052B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift */; };
-		592D0E092B91B09C003E90F9 /* StoreFixUpdateRequestSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 592D0E072B91AF25003E90F9 /* StoreFixUpdateRequestSuccess.json */; };
-		592D0E0A2B91B09C003E90F9 /* StoreDeleteUpdateRequestSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 592D0E082B91AF5F003E90F9 /* StoreDeleteUpdateRequestSuccess.json */; };
 		594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376332B81F071005B97B2 /* UpdateRequestDTO.swift */; };
 		594376362B8201FB005B97B2 /* StoreUpdateRequestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */; };
 		594376382B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */; };
@@ -250,8 +248,6 @@
 		592D0DFE2B8FB9B3003E90F9 /* FetchSearchStoresFailureWithWrongDay.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FetchSearchStoresFailureWithWrongDay.json; sourceTree = "<group>"; };
 		592D0DFF2B8FB9CA003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FetchSearchStoresFailureWithWrongCertification.json; sourceTree = "<group>"; };
 		592D0E052B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepositoryImplTests.swift; sourceTree = "<group>"; };
-		592D0E072B91AF25003E90F9 /* StoreFixUpdateRequestSuccess.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StoreFixUpdateRequestSuccess.json; sourceTree = "<group>"; };
-		592D0E082B91AF5F003E90F9 /* StoreDeleteUpdateRequestSuccess.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StoreDeleteUpdateRequestSuccess.json; sourceTree = "<group>"; };
 		594376332B81F071005B97B2 /* UpdateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequestDTO.swift; sourceTree = "<group>"; };
 		594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepository.swift; sourceTree = "<group>"; };
 		594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -1098,8 +1094,6 @@
 				592D0DFD2B8FB98B003E90F9 /* FetchSearchStoresSuccessWithNoStore.json */,
 				592D0DFE2B8FB9B3003E90F9 /* FetchSearchStoresFailureWithWrongDay.json */,
 				592D0DFF2B8FB9CA003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json */,
-				592D0E072B91AF25003E90F9 /* StoreFixUpdateRequestSuccess.json */,
-				592D0E082B91AF5F003E90F9 /* StoreDeleteUpdateRequestSuccess.json */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1331,8 +1325,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				592D0E092B91B09C003E90F9 /* StoreFixUpdateRequestSuccess.json in Resources */,
-				592D0E0A2B91B09C003E90F9 /* StoreDeleteUpdateRequestSuccess.json in Resources */,
 				592D0E002B8FBDD0003E90F9 /* FetchSearchStoresSuccessWithManyStores.json in Resources */,
 				592D0E012B8FBDD0003E90F9 /* FetchSearchStoresSuccessWithOneStore.json in Resources */,
 				592D0E022B8FBDD0003E90F9 /* FetchSearchStoresSuccessWithNoStore.json in Resources */,

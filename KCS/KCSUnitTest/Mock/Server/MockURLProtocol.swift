@@ -153,8 +153,6 @@ extension MockURLProtocol {
         case fetchSearchStoresSuccessWithManyStores
         case fetchSearchStoresFailureWithWrongDay
         case fetchSearchStoresFailureWithWrongCertification
-        case storeFixUpdateRequestSuccess
-        case storeDeleteUpdateRequestSuccess
         
         var fileName: String {
             switch self {
@@ -180,10 +178,6 @@ extension MockURLProtocol {
                 return "FetchSearchStoresFailureWithWrongDay"
             case .fetchSearchStoresFailureWithWrongCertification:
                 return "FetchSearchStoresFailureWithWrongCertification"
-            case .storeFixUpdateRequestSuccess:
-                return "StoreFixUpdateRequestSuccess"
-            case .storeDeleteUpdateRequestSuccess:
-                return "StoreDeleteUpdateRequestSuccess"
             }
         }
         
