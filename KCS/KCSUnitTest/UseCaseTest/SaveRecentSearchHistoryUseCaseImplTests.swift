@@ -11,7 +11,7 @@ import XCTest
 struct SaveRecentSearchHistoryUseCaseImplTestsConstant {
     
     let testKeyword = "TestKeyword"
-    let dummyUserDefaults = UserDefaults.standard
+    let dummyUserDefaults = UserDefaults()
     let resultExecuteCount = 1
     
 }
