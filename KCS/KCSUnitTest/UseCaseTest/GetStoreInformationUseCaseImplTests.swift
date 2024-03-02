@@ -33,6 +33,8 @@ struct GetStoreInformationUseCaseImplTestsConstant {
         localPhotos: [""]
     )
     let storeStorage = StoreStorage()
+    let storeId: UInt = 1
+    let wrongStoreId: UInt = 2
     
 }
 
@@ -50,9 +52,10 @@ final class GetStoreInformationUseCaseImplTests: XCTestCase {
     
     func test_id가_같은_가게정보_가져오기_성공한_경우() {
         // Given initial state
+        
         // When
         do {
-            let result = try getStoreInformationUseCase.execute(tag: 1)
+            let result = try getStoreInformationUseCase.execute(tag: constant.storeId)
             // Then
             XCTAssertEqual(result, constant.store)
         } catch {
@@ -62,9 +65,10 @@ final class GetStoreInformationUseCaseImplTests: XCTestCase {
     
     func test_id가_같은_가게정보_가져오기_실패한_경우() {
         // Given initial state
+        
         // When
         do {
-            let result = try getStoreInformationUseCase.execute(tag: 2)
+            let result = try getStoreInformationUseCase.execute(tag: constant.wrongStoreId)
             // Then
             XCTFail("Error 방출 실패")
         } catch let error as StoreRepositoryError {
