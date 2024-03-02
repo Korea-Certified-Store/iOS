@@ -1,5 +1,5 @@
 //
-//  MockSuccessImageRepository.swift
+//  StubSuccessImageRepository.swift
 //  KCSUnitTest
 //
 //  Created by 김영현 on 2/25/24.
@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import RxSwift
 
-final class MockSuccessImageRepository: FetchImageRepository {
+final class StubSuccessImageRepository: FetchImageRepository {
     
     var cache: ImageCache
     var session: Session = Session.default

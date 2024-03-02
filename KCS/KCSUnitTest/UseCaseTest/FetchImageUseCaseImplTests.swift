@@ -46,7 +46,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         let imageData = mockImage.getImageURL()
         imageCache.setImageData(imageData as NSData, for: url)
         fetchImageUseCase = FetchImageUseCaseImpl(
-            repository: MockSuccessImageRepository(
+            repository: StubSuccessImageRepository(
                 cache: imageCache
             )
         )
@@ -72,7 +72,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         let urlString = FetchImageUseCaseImplTestsConstant.MockURLString.noCache.rawValue
         let imageData = mockImage.getImageURL()
         fetchImageUseCase = FetchImageUseCaseImpl(
-            repository: MockSuccessImageRepository(
+            repository: StubSuccessImageRepository(
                 cache: imageCache
             )
         )
@@ -96,7 +96,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         // Given
         let urlString = FetchImageUseCaseImplTestsConstant.MockURLString.fail.rawValue
         fetchImageUseCase = FetchImageUseCaseImpl(
-            repository: MockNoImageFailureImageRepository(
+            repository: StubNoImageFailureImageRepository(
                 cache: imageCache
             )
         )
@@ -117,7 +117,7 @@ final class FetchImageUseCaseImplTests: XCTestCase {
         // Given
         let urlString = FetchImageUseCaseImplTestsConstant.MockURLString.fail.rawValue
         fetchImageUseCase = FetchImageUseCaseImpl(
-            repository: MockAPIFailureImageRepository(
+            repository: StubAPIFailureImageRepository(
                 cache: imageCache
             )
         )
