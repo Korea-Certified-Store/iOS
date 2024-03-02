@@ -21,6 +21,8 @@
 		592D0E042B8FBDD0003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json in Resources */ = {isa = PBXBuildFile; fileRef = 592D0DFF2B8FB9CA003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json */; };
 		592D0E062B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E052B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift */; };
 		592D0E0C2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E0B2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift */; };
+		592D0E102B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E0F2B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift */; };
+		592D0E122B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E112B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift */; };
 		594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376332B81F071005B97B2 /* UpdateRequestDTO.swift */; };
 		594376362B8201FB005B97B2 /* StoreUpdateRequestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */; };
 		594376382B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */; };
@@ -256,6 +258,8 @@
 		592D0DFF2B8FB9CA003E90F9 /* FetchSearchStoresFailureWithWrongCertification.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FetchSearchStoresFailureWithWrongCertification.json; sourceTree = "<group>"; };
 		592D0E052B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepositoryImplTests.swift; sourceTree = "<group>"; };
 		592D0E0B2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDRepositoryImplTests.swift; sourceTree = "<group>"; };
+		592D0E0F2B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRecentSearchHistoryUseCaseImplTests.swift; sourceTree = "<group>"; };
+		592D0E112B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpySaveRecentSearchHistoryRepository.swift; sourceTree = "<group>"; };
 		594376332B81F071005B97B2 /* UpdateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequestDTO.swift; sourceTree = "<group>"; };
 		594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepository.swift; sourceTree = "<group>"; };
 		594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -1056,6 +1060,7 @@
 				A8EC5B1D2B933ABA00D9182F /* GetStoreInformationUseCaseImplTests.swift */,
 				A826745C2B8C7AD7004710CB /* CheckNetworkStatusUseCaseImplTests.swift */,
 				A826745E2B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift */,
+				592D0E0F2B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift */,
 			);
 			path = UseCaseTest;
 			sourceTree = "<group>";
@@ -1078,6 +1083,7 @@
 				59C0308E2B8E4DC800A1A6FB /* StubFailureNetworkRepository.swift */,
 				59C030902B8E4E0A00A1A6FB /* StubSuccessNetworkRepository.swift */,
 				A8EC5B192B91C4E300D9182F /* StubGetStoresRepository.swift */,
+				592D0E112B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1669,6 +1675,7 @@
 				A826749B2B8D0BB1004710CB /* MockImage.swift in Sources */,
 				A82674662B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift in Sources */,
 				A8EC5B082B9055E300D9182F /* FakeUserDefaults.swift in Sources */,
+				592D0E122B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift in Sources */,
 				592D0E0C2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift in Sources */,
 				592D0E062B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift in Sources */,
 				A8EC5B012B8F9B1F00D9182F /* StubSuccessNetworkRepository.swift in Sources */,
@@ -1688,6 +1695,7 @@
 				A8EC5B1A2B91C4E300D9182F /* StubGetStoresRepository.swift in Sources */,
 				A8EC5B1E2B933ABA00D9182F /* GetStoreInformationUseCaseImplTests.swift in Sources */,
 				59C030972B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift in Sources */,
+				592D0E102B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift in Sources */,
 				A8EC5B0A2B90C43A00D9182F /* SaveRecentSearchHistoryRepositoryImplTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
