@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum OpeningHourError: Error, LocalizedError {
+enum OpeningHourError: Error, LocalizedError, Equatable {
     
     case wrongHour
     case wrongMinute
