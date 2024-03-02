@@ -1,5 +1,5 @@
 //
-//  MockFailureImageRepository.swift
+//  StubFailureImageRepository.swift
 //  KCSUnitTest
 //
 //  Created by 김영현 on 2/25/24.
@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import Alamofire
 
-struct MockNoImageFailureImageRepository: FetchImageRepository {
+struct StubNoImageFailureImageRepository: FetchImageRepository {
     
     var cache: ImageCache
     var session: Session = Session.default
@@ -25,7 +25,7 @@ struct MockNoImageFailureImageRepository: FetchImageRepository {
     
 }
 
-struct MockAPIFailureImageRepository: FetchImageRepository {
+struct StubAPIFailureImageRepository: FetchImageRepository {
     
     var cache: ImageCache
     var session: Session = Session.default

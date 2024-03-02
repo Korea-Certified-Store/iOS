@@ -14,14 +14,14 @@ final class CheckNetworkStatusUseCaseImplTests: XCTestCase {
     
     func test_네트워크가_안정한_경우() {
         checkNetworkStatusUseCase = CheckNetworkStatusUseCaseImpl(
-            repository: MockSuccessNetworkRepository()
+            repository: StubSuccessNetworkRepository()
         )
         XCTAssertTrue(checkNetworkStatusUseCase.execute())
     }
     
     func test_네트워크가_불안정한_경우() {
         checkNetworkStatusUseCase = CheckNetworkStatusUseCaseImpl(
-            repository: MockFailureNetworkRepository()
+            repository: StubFailureNetworkRepository()
         )
         XCTAssertFalse(checkNetworkStatusUseCase.execute())
     }
