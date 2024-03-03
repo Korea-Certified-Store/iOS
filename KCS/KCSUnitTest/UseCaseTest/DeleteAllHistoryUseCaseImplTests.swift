@@ -28,7 +28,7 @@ final class DeleteAllHistoryUseCaseImplTestsTests: XCTestCase {
         deleteAllHistoryUseCase = DeleteAllHistoryUseCaseImpl(repository: spyDeleteAllHistoryRepository)
     }
 
-    func test_Repository의_함수를_성공하는_경우() {
+    func test_Repository의_함수_호출을_성공하는_경우() {
         // Given initial statie
         
         // When
