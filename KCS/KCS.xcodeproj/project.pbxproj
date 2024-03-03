@@ -233,6 +233,11 @@
 		A8EC5B1C2B921D9A00D9182F /* MockImage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A8EC5B1B2B92151A00D9182F /* MockImage.jpeg */; };
 		A8EC5B1E2B933ABA00D9182F /* GetStoreInformationUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B1D2B933ABA00D9182F /* GetStoreInformationUseCaseImplTests.swift */; };
 		A8EC5B202B9348EC00D9182F /* GetOpenClosedUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B1F2B9348EC00D9182F /* GetOpenClosedUseCaseImplTests.swift */; };
+		A8EC5B222B943DB700D9182F /* SetStoreIDUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B212B943DB700D9182F /* SetStoreIDUseCaseImplTests.swift */; };
+		A8EC5B242B947E4800D9182F /* SetStoreIDRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B232B947E4800D9182F /* SetStoreIDRepositoryImpl.swift */; };
+		A8EC5B262B947E6800D9182F /* SetStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B252B947E6800D9182F /* SetStoreIDRepository.swift */; };
+		A8EC5B282B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B272B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift */; };
+		A8EC5B2A2B9483D600D9182F /* SpySetStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B292B9483D600D9182F /* SpySetStoreIDRepository.swift */; };
 		AE60727C9A543E3D0F3A0279 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */; };
 		BBE1483137890D1D37D0E308 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3902FBE673069073F47D82 /* Pods_KCS.framework */; };
 /* End PBXBuildFile section */
@@ -481,6 +486,11 @@
 		A8EC5B1B2B92151A00D9182F /* MockImage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MockImage.jpeg; sourceTree = "<group>"; };
 		A8EC5B1D2B933ABA00D9182F /* GetStoreInformationUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreInformationUseCaseImplTests.swift; sourceTree = "<group>"; };
 		A8EC5B1F2B9348EC00D9182F /* GetOpenClosedUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOpenClosedUseCaseImplTests.swift; sourceTree = "<group>"; };
+		A8EC5B212B943DB700D9182F /* SetStoreIDUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDUseCaseImplTests.swift; sourceTree = "<group>"; };
+		A8EC5B232B947E4800D9182F /* SetStoreIDRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDRepositoryImpl.swift; sourceTree = "<group>"; };
+		A8EC5B252B947E6800D9182F /* SetStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDRepository.swift; sourceTree = "<group>"; };
+		A8EC5B272B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDRepositoryImplTests.swift; sourceTree = "<group>"; };
+		A8EC5B292B9483D600D9182F /* SpySetStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpySetStoreIDRepository.swift; sourceTree = "<group>"; };
 		D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -563,6 +573,7 @@
 				A8EC5B152B90FE6C00D9182F /* PostNewStoreRepositoryImplTests.swift */,
 				592D0E052B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift */,
 				592D0E0B2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift */,
+				A8EC5B272B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift */,
 			);
 			path = RepositoryTest;
 			sourceTree = "<group>";
@@ -923,6 +934,7 @@
 				A85659472B83280F00775C78 /* PostNewStoreRepository.swift */,
 				594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */,
 				594376412B8216C1005B97B2 /* FetchStoreIDRepository.swift */,
+				A8EC5B252B947E6800D9182F /* SetStoreIDRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1079,6 +1091,7 @@
 				592D0E1B2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift */,
 				592D0E172B9437AA003E90F9 /* DeleteAllHistoryUseCaseImplTests.swift */,
 				592D0E132B9431A6003E90F9 /* DeleteRecentSearchHistoryUseCaseImplTests.swift */,
+				A8EC5B212B943DB700D9182F /* SetStoreIDUseCaseImplTests.swift */,
 			);
 			path = UseCaseTest;
 			sourceTree = "<group>";
@@ -1105,6 +1118,7 @@
 				592D0E1D2B943B12003E90F9 /* StubFetchStoreIDRepository.swift */,
 				592D0E192B943823003E90F9 /* SpyDeleteAllHistoryRepository.swift */,
 				592D0E152B94324E003E90F9 /* SpySpyDeleteRecentSearchHistoryRepository.swift */,
+				A8EC5B292B9483D600D9182F /* SpySetStoreIDRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1214,6 +1228,7 @@
 				A85659452B83268300775C78 /* PostNewStoreRepositoryImpl.swift */,
 				594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */,
 				594376452B821731005B97B2 /* FetchStoreIDRepositoryImpl.swift */,
+				A8EC5B232B947E4800D9182F /* SetStoreIDRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1558,6 +1573,7 @@
 				A8AE14D62B886DF700A554A8 /* ReloadDiffableDataSource.swift in Sources */,
 				5977BE742B57FA7A00725C90 /* FilteredStores.swift in Sources */,
 				A821A37C2B74BC4B00089B8F /* CheckNetworkStatusUseCase.swift in Sources */,
+				A8EC5B262B947E6800D9182F /* SetStoreIDRepository.swift in Sources */,
 				A8A7E05D2B64AF1300D015E5 /* StoreInformationViewConstraints.swift in Sources */,
 				594376422B8216C2005B97B2 /* FetchStoreIDRepository.swift in Sources */,
 				5977BE5E2B5535C700725C90 /* GetStoresUseCase.swift in Sources */,
@@ -1639,6 +1655,7 @@
 				594376622B875EFB005B97B2 /* GetStoresRepository.swift in Sources */,
 				5977BE582B5524D500725C90 /* RefreshButton.swift in Sources */,
 				A8722F062B766278001ED988 /* DeleteRecentSearchHistoryUseCase.swift in Sources */,
+				A8EC5B242B947E4800D9182F /* SetStoreIDRepositoryImpl.swift in Sources */,
 				5977BE942B59738800725C90 /* GetRefreshStoresUseCase.swift in Sources */,
 				59B886502B6AB9F7005750EF /* StoreTableViewCellContents.swift in Sources */,
 				594376522B83526D005B97B2 /* UIView+removeFromSuperviewWithAnimation.swift in Sources */,
@@ -1696,6 +1713,7 @@
 				A826749B2B8D0BB1004710CB /* MockImage.swift in Sources */,
 				A82674662B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift in Sources */,
 				A8EC5B082B9055E300D9182F /* FakeUserDefaults.swift in Sources */,
+				A8EC5B222B943DB700D9182F /* SetStoreIDUseCaseImplTests.swift in Sources */,
 				592D0E122B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift in Sources */,
 				592D0E0C2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift in Sources */,
 				592D0E162B94324E003E90F9 /* SpySpyDeleteRecentSearchHistoryRepository.swift in Sources */,
@@ -1717,8 +1735,10 @@
 				A82674692B8C7AD7004710CB /* StubSuccessImageRepository.swift in Sources */,
 				A8EC5B0E2B90DC2000D9182F /* DeleteAllHistoryRepositoryImplTests.swift in Sources */,
 				A826746A2B8C7AD7004710CB /* StubFailureImageRepository.swift in Sources */,
+				A8EC5B282B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift in Sources */,
 				A8EC5B062B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift in Sources */,
 				A82674652B8C7AD7004710CB /* CheckNetworkStatusUseCaseImplTests.swift in Sources */,
+				A8EC5B2A2B9483D600D9182F /* SpySetStoreIDRepository.swift in Sources */,
 				A8EC5B1A2B91C4E300D9182F /* StubGetStoresRepository.swift in Sources */,
 				A8EC5B1E2B933ABA00D9182F /* GetStoreInformationUseCaseImplTests.swift in Sources */,
 				59C030972B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift in Sources */,
