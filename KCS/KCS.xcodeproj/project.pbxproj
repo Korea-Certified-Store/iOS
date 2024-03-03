@@ -23,6 +23,8 @@
 		592D0E0C2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E0B2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift */; };
 		592D0E102B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E0F2B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift */; };
 		592D0E122B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E112B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift */; };
+		592D0E1C2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E1B2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift */; };
+		592D0E1E2B943B12003E90F9 /* StubFetchStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E1D2B943B12003E90F9 /* StubFetchStoreIDRepository.swift */; };
 		594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376332B81F071005B97B2 /* UpdateRequestDTO.swift */; };
 		594376362B8201FB005B97B2 /* StoreUpdateRequestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */; };
 		594376382B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */; };
@@ -260,6 +262,8 @@
 		592D0E0B2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDRepositoryImplTests.swift; sourceTree = "<group>"; };
 		592D0E0F2B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRecentSearchHistoryUseCaseImplTests.swift; sourceTree = "<group>"; };
 		592D0E112B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpySaveRecentSearchHistoryRepository.swift; sourceTree = "<group>"; };
+		592D0E1B2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDUseCaseImplTests.swift; sourceTree = "<group>"; };
+		592D0E1D2B943B12003E90F9 /* StubFetchStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubFetchStoreIDRepository.swift; sourceTree = "<group>"; };
 		594376332B81F071005B97B2 /* UpdateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequestDTO.swift; sourceTree = "<group>"; };
 		594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepository.swift; sourceTree = "<group>"; };
 		594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -1061,6 +1065,7 @@
 				A826745C2B8C7AD7004710CB /* CheckNetworkStatusUseCaseImplTests.swift */,
 				A826745E2B8C7AD7004710CB /* FetchImageUseCaseImplTests.swift */,
 				592D0E0F2B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift */,
+				592D0E1B2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift */,
 			);
 			path = UseCaseTest;
 			sourceTree = "<group>";
@@ -1084,6 +1089,7 @@
 				59C030902B8E4E0A00A1A6FB /* StubSuccessNetworkRepository.swift */,
 				A8EC5B192B91C4E300D9182F /* StubGetStoresRepository.swift */,
 				592D0E112B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift */,
+				592D0E1D2B943B12003E90F9 /* StubFetchStoreIDRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1678,8 +1684,10 @@
 				592D0E122B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift in Sources */,
 				592D0E0C2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift in Sources */,
 				592D0E062B91AC94003E90F9 /* StoreUpdateRequestRepositoryImplTests.swift in Sources */,
+				592D0E1C2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift in Sources */,
 				A8EC5B012B8F9B1F00D9182F /* StubSuccessNetworkRepository.swift in Sources */,
 				59C030992B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift in Sources */,
+				592D0E1E2B943B12003E90F9 /* StubFetchStoreIDRepository.swift in Sources */,
 				A82674992B8D059D004710CB /* FetchImageRepositoryImplTests.swift in Sources */,
 				A8EC5B0C2B90CF0D00D9182F /* DeleteRecentSearchHistoryRepositoryImplTests.swift in Sources */,
 				A8EC5B182B91C3CB00D9182F /* GetRefreshStoresUseCaseImplTests.swift in Sources */,
