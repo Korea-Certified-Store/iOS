@@ -10,7 +10,6 @@ import XCTest
 
 struct FetchStoreIDUseCaseImplTestsConstant {
     
-    let testKeyword = "TestKeyword"
     let dummyStoreIDStorage = StoreIDStorage()
     static let successStoreID = 1
     static let failureStoreID: Int? = nil
