@@ -9,7 +9,9 @@ import Foundation
 
 protocol SetStoreIDUseCase {
     
-    var storage: StoreIDStorage { get }
+    var repository: SetStoreIDRepository { get }
+    
+    init(repository: SetStoreIDRepository)
     
     func execute(id: Int)
     
