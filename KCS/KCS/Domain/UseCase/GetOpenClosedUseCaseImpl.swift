@@ -124,11 +124,8 @@ private extension GetOpenClosedUseCaseImpl {
     }
     
     func appendYesterdayClosedHour(openingHours: [RegularOpeningHours]) throws -> [Int] {
-        if let businessHour = openingHours.last?.close {
-            return [try catchHourError(businessHour: businessHour, openClose: .close) - 86400]
-        }
-        
-        return [.zero]
+        guard let businessHour = openingHours.last?.close else { return [.zero] }
+        return [try catchHourError(businessHour: businessHour, openClose: .close) - 86400]
     }
     
     func appendTodayOpenClosedHour(openingHours: [RegularOpeningHours]) throws -> [Int] {
@@ -142,11 +139,8 @@ private extension GetOpenClosedUseCaseImpl {
     }
     
     func appendTomorrowOpenHour(openingHours: [RegularOpeningHours]) throws -> [Int] {
-        if let businessHour = openingHours.first?.open {
-            return [try catchHourError(businessHour: businessHour, openClose: .open) + 86400]
-        }
-        
-        return [86400 * 2]
+        guard let businessHour = openingHours.first?.open else { return [86400 * 2] }
+        return [try catchHourError(businessHour: businessHour, openClose: .open) + 86400]
     }
     
     func catchHourError(businessHour: BusinessHour, openClose: OpenClose) throws -> Int {
