@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OpenClosedContent: Equatable {
+struct OpenClosedContent {
     
     let openClosedType: OpenClosedType
     let nextOpeningHour: String

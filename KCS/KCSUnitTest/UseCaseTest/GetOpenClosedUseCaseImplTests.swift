@@ -156,7 +156,8 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
             let result = try getOpenClosedUseCase.execute(openingHours: constant.emptyOpeningHour, today: constant.openDate)
             
             // Then
-            XCTAssertEqual(result, constant.noneOpenClosedContent)
+            XCTAssertEqual(result.openClosedType, constant.noneOpenClosedContent.openClosedType)
+            XCTAssertEqual(result.nextOpeningHour, constant.noneOpenClosedContent.nextOpeningHour)
         } catch {
             XCTFail("가게 운영 시간 확인 실패")
         }
@@ -170,7 +171,8 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
             let result = try getOpenClosedUseCase.execute(openingHours: constant.alwaysOpenOpeningHour, today: constant.openDate)
             
             // Then
-            XCTAssertEqual(result, constant.alwaysOpenOpenClosedContent)
+            XCTAssertEqual(result.openClosedType, constant.alwaysOpenOpenClosedContent.openClosedType)
+            XCTAssertEqual(result.nextOpeningHour, constant.alwaysOpenOpenClosedContent.nextOpeningHour)
         } catch {
             XCTFail("가게 운영 시간 확인 실패")
         }
@@ -184,7 +186,8 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
             let result = try getOpenClosedUseCase.execute(openingHours: constant.dayOffOpeningHour, today: constant.openDate)
             
             // Then
-            XCTAssertEqual(result, constant.dayOffOpenClosedContent)
+            XCTAssertEqual(result.openClosedType, constant.dayOffOpenClosedContent.openClosedType)
+            XCTAssertEqual(result.nextOpeningHour, constant.dayOffOpenClosedContent.nextOpeningHour)
         } catch {
             XCTFail("가게 운영 시간 확인 실패")
         }
@@ -198,7 +201,8 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
             let result = try getOpenClosedUseCase.execute(openingHours: constant.openWithNoBreakTimeOpeningHour, today: constant.openDate)
             
             // Then
-            XCTAssertEqual(result, constant.openWithNoBreakTimeOpenClosedContent)
+            XCTAssertEqual(result.openClosedType, constant.openWithNoBreakTimeOpenClosedContent.openClosedType)
+            XCTAssertEqual(result.nextOpeningHour, constant.openWithNoBreakTimeOpenClosedContent.nextOpeningHour)
         } catch {
             XCTFail("가게 운영 시간 확인 실패")
         }
@@ -212,7 +216,8 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
             let result = try getOpenClosedUseCase.execute(openingHours: constant.openWithBreakTimeOpeningHour, today: constant.openDate)
             
             // Then
-            XCTAssertEqual(result, constant.openWithBreakTimeOpenClosedContent)
+            XCTAssertEqual(result.openClosedType, constant.openWithBreakTimeOpenClosedContent.openClosedType)
+            XCTAssertEqual(result.nextOpeningHour, constant.openWithBreakTimeOpenClosedContent.nextOpeningHour)
         } catch {
             XCTFail("가게 운영 시간 확인 실패")
         }
@@ -226,7 +231,8 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
             let result = try getOpenClosedUseCase.execute(openingHours: constant.openWithNoBreakTimeOpeningHour, today: constant.closeDate)
             
             // Then
-            XCTAssertEqual(result, constant.closedWithNoDayOffOpenClosedContent)
+            XCTAssertEqual(result.openClosedType, constant.closedWithNoDayOffOpenClosedContent.openClosedType)
+            XCTAssertEqual(result.nextOpeningHour, constant.closedWithNoDayOffOpenClosedContent.nextOpeningHour)
         } catch {
             XCTFail("가게 운영 시간 확인 실패")
         }
@@ -240,7 +246,8 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
             let result = try getOpenClosedUseCase.execute(openingHours: constant.closedWithDayOffOpeningHour, today: constant.closeDate)
             
             // Then
-            XCTAssertEqual(result, constant.closedWithDayOffOpenClosedContent)
+            XCTAssertEqual(result.openClosedType, constant.closedWithDayOffOpenClosedContent.openClosedType)
+            XCTAssertEqual(result.nextOpeningHour, constant.closedWithDayOffOpenClosedContent.nextOpeningHour)
         } catch {
             XCTFail("가게 운영 시간 확인 실패")
         }
@@ -254,7 +261,8 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
             let result = try getOpenClosedUseCase.execute(openingHours: constant.openWithBreakTimeOpeningHour, today: constant.breakTimeDate)
             
             // Then
-            XCTAssertEqual(result, constant.breakTimeOpenClosedContent)
+            XCTAssertEqual(result.openClosedType, constant.breakTimeOpenClosedContent.openClosedType)
+            XCTAssertEqual(result.nextOpeningHour, constant.breakTimeOpenClosedContent.nextOpeningHour)
         } catch {
             XCTFail("가게 운영 시간 확인 실패")
         }
@@ -268,7 +276,8 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
             let result = try getOpenClosedUseCase.execute(openingHours: constant.closedAfter24OpeningHour, today: constant.openDate)
             
             // Then
-            XCTAssertEqual(result, constant.closedAfter24OpenClosedContent)
+            XCTAssertEqual(result.openClosedType, constant.closedAfter24OpenClosedContent.openClosedType)
+            XCTAssertEqual(result.nextOpeningHour, constant.closedAfter24OpenClosedContent.nextOpeningHour)
         } catch {
             XCTFail("가게 운영 시간 확인 실패")
         }
@@ -279,7 +288,7 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
         
         // When
         do {
-            let result = try getOpenClosedUseCase.execute(openingHours: constant.wrongHourOpeningHour, today: constant.openDate)
+            let _ = try getOpenClosedUseCase.execute(openingHours: constant.wrongHourOpeningHour, today: constant.openDate)
             
             // Then
             XCTFail("가게 운영 시간 확인 실패")
@@ -295,7 +304,7 @@ final class GetOpenClosedUseCaseImplTests: XCTestCase {
         
         // When
         do {
-            let result = try getOpenClosedUseCase.execute(openingHours: constant.wrongMinuteOpeningHour, today: constant.openDate)
+            let _ = try getOpenClosedUseCase.execute(openingHours: constant.wrongMinuteOpeningHour, today: constant.openDate)
             
             // Then
             XCTFail("가게 운영 시간 확인 실패")
