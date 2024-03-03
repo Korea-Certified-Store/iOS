@@ -10,29 +10,32 @@ import XCTest
 
 struct SetStoreIDUseCaseImplTestsConstant {
     
-    let storeIDStorage = StoreIDStorage()
-    let resultID: Int = 3
+    let DummystoreIDStorage = StoreIDStorage()
+    let testStoreID: Int = 3
+    let resultExecuteCount: Int = 1
     
 }
 
 final class SetStoreIDUseCaseImplTests: XCTestCase {
     
     private var constant: SetStoreIDUseCaseImplTestsConstant!
+    private var repository: SpySetStoreIDRepository!
     private var setStoreIDUseCase: SetStoreIDUseCaseImpl!
 
     override func setUp() {
         constant = SetStoreIDUseCaseImplTestsConstant()
-        setStoreIDUseCase = SetStoreIDUseCaseImpl(storage: constant.storeIDStorage)
+        repository = SpySetStoreIDRepository(storage: constant.DummystoreIDStorage)
+        setStoreIDUseCase = SetStoreIDUseCaseImpl(repository: repository)
     }
     
     func test_가게_ID정보가_저장되는_경우() {
         // Given initial state
         
         // When
-        setStoreIDUseCase.execute(id: 3)
+        setStoreIDUseCase.execute(id: constant.testStoreID)
         
         // Then
-        XCTAssertEqual(setStoreIDUseCase.storage.storeID, constant.resultID)
+        XCTAssertEqual(repository.executeCount, constant.resultExecuteCount)
     }
 
 }

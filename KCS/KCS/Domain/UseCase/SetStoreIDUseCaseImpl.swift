@@ -9,7 +9,7 @@ import Foundation
 
 struct SetStoreIDUseCaseImpl: SetStoreIDUseCase {
     
-    var repository: SetStoreIDRepository
+    let repository: SetStoreIDRepository
     
     func execute(id: Int) {
         repository.fetchStoreID(id: id)
