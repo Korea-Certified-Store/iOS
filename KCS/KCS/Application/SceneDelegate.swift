@@ -74,6 +74,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             cache: imageCache,
             session: session
         )
+        let setStoreIDRepository = SetStoreIDRepositoryImpl(
+            storage: storeIDStorage
+        )
         let networkRepository = NetworkRepositoryImpl()
         
         // MARK: UseCase
@@ -96,7 +99,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             repository: fetchStoreIDRepository
         )
         let setStoreIDUseCase = SetStoreIDUseCaseImpl(
-            storage: storeIDStorage
+            repository: setStoreIDRepository
         )
         let getOpenClosedUseCase = GetOpenClosedUseCaseImpl()
         let fetchImageUseCase = FetchImageUseCaseImpl(
