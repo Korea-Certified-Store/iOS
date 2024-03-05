@@ -212,7 +212,7 @@ final class SearchViewController: UIViewController {
         self.textObserver = textObserver
         
         super.init(nibName: nil, bundle: nil)
-        setup()
+        modalPresentationStyle = .fullScreen
     }
     
     required init?(coder: NSCoder) {
@@ -222,6 +222,7 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setup()
         addUIComponents()
         configureConstraints()
         bind()
@@ -248,7 +249,6 @@ private extension SearchViewController {
     
     func setup() {
         view.backgroundColor = .white
-        modalPresentationStyle = .fullScreen
     }
     
     func addUIComponents() {
