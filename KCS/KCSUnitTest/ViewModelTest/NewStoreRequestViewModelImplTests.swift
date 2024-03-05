@@ -53,7 +53,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .titleEndEdit(text: constant.emptyTestText))
+        newStoreRequestViewModel.action(input: .endEdit(text: constant.emptyTestText, inputCase: .title))
         
         // Then
         XCTAssertNotNil(observer.events.first)
@@ -67,7 +67,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .titleEndEdit(text: constant.testText))
+        newStoreRequestViewModel.action(input: .endEdit(text: constant.testText, inputCase: .title))
         
         // Then
         XCTAssertNotNil(observer.events.first)
@@ -81,7 +81,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .addressEndEdit(text: constant.emptyTestText))
+        newStoreRequestViewModel.action(input: .endEdit(text: constant.emptyTestText, inputCase: .address))
         
         // Then
         XCTAssertNotNil(observer.events.first)
@@ -95,7 +95,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .addressEndEdit(text: constant.testText))
+        newStoreRequestViewModel.action(input: .endEdit(text: constant.testText, inputCase: .address))
         
         // Then
         XCTAssertNotNil(observer.events.first)
@@ -109,7 +109,10 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .detailAddressEndEdit(text: constant.emptyTestText))
+        newStoreRequestViewModel.action(input: .endEdit(
+            text: constant.emptyTestText,
+            inputCase: .detailAddress
+        ))
         
         // Then
         XCTAssertNotNil(observer.events.first)
@@ -123,7 +126,10 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .detailAddressEndEdit(text: constant.testText))
+        newStoreRequestViewModel.action(input: .endEdit(
+            text: constant.testText,
+            inputCase: .detailAddress
+        ))
         
         // Then
         XCTAssertNotNil(observer.events.first)
@@ -169,9 +175,9 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .titleWhileEdit(text: constant.testText))
-        newStoreRequestViewModel.action(input: .detailAddressWhileEdit(text: constant.testText))
-        newStoreRequestViewModel.action(input: .addressEndEdit(text: constant.testText))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.testText, inputCase: .title))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.testText, inputCase: .detailAddress))
+        newStoreRequestViewModel.action(input: .endEdit(text: constant.testText, inputCase: .address))
         newStoreRequestViewModel.action(input: .certificationEndEdit(
             requestNewStoreCertificationIsSelected: constant.certificationSelected
         ))
@@ -193,9 +199,9 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .titleWhileEdit(text: constant.emptyTestText))
-        newStoreRequestViewModel.action(input: .detailAddressWhileEdit(text: constant.testText))
-        newStoreRequestViewModel.action(input: .addressEndEdit(text: constant.testText))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.emptyTestText, inputCase: .title))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.testText, inputCase: .detailAddress))
+        newStoreRequestViewModel.action(input: .endEdit(text: constant.testText, inputCase: .address))
         newStoreRequestViewModel.action(input: .certificationEndEdit(
             requestNewStoreCertificationIsSelected: constant.certificationSelected
         ))
@@ -217,9 +223,9 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .titleWhileEdit(text: constant.testText))
-        newStoreRequestViewModel.action(input: .detailAddressWhileEdit(text: constant.testText))
-        newStoreRequestViewModel.action(input: .addressEndEdit(text: constant.emptyTestText))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.testText, inputCase: .title))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.testText, inputCase: .detailAddress))
+        newStoreRequestViewModel.action(input: .endEdit(text: constant.emptyTestText, inputCase: .address))
         newStoreRequestViewModel.action(input: .certificationEndEdit(
             requestNewStoreCertificationIsSelected: constant.certificationSelected
         ))
@@ -241,9 +247,9 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .titleWhileEdit(text: constant.testText))
-        newStoreRequestViewModel.action(input: .detailAddressWhileEdit(text: constant.emptyTestText))
-        newStoreRequestViewModel.action(input: .addressEndEdit(text: constant.testText))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.testText, inputCase: .title))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.emptyTestText, inputCase: .detailAddress))
+        newStoreRequestViewModel.action(input: .endEdit(text: constant.testText, inputCase: .address))
         newStoreRequestViewModel.action(input: .certificationEndEdit(
             requestNewStoreCertificationIsSelected: constant.certificationSelected
         ))
@@ -265,9 +271,9 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
             .disposed(by: disposeBag)
         
         // When
-        newStoreRequestViewModel.action(input: .titleWhileEdit(text: constant.testText))
-        newStoreRequestViewModel.action(input: .detailAddressWhileEdit(text: constant.emptyTestText))
-        newStoreRequestViewModel.action(input: .addressEndEdit(text: constant.testText))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.testText, inputCase: .title))
+        newStoreRequestViewModel.action(input: .whileEdit(text: constant.emptyTestText, inputCase: .detailAddress))
+        newStoreRequestViewModel.action(input: .endEdit(text: constant.testText, inputCase: .address))
         newStoreRequestViewModel.action(input: .certificationEndEdit(
             requestNewStoreCertificationIsSelected: constant.emptyCertificationSelected
         ))
