@@ -23,12 +23,12 @@
 		592D0E0C2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E0B2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift */; };
 		592D0E102B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E0F2B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift */; };
 		592D0E122B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E112B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift */; };
-		592D0E1C2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E1B2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift */; };
-		592D0E1E2B943B12003E90F9 /* StubFetchStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E1D2B943B12003E90F9 /* StubFetchStoreIDRepository.swift */; };
-		592D0E182B9437AA003E90F9 /* DeleteAllHistoryUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E172B9437AA003E90F9 /* DeleteAllHistoryUseCaseImplTests.swift */; };
-		592D0E1A2B943823003E90F9 /* SpyDeleteAllHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E192B943823003E90F9 /* SpyDeleteAllHistoryRepository.swift */; };
 		592D0E142B9431A6003E90F9 /* DeleteRecentSearchHistoryUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E132B9431A6003E90F9 /* DeleteRecentSearchHistoryUseCaseImplTests.swift */; };
 		592D0E162B94324E003E90F9 /* SpySpyDeleteRecentSearchHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E152B94324E003E90F9 /* SpySpyDeleteRecentSearchHistoryRepository.swift */; };
+		592D0E182B9437AA003E90F9 /* DeleteAllHistoryUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E172B9437AA003E90F9 /* DeleteAllHistoryUseCaseImplTests.swift */; };
+		592D0E1A2B943823003E90F9 /* SpyDeleteAllHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E192B943823003E90F9 /* SpyDeleteAllHistoryRepository.swift */; };
+		592D0E1C2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E1B2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift */; };
+		592D0E1E2B943B12003E90F9 /* StubFetchStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D0E1D2B943B12003E90F9 /* StubFetchStoreIDRepository.swift */; };
 		594376342B81F071005B97B2 /* UpdateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376332B81F071005B97B2 /* UpdateRequestDTO.swift */; };
 		594376362B8201FB005B97B2 /* StoreUpdateRequestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */; };
 		594376382B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */; };
@@ -238,6 +238,9 @@
 		A8EC5B262B947E6800D9182F /* SetStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B252B947E6800D9182F /* SetStoreIDRepository.swift */; };
 		A8EC5B282B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B272B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift */; };
 		A8EC5B2A2B9483D600D9182F /* SpySetStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B292B9483D600D9182F /* SpySetStoreIDRepository.swift */; };
+		A8EC5B2D2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B2C2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift */; };
+		A8EC5B302B95FD1A00D9182F /* StubSuccessPostNewStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B2F2B95FD1A00D9182F /* StubSuccessPostNewStoreUseCase.swift */; };
+		A8EC5B322B97610D00D9182F /* StubFailurePostNewStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B312B97610D00D9182F /* StubFailurePostNewStoreUseCase.swift */; };
 		AE60727C9A543E3D0F3A0279 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */; };
 		BBE1483137890D1D37D0E308 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3902FBE673069073F47D82 /* Pods_KCS.framework */; };
 /* End PBXBuildFile section */
@@ -272,12 +275,12 @@
 		592D0E0B2B91B2FC003E90F9 /* FetchStoreIDRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDRepositoryImplTests.swift; sourceTree = "<group>"; };
 		592D0E0F2B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRecentSearchHistoryUseCaseImplTests.swift; sourceTree = "<group>"; };
 		592D0E112B9354ED003E90F9 /* SpySaveRecentSearchHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpySaveRecentSearchHistoryRepository.swift; sourceTree = "<group>"; };
-		592D0E1B2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDUseCaseImplTests.swift; sourceTree = "<group>"; };
-		592D0E1D2B943B12003E90F9 /* StubFetchStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubFetchStoreIDRepository.swift; sourceTree = "<group>"; };
-		592D0E172B9437AA003E90F9 /* DeleteAllHistoryUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAllHistoryUseCaseImplTests.swift; sourceTree = "<group>"; };
-		592D0E192B943823003E90F9 /* SpyDeleteAllHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyDeleteAllHistoryRepository.swift; sourceTree = "<group>"; };
 		592D0E132B9431A6003E90F9 /* DeleteRecentSearchHistoryUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecentSearchHistoryUseCaseImplTests.swift; sourceTree = "<group>"; };
 		592D0E152B94324E003E90F9 /* SpySpyDeleteRecentSearchHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpySpyDeleteRecentSearchHistoryRepository.swift; sourceTree = "<group>"; };
+		592D0E172B9437AA003E90F9 /* DeleteAllHistoryUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAllHistoryUseCaseImplTests.swift; sourceTree = "<group>"; };
+		592D0E192B943823003E90F9 /* SpyDeleteAllHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyDeleteAllHistoryRepository.swift; sourceTree = "<group>"; };
+		592D0E1B2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStoreIDUseCaseImplTests.swift; sourceTree = "<group>"; };
+		592D0E1D2B943B12003E90F9 /* StubFetchStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubFetchStoreIDRepository.swift; sourceTree = "<group>"; };
 		594376332B81F071005B97B2 /* UpdateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequestDTO.swift; sourceTree = "<group>"; };
 		594376352B8201FB005B97B2 /* StoreUpdateRequestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepository.swift; sourceTree = "<group>"; };
 		594376372B820272005B97B2 /* StoreUpdateRequestRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdateRequestRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -491,6 +494,9 @@
 		A8EC5B252B947E6800D9182F /* SetStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDRepository.swift; sourceTree = "<group>"; };
 		A8EC5B272B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDRepositoryImplTests.swift; sourceTree = "<group>"; };
 		A8EC5B292B9483D600D9182F /* SpySetStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpySetStoreIDRepository.swift; sourceTree = "<group>"; };
+		A8EC5B2C2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestViewModelImplTests.swift; sourceTree = "<group>"; };
+		A8EC5B2F2B95FD1A00D9182F /* StubSuccessPostNewStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubSuccessPostNewStoreUseCase.swift; sourceTree = "<group>"; };
+		A8EC5B312B97610D00D9182F /* StubFailurePostNewStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubFailurePostNewStoreUseCase.swift; sourceTree = "<group>"; };
 		D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -751,6 +757,7 @@
 			children = (
 				594376932B8C7E5C005B97B2 /* RepositoryTest */,
 				A826745A2B8C7AD7004710CB /* UseCaseTest */,
+				A8EC5B2B2B95F6E400D9182F /* ViewModelTest */,
 				A826745F2B8C7AD7004710CB /* TestDouble */,
 			);
 			path = KCSUnitTest;
@@ -1099,6 +1106,7 @@
 		A826745F2B8C7AD7004710CB /* TestDouble */ = {
 			isa = PBXGroup;
 			children = (
+				A8EC5B2E2B95FC9F00D9182F /* UseCase */,
 				A82674602B8C7AD7004710CB /* Repository */,
 				A82674912B8CFD61004710CB /* MockServer */,
 				A82674892B8CF6DF004710CB /* Resource */,
@@ -1257,6 +1265,23 @@
 				A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		A8EC5B2B2B95F6E400D9182F /* ViewModelTest */ = {
+			isa = PBXGroup;
+			children = (
+				A8EC5B2C2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift */,
+			);
+			path = ViewModelTest;
+			sourceTree = "<group>";
+		};
+		A8EC5B2E2B95FC9F00D9182F /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				A8EC5B2F2B95FD1A00D9182F /* StubSuccessPostNewStoreUseCase.swift */,
+				A8EC5B312B97610D00D9182F /* StubFailurePostNewStoreUseCase.swift */,
+			);
+			path = UseCase;
 			sourceTree = "<group>";
 		};
 		E99F20FF9A30DCF9C51285A2 /* Frameworks */ = {
@@ -1721,6 +1746,7 @@
 				592D0E1C2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift in Sources */,
 				A8EC5B012B8F9B1F00D9182F /* StubSuccessNetworkRepository.swift in Sources */,
 				592D0E1A2B943823003E90F9 /* SpyDeleteAllHistoryRepository.swift in Sources */,
+				A8EC5B2D2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift in Sources */,
 				59C030992B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift in Sources */,
 				592D0E1E2B943B12003E90F9 /* StubFetchStoreIDRepository.swift in Sources */,
 				A8EC5B202B9348EC00D9182F /* GetOpenClosedUseCaseImplTests.swift in Sources */,
@@ -1728,8 +1754,10 @@
 				A8EC5B0C2B90CF0D00D9182F /* DeleteRecentSearchHistoryRepositoryImplTests.swift in Sources */,
 				A8EC5B182B91C3CB00D9182F /* GetRefreshStoresUseCaseImplTests.swift in Sources */,
 				592D0E142B9431A6003E90F9 /* DeleteRecentSearchHistoryUseCaseImplTests.swift in Sources */,
+				A8EC5B322B97610D00D9182F /* StubFailurePostNewStoreUseCase.swift in Sources */,
 				A8EC5B162B90FE6C00D9182F /* PostNewStoreRepositoryImplTests.swift in Sources */,
 				594376952B8C7EAD005B97B2 /* FetchStoresRepositoryImplTests.swift in Sources */,
+				A8EC5B302B95FD1A00D9182F /* StubSuccessPostNewStoreUseCase.swift in Sources */,
 				59C030932B8E4E8900A1A6FB /* MockURLProtocol.swift in Sources */,
 				A8EC5B002B8F9B1D00D9182F /* StubFailureNetworkRepository.swift in Sources */,
 				A82674692B8C7AD7004710CB /* StubSuccessImageRepository.swift in Sources */,
