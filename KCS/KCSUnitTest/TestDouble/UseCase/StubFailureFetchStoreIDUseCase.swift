@@ -1,14 +1,14 @@
 //
-//  StubFetchStoreIDUseCase.swift
+//  StubFailureFetchStoreIDUseCase.swift
 //  KCSUnitTest
 //
-//  Created by 조성민 on 3/5/24.
+//  Created by 조성민 on 3/6/24.
 //
 
 import Foundation
 @testable import KCS
 
-struct StubSuccessFetchStoreIDUseCase: FetchStoreIDUseCase {
+struct StubFailureFetchStoreIDUseCase: FetchStoreIDUseCase {
     
     let repository: FetchStoreIDRepository
     
@@ -17,7 +17,7 @@ struct StubSuccessFetchStoreIDUseCase: FetchStoreIDUseCase {
     }
     
     func execute() -> Int? {
-        return StoreUpdateRequestViewModelImplTestsConstant.fetchStoreIDUseCaseResult
+        return nil
     }
     
 }

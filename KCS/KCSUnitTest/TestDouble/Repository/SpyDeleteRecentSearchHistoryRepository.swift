@@ -1,5 +1,5 @@
 //
-//  SpySpyDeleteRecentSearchHistoryRepository.swift
+//  SpyDeleteRecentSearchHistoryRepository.swift
 //  KCSUnitTest
 //
 //  Created by 조성민 on 3/3/24.
