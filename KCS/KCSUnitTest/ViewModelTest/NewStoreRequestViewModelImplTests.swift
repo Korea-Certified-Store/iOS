@@ -367,7 +367,6 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
         )
         
         // Then
-        // Then
         if let observerResult = observer.events.first,
            let result = observerResult.value.element {
             XCTAssertEqual(result, ErrorAlertMessage.client)
