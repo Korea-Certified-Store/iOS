@@ -11,6 +11,6 @@ protocol SetStoreIDRepository {
     
     var storage: StoreIDStorage { get }
     
-    func fetchStoreID(id: Int)
+    func setStoreID(id: Int)
     
 }

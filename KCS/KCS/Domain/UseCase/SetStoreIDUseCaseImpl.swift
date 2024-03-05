@@ -12,7 +12,7 @@ struct SetStoreIDUseCaseImpl: SetStoreIDUseCase {
     let repository: SetStoreIDRepository
     
     func execute(id: Int) {
-        repository.fetchStoreID(id: id)
+        repository.setStoreID(id: id)
     }
     
 }
