@@ -10,7 +10,7 @@ import RxSwift
 
 struct StubServerFailurePostNewStoreUseCase: PostNewStoreUseCase {
     
-    var repository: PostNewStoreRepository
+    let repository: PostNewStoreRepository
     
     func execute(storeName: String, formattedAddress: String, certifications: [CertificationType]) -> Observable<Void> {
         return Observable.create { observer -> Disposable in
@@ -23,7 +23,7 @@ struct StubServerFailurePostNewStoreUseCase: PostNewStoreUseCase {
 
 struct StubClientFailurePostNewStoreUseCase: PostNewStoreUseCase {
     
-    var repository: PostNewStoreRepository
+    let repository: PostNewStoreRepository
     
     func execute(storeName: String, formattedAddress: String, certifications: [CertificationType]) -> Observable<Void> {
         return Observable.create { observer -> Disposable in

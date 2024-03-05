@@ -10,13 +10,10 @@ import RxSwift
 
 struct StubSuccessPostNewStoreUseCase: PostNewStoreUseCase {
     
-    var repository: PostNewStoreRepository
+    let repository: PostNewStoreRepository
     
     func execute(storeName: String, formattedAddress: String, certifications: [CertificationType]) -> Observable<Void> {
-        return Observable.create { observer -> Disposable in
-            observer.onNext(())
-            return Disposables.create()
-        }
+        return .just(())
     }
     
 }
