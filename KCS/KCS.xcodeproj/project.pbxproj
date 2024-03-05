@@ -241,6 +241,7 @@
 		A8EC5B2D2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B2C2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift */; };
 		A8EC5B302B95FD1A00D9182F /* StubSuccessPostNewStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B2F2B95FD1A00D9182F /* StubSuccessPostNewStoreUseCase.swift */; };
 		A8EC5B322B97610D00D9182F /* StubFailurePostNewStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B312B97610D00D9182F /* StubFailurePostNewStoreUseCase.swift */; };
+		A8EC5B342B9767FD00D9182F /* NewStoreRequestInputCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B332B9767FD00D9182F /* NewStoreRequestInputCase.swift */; };
 		AE60727C9A543E3D0F3A0279 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */; };
 		BBE1483137890D1D37D0E308 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3902FBE673069073F47D82 /* Pods_KCS.framework */; };
 /* End PBXBuildFile section */
@@ -497,6 +498,7 @@
 		A8EC5B2C2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestViewModelImplTests.swift; sourceTree = "<group>"; };
 		A8EC5B2F2B95FD1A00D9182F /* StubSuccessPostNewStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubSuccessPostNewStoreUseCase.swift; sourceTree = "<group>"; };
 		A8EC5B312B97610D00D9182F /* StubFailurePostNewStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubFailurePostNewStoreUseCase.swift; sourceTree = "<group>"; };
+		A8EC5B332B9767FD00D9182F /* NewStoreRequestInputCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestInputCase.swift; sourceTree = "<group>"; };
 		D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -969,6 +971,7 @@
 				A8AF06822B8281C200E73574 /* RequestNewStoreCertificationIsSelected.swift */,
 				5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */,
 				A8AE14C52B86460F00A554A8 /* AutoCompletionKeyword.swift */,
+				A8EC5B332B9767FD00D9182F /* NewStoreRequestInputCase.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1669,6 +1672,7 @@
 				A8AE14C82B8784FD00A554A8 /* SaveRecentSearchHistoryRepositoryImpl.swift in Sources */,
 				A85659522B83C6DC00775C78 /* StoreListDependency.swift in Sources */,
 				A8722EFE2B7644D7001ED988 /* FetchRecentSearchHistoryUseCaseImpl.swift in Sources */,
+				A8EC5B342B9767FD00D9182F /* NewStoreRequestInputCase.swift in Sources */,
 				59503A822B80ED340006CF35 /* StoreUpdateRequestViewModelImpl.swift in Sources */,
 				59B8865A2B6E3B40005750EF /* StoreInformationViewController.swift in Sources */,
 				A81B5A682B7C81DB0042307A /* DeleteAllHistoryUseCase.swift in Sources */,
