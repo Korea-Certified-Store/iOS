@@ -87,7 +87,7 @@ private extension StoreUpdateRequestViewModelImpl {
     }
     
     func completeButtonIsEnable(type: String, content: String) {
-        if type.isEmpty || content.isEmpty {
+        if type.isEmpty || content.isEmpty || content.count > 300 {
             completeButtonIsEnabledOutput.accept(false)
         } else {
             completeButtonIsEnabledOutput.accept(true)
