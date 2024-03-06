@@ -183,12 +183,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
         ))
         
         // Then
-        if let observerResult = observer.events.first,
-           let result = observerResult.value.element {
-            XCTAssertTrue(result)
-        } else {
-            XCTFail("완료 버튼 활성화 실패")
-        }
+        XCTAssertEqual(observer.events.first?.value.element, true)
     }
     
     func test_제목란이_빈칸이기_때문에_네비게이션바_상단_완료_버튼이_활성화되지_않은_경우() {
@@ -207,12 +202,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
         ))
         
         // Then
-        if let observerResult = observer.events.first,
-           let result = observerResult.value.element {
-            XCTAssertFalse(result)
-        } else {
-            XCTFail("완료 버튼 비활성화 실패")
-        }
+        XCTAssertEqual(observer.events.first?.value.element, false)
     }
     
     func test_주소란이_빈칸이기_때문에_네비게이션바_상단_완료_버튼이_활성화되지_않은_경우() {
@@ -231,12 +221,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
         ))
         
         // Then
-        if let observerResult = observer.events.first,
-           let result = observerResult.value.element {
-            XCTAssertFalse(result)
-        } else {
-            XCTFail("완료 버튼 비활성화 실패")
-        }
+        XCTAssertEqual(observer.events.first?.value.element, false)
     }
     
     func test_상세주소란이_빈칸이기_때문에_네비게이션바_상단_완료_버튼이_활성화되지_않은_경우() {
@@ -255,12 +240,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
         ))
         
         // Then
-        if let observerResult = observer.events.first,
-           let result = observerResult.value.element {
-            XCTAssertFalse(result)
-        } else {
-            XCTFail("완료 버튼 비활성화 실패")
-        }
+        XCTAssertEqual(observer.events.first?.value.element, false)
     }
     
     func test_활성화된_인증제_버튼이_없기_때문에_네비게이션바_상단_완료_버튼이_활성화되지_않은_경우() {
@@ -279,12 +259,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
         ))
         
         // Then
-        if let observerResult = observer.events.first,
-           let result = observerResult.value.element {
-            XCTAssertFalse(result)
-        } else {
-            XCTFail("완료 버튼 비활성화 실패")
-        }
+        XCTAssertEqual(observer.events.first?.value.element, false)
     }
     
     func test_완료버튼을_누르고_서버에_정상적으로_POST_된_경우() {
@@ -333,12 +308,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
         )
         
         // Then
-        if let observerResult = observer.events.first,
-           let result = observerResult.value.element {
-            XCTAssertEqual(result, ErrorAlertMessage.server)
-        } else {
-            XCTFail("ErrorAlertMessage 방출 실패")
-        }
+        XCTAssertEqual(observer.events.first?.value.element, ErrorAlertMessage.server)
     }
     
     func test_완료버튼을_누르고_알_수_없는_에러로_POST실패한_경우() {
@@ -367,12 +337,7 @@ final class NewStoreRequestViewModelImplTests: XCTestCase {
         )
         
         // Then
-        if let observerResult = observer.events.first,
-           let result = observerResult.value.element {
-            XCTAssertEqual(result, ErrorAlertMessage.client)
-        } else {
-            XCTFail("ErrorAlertMessage 방출 실패")
-        }
+        XCTAssertEqual(observer.events.first?.value.element, ErrorAlertMessage.client)
     }
     
 }
