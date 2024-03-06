@@ -107,7 +107,7 @@ final class NewStoreRequestViewController: UIViewController {
         textField.rx.controlEvent([.editingDidEnd])
             .asObservable()
             .bind { [weak self] _ in
-                self?.viewModel.action(input: .titleEndEdit(text: textField.text ?? ""))
+                self?.viewModel.action(input: .endEdit(text: textField.text ?? "", inputCase: .title))
             }
             .disposed(by: disposeBag)
         
@@ -188,7 +188,7 @@ final class NewStoreRequestViewController: UIViewController {
         textField.rx.controlEvent([.editingDidEnd])
             .asObservable()
             .bind { [weak self] _ in
-                self?.viewModel.action(input: .detailAddressEndEdit(text: textField.text ?? ""))
+                self?.viewModel.action(input: .endEdit(text: textField.text ?? "", inputCase: .detailAddress))
             }
             .disposed(by: disposeBag)
         
@@ -379,7 +379,7 @@ private extension NewStoreRequestViewController {
             .orEmpty
             .distinctUntilChanged()
             .bind { [weak self] text in
-                self?.viewModel.action(input: .titleWhileEdit(text: text))
+                self?.viewModel.action(input: .whileEdit(text: text, inputCase: .title))
             }
             .disposed(by: disposeBag)
         
@@ -387,7 +387,7 @@ private extension NewStoreRequestViewController {
             .orEmpty
             .distinctUntilChanged()
             .bind { [weak self] text in
-                self?.viewModel.action(input: .detailAddressWhileEdit(text: text))
+                self?.viewModel.action(input: .whileEdit(text: text, inputCase: .detailAddress))
             }
             .disposed(by: disposeBag)
     }
@@ -404,7 +404,7 @@ private extension NewStoreRequestViewController {
         addressObserver
             .bind { [weak self] address in
                 self?.addressTextField.text = address
-                self?.viewModel.action(input: .addressEndEdit(text: address))
+                self?.viewModel.action(input: .endEdit(text: address, inputCase: .address))
             }
             .disposed(by: disposeBag)
     }
@@ -670,7 +670,7 @@ private extension NewStoreRequestViewController {
     func presentAddressView() {
         let addressViewController = AddressViewController(addressObserver: addressObserver)
         present(addressViewController, animated: true) { [weak self] in
-            self?.viewModel.action(input: .addressEndEdit(text: self?.addressTextField.text ?? ""))
+            self?.viewModel.action(input: .endEdit(text: self?.addressTextField.text ?? "", inputCase: .address))
         }
     }
     

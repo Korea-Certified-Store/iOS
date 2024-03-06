@@ -189,6 +189,8 @@
 		A890870A2B4EF00B00767225 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89087092B4EF00B00767225 /* SystemImage.swift */; };
 		A890870D2B4EF91600767225 /* UIView+SetLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870C2B4EF91600767225 /* UIView+SetLayer.swift */; };
 		A890870F2B4F836C00767225 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890870E2B4F836C00767225 /* SummaryView.swift */; };
+		A8A779172B98A56F00237881 /* StubFailurePostNewStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A779152B98A56F00237881 /* StubFailurePostNewStoreUseCase.swift */; };
+		A8A779182B98A56F00237881 /* StubSuccessPostNewStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A779162B98A56F00237881 /* StubSuccessPostNewStoreUseCase.swift */; };
 		A8A7E05B2B642EC900D015E5 /* DetailViewContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A7E05A2B642EC900D015E5 /* DetailViewContents.swift */; };
 		A8A7E05D2B64AF1300D015E5 /* StoreInformationViewConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A7E05C2B64AF1200D015E5 /* StoreInformationViewConstraints.swift */; };
 		A8A7E0602B64E62200D015E5 /* NMFMyPosition+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A7E05F2B64E62200D015E5 /* NMFMyPosition+.swift */; };
@@ -244,6 +246,8 @@
 		A8EC5B262B947E6800D9182F /* SetStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B252B947E6800D9182F /* SetStoreIDRepository.swift */; };
 		A8EC5B282B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B272B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift */; };
 		A8EC5B2A2B9483D600D9182F /* SpySetStoreIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B292B9483D600D9182F /* SpySetStoreIDRepository.swift */; };
+		A8EC5B2D2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B2C2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift */; };
+		A8EC5B342B9767FD00D9182F /* NewStoreRequestInputCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC5B332B9767FD00D9182F /* NewStoreRequestInputCase.swift */; };
 		AE60727C9A543E3D0F3A0279 /* Pods_KCSUnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6818C1431365A23C873FB /* Pods_KCSUnitTest.framework */; };
 		BBE1483137890D1D37D0E308 /* Pods_KCS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3902FBE673069073F47D82 /* Pods_KCS.framework */; };
 /* End PBXBuildFile section */
@@ -450,6 +454,8 @@
 		A89087092B4EF00B00767225 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		A890870C2B4EF91600767225 /* UIView+SetLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SetLayer.swift"; sourceTree = "<group>"; };
 		A890870E2B4F836C00767225 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		A8A779152B98A56F00237881 /* StubFailurePostNewStoreUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StubFailurePostNewStoreUseCase.swift; sourceTree = "<group>"; };
+		A8A779162B98A56F00237881 /* StubSuccessPostNewStoreUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StubSuccessPostNewStoreUseCase.swift; sourceTree = "<group>"; };
 		A8A7E05A2B642EC900D015E5 /* DetailViewContents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewContents.swift; sourceTree = "<group>"; };
 		A8A7E05C2B64AF1200D015E5 /* StoreInformationViewConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInformationViewConstraints.swift; sourceTree = "<group>"; };
 		A8A7E05F2B64E62200D015E5 /* NMFMyPosition+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMFMyPosition+.swift"; sourceTree = "<group>"; };
@@ -503,6 +509,8 @@
 		A8EC5B252B947E6800D9182F /* SetStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDRepository.swift; sourceTree = "<group>"; };
 		A8EC5B272B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreIDRepositoryImplTests.swift; sourceTree = "<group>"; };
 		A8EC5B292B9483D600D9182F /* SpySetStoreIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpySetStoreIDRepository.swift; sourceTree = "<group>"; };
+		A8EC5B2C2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestViewModelImplTests.swift; sourceTree = "<group>"; };
+		A8EC5B332B9767FD00D9182F /* NewStoreRequestInputCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreRequestInputCase.swift; sourceTree = "<group>"; };
 		D7B848B1C5D2F1B31C605818 /* Pods-KCSUnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCSUnitTest.debug.xcconfig"; path = "Target Support Files/Pods-KCSUnitTest/Pods-KCSUnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -537,6 +545,7 @@
 				591A887A2B384E600059E40F /* Products */,
 				ED50AD730FA5F4D533F6DF5F /* Pods */,
 				E99F20FF9A30DCF9C51285A2 /* Frameworks */,
+				A8A779142B98A50F00237881 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -590,14 +599,6 @@
 			path = RepositoryTest;
 			sourceTree = "<group>";
 		};
-		59491D7B2B9751210009E77F /* ViewModelTest */ = {
-			isa = PBXGroup;
-			children = (
-				59491D7C2B97513A0009E77F /* StoreUpdateRequestViewModelImplTests.swift */,
-			);
-			path = ViewModelTest;
-			sourceTree = "<group>";
-		};
 		59491D7E2B9752410009E77F /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -606,6 +607,8 @@
 				59491D872B9785D20009E77F /* StubFailureFetchStoreIDUseCase.swift */,
 				59491D832B9755740009E77F /* StubSuccessStoreUpdateRequestUseCase.swift */,
 				59491D852B9785080009E77F /* StubFailureStoreUpdateRequestUseCase.swift */,
+				A8A779162B98A56F00237881 /* StubSuccessPostNewStoreUseCase.swift */,
+				A8A779152B98A56F00237881 /* StubFailurePostNewStoreUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -781,9 +784,9 @@
 		5977BE8B2B5966F900725C90 /* KCSUnitTest */ = {
 			isa = PBXGroup;
 			children = (
-				59491D7B2B9751210009E77F /* ViewModelTest */,
 				594376932B8C7E5C005B97B2 /* RepositoryTest */,
 				A826745A2B8C7AD7004710CB /* UseCaseTest */,
+				A8EC5B2B2B95F6E400D9182F /* ViewModelTest */,
 				A826745F2B8C7AD7004710CB /* TestDouble */,
 			);
 			path = KCSUnitTest;
@@ -995,6 +998,7 @@
 				A8AF06822B8281C200E73574 /* RequestNewStoreCertificationIsSelected.swift */,
 				5943764F2B82437C005B97B2 /* StoreUpdateRequestType.swift */,
 				A8AE14C52B86460F00A554A8 /* AutoCompletionKeyword.swift */,
+				A8EC5B332B9767FD00D9182F /* NewStoreRequestInputCase.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1291,6 +1295,15 @@
 				A8ACB7EC2B59647400540BD1 /* OpeningHourError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		A8EC5B2B2B95F6E400D9182F /* ViewModelTest */ = {
+			isa = PBXGroup;
+			children = (
+				59491D7C2B97513A0009E77F /* StoreUpdateRequestViewModelImplTests.swift */,
+				A8EC5B2C2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift */,
+			);
+			path = ViewModelTest;
 			sourceTree = "<group>";
 		};
 		E99F20FF9A30DCF9C51285A2 /* Frameworks */ = {
@@ -1678,6 +1691,7 @@
 				A8AE14C82B8784FD00A554A8 /* SaveRecentSearchHistoryRepositoryImpl.swift in Sources */,
 				A85659522B83C6DC00775C78 /* StoreListDependency.swift in Sources */,
 				A8722EFE2B7644D7001ED988 /* FetchRecentSearchHistoryUseCaseImpl.swift in Sources */,
+				A8EC5B342B9767FD00D9182F /* NewStoreRequestInputCase.swift in Sources */,
 				59503A822B80ED340006CF35 /* StoreUpdateRequestViewModelImpl.swift in Sources */,
 				59B8865A2B6E3B40005750EF /* StoreInformationViewController.swift in Sources */,
 				A81B5A682B7C81DB0042307A /* DeleteAllHistoryUseCase.swift in Sources */,
@@ -1755,6 +1769,7 @@
 				592D0E1C2B9439C0003E90F9 /* FetchStoreIDUseCaseImplTests.swift in Sources */,
 				A8EC5B012B8F9B1F00D9182F /* StubSuccessNetworkRepository.swift in Sources */,
 				592D0E1A2B943823003E90F9 /* SpyDeleteAllHistoryRepository.swift in Sources */,
+				A8EC5B2D2B95F71800D9182F /* NewStoreRequestViewModelImplTests.swift in Sources */,
 				59C030992B8FB03F00A1A6FB /* FetchSearchStoresRepositoryImplTests.swift in Sources */,
 				592D0E1E2B943B12003E90F9 /* StubFetchStoreIDRepository.swift in Sources */,
 				A8EC5B202B9348EC00D9182F /* GetOpenClosedUseCaseImplTests.swift in Sources */,
@@ -1772,6 +1787,7 @@
 				A8EC5B0E2B90DC2000D9182F /* DeleteAllHistoryRepositoryImplTests.swift in Sources */,
 				A826746A2B8C7AD7004710CB /* StubFailureImageRepository.swift in Sources */,
 				A8EC5B282B94818F00D9182F /* SetStoreIDRepositoryImplTests.swift in Sources */,
+				A8A779182B98A56F00237881 /* StubSuccessPostNewStoreUseCase.swift in Sources */,
 				59491D802B9752510009E77F /* SpySetStoreIDUseCase.swift in Sources */,
 				59491D822B9753EF0009E77F /* StubFetchStoreIDUseCase.swift in Sources */,
 				A8EC5B062B903C7A00D9182F /* FetchRecentSearchHistoryRepositoryImplTests.swift in Sources */,
@@ -1781,6 +1797,7 @@
 				A8EC5B1E2B933ABA00D9182F /* GetStoreInformationUseCaseImplTests.swift in Sources */,
 				59C030972B8FAD0B00A1A6FB /* GetStoresRepositoryImplTests.swift in Sources */,
 				592D0E182B9437AA003E90F9 /* DeleteAllHistoryUseCaseImplTests.swift in Sources */,
+				A8A779172B98A56F00237881 /* StubFailurePostNewStoreUseCase.swift in Sources */,
 				59491D862B9785080009E77F /* StubFailureStoreUpdateRequestUseCase.swift in Sources */,
 				592D0E102B934FFA003E90F9 /* SaveRecentSearchHistoryUseCaseImplTests.swift in Sources */,
 				59491D7D2B97513A0009E77F /* StoreUpdateRequestViewModelImplTests.swift in Sources */,

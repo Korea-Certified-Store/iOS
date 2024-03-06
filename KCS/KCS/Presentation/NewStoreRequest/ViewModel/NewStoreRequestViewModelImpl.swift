@@ -37,16 +37,10 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
     
     func action(input: NewStoreRequestViewModelInputCase) {
         switch input {
-        case .titleWhileEdit(let text):
-            whileEdit(text: text, inputCase: .title)
-        case .titleEndEdit(let text):
-            editEnd(text: text, inputCase: .title)
-        case .addressEndEdit(let text):
-            editEnd(text: text, inputCase: .address)
-        case .detailAddressWhileEdit(let text):
-            whileEdit(text: text, inputCase: .detailAddress)
-        case .detailAddressEndEdit(let text):
-            editEnd(text: text, inputCase: .detailAddress)
+        case .whileEdit(let text, let inputCase):
+            whileEdit(text: text, inputCase: inputCase)
+        case .endEdit(let text, let inputCase):
+            editEnd(text: text, inputCase: inputCase)
         case .certificationEndEdit(let requestNewStoreCertificationIsSelected):
             certificationEditEnd(requestNewStoreCertificationIsSelected: requestNewStoreCertificationIsSelected)
         case .completeButtonTapped(let storeName, let address, let certifications):
@@ -57,12 +51,6 @@ final class NewStoreRequestViewModelImpl: NewStoreRequestViewModel {
 }
 
 private extension NewStoreRequestViewModelImpl {
-    
-    enum InputCase {
-        case title
-        case address
-        case detailAddress
-    }
     
     func whileEdit(text: String, inputCase: InputCase) {
         if text.isEmpty {

@@ -22,11 +22,8 @@ protocol NewStoreRequestViewModelInput {
 
 enum NewStoreRequestViewModelInputCase {
     
-    case titleWhileEdit(text: String)
-    case titleEndEdit(text: String)
-    case addressEndEdit(text: String)
-    case detailAddressWhileEdit(text: String)
-    case detailAddressEndEdit(text: String)
+    case whileEdit(text: String, inputCase: InputCase)
+    case endEdit(text: String, inputCase: InputCase)
     case certificationEndEdit(requestNewStoreCertificationIsSelected: RequestNewStoreCertificationIsSelected)
     case completeButtonTapped(storeName: String, address: String, certifications: RequestNewStoreCertificationIsSelected)
     
