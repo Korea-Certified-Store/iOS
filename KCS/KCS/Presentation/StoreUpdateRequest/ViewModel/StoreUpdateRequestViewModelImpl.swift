@@ -87,7 +87,7 @@ private extension StoreUpdateRequestViewModelImpl {
     }
     
     func completeButtonIsEnable(type: String, content: String) {
-        if type.isEmpty || content.isEmpty {
+        if type.isEmpty || content.isEmpty || content.count > 300 {
             completeButtonIsEnabledOutput.accept(false)
         } else {
             completeButtonIsEnabledOutput.accept(true)
@@ -110,8 +110,6 @@ private extension StoreUpdateRequestViewModelImpl {
             onError: { [weak self] error in
                 if let error = error as? ErrorAlertMessage {
                     self?.errorAlertOutput.accept(error)
-                } else {
-                    self?.errorAlertOutput.accept(.client)
                 }
             }
         )
