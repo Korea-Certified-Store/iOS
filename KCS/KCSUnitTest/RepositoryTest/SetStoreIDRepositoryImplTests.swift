@@ -29,7 +29,7 @@ final class SetStoreIDRepositoryImplTests: XCTestCase {
         // Given initial state
         
         // When
-        setStoreIDRepository.fetchStoreID(id: constant.storeID)
+        setStoreIDRepository.setStoreID(id: constant.storeID)
         
         //Then
         XCTAssertEqual(setStoreIDRepository.storage.storeID, constant.storeID)

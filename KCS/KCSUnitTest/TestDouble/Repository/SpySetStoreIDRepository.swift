@@ -17,7 +17,7 @@ final class SpySetStoreIDRepository: SetStoreIDRepository {
         self.storage = storage
     }
     
-    func fetchStoreID(id: Int) {
+    func setStoreID(id: Int) {
         executeCount += 1
     }
     

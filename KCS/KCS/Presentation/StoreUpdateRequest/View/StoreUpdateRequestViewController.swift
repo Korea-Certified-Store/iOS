@@ -46,9 +46,7 @@ final class StoreUpdateRequestViewController: UIViewController {
     }()
     
     private lazy var customNavigationBar: UINavigationBar = {
-        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let statusBarHeight = scene.windows.first?.safeAreaInsets.top else { return UINavigationBar() }
-        let navigationBar = UINavigationBar(frame: .init(x: 0, y: statusBarHeight, width: view.frame.width, height: statusBarHeight))
+        let navigationBar = UINavigationBar()
         navigationBar.isTranslucent = false
         navigationBar.backgroundColor = .white
 
@@ -228,8 +226,7 @@ final class StoreUpdateRequestViewController: UIViewController {
         self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
-        
-        setup()
+        modalPresentationStyle = .fullScreen
     }
     
     required init?(coder: NSCoder) {
@@ -239,6 +236,8 @@ final class StoreUpdateRequestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setup()
+        setNavigationBar()
         addUIComponents()
         configureConstraints()
         bind()
@@ -271,6 +270,11 @@ private extension StoreUpdateRequestViewController {
     }
     
     func configureConstraints() {
+        NSLayoutConstraint.activate([
+            typeHeaderLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            typeHeaderLabel.topAnchor.constraint(equalTo: customNavigationBar.bottomAnchor, constant: 35)
+        ])
+        
         NSLayoutConstraint.activate([
             typeHeaderLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             typeHeaderLabel.topAnchor.constraint(equalTo: customNavigationBar.bottomAnchor, constant: 35)
@@ -316,9 +320,16 @@ private extension StoreUpdateRequestViewController {
         ])
     }
     
+    func setNavigationBar() {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let statusBarHeight = scene.windows.first?.safeAreaInsets.top else {
+            return
+        }
+        customNavigationBar.frame = CGRect(x: 0, y: statusBarHeight, width: view.frame.width, height: statusBarHeight)
+    }
+    
     func setup() {
         view.backgroundColor = .white
-        modalPresentationStyle = .fullScreen
         setNormalUI()
     }
     

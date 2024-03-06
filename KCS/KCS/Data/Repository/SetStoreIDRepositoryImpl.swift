@@ -11,7 +11,7 @@ struct SetStoreIDRepositoryImpl: SetStoreIDRepository {
     
     let storage: StoreIDStorage
     
-    func fetchStoreID(id: Int) {
+    func setStoreID(id: Int) {
         storage.storeID = id
     }
     
