@@ -3,6 +3,8 @@ platform :ios, '15.0'
 
 use_frameworks!
 
+source 'https://github.com/navermaps/NMapsMapLegacySpecs.git'
+
 target 'KCS' do
   # Comment the next line if you don't want to use dynamic frameworks
 
@@ -13,7 +15,7 @@ target 'KCS' do
   pod 'RxGesture'
   pod 'Alamofire'
   pod 'SwiftLint'
-  pod 'NMapsMap'
+  pod 'NMapsMap-Legacy'
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
   pod 'RxKeyboard'
